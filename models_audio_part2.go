@@ -8,129 +8,6 @@ import (
 	"fmt"
 )
 
-func (value *CreateTranslationRequest) UnmarshalJSON(data []byte) error {
-	type CreateTranslationRequestAlias CreateTranslationRequest
-	var decoded CreateTranslationRequestAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = CreateTranslationRequest(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"file", "model"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"file", "model"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewCreateTranslationRequest returns a validated CreateTranslationRequest built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewCreateTranslationRequest(fields CreateTranslationRequest) (*CreateTranslationRequest, error) {
-	return ConstructModel(fields)
-}
-
-// CreateTranslationRequestResponseFormatEnum The format of the output, in one of these options: `json`, `text`, `srt`, `verbose_json`, or `vtt`.
-type CreateTranslationRequestResponseFormatEnum string
-
-const (
-	CreateTranslationRequestResponseFormatEnumJson        CreateTranslationRequestResponseFormatEnum = "json"
-	CreateTranslationRequestResponseFormatEnumText        CreateTranslationRequestResponseFormatEnum = "text"
-	CreateTranslationRequestResponseFormatEnumSrt         CreateTranslationRequestResponseFormatEnum = "srt"
-	CreateTranslationRequestResponseFormatEnumVerboseJson CreateTranslationRequestResponseFormatEnum = "verbose_json"
-	CreateTranslationRequestResponseFormatEnumVtt         CreateTranslationRequestResponseFormatEnum = "vtt"
-)
-
-// CreateTranslationResponseJson Typed representation of the `CreateTranslationResponseJson` API schema.
-type CreateTranslationResponseJson struct {
-	// Text Required `string` value serialized in the `text` wire field.
-	Text string `json:"text"`
-}
-
-func (value *CreateTranslationResponseJson) UnmarshalJSON(data []byte) error {
-	type CreateTranslationResponseJsonAlias CreateTranslationResponseJson
-	var decoded CreateTranslationResponseJsonAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = CreateTranslationResponseJson(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"text"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"text"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewCreateTranslationResponseJson returns a validated CreateTranslationResponseJson built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewCreateTranslationResponseJson(fields CreateTranslationResponseJson) (*CreateTranslationResponseJson, error) {
-	return ConstructModel(fields)
-}
-
-// CreateTranslationResponseVerboseJson Typed representation of the `CreateTranslationResponseVerboseJson` API schema.
-type CreateTranslationResponseVerboseJson struct {
-	// Language The language of the output translation (always `english`).
-	Language string `json:"language"`
-	// Duration The duration of the input audio.
-	Duration float64 `json:"duration"`
-	// Text The translated text.
-	Text string `json:"text"`
-	// Segments Segments of the translated text and their corresponding details.
-	Segments []TranscriptionSegment `json:"segments,omitempty"`
-}
-
-func (value *CreateTranslationResponseVerboseJson) UnmarshalJSON(data []byte) error {
-	type CreateTranslationResponseVerboseJsonAlias CreateTranslationResponseVerboseJson
-	var decoded CreateTranslationResponseVerboseJsonAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = CreateTranslationResponseVerboseJson(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"language", "duration", "text"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"language", "duration", "text"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewCreateTranslationResponseVerboseJson returns a validated CreateTranslationResponseVerboseJson built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewCreateTranslationResponseVerboseJson(fields CreateTranslationResponseVerboseJson) (*CreateTranslationResponseVerboseJson, error) {
-	return ConstructModel(fields)
-}
-
-// CreateVoiceConsentRequest Typed representation of the `CreateVoiceConsentRequest` API schema.
-type CreateVoiceConsentRequest struct {
-	// Name The label to use for this consent recording.
-	Name string `json:"name"`
-	// Recording The consent audio recording file. Maximum size is 10 MiB.
-	//
-	// Supported MIME types:
-	// `audio/mpeg`, `audio/wav`, `audio/x-wav`, `audio/ogg`, `audio/aac`, `audio/flac`, `audio/webm`, `audio/mp4`.
-	Recording []byte `json:"recording"`
-	// Language The BCP 47 language tag for the consent phrase (for example, `en-US`).
-	Language string `json:"language"`
-}
-
 func (value *CreateVoiceConsentRequest) UnmarshalJSON(data []byte) error {
 	type CreateVoiceConsentRequestAlias CreateVoiceConsentRequest
 	var decoded CreateVoiceConsentRequestAlias
@@ -704,4 +581,128 @@ func (value *TranscriptTextUsageDuration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+// NewTranscriptTextUsageDuration returns a validated TranscriptTextUsageDuration built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewTranscriptTextUsageDuration(fields TranscriptTextUsageDuration) (*TranscriptTextUsageDuration, error) {
+	return ConstructModel(fields)
+}
+
+// TranscriptTextUsageDurationTypeEnum The type of the usage object. Always `duration` for this variant.
+type TranscriptTextUsageDurationTypeEnum string
+
+const (
+	TranscriptTextUsageDurationTypeEnumDuration TranscriptTextUsageDurationTypeEnum = "duration"
+)
+
+func (value *TranscriptTextUsageDurationTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "duration":
+		*value = TranscriptTextUsageDurationTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "TranscriptTextUsageDurationTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown TranscriptTextUsageDurationTypeEnum: %v", raw)}
+	}
+}
+
+// TranscriptTextUsageTokens Usage statistics for models billed by token usage.
+type TranscriptTextUsageTokens struct {
+	// Type The type of the usage object. Always `tokens` for this variant.
+	Type TranscriptTextUsageTokensTypeEnum `json:"type"`
+	// InputTokens Number of input tokens billed for this request.
+	InputTokens int64 `json:"input_tokens"`
+	// InputTokenDetails Details about the input tokens billed for this request.
+	InputTokenDetails *TranscriptTextUsageTokensInputTokenDetails `json:"input_token_details,omitempty"`
+	// OutputTokens Number of output tokens generated.
+	OutputTokens int64 `json:"output_tokens"`
+	// TotalTokens Total number of tokens used (input + output).
+	TotalTokens int64 `json:"total_tokens"`
+}
+
+func (value *TranscriptTextUsageTokens) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"tokens"}); err != nil {
+		return err
+	}
+	type TranscriptTextUsageTokensAlias TranscriptTextUsageTokens
+	var decoded TranscriptTextUsageTokensAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = TranscriptTextUsageTokens(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "input_tokens", "output_tokens", "total_tokens"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "input_tokens", "output_tokens", "total_tokens"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewTranscriptTextUsageTokens returns a validated TranscriptTextUsageTokens built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewTranscriptTextUsageTokens(fields TranscriptTextUsageTokens) (*TranscriptTextUsageTokens, error) {
+	return ConstructModel(fields)
+}
+
+// TranscriptTextUsageTokensTypeEnum The type of the usage object. Always `tokens` for this variant.
+type TranscriptTextUsageTokensTypeEnum string
+
+const (
+	TranscriptTextUsageTokensTypeEnumTokens TranscriptTextUsageTokensTypeEnum = "tokens"
+)
+
+func (value *TranscriptTextUsageTokensTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "tokens":
+		*value = TranscriptTextUsageTokensTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "TranscriptTextUsageTokensTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown TranscriptTextUsageTokensTypeEnum: %v", raw)}
+	}
+}
+
+// TranscriptTextUsageTokensInputTokenDetails Details about the input tokens billed for this request.
+type TranscriptTextUsageTokensInputTokenDetails struct {
+	// TextTokens Number of text tokens billed for this request.
+	TextTokens *int64 `json:"text_tokens,omitempty"`
+	// AudioTokens Number of audio tokens billed for this request.
+	AudioTokens *int64 `json:"audio_tokens,omitempty"`
+}
+
+// NewTranscriptTextUsageTokensInputTokenDetails returns a validated TranscriptTextUsageTokensInputTokenDetails built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewTranscriptTextUsageTokensInputTokenDetails(fields TranscriptTextUsageTokensInputTokenDetails) (*TranscriptTextUsageTokensInputTokenDetails, error) {
+	return ConstructModel(fields)
+}
+
+// TranscriptionDiarizedSegment A segment of diarized transcript text with speaker metadata.
+type TranscriptionDiarizedSegment struct {
+	// Type The type of the segment. Always `transcript.text.segment`.
+	Type TranscriptionDiarizedSegmentTypeEnum `json:"type"`
+	// Id Unique identifier for the segment.
+	Id string `json:"id"`
+	// Start Start timestamp of the segment in seconds.
+	Start float64 `json:"start"`
+	// End End timestamp of the segment in seconds.
+	End float64 `json:"end"`
+	// Text Transcript text for this segment.
+	Text string `json:"text"`
+	// Speaker Speaker label for this segment. When known speakers are provided, the label matches `known_speaker_names[]`. Otherwise speakers are labeled sequentially using capital letters (`A`, `B`, ...).
+	Speaker string `json:"speaker"`
 }

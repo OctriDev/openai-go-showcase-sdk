@@ -292,6 +292,54 @@ func (u *ToolChoiceParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ToolChoiceOptions
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ToolChoiceOptions = &lossless0
+			return nil
+		}
+		var lossless1 ToolChoiceAllowed
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ToolChoiceAllowed = &lossless1
+			return nil
+		}
+		var lossless2 ToolChoiceTypes
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ToolChoiceTypes = &lossless2
+			return nil
+		}
+		var lossless3 ToolChoiceFunction
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ToolChoiceFunction = &lossless3
+			return nil
+		}
+		var lossless4 ToolChoiceMCP
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ToolChoiceMCP = &lossless4
+			return nil
+		}
+		var lossless5 ToolChoiceCustom
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ToolChoiceCustom = &lossless5
+			return nil
+		}
+		var lossless6 SpecificProgrammaticToolCallingParam
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.SpecificProgrammaticToolCallingParam = &lossless6
+			return nil
+		}
+		var lossless7 SpecificApplyPatchParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.SpecificApplyPatchParam = &lossless7
+			return nil
+		}
+		var lossless8 SpecificFunctionShellParam
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.SpecificFunctionShellParam = &lossless8
+			return nil
+		}
+	}
 	var toolchoiceoptions ToolChoiceOptions
 	if err := json.Unmarshal(data, &toolchoiceoptions); err == nil && isNonEmptyToolChoiceParamToolChoiceOptions(toolchoiceoptions) {
 		u.ToolChoiceOptions = &toolchoiceoptions

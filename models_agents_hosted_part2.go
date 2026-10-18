@@ -8,6 +8,35 @@ import (
 	"fmt"
 )
 
+func (value *HostedSkillParamInline) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"inline"}); err != nil {
+		return err
+	}
+	type HostedSkillParamInlineAlias HostedSkillParamInline
+	var decoded HostedSkillParamInlineAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = HostedSkillParamInline(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "name", "description", "source"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "name", "description", "source"}); err != nil {
+		return err
+	}
+	if err := ValidateLength("name", value.Name, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](64)}); err != nil {
+		return err
+	}
+	if err := ValidateLength("description", value.Description, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
+		return err
+	}
+	return nil
+}
+
 // NewHostedSkillParamInline returns a validated HostedSkillParamInline built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
@@ -73,6 +102,19 @@ func (u *HostedSkillParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 HostedSkillParamSkillReference
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.HostedSkillParamSkillReference = &lossless0
+			return nil
+		}
+		var lossless1 HostedSkillParamInline
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.HostedSkillParamInline = &lossless1
+			return nil
 		}
 	}
 	var hostedskillparamskillreference HostedSkillParamSkillReference
@@ -429,6 +471,19 @@ func (u *HostedEnvironmentFileParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 HostedEnvironmentFileParamFileId
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.HostedEnvironmentFileParamFileId = &lossless0
+			return nil
+		}
+		var lossless1 HostedEnvironmentFileParamInline
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.HostedEnvironmentFileParamInline = &lossless1
+			return nil
+		}
+	}
 	var hostedenvironmentfileparamfileid HostedEnvironmentFileParamFileId
 	if err := json.Unmarshal(data, &hostedenvironmentfileparamfileid); err == nil && isNonEmptyHostedEnvironmentFileParamHostedEnvironmentFileParamFileId(hostedenvironmentfileparamfileid) {
 		u.HostedEnvironmentFileParamFileId = &hostedenvironmentfileparamfileid
@@ -615,92 +670,4 @@ type HostedTemplateSkillResource struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *HostedTemplateSkillResource) UnmarshalJSON(data []byte) error {
-	*u = HostedTemplateSkillResource{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "skill_reference":
-					var hostedtemplateskillresourceskillreference HostedTemplateSkillResourceSkillReference
-					if err := json.Unmarshal(data, &hostedtemplateskillresourceskillreference); err != nil {
-						return err
-					}
-					u.HostedTemplateSkillResourceSkillReference = &hostedtemplateskillresourceskillreference
-					return nil
-				case "inline":
-					var hostedtemplateskillresourceinline HostedTemplateSkillResourceInline
-					if err := json.Unmarshal(data, &hostedtemplateskillresourceinline); err != nil {
-						return err
-					}
-					u.HostedTemplateSkillResourceInline = &hostedtemplateskillresourceinline
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var hostedtemplateskillresourceskillreference HostedTemplateSkillResourceSkillReference
-	if err := json.Unmarshal(data, &hostedtemplateskillresourceskillreference); err == nil && isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceSkillReference(hostedtemplateskillresourceskillreference) {
-		u.HostedTemplateSkillResourceSkillReference = &hostedtemplateskillresourceskillreference
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var hostedtemplateskillresourceinline HostedTemplateSkillResourceInline
-	if err := json.Unmarshal(data, &hostedtemplateskillresourceinline); err == nil && isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceInline(hostedtemplateskillresourceinline) {
-		u.HostedTemplateSkillResourceInline = &hostedtemplateskillresourceinline
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u HostedTemplateSkillResource) MarshalJSON() ([]byte, error) {
-	if u.HostedTemplateSkillResourceSkillReference != nil {
-		return json.Marshal(u.HostedTemplateSkillResourceSkillReference)
-	}
-	if u.HostedTemplateSkillResourceInline != nil {
-		return json.Marshal(u.HostedTemplateSkillResourceInline)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceSkillReference(v HostedTemplateSkillResourceSkillReference) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceInline(v HostedTemplateSkillResourceInline) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalHostedTemplateSkillResource converts an untyped value to HostedTemplateSkillResource.
-func UnmarshalHostedTemplateSkillResource(v any) HostedTemplateSkillResource {
-	b, _ := json.Marshal(v)
-	var result HostedTemplateSkillResource
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// HostedTemplateFileResourceFileId A project-scoped Files API reference resolved separately for each session.
-type HostedTemplateFileResourceFileId struct {
-	// Type The type of the object. Always `file_id`.
-	Type HostedTemplateFileResourceFileIdTypeEnum `json:"type"`
-	// FileId The ID of the uploaded file.
-	FileId string `json:"file_id"`
-	// Path The file's absolute path inside the environment.
-	Path string `json:"path"`
 }

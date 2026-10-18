@@ -101,6 +101,19 @@ func (u *AutoCodeInterpreterToolParamNetworkPolicy) UnmarshalJSON(data []byte) e
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ContainerNetworkPolicyDisabledParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ContainerNetworkPolicyDisabledParam = &lossless0
+			return nil
+		}
+		var lossless1 ContainerNetworkPolicyAllowlistParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ContainerNetworkPolicyAllowlistParam = &lossless1
+			return nil
+		}
+	}
 	var containernetworkpolicydisabledparam ContainerNetworkPolicyDisabledParam
 	if err := json.Unmarshal(data, &containernetworkpolicydisabledparam); err == nil && isNonEmptyAutoCodeInterpreterToolParamNetworkPolicyContainerNetworkPolicyDisabledParam(containernetworkpolicydisabledparam) {
 		u.ContainerNetworkPolicyDisabledParam = &containernetworkpolicydisabledparam

@@ -14,6 +14,19 @@ type Content struct {
 func (u *Content) UnmarshalJSON(data []byte) error {
 	*u = Content{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputContent = &lossless0
+			return nil
+		}
+		var lossless1 OutputContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.OutputContent = &lossless1
+			return nil
+		}
+	}
 	var inputcontent InputContent
 	if err := json.Unmarshal(data, &inputcontent); err == nil && isNonEmptyContentInputContent(inputcontent) {
 		u.InputContent = &inputcontent

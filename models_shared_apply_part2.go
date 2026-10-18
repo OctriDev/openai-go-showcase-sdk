@@ -9,6 +9,27 @@ import (
 	"fmt"
 )
 
+func (u ApplyPatchOperationParam) MarshalJSON() ([]byte, error) {
+	if u.ApplyPatchCreateFileOperationParam != nil {
+		return json.Marshal(u.ApplyPatchCreateFileOperationParam)
+	}
+	if u.ApplyPatchDeleteFileOperationParam != nil {
+		return json.Marshal(u.ApplyPatchDeleteFileOperationParam)
+	}
+	if u.ApplyPatchUpdateFileOperationParam != nil {
+		return json.Marshal(u.ApplyPatchUpdateFileOperationParam)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyApplyPatchOperationParamApplyPatchCreateFileOperationParam(v ApplyPatchCreateFileOperationParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
 func isNonEmptyApplyPatchOperationParamApplyPatchDeleteFileOperationParam(v ApplyPatchDeleteFileOperationParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
@@ -235,6 +256,24 @@ func (u *ApplyPatchToolCallOperation) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ApplyPatchCreateFileOperation
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ApplyPatchCreateFileOperation = &lossless0
+			return nil
+		}
+		var lossless1 ApplyPatchDeleteFileOperation
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ApplyPatchDeleteFileOperation = &lossless1
+			return nil
+		}
+		var lossless2 ApplyPatchUpdateFileOperation
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ApplyPatchUpdateFileOperation = &lossless2
+			return nil
 		}
 	}
 	var applypatchcreatefileoperation ApplyPatchCreateFileOperation

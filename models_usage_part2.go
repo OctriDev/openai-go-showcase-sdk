@@ -470,6 +470,64 @@ func (u *UsageTimeBucketResultsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 UsageCompletionsResult
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.UsageCompletionsResult = &lossless0
+			return nil
+		}
+		var lossless1 UsageEmbeddingsResult
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.UsageEmbeddingsResult = &lossless1
+			return nil
+		}
+		var lossless2 UsageModerationsResult
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.UsageModerationsResult = &lossless2
+			return nil
+		}
+		var lossless3 UsageImagesResult
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.UsageImagesResult = &lossless3
+			return nil
+		}
+		var lossless4 UsageAudioSpeechesResult
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.UsageAudioSpeechesResult = &lossless4
+			return nil
+		}
+		var lossless5 UsageAudioTranscriptionsResult
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.UsageAudioTranscriptionsResult = &lossless5
+			return nil
+		}
+		var lossless6 UsageVectorStoresResult
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.UsageVectorStoresResult = &lossless6
+			return nil
+		}
+		var lossless7 UsageCodeInterpreterSessionsResult
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.UsageCodeInterpreterSessionsResult = &lossless7
+			return nil
+		}
+		var lossless8 UsageFileSearchCallsResult
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.UsageFileSearchCallsResult = &lossless8
+			return nil
+		}
+		var lossless9 UsageWebSearchCallsResult
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.UsageWebSearchCallsResult = &lossless9
+			return nil
+		}
+		var lossless10 CostsResult
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.CostsResult = &lossless10
+			return nil
+		}
+	}
 	var usagecompletionsresult UsageCompletionsResult
 	if err := json.Unmarshal(data, &usagecompletionsresult); err == nil && isNonEmptyUsageTimeBucketResultsItemUsageCompletionsResult(usagecompletionsresult) {
 		u.UsageCompletionsResult = &usagecompletionsresult

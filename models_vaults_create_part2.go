@@ -5,6 +5,37 @@ package sdk
 
 import "encoding/json"
 
+func (u CreateVaultCredentialAuthParam) MarshalJSON() ([]byte, error) {
+	if u.CreateVaultCredentialAuthParamMcpOauth != nil {
+		return json.Marshal(u.CreateVaultCredentialAuthParamMcpOauth)
+	}
+	if u.CreateVaultCredentialAuthParamStaticBearer != nil {
+		return json.Marshal(u.CreateVaultCredentialAuthParamStaticBearer)
+	}
+	if u.CreateVaultCredentialAuthParamEnvironmentVariable != nil {
+		return json.Marshal(u.CreateVaultCredentialAuthParamEnvironmentVariable)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateVaultCredentialAuthParamCreateVaultCredentialAuthParamMcpOauth(v CreateVaultCredentialAuthParamMcpOauth) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateVaultCredentialAuthParamCreateVaultCredentialAuthParamStaticBearer(v CreateVaultCredentialAuthParamStaticBearer) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateVaultCredentialAuthParamCreateVaultCredentialAuthParamEnvironmentVariable(v CreateVaultCredentialAuthParamEnvironmentVariable) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
 // UnmarshalCreateVaultCredentialAuthParam converts an untyped value to CreateVaultCredentialAuthParam.
 func UnmarshalCreateVaultCredentialAuthParam(v any) CreateVaultCredentialAuthParam {
 	b, _ := json.Marshal(v)

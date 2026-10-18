@@ -635,6 +635,19 @@ func (u *BetaCustomToolParamFormat) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaCustomTextFormatParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaCustomTextFormatParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaCustomGrammarFormatParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaCustomGrammarFormatParam = &lossless1
+			return nil
+		}
+	}
 	var betacustomtextformatparam BetaCustomTextFormatParam
 	if err := json.Unmarshal(data, &betacustomtextformatparam); err == nil && isNonEmptyBetaCustomToolParamFormatBetaCustomTextFormatParam(betacustomtextformatparam) {
 		u.BetaCustomTextFormatParam = &betacustomtextformatparam

@@ -246,6 +246,19 @@ func (u *ChatCompletionRequestAssistantMessageContentPart) UnmarshalJSON(data []
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionRequestMessageContentPartText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionRequestMessageContentPartText = &lossless0
+			return nil
+		}
+		var lossless1 ChatCompletionRequestMessageContentPartRefusal
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ChatCompletionRequestMessageContentPartRefusal = &lossless1
+			return nil
+		}
+	}
 	var chatcompletionrequestmessagecontentparttext ChatCompletionRequestMessageContentPartText
 	if err := json.Unmarshal(data, &chatcompletionrequestmessagecontentparttext); err == nil && isNonEmptyChatCompletionRequestAssistantMessageContentPartChatCompletionRequestMessageContentPartText(chatcompletionrequestmessagecontentparttext) {
 		u.ChatCompletionRequestMessageContentPartText = &chatcompletionrequestmessagecontentparttext
@@ -536,6 +549,39 @@ func (u *ChatCompletionRequestMessage) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionRequestDeveloperMessage
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionRequestDeveloperMessage = &lossless0
+			return nil
+		}
+		var lossless1 ChatCompletionRequestSystemMessage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ChatCompletionRequestSystemMessage = &lossless1
+			return nil
+		}
+		var lossless2 ChatCompletionRequestUserMessage
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ChatCompletionRequestUserMessage = &lossless2
+			return nil
+		}
+		var lossless3 ChatCompletionRequestAssistantMessage
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ChatCompletionRequestAssistantMessage = &lossless3
+			return nil
+		}
+		var lossless4 ChatCompletionRequestToolMessage
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ChatCompletionRequestToolMessage = &lossless4
+			return nil
+		}
+		var lossless5 ChatCompletionRequestFunctionMessage
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ChatCompletionRequestFunctionMessage = &lossless5
+			return nil
+		}
+	}
 	var chatcompletionrequestdevelopermessage ChatCompletionRequestDeveloperMessage
 	if err := json.Unmarshal(data, &chatcompletionrequestdevelopermessage); err == nil && isNonEmptyChatCompletionRequestMessageChatCompletionRequestDeveloperMessage(chatcompletionrequestdevelopermessage) {
 		u.ChatCompletionRequestDeveloperMessage = &chatcompletionrequestdevelopermessage
@@ -652,55 +698,4 @@ type ChatCompletionRequestMessageContentPartAudio struct {
 	InputAudio ChatCompletionRequestMessageContentPartAudioInputAudio `json:"input_audio"`
 	// PromptCacheBreakpoint Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
 	PromptCacheBreakpoint *PromptCacheBreakpointParam `json:"prompt_cache_breakpoint,omitempty"`
-}
-
-func (value *ChatCompletionRequestMessageContentPartAudio) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"input_audio"}); err != nil {
-		return err
-	}
-	type ChatCompletionRequestMessageContentPartAudioAlias ChatCompletionRequestMessageContentPartAudio
-	var decoded ChatCompletionRequestMessageContentPartAudioAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ChatCompletionRequestMessageContentPartAudio(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "input_audio"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "input_audio"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewChatCompletionRequestMessageContentPartAudio returns a validated ChatCompletionRequestMessageContentPartAudio built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewChatCompletionRequestMessageContentPartAudio(fields ChatCompletionRequestMessageContentPartAudio) (*ChatCompletionRequestMessageContentPartAudio, error) {
-	return ConstructModel(fields)
-}
-
-// ChatCompletionRequestMessageContentPartAudioTypeEnum The type of the content part. Always `input_audio`.
-type ChatCompletionRequestMessageContentPartAudioTypeEnum string
-
-const (
-	ChatCompletionRequestMessageContentPartAudioTypeEnumInputAudio ChatCompletionRequestMessageContentPartAudioTypeEnum = "input_audio"
-)
-
-func (value *ChatCompletionRequestMessageContentPartAudioTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "input_audio":
-		*value = ChatCompletionRequestMessageContentPartAudioTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "ChatCompletionRequestMessageContentPartAudioTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown ChatCompletionRequestMessageContentPartAudioTypeEnum: %v", raw)}
-	}
 }

@@ -3,7 +3,10 @@
 
 package sdk
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // ThreadObject Represents a thread that contains [messages](https://developers.openai.com/api/docs/assistants/migration).
 type ThreadObject struct {
@@ -137,26 +140,30 @@ func NewThreadObjectToolResourcesFileSearch(fields ThreadObjectToolResourcesFile
 	return ConstructModel(fields)
 }
 
-// ThreadStreamEventVariant0 Occurs when a new [thread](https://developers.openai.com/api/docs/assistants/migration) is created.
-type ThreadStreamEventVariant0 struct {
+// ThreadStreamEvent Occurs when a new [thread](https://developers.openai.com/api/docs/assistants/migration) is created.
+type ThreadStreamEvent struct {
 	// Enabled Whether to enable input audio transcription.
-	Enabled *bool                              `json:"enabled,omitempty"`
-	Event   ThreadStreamEventVariant0EventEnum `json:"event"`
+	Enabled *bool `json:"enabled,omitempty"`
+	// Event Required enumerated value serialized in the `event` wire field.
+	Event ThreadStreamEventEventEnum `json:"event"`
 	// Data Represents a thread that contains [messages](https://developers.openai.com/api/docs/assistants/migration).
 	Data ThreadObject `json:"data"`
 }
 
-func (value *ThreadStreamEventVariant0) UnmarshalJSON(data []byte) error {
-	type ThreadStreamEventVariant0Alias ThreadStreamEventVariant0
-	var decoded ThreadStreamEventVariant0Alias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ThreadStreamEventVariant0(decoded)
+func (value *ThreadStreamEvent) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
+	if err := ValidateRawEnum("event", rawFields["event"], []string{"thread.created"}); err != nil {
+		return err
+	}
+	type ThreadStreamEventAlias ThreadStreamEvent
+	var decoded ThreadStreamEventAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ThreadStreamEvent(decoded)
 	if err := ValidateRequired(rawFields, []string{"event", "data"}); err != nil {
 		return err
 	}
@@ -166,53 +173,30 @@ func (value *ThreadStreamEventVariant0) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// NewThreadStreamEventVariant0 returns a validated ThreadStreamEventVariant0 built from named fields.
+// NewThreadStreamEvent returns a validated ThreadStreamEvent built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewThreadStreamEventVariant0(fields ThreadStreamEventVariant0) (*ThreadStreamEventVariant0, error) {
+func NewThreadStreamEvent(fields ThreadStreamEvent) (*ThreadStreamEvent, error) {
 	return ConstructModel(fields)
 }
 
-type ThreadStreamEventVariant0EventEnum string
+// ThreadStreamEventEventEnum Required enumerated value serialized in the `event` wire field.
+type ThreadStreamEventEventEnum string
 
 const (
-	ThreadStreamEventVariant0EventEnumThreadCreated ThreadStreamEventVariant0EventEnum = "thread.created"
+	ThreadStreamEventEventEnumThreadCreated ThreadStreamEventEventEnum = "thread.created"
 )
 
-// ThreadStreamEvent represents a union type.
-type ThreadStreamEvent struct {
-	ThreadStreamEventVariant0 *ThreadStreamEventVariant0
-}
-
-func (u *ThreadStreamEvent) UnmarshalJSON(data []byte) error {
-	*u = ThreadStreamEvent{}
-	var refusal error
-	var threadstreameventvariant0 ThreadStreamEventVariant0
-	if err := json.Unmarshal(data, &threadstreameventvariant0); err == nil && isNonEmptyThreadStreamEventThreadStreamEventVariant0(threadstreameventvariant0) {
-		u.ThreadStreamEventVariant0 = &threadstreameventvariant0
+func (value *ThreadStreamEventEventEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "thread.created":
+		*value = ThreadStreamEventEventEnum(raw)
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
+	default:
+		return &SdkValidationError{Field: "ThreadStreamEventEventEnum", Code: "enum", Message: fmt.Sprintf("unknown ThreadStreamEventEventEnum: %v", raw)}
 	}
-	return refusal
-}
-
-func (u ThreadStreamEvent) MarshalJSON() ([]byte, error) {
-	if u.ThreadStreamEventVariant0 != nil {
-		return json.Marshal(u.ThreadStreamEventVariant0)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyThreadStreamEventThreadStreamEventVariant0(v ThreadStreamEventVariant0) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalThreadStreamEvent converts an untyped value to ThreadStreamEvent.
-func UnmarshalThreadStreamEvent(v any) ThreadStreamEvent {
-	b, _ := json.Marshal(v)
-	var result ThreadStreamEvent
-	_ = json.Unmarshal(b, &result)
-	return result
 }

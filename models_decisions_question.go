@@ -272,6 +272,24 @@ func (u *QuestionParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 QuestionParamPredicate
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.QuestionParamPredicate = &lossless0
+			return nil
+		}
+		var lossless1 QuestionParamChoice
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.QuestionParamChoice = &lossless1
+			return nil
+		}
+		var lossless2 QuestionParamScore
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.QuestionParamScore = &lossless2
+			return nil
+		}
+	}
 	var questionparampredicate QuestionParamPredicate
 	if err := json.Unmarshal(data, &questionparampredicate); err == nil && isNonEmptyQuestionParamQuestionParamPredicate(questionparampredicate) {
 		u.QuestionParamPredicate = &questionparampredicate

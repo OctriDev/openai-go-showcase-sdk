@@ -75,53 +75,6 @@ func (value *BetaCodeInterpreterToolTypeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// BetaCodeInterpreterToolContainer represents a union type.
-type BetaCodeInterpreterToolContainer struct {
-	String                           *string
-	BetaAutoCodeInterpreterToolParam *BetaAutoCodeInterpreterToolParam
-}
-
-func (u *BetaCodeInterpreterToolContainer) UnmarshalJSON(data []byte) error {
-	*u = BetaCodeInterpreterToolContainer{}
-	var refusal error
-	var s string
-	if err := json.Unmarshal(data, &s); err == nil {
-		u.String = &s
-		return nil
-	}
-	var betaautocodeinterpretertoolparam BetaAutoCodeInterpreterToolParam
-	if err := json.Unmarshal(data, &betaautocodeinterpretertoolparam); err == nil && isNonEmptyBetaCodeInterpreterToolContainerBetaAutoCodeInterpreterToolParam(betaautocodeinterpretertoolparam) {
-		u.BetaAutoCodeInterpreterToolParam = &betaautocodeinterpretertoolparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u BetaCodeInterpreterToolContainer) MarshalJSON() ([]byte, error) {
-	if u.String != nil {
-		return json.Marshal(u.String)
-	}
-	if u.BetaAutoCodeInterpreterToolParam != nil {
-		return json.Marshal(u.BetaAutoCodeInterpreterToolParam)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyBetaCodeInterpreterToolContainerBetaAutoCodeInterpreterToolParam(v BetaAutoCodeInterpreterToolParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalBetaCodeInterpreterToolContainer converts an untyped value to BetaCodeInterpreterToolContainer.
-func UnmarshalBetaCodeInterpreterToolContainer(v any) BetaCodeInterpreterToolContainer {
-	b, _ := json.Marshal(v)
-	var result BetaCodeInterpreterToolContainer
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
 // BetaCodeInterpreterToolCall A tool call to run code.
 type BetaCodeInterpreterToolCall struct {
 	// Agent The agent that produced this item.
@@ -327,6 +280,53 @@ func (value *BetaCodeInterpreterOutputLogsTypeEnum) UnmarshalJSON(data []byte) e
 	}
 }
 
+// BetaCodeInterpreterToolContainer represents a union type.
+type BetaCodeInterpreterToolContainer struct {
+	String                           *string
+	BetaAutoCodeInterpreterToolParam *BetaAutoCodeInterpreterToolParam
+}
+
+func (u *BetaCodeInterpreterToolContainer) UnmarshalJSON(data []byte) error {
+	*u = BetaCodeInterpreterToolContainer{}
+	var refusal error
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		u.String = &s
+		return nil
+	}
+	var betaautocodeinterpretertoolparam BetaAutoCodeInterpreterToolParam
+	if err := json.Unmarshal(data, &betaautocodeinterpretertoolparam); err == nil && isNonEmptyBetaCodeInterpreterToolContainerBetaAutoCodeInterpreterToolParam(betaautocodeinterpretertoolparam) {
+		u.BetaAutoCodeInterpreterToolParam = &betaautocodeinterpretertoolparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u BetaCodeInterpreterToolContainer) MarshalJSON() ([]byte, error) {
+	if u.String != nil {
+		return json.Marshal(u.String)
+	}
+	if u.BetaAutoCodeInterpreterToolParam != nil {
+		return json.Marshal(u.BetaAutoCodeInterpreterToolParam)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyBetaCodeInterpreterToolContainerBetaAutoCodeInterpreterToolParam(v BetaAutoCodeInterpreterToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaCodeInterpreterToolContainer converts an untyped value to BetaCodeInterpreterToolContainer.
+func UnmarshalBetaCodeInterpreterToolContainer(v any) BetaCodeInterpreterToolContainer {
+	b, _ := json.Marshal(v)
+	var result BetaCodeInterpreterToolContainer
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
 // BetaCodeInterpreterToolCallOutputsItem represents a union type.
 type BetaCodeInterpreterToolCallOutputsItem struct {
 	BetaCodeInterpreterOutputLogs  *BetaCodeInterpreterOutputLogs
@@ -364,6 +364,19 @@ func (u *BetaCodeInterpreterToolCallOutputsItem) UnmarshalJSON(data []byte) erro
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaCodeInterpreterOutputLogs
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaCodeInterpreterOutputLogs = &lossless0
+			return nil
+		}
+		var lossless1 BetaCodeInterpreterOutputImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaCodeInterpreterOutputImage = &lossless1
+			return nil
 		}
 	}
 	var betacodeinterpreteroutputlogs BetaCodeInterpreterOutputLogs

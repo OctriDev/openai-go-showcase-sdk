@@ -5,6 +5,20 @@ package sdk
 
 import "context"
 
+// GetRun retrieves a run associated with a thread. Use the thread and run IDs to inspect the run’s current status, timestamps, and any required action or error.
+//
+// Retrieves a run.
+//
+// Parameters:
+//
+//	threadId: The ID of the
+//	[thread](https://developers.openai.com/api/docs/assistants/migration) that
+//	was run.
+//	runId: The ID of the run to retrieve.
+func (sdk *AssistantsNamespace) GetRun(ctx context.Context, params GetRunParams, opts ...RequestOption) (*RunObject, error) {
+	return GetRun(ctx, sdk.config, params, opts...)
+}
+
 // ModifyRun updates the metadata attached to a run. Send the key-value pairs you want associated with the run; the metadata object supports up to 16 pairs, with string values and keys of up to 64 characters.
 //
 // Modifies a run.
@@ -64,6 +78,36 @@ func (sdk *AssistantsNamespace) CancelRun(ctx context.Context, params CancelRunP
 //	ch#retrieval-customization) for more information.
 func (sdk *AssistantsNamespace) ListRunSteps(ctx context.Context, params ListRunStepsParams, opts ...RequestOption) (*ListRunStepsResponse, error) {
 	return ListRunSteps(ctx, sdk.config, params, opts...)
+}
+
+// ListRunStepsPaginated lists the steps belonging to a run on a thread. Use cursor parameters to page through the steps, and set `order` to control their order by creation time.
+//
+// Returns a list of run steps belonging to a run.
+//
+// Parameters:
+//
+//	threadId: The ID of the thread the run and run steps belong to.
+//	runId: The ID of the run the run steps belong to.
+//	limit: A limit on the number of objects to be returned. Limit can range
+//	between 1 and 100, and the default is 20.
+//	order: Sort order by the `created_at` timestamp of the objects. `asc` for
+//	ascending order and `desc` for descending order.
+//	after: A cursor for use in pagination. `after` is an object ID that defines
+//	your place in the list. For instance, if you make a list request and receive
+//	100 objects, ending with obj_foo, your subsequent call can include
+//	after=obj_foo in order to fetch the next page of the list.
+//	before: A cursor for use in pagination. `before` is an object ID that
+//	defines your place in the list. For instance, if you make a list request and
+//	receive 100 objects, starting with obj_foo, your subsequent call can include
+//	before=obj_foo in order to fetch the previous page of the list.
+//	include: A list of additional fields to include in the response. Currently
+//	the only supported value is
+//	`step_details.tool_calls[*].file_search.results[*].content` to fetch the
+//	file search result content. See the [file search tool
+//	documentation](https://developers.openai.com/api/docs/guides/tools-file-sear
+//	ch#retrieval-customization) for more information.
+func (sdk *AssistantsNamespace) ListRunStepsPaginated(ctx context.Context, params ListRunStepsParams, yield func(*RunStepObject) bool, opts ...RequestOption) error {
+	return ListRunStepsPaginated(ctx, sdk.config, params, yield, opts...)
 }
 
 // GetRunStep retrieves a specific step from a run on a thread. Use `include[]` to request file search result content when the step contains file search tool calls.
@@ -183,7 +227,7 @@ func (sdk *AudioNamespace) CreateSpeech(ctx context.Context, params CreateSpeech
 //	`4.0`. `1.0` is the default.
 //	streamFormat: The format to stream the audio in. Supported formats are `sse`
 //	and `audio`. `sse` is not supported for `tts-1` or `tts-1-hd`.
-func (sdk *AudioNamespace) CreateSpeechStream(ctx context.Context, model string, input string, voice any, instructions *string, responseFormat *string, speed *float64, streamFormat *string, opts ...RequestOption) (<-chan CreateSpeechResponseStreamEvent, <-chan error) {
+func (sdk *AudioNamespace) CreateSpeechStream(ctx context.Context, model string, input string, voice CreateSpeechRequestVoice, instructions *string, responseFormat *string, speed *float64, streamFormat *string, opts ...RequestOption) (<-chan CreateSpeechResponseStreamEvent, <-chan error) {
 	return CreateSpeechStream(ctx, sdk.config, model, input, voice, instructions, responseFormat, speed, streamFormat, opts...)
 }
 
@@ -254,7 +298,7 @@ func (sdk *AudioNamespace) CreateSpeechStream(ctx context.Context, model string,
 //	URLs)) that contain known speaker references matching
 //	`known_speaker_names[]`. Each sample must be between 2 and 10 seconds, and
 //	can use any of the same input audio formats supported by `file`.
-func (sdk *AudioNamespace) CreateTranscription(ctx context.Context, params CreateTranscriptionParams, opts ...RequestOption) (any, error) {
+func (sdk *AudioNamespace) CreateTranscription(ctx context.Context, params CreateTranscriptionParams, opts ...RequestOption) (*CreateTranscriptionResponse, error) {
 	return CreateTranscription(ctx, sdk.config, params, opts...)
 }
 
@@ -325,7 +369,7 @@ func (sdk *AudioNamespace) CreateTranscription(ctx context.Context, params Creat
 //	URLs)) that contain known speaker references matching
 //	`known_speaker_names[]`. Each sample must be between 2 and 10 seconds, and
 //	can use any of the same input audio formats supported by `file`.
-func (sdk *AudioNamespace) CreateTranscriptionStream(ctx context.Context, file UploadFile, model string, stream NullableValue[bool], language *string, languages *[]string, keywords *[]string, prompt *string, responseFormat *AudioResponseFormat, temperature *float64, include *[]TranscriptionInclude, timestampGranularities *[]string, chunkingStrategy *any, knownSpeakerNames *[]string, knownSpeakerReferences *[]string, opts ...RequestOption) (<-chan CreateTranscriptionResponseStreamEvent, <-chan error) {
+func (sdk *AudioNamespace) CreateTranscriptionStream(ctx context.Context, file UploadFile, model string, stream NullableValue[bool], language *string, languages *[]string, keywords *[]string, prompt *string, responseFormat *AudioResponseFormat, temperature *float64, include *[]TranscriptionInclude, timestampGranularities *[]string, chunkingStrategy *NullableValue[CreateTranscriptionRequestChunkingStrategy], knownSpeakerNames *[]string, knownSpeakerReferences *[]string, opts ...RequestOption) (<-chan CreateTranscriptionResponseStreamEvent, <-chan error) {
 	return CreateTranscriptionStream(ctx, sdk.config, file, model, stream, language, languages, keywords, prompt, responseFormat, temperature, include, timestampGranularities, chunkingStrategy, knownSpeakerNames, knownSpeakerReferences, opts...)
 }
 
@@ -352,7 +396,7 @@ func (sdk *AudioNamespace) CreateTranscriptionStream(ctx context.Context, file U
 //	it more focused and deterministic. If set to 0, the model will use [log
 //	probability](https://en.wikipedia.org/wiki/Log_probability) to automatically
 //	increase the temperature until certain thresholds are hit.
-func (sdk *AudioNamespace) CreateTranslation(ctx context.Context, params CreateTranslationParams, opts ...RequestOption) (any, error) {
+func (sdk *AudioNamespace) CreateTranslation(ctx context.Context, params CreateTranslationParams, opts ...RequestOption) (*CreateTranslationResponse, error) {
 	return CreateTranslation(ctx, sdk.config, params, opts...)
 }
 

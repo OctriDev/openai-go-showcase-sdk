@@ -454,6 +454,29 @@ func (u *CreateExternalStorageBodyProvider) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AwsExternalStorageProviderParams
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AwsExternalStorageProviderParams = &lossless0
+			return nil
+		}
+		var lossless1 AzureExternalStorageProviderParams
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AzureExternalStorageProviderParams = &lossless1
+			return nil
+		}
+		var lossless2 GcpExternalStorageProviderParams
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.GcpExternalStorageProviderParams = &lossless2
+			return nil
+		}
+		var lossless3 OciExternalStorageProviderParams
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.OciExternalStorageProviderParams = &lossless3
+			return nil
+		}
+	}
 	var awsexternalstorageproviderparams AwsExternalStorageProviderParams
 	if err := json.Unmarshal(data, &awsexternalstorageproviderparams); err == nil && isNonEmptyCreateExternalStorageBodyProviderAwsExternalStorageProviderParams(awsexternalstorageproviderparams) {
 		u.AwsExternalStorageProviderParams = &awsexternalstorageproviderparams

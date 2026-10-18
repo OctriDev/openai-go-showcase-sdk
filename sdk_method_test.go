@@ -692,6 +692,8 @@ func sdkMethodByName(name string) any {
 		return SearchVectorStore
 	case "SubmitAssistantsToolOutputsToRun":
 		return SubmitAssistantsToolOutputsToRun
+	case "SubmitAssistantsToolOutputsToRunStream":
+		return SubmitAssistantsToolOutputsToRunStream
 	case "TestWebhookEndpoint":
 		return TestWebhookEndpoint
 	case "UnassignGroupRole":

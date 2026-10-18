@@ -5,6 +5,26 @@ package sdk
 
 import "encoding/json"
 
+// NewRealtimeTurnDetectionVariant0 returns a validated RealtimeTurnDetectionVariant0 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeTurnDetectionVariant0(fields RealtimeTurnDetectionVariant0) (*RealtimeTurnDetectionVariant0, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeTurnDetectionVariant1 Server-side semantic turn detection which uses a model to determine when the user has finished speaking.
+type RealtimeTurnDetectionVariant1 struct {
+	// Type Type of turn detection, `semantic_vad` to turn on Semantic VAD.
+	Type string `json:"type"`
+	// Eagerness Used only for `semantic_vad` mode. The eagerness of the model to respond. `low` will wait longer for the user to continue speaking, `high` will respond more quickly. `auto` is the default and is equivalent to `medium`. `low`, `medium`, and `high` have max timeouts of 8s, 4s, and 2s respectively.
+	Eagerness *RealtimeTurnDetectionVariant1EagernessEnum `json:"eagerness,omitempty"`
+	// CreateResponse Whether or not to automatically generate a response when a VAD stop event occurs.
+	CreateResponse *bool `json:"create_response,omitempty"`
+	// InterruptResponse Whether or not to automatically interrupt any ongoing response with output to the default
+	// conversation (i.e. `conversation` of `auto`) when a VAD start event occurs.
+	InterruptResponse *bool `json:"interrupt_response,omitempty"`
+}
+
 func (value *RealtimeTurnDetectionVariant1) UnmarshalJSON(data []byte) error {
 	type RealtimeTurnDetectionVariant1Alias RealtimeTurnDetectionVariant1
 	var decoded RealtimeTurnDetectionVariant1Alias
@@ -79,6 +99,19 @@ func (u *RealtimeTurnDetection) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeTurnDetectionVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeTurnDetectionVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeTurnDetectionVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeTurnDetectionVariant1 = &lossless1
+			return nil
 		}
 	}
 	var realtimeturndetectionvariant0 RealtimeTurnDetectionVariant0

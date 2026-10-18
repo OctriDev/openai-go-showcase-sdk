@@ -173,6 +173,19 @@ type BetaMCPToolAllowedTools struct {
 func (u *BetaMCPToolAllowedTools) UnmarshalJSON(data []byte) error {
 	*u = BetaMCPToolAllowedTools{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 []string
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ListOfString = &lossless0
+			return nil
+		}
+		var lossless1 BetaMCPToolFilter
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaMCPToolFilter = &lossless1
+			return nil
+		}
+	}
 	var listofstring []string
 	if err := json.Unmarshal(data, &listofstring); err == nil && isNonEmptyBetaMCPToolAllowedToolsListOfString(listofstring) {
 		u.ListOfString = &listofstring
@@ -214,87 +227,6 @@ func isNonEmptyBetaMCPToolAllowedToolsBetaMCPToolFilter(v BetaMCPToolFilter) boo
 func UnmarshalBetaMCPToolAllowedTools(v any) BetaMCPToolAllowedTools {
 	b, _ := json.Marshal(v)
 	var result BetaMCPToolAllowedTools
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// BetaMCPToolRequireApprovalVariant0 Specify which of the MCP server's tools require approval. Can be
-// `always`, `never`, or a filter object associated with tools
-// that require approval.
-type BetaMCPToolRequireApprovalVariant0 struct {
-	// Always A filter object to specify which tools are allowed.
-	Always *BetaMCPToolFilter `json:"always,omitempty"`
-	// Never A filter object to specify which tools are allowed.
-	Never *BetaMCPToolFilter `json:"never,omitempty"`
-}
-
-// NewBetaMCPToolRequireApprovalVariant0 returns a validated BetaMCPToolRequireApprovalVariant0 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaMCPToolRequireApprovalVariant0(fields BetaMCPToolRequireApprovalVariant0) (*BetaMCPToolRequireApprovalVariant0, error) {
-	return ConstructModel(fields)
-}
-
-// BetaMCPToolRequireApprovalVariant1Enum Specify a single approval policy for all tools. One of `always` or
-// `never`. When set to `always`, all tools will require approval. When
-// set to `never`, all tools will not require approval.
-type BetaMCPToolRequireApprovalVariant1Enum string
-
-const (
-	BetaMCPToolRequireApprovalVariant1EnumAlways BetaMCPToolRequireApprovalVariant1Enum = "always"
-	BetaMCPToolRequireApprovalVariant1EnumNever  BetaMCPToolRequireApprovalVariant1Enum = "never"
-)
-
-// BetaMCPToolRequireApproval represents a union type.
-type BetaMCPToolRequireApproval struct {
-	BetaMCPToolRequireApprovalVariant0     *BetaMCPToolRequireApprovalVariant0
-	BetaMCPToolRequireApprovalVariant1Enum *BetaMCPToolRequireApprovalVariant1Enum
-}
-
-func (u *BetaMCPToolRequireApproval) UnmarshalJSON(data []byte) error {
-	*u = BetaMCPToolRequireApproval{}
-	var refusal error
-	var betamcptoolrequireapprovalvariant0 BetaMCPToolRequireApprovalVariant0
-	if err := json.Unmarshal(data, &betamcptoolrequireapprovalvariant0); err == nil && isNonEmptyBetaMCPToolRequireApprovalBetaMCPToolRequireApprovalVariant0(betamcptoolrequireapprovalvariant0) {
-		u.BetaMCPToolRequireApprovalVariant0 = &betamcptoolrequireapprovalvariant0
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betamcptoolrequireapprovalvariant1enum BetaMCPToolRequireApprovalVariant1Enum
-	if err := json.Unmarshal(data, &betamcptoolrequireapprovalvariant1enum); err == nil && isNonEmptyBetaMCPToolRequireApprovalBetaMCPToolRequireApprovalVariant1Enum(betamcptoolrequireapprovalvariant1enum) {
-		u.BetaMCPToolRequireApprovalVariant1Enum = &betamcptoolrequireapprovalvariant1enum
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u BetaMCPToolRequireApproval) MarshalJSON() ([]byte, error) {
-	if u.BetaMCPToolRequireApprovalVariant0 != nil {
-		return json.Marshal(u.BetaMCPToolRequireApprovalVariant0)
-	}
-	if u.BetaMCPToolRequireApprovalVariant1Enum != nil {
-		return json.Marshal(u.BetaMCPToolRequireApprovalVariant1Enum)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyBetaMCPToolRequireApprovalBetaMCPToolRequireApprovalVariant0(v BetaMCPToolRequireApprovalVariant0) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaMCPToolRequireApprovalBetaMCPToolRequireApprovalVariant1Enum(v BetaMCPToolRequireApprovalVariant1Enum) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalBetaMCPToolRequireApproval converts an untyped value to BetaMCPToolRequireApproval.
-func UnmarshalBetaMCPToolRequireApproval(v any) BetaMCPToolRequireApproval {
-	b, _ := json.Marshal(v)
-	var result BetaMCPToolRequireApproval
 	_ = json.Unmarshal(b, &result)
 	return result
 }
@@ -461,6 +393,24 @@ func (u *BetaMCPToolCallError) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaMCPProtocolError
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaMCPProtocolError = &lossless0
+			return nil
+		}
+		var lossless1 BetaMCPToolExecutionError
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaMCPToolExecutionError = &lossless1
+			return nil
+		}
+		var lossless2 BetaHTTPError
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaHTTPError = &lossless2
+			return nil
+		}
+	}
 	var betamcpprotocolerror BetaMCPProtocolError
 	if err := json.Unmarshal(data, &betamcpprotocolerror); err == nil && isNonEmptyBetaMCPToolCallErrorBetaMCPProtocolError(betamcpprotocolerror) {
 		u.BetaMCPProtocolError = &betamcpprotocolerror
@@ -581,4 +531,78 @@ func (value *BetaMCPToolExecutionErrorTypeEnum) UnmarshalJSON(data []byte) error
 	default:
 		return &SdkValidationError{Field: "BetaMCPToolExecutionErrorTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaMCPToolExecutionErrorTypeEnum: %v", raw)}
 	}
+}
+
+// BetaMCPToolRequireApprovalVariant1Enum Specify a single approval policy for all tools. One of `always` or
+// `never`. When set to `always`, all tools will require approval. When
+// set to `never`, all tools will not require approval.
+type BetaMCPToolRequireApprovalVariant1Enum string
+
+const (
+	BetaMCPToolRequireApprovalVariant1EnumAlways BetaMCPToolRequireApprovalVariant1Enum = "always"
+	BetaMCPToolRequireApprovalVariant1EnumNever  BetaMCPToolRequireApprovalVariant1Enum = "never"
+)
+
+// BetaMCPToolRequireApprovalVariant0 Specify which of the MCP server's tools require approval. Can be
+// `always`, `never`, or a filter object associated with tools
+// that require approval.
+type BetaMCPToolRequireApprovalVariant0 struct {
+	// Always A filter object to specify which tools are allowed.
+	Always *BetaMCPToolFilter `json:"always,omitempty"`
+	// Never A filter object to specify which tools are allowed.
+	Never *BetaMCPToolFilter `json:"never,omitempty"`
+}
+
+// NewBetaMCPToolRequireApprovalVariant0 returns a validated BetaMCPToolRequireApprovalVariant0 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewBetaMCPToolRequireApprovalVariant0(fields BetaMCPToolRequireApprovalVariant0) (*BetaMCPToolRequireApprovalVariant0, error) {
+	return ConstructModel(fields)
+}
+
+// BetaMCPToolRequireApproval represents a union type.
+type BetaMCPToolRequireApproval struct {
+	BetaMCPToolRequireApprovalVariant0     *BetaMCPToolRequireApprovalVariant0
+	BetaMCPToolRequireApprovalVariant1Enum *BetaMCPToolRequireApprovalVariant1Enum
+}
+
+func (u *BetaMCPToolRequireApproval) UnmarshalJSON(data []byte) error {
+	*u = BetaMCPToolRequireApproval{}
+	var refusal error
+	var betamcptoolrequireapprovalvariant0 BetaMCPToolRequireApprovalVariant0
+	if err := json.Unmarshal(data, &betamcptoolrequireapprovalvariant0); err == nil && isNonEmptyBetaMCPToolRequireApprovalBetaMCPToolRequireApprovalVariant0(betamcptoolrequireapprovalvariant0) {
+		u.BetaMCPToolRequireApprovalVariant0 = &betamcptoolrequireapprovalvariant0
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betamcptoolrequireapprovalvariant1enum BetaMCPToolRequireApprovalVariant1Enum
+	if err := json.Unmarshal(data, &betamcptoolrequireapprovalvariant1enum); err == nil {
+		u.BetaMCPToolRequireApprovalVariant1Enum = &betamcptoolrequireapprovalvariant1enum
+		return nil
+	}
+	return refusal
+}
+
+func (u BetaMCPToolRequireApproval) MarshalJSON() ([]byte, error) {
+	if u.BetaMCPToolRequireApprovalVariant0 != nil {
+		return json.Marshal(u.BetaMCPToolRequireApprovalVariant0)
+	}
+	if u.BetaMCPToolRequireApprovalVariant1Enum != nil {
+		return json.Marshal(u.BetaMCPToolRequireApprovalVariant1Enum)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyBetaMCPToolRequireApprovalBetaMCPToolRequireApprovalVariant0(v BetaMCPToolRequireApprovalVariant0) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaMCPToolRequireApproval converts an untyped value to BetaMCPToolRequireApproval.
+func UnmarshalBetaMCPToolRequireApproval(v any) BetaMCPToolRequireApproval {
+	b, _ := json.Marshal(v)
+	var result BetaMCPToolRequireApproval
+	_ = json.Unmarshal(b, &result)
+	return result
 }

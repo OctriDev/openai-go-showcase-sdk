@@ -158,6 +158,19 @@ func (u *ImageEditStreamEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ImageEditPartialImageEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ImageEditPartialImageEvent = &lossless0
+			return nil
+		}
+		var lossless1 ImageEditCompletedEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ImageEditCompletedEvent = &lossless1
+			return nil
+		}
+	}
 	var imageeditpartialimageevent ImageEditPartialImageEvent
 	if err := json.Unmarshal(data, &imageeditpartialimageevent); err == nil && isNonEmptyImageEditStreamEventImageEditPartialImageEvent(imageeditpartialimageevent) {
 		u.ImageEditPartialImageEvent = &imageeditpartialimageevent
@@ -452,6 +465,19 @@ func (u *ImageGenStreamEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ImageGenPartialImageEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ImageGenPartialImageEvent = &lossless0
+			return nil
+		}
+		var lossless1 ImageGenCompletedEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ImageGenCompletedEvent = &lossless1
+			return nil
+		}
+	}
 	var imagegenpartialimageevent ImageGenPartialImageEvent
 	if err := json.Unmarshal(data, &imagegenpartialimageevent); err == nil && isNonEmptyImageGenStreamEventImageGenPartialImageEvent(imagegenpartialimageevent) {
 		u.ImageGenPartialImageEvent = &imagegenpartialimageevent
@@ -500,8 +526,43 @@ func UnmarshalImageGenStreamEvent(v any) ImageGenStreamEvent {
 	return result
 }
 
-// ImageRefParam is a union type
-type ImageRefParam = any
+// ImageRefParam Reference an input image by either URL or uploaded file ID.
+// Provide exactly one of `image_url` or `file_id`.
+type ImageRefParam struct {
+	// ImageUrl A fully qualified URL or base64-encoded data URL.
+	ImageUrl *string `json:"image_url,omitempty"`
+	// FileId The File API ID of an uploaded image to use as input.
+	FileId *string `json:"file_id,omitempty"`
+}
+
+func (value *ImageRefParam) UnmarshalJSON(data []byte) error {
+	type ImageRefParamAlias ImageRefParam
+	var decoded ImageRefParamAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ImageRefParam(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if value.ImageUrl != nil {
+		if err := ValidateLength("image_url", *value.ImageUrl, LengthOpts{Max: Ptr[int](20971520)}); err != nil {
+			return err
+		}
+		if err := ValidateUri("image_url", *value.ImageUrl); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// NewImageRefParam returns a validated ImageRefParam built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewImageRefParam(fields ImageRefParam) (*ImageRefParam, error) {
+	return ConstructModel(fields)
+}
 
 // ImagesResponse The response from the image generation endpoint.
 type ImagesResponse struct {
@@ -626,69 +687,4 @@ type ImagesUsageInputTokensDetails struct {
 	TextTokens int64 `json:"text_tokens"`
 	// ImageTokens The number of image tokens in the input prompt.
 	ImageTokens int64 `json:"image_tokens"`
-}
-
-func (value *ImagesUsageInputTokensDetails) UnmarshalJSON(data []byte) error {
-	type ImagesUsageInputTokensDetailsAlias ImagesUsageInputTokensDetails
-	var decoded ImagesUsageInputTokensDetailsAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ImagesUsageInputTokensDetails(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"text_tokens", "image_tokens"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"text_tokens", "image_tokens"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewImagesUsageInputTokensDetails returns a validated ImagesUsageInputTokensDetails built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewImagesUsageInputTokensDetails(fields ImagesUsageInputTokensDetails) (*ImagesUsageInputTokensDetails, error) {
-	return ConstructModel(fields)
-}
-
-// PartialImages represents a union type.
-type PartialImages struct {
-	Int64 *int64
-}
-
-func (u *PartialImages) UnmarshalJSON(data []byte) error {
-	*u = PartialImages{}
-	var int642 int64
-	if err := json.Unmarshal(data, &int642); err == nil {
-		u.Int64 = &int642
-		return nil
-	}
-	return nil
-}
-
-func (u PartialImages) MarshalJSON() ([]byte, error) {
-	if u.Int64 != nil {
-		return json.Marshal(u.Int64)
-	}
-	return []byte("null"), nil
-}
-
-// UnmarshalPartialImages converts an untyped value to PartialImages.
-func UnmarshalPartialImages(v any) PartialImages {
-	b, _ := json.Marshal(v)
-	var result PartialImages
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// ImageGenOutputTokensDetails The output token details for the image generation.
-type ImageGenOutputTokensDetails struct {
-	// ImageTokens The number of image output tokens generated by the model.
-	ImageTokens int64 `json:"image_tokens"`
-	// TextTokens The number of text output tokens generated by the model.
-	TextTokens int64 `json:"text_tokens"`
 }

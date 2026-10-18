@@ -67,6 +67,39 @@ func (u *PersistedAgentToolResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 PersistedAgentToolResourceFunction
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.PersistedAgentToolResourceFunction = &lossless0
+			return nil
+		}
+		var lossless1 PersistedAgentToolResourceToolSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.PersistedAgentToolResourceToolSearch = &lossless1
+			return nil
+		}
+		var lossless2 PersistedAgentToolResourceProgrammaticToolCalling
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.PersistedAgentToolResourceProgrammaticToolCalling = &lossless2
+			return nil
+		}
+		var lossless3 PersistedAgentToolResourceMcp
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.PersistedAgentToolResourceMcp = &lossless3
+			return nil
+		}
+		var lossless4 PersistedAgentToolResourceWebSearch
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.PersistedAgentToolResourceWebSearch = &lossless4
+			return nil
+		}
+		var lossless5 PersistedAgentToolResourceComputerUse
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.PersistedAgentToolResourceComputerUse = &lossless5
+			return nil
+		}
+	}
 	var persistedagenttoolresourcefunction PersistedAgentToolResourceFunction
 	if err := json.Unmarshal(data, &persistedagenttoolresourcefunction); err == nil && isNonEmptyPersistedAgentToolResourcePersistedAgentToolResourceFunction(persistedagenttoolresourcefunction) {
 		u.PersistedAgentToolResourceFunction = &persistedagenttoolresourcefunction
@@ -545,6 +578,19 @@ func (u *PersistedMcpTransportConfigParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 PersistedMcpTransportConfigParamHttp
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.PersistedMcpTransportConfigParamHttp = &lossless0
+			return nil
+		}
+		var lossless1 PersistedMcpTransportConfigParamStdio
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.PersistedMcpTransportConfigParamStdio = &lossless1
+			return nil
+		}
+	}
 	var persistedmcptransportconfigparamhttp PersistedMcpTransportConfigParamHttp
 	if err := json.Unmarshal(data, &persistedmcptransportconfigparamhttp); err == nil && isNonEmptyPersistedMcpTransportConfigParamPersistedMcpTransportConfigParamHttp(persistedmcptransportconfigparamhttp) {
 		u.PersistedMcpTransportConfigParamHttp = &persistedmcptransportconfigparamhttp
@@ -664,31 +710,3 @@ type PersistedAgentToolConfigParamMcpTypeEnum string
 const (
 	PersistedAgentToolConfigParamMcpTypeEnumMcp PersistedAgentToolConfigParamMcpTypeEnum = "mcp"
 )
-
-func (value *PersistedAgentToolConfigParamMcpTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "mcp":
-		*value = PersistedAgentToolConfigParamMcpTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "PersistedAgentToolConfigParamMcpTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown PersistedAgentToolConfigParamMcpTypeEnum: %v", raw)}
-	}
-}
-
-// PersistedAgentToolConfigParamWebSearch Web search.
-type PersistedAgentToolConfigParamWebSearch struct {
-	// Type The type of the object. Always `web_search`.
-	Type PersistedAgentToolConfigParamWebSearchTypeEnum `json:"type"`
-	// Mode The source used for web search results. Defaults to `live`.
-	Mode *NullableValue[WebSearchModeParam] `json:"mode,omitempty"`
-	// ContextSize The amount of search context made available to the model. Defaults to `medium`.
-	ContextSize *NullableValue[WebSearchContextSizeParam] `json:"context_size,omitempty"`
-	// AllowedDomains Domains the search may include.
-	AllowedDomains *NullableValue[[]string] `json:"allowed_domains,omitempty"`
-	// Location Approximate location used to localize search results.
-	Location *NullableValue[WebSearchLocationParam] `json:"location,omitempty"`
-}

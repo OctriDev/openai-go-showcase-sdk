@@ -385,6 +385,19 @@ func (u *BetaFilters) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaComparisonFilter
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaComparisonFilter = &lossless0
+			return nil
+		}
+		var lossless1 BetaCompoundFilter
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaCompoundFilter = &lossless1
+			return nil
+		}
+	}
 	var betacomparisonfilter BetaComparisonFilter
 	if err := json.Unmarshal(data, &betacomparisonfilter); err == nil && isNonEmptyBetaFiltersBetaComparisonFilter(betacomparisonfilter) {
 		u.BetaComparisonFilter = &betacomparisonfilter

@@ -268,7 +268,7 @@ func (value *LiveSessionAudioFormatPCMAParamTypeEnum) UnmarshalJSON(data []byte)
 // LiveSessionCreateParams Initial configuration for a Live session, including its model, conversation instructions, audio, and delegated task handling.
 type LiveSessionCreateParams struct {
 	// Model The Live model. Required in the session configuration for every transport; do not pass it as a URL query parameter.
-	Model ModelIdsLive `json:"model"`
+	Model string `json:"model"`
 	// Instructions Optional `string` value serialized in the `instructions` wire field.
 	Instructions *NullableValue[string] `json:"instructions,omitempty"`
 	// Input Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default).
@@ -300,6 +300,9 @@ func (value *LiveSessionCreateParams) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if err := ValidateNotNull(rawFields, []string{"model"}); err != nil {
+		return err
+	}
+	if err := ValidateLength("model", value.Model, LengthOpts{Min: Ptr[int](1)}); err != nil {
 		return err
 	}
 	if func() bool { _, ok := rawFields["input"]; return ok }() {
@@ -558,7 +561,7 @@ func (value *LiveSessionCloseParamTypeEnum) UnmarshalJSON(data []byte) error {
 // LiveSessionResourceParam The resolved Live session configuration and server-assigned session metadata.
 type LiveSessionResourceParam struct {
 	// Model The Live model. Required in the session configuration for every transport; do not pass it as a URL query parameter.
-	Model ModelIdsLive `json:"model"`
+	Model string `json:"model"`
 	// Instructions Optional `string` value serialized in the `instructions` wire field.
 	Instructions *NullableValue[string] `json:"instructions,omitempty"`
 	// Input Ordered text-only history supplied before startup. Supports developer, user, and assistant messages with one text part each; at most 128 messages and a configured rendered-token limit (8,192 by default).
@@ -596,6 +599,9 @@ func (value *LiveSessionResourceParam) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if err := ValidateNotNull(rawFields, []string{"model", "id", "expires_at", "status"}); err != nil {
+		return err
+	}
+	if err := ValidateLength("model", value.Model, LengthOpts{Min: Ptr[int](1)}); err != nil {
 		return err
 	}
 	if func() bool { _, ok := rawFields["input"]; return ok }() {

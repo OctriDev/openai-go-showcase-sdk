@@ -241,6 +241,24 @@ func (u *MessageContentResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageContentResourceInputText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageContentResourceInputText = &lossless0
+			return nil
+		}
+		var lossless1 MessageContentResourceInputImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MessageContentResourceInputImage = &lossless1
+			return nil
+		}
+		var lossless2 MessageContentResourceOutputText
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.MessageContentResourceOutputText = &lossless2
+			return nil
+		}
+	}
 	var messagecontentresourceinputtext MessageContentResourceInputText
 	if err := json.Unmarshal(data, &messagecontentresourceinputtext); err == nil && isNonEmptyMessageContentResourceMessageContentResourceInputText(messagecontentresourceinputtext) {
 		u.MessageContentResourceInputText = &messagecontentresourceinputtext

@@ -56,6 +56,24 @@ func (u *FunctionAndCustomToolCallOutput) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 InputImageContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.InputImageContent = &lossless1
+			return nil
+		}
+		var lossless2 InputFileContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.InputFileContent = &lossless2
+			return nil
+		}
+	}
 	var inputtextcontent InputTextContent
 	if err := json.Unmarshal(data, &inputtextcontent); err == nil && isNonEmptyFunctionAndCustomToolCallOutputInputTextContent(inputtextcontent) {
 		u.InputTextContent = &inputtextcontent

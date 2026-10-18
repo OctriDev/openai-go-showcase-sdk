@@ -300,6 +300,19 @@ func (u *ComputerUseApprovalResponseKindResource) UnmarshalJSON(data []byte) err
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ComputerUseApprovalResponseKindResourceBrowserAuthenticationSubmitResource
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ComputerUseApprovalResponseKindResourceBrowserAuthenticationSubmitResource = &lossless0
+			return nil
+		}
+		var lossless1 ComputerUseApprovalResponseKindResourceBrowserAuthenticationCancelResource
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ComputerUseApprovalResponseKindResourceBrowserAuthenticationCancelResource = &lossless1
+			return nil
+		}
+	}
 	var computeruseapprovalresponsekindresourcebrowserauthenticationsubmitresource ComputerUseApprovalResponseKindResourceBrowserAuthenticationSubmitResource
 	if err := json.Unmarshal(data, &computeruseapprovalresponsekindresourcebrowserauthenticationsubmitresource); err == nil && isNonEmptyComputerUseApprovalResponseKindResourceComputerUseApprovalResponseKindResourceBrowserAuthenticationSubmitResource(computeruseapprovalresponsekindresourcebrowserauthenticationsubmitresource) {
 		u.ComputerUseApprovalResponseKindResourceBrowserAuthenticationSubmitResource = &computeruseapprovalresponsekindresourcebrowserauthenticationsubmitresource
@@ -596,6 +609,19 @@ func (u *ComputerUseApprovalRequestKindResource) UnmarshalJSON(data []byte) erro
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ComputerUseApprovalRequestKindResourceBrowserAuthentication
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ComputerUseApprovalRequestKindResourceBrowserAuthentication = &lossless0
+			return nil
+		}
+		var lossless1 ComputerUseApprovalRequestKindResourceBrowserOriginAccess
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ComputerUseApprovalRequestKindResourceBrowserOriginAccess = &lossless1
+			return nil
+		}
+	}
 	var computeruseapprovalrequestkindresourcebrowserauthentication ComputerUseApprovalRequestKindResourceBrowserAuthentication
 	if err := json.Unmarshal(data, &computeruseapprovalrequestkindresourcebrowserauthentication); err == nil && isNonEmptyComputerUseApprovalRequestKindResourceComputerUseApprovalRequestKindResourceBrowserAuthentication(computeruseapprovalrequestkindresourcebrowserauthentication) {
 		u.ComputerUseApprovalRequestKindResourceBrowserAuthentication = &computeruseapprovalrequestkindresourcebrowserauthentication
@@ -661,6 +687,9 @@ func (value *ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam) U
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"browser_authentication"}); err != nil {
+		return err
+	}
 	if err := ValidateRawEnum("action", rawFields["action"], []string{"submit"}); err != nil {
 		return err
 	}
@@ -684,24 +713,3 @@ func (value *ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam) U
 	}
 	return nil
 }
-
-// NewComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam returns a validated ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam(fields ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam) (*ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam, error) {
-	return ConstructModel(fields)
-}
-
-// ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum Required enumerated value serialized in the `type` wire field.
-type ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum string
-
-const (
-	ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnumBrowserAuthentication ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum = "browser_authentication"
-)
-
-// ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnum Required enumerated value serialized in the `action` wire field.
-type ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnum string
-
-const (
-	ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnumSubmit ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnum = "submit"
-)

@@ -274,6 +274,19 @@ func (u *ProvenanceResourceResultsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 C2PAProvenanceResult
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.C2PAProvenanceResult = &lossless0
+			return nil
+		}
+		var lossless1 SynthIDProvenanceResult
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SynthIDProvenanceResult = &lossless1
+			return nil
+		}
+	}
 	var c2paprovenanceresult C2PAProvenanceResult
 	if err := json.Unmarshal(data, &c2paprovenanceresult); err == nil && isNonEmptyProvenanceResourceResultsItemC2PAProvenanceResult(c2paprovenanceresult) {
 		u.C2PAProvenanceResult = &c2paprovenanceresult

@@ -8,6 +8,26 @@ import (
 	"fmt"
 )
 
+// VaultCredentialResource Metadata for a stored credential. Secret values are never returned.
+type VaultCredentialResource struct {
+	// Id The ID of the credential.
+	Id string `json:"id"`
+	// Object The object type. Always `vault.credential`.
+	Object VaultCredentialResourceObjectEnum `json:"object"`
+	// VaultId The ID of the vault containing this credential.
+	VaultId string `json:"vault_id"`
+	// Name The human-readable name of the credential.
+	Name string `json:"name"`
+	// Auth The authentication method and non-secret configuration of the credential.
+	Auth VaultCredentialAuthResource `json:"auth"`
+	// Metadata Application-defined key-value pairs associated with this credential.
+	Metadata map[string]string `json:"metadata"`
+	// CreatedAt The Unix timestamp, in seconds, when the credential was created.
+	CreatedAt int64 `json:"created_at"`
+	// UpdatedAt The Unix timestamp, in seconds, when the credential was last updated.
+	UpdatedAt int64 `json:"updated_at"`
+}
+
 func (value *VaultCredentialResource) UnmarshalJSON(data []byte) error {
 	type VaultCredentialResourceAlias VaultCredentialResource
 	var decoded VaultCredentialResourceAlias
@@ -258,6 +278,19 @@ func (u *VaultCredentialNetworkingParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 VaultCredentialNetworkingParamUnrestricted
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.VaultCredentialNetworkingParamUnrestricted = &lossless0
+			return nil
+		}
+		var lossless1 VaultCredentialNetworkingParamLimited
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.VaultCredentialNetworkingParamLimited = &lossless1
+			return nil
 		}
 	}
 	var vaultcredentialnetworkingparamunrestricted VaultCredentialNetworkingParamUnrestricted

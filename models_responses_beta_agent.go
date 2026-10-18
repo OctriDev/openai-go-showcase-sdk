@@ -262,6 +262,24 @@ func (u *BetaAgentMessageItemParamContentItem) UnmarshalJSON(data []byte) error 
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaInputTextContentParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaInputTextContentParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaInputImageContentParamAutoParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaInputImageContentParamAutoParam = &lossless1
+			return nil
+		}
+		var lossless2 BetaEncryptedContentParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaEncryptedContentParam = &lossless2
+			return nil
+		}
+	}
 	var betainputtextcontentparam BetaInputTextContentParam
 	if err := json.Unmarshal(data, &betainputtextcontentparam); err == nil && isNonEmptyBetaAgentMessageItemParamContentItemBetaInputTextContentParam(betainputtextcontentparam) {
 		u.BetaInputTextContentParam = &betainputtextcontentparam
@@ -426,6 +444,59 @@ func (u *BetaAgentMessageContentItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaInputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaInputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 BetaOutputTextContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaOutputTextContent = &lossless1
+			return nil
+		}
+		var lossless2 BetaTextContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaTextContent = &lossless2
+			return nil
+		}
+		var lossless3 BetaSummaryTextContent
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaSummaryTextContent = &lossless3
+			return nil
+		}
+		var lossless4 BetaReasoningTextContent
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.BetaReasoningTextContent = &lossless4
+			return nil
+		}
+		var lossless5 BetaRefusalContent
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BetaRefusalContent = &lossless5
+			return nil
+		}
+		var lossless6 BetaInputImageContent
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.BetaInputImageContent = &lossless6
+			return nil
+		}
+		var lossless7 BetaComputerScreenshotContent
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.BetaComputerScreenshotContent = &lossless7
+			return nil
+		}
+		var lossless8 BetaInputFileContent
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.BetaInputFileContent = &lossless8
+			return nil
+		}
+		var lossless9 BetaEncryptedContent
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.BetaEncryptedContent = &lossless9
+			return nil
 		}
 	}
 	var betainputtextcontent BetaInputTextContent

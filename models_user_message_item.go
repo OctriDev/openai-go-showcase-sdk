@@ -181,6 +181,24 @@ func (u *UserMessageItemParamContentItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputTextContentParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputTextContentParam = &lossless0
+			return nil
+		}
+		var lossless1 InputImageContentParamAutoParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.InputImageContentParamAutoParam = &lossless1
+			return nil
+		}
+		var lossless2 InputFileContentParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.InputFileContentParam = &lossless2
+			return nil
+		}
+	}
 	var inputtextcontentparam InputTextContentParam
 	if err := json.Unmarshal(data, &inputtextcontentparam); err == nil && isNonEmptyUserMessageItemParamContentItemInputTextContentParam(inputtextcontentparam) {
 		u.InputTextContentParam = &inputtextcontentparam

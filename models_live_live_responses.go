@@ -88,290 +88,6 @@ func NewLiveResponsesDelegationSettingsInputParam(fields LiveResponsesDelegation
 	return ConstructModel(fields)
 }
 
-// LiveResponsesDelegationSettingsInputParamToolChoiceVariant1 represents a union type.
-type LiveResponsesDelegationSettingsInputParamToolChoiceVariant1 struct {
-	LiveFunctionToolChoiceParam              *LiveFunctionToolChoiceParam
-	LiveMCPToolChoiceParam                   *LiveMCPToolChoiceParam
-	LiveSpecificFileSearchParam              *LiveSpecificFileSearchParam
-	LiveSpecificWebSearchParam               *LiveSpecificWebSearchParam
-	LiveSpecificWebSearchPreviewParam        *LiveSpecificWebSearchPreviewParam
-	LiveSpecificImageGenParam                *LiveSpecificImageGenParam
-	LiveSpecificComputerParam                *LiveSpecificComputerParam
-	LiveSpecificCodeInterpreterParam         *LiveSpecificCodeInterpreterParam
-	LiveSpecificProgrammaticToolCallingParam *LiveSpecificProgrammaticToolCallingParam
-	LiveSpecificFunctionShellParam           *LiveSpecificFunctionShellParam
-	LiveSpecificCustomToolParam              *LiveSpecificCustomToolParam
-	LiveSpecificApplyPatchParam              *LiveSpecificApplyPatchParam
-}
-
-func (u *LiveResponsesDelegationSettingsInputParamToolChoiceVariant1) UnmarshalJSON(data []byte) error {
-	*u = LiveResponsesDelegationSettingsInputParamToolChoiceVariant1{}
-	var refusal error
-	var livefunctiontoolchoiceparam LiveFunctionToolChoiceParam
-	if err := json.Unmarshal(data, &livefunctiontoolchoiceparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveFunctionToolChoiceParam(livefunctiontoolchoiceparam) {
-		u.LiveFunctionToolChoiceParam = &livefunctiontoolchoiceparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livemcptoolchoiceparam LiveMCPToolChoiceParam
-	if err := json.Unmarshal(data, &livemcptoolchoiceparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveMCPToolChoiceParam(livemcptoolchoiceparam) {
-		u.LiveMCPToolChoiceParam = &livemcptoolchoiceparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificfilesearchparam LiveSpecificFileSearchParam
-	if err := json.Unmarshal(data, &livespecificfilesearchparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificFileSearchParam(livespecificfilesearchparam) {
-		u.LiveSpecificFileSearchParam = &livespecificfilesearchparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificwebsearchparam LiveSpecificWebSearchParam
-	if err := json.Unmarshal(data, &livespecificwebsearchparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificWebSearchParam(livespecificwebsearchparam) {
-		u.LiveSpecificWebSearchParam = &livespecificwebsearchparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificwebsearchpreviewparam LiveSpecificWebSearchPreviewParam
-	if err := json.Unmarshal(data, &livespecificwebsearchpreviewparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificWebSearchPreviewParam(livespecificwebsearchpreviewparam) {
-		u.LiveSpecificWebSearchPreviewParam = &livespecificwebsearchpreviewparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificimagegenparam LiveSpecificImageGenParam
-	if err := json.Unmarshal(data, &livespecificimagegenparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificImageGenParam(livespecificimagegenparam) {
-		u.LiveSpecificImageGenParam = &livespecificimagegenparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificcomputerparam LiveSpecificComputerParam
-	if err := json.Unmarshal(data, &livespecificcomputerparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificComputerParam(livespecificcomputerparam) {
-		u.LiveSpecificComputerParam = &livespecificcomputerparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificcodeinterpreterparam LiveSpecificCodeInterpreterParam
-	if err := json.Unmarshal(data, &livespecificcodeinterpreterparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificCodeInterpreterParam(livespecificcodeinterpreterparam) {
-		u.LiveSpecificCodeInterpreterParam = &livespecificcodeinterpreterparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificprogrammatictoolcallingparam LiveSpecificProgrammaticToolCallingParam
-	if err := json.Unmarshal(data, &livespecificprogrammatictoolcallingparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificProgrammaticToolCallingParam(livespecificprogrammatictoolcallingparam) {
-		u.LiveSpecificProgrammaticToolCallingParam = &livespecificprogrammatictoolcallingparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificfunctionshellparam LiveSpecificFunctionShellParam
-	if err := json.Unmarshal(data, &livespecificfunctionshellparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificFunctionShellParam(livespecificfunctionshellparam) {
-		u.LiveSpecificFunctionShellParam = &livespecificfunctionshellparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificcustomtoolparam LiveSpecificCustomToolParam
-	if err := json.Unmarshal(data, &livespecificcustomtoolparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificCustomToolParam(livespecificcustomtoolparam) {
-		u.LiveSpecificCustomToolParam = &livespecificcustomtoolparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livespecificapplypatchparam LiveSpecificApplyPatchParam
-	if err := json.Unmarshal(data, &livespecificapplypatchparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificApplyPatchParam(livespecificapplypatchparam) {
-		u.LiveSpecificApplyPatchParam = &livespecificapplypatchparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u LiveResponsesDelegationSettingsInputParamToolChoiceVariant1) MarshalJSON() ([]byte, error) {
-	if u.LiveFunctionToolChoiceParam != nil {
-		return json.Marshal(u.LiveFunctionToolChoiceParam)
-	}
-	if u.LiveMCPToolChoiceParam != nil {
-		return json.Marshal(u.LiveMCPToolChoiceParam)
-	}
-	if u.LiveSpecificFileSearchParam != nil {
-		return json.Marshal(u.LiveSpecificFileSearchParam)
-	}
-	if u.LiveSpecificWebSearchParam != nil {
-		return json.Marshal(u.LiveSpecificWebSearchParam)
-	}
-	if u.LiveSpecificWebSearchPreviewParam != nil {
-		return json.Marshal(u.LiveSpecificWebSearchPreviewParam)
-	}
-	if u.LiveSpecificImageGenParam != nil {
-		return json.Marshal(u.LiveSpecificImageGenParam)
-	}
-	if u.LiveSpecificComputerParam != nil {
-		return json.Marshal(u.LiveSpecificComputerParam)
-	}
-	if u.LiveSpecificCodeInterpreterParam != nil {
-		return json.Marshal(u.LiveSpecificCodeInterpreterParam)
-	}
-	if u.LiveSpecificProgrammaticToolCallingParam != nil {
-		return json.Marshal(u.LiveSpecificProgrammaticToolCallingParam)
-	}
-	if u.LiveSpecificFunctionShellParam != nil {
-		return json.Marshal(u.LiveSpecificFunctionShellParam)
-	}
-	if u.LiveSpecificCustomToolParam != nil {
-		return json.Marshal(u.LiveSpecificCustomToolParam)
-	}
-	if u.LiveSpecificApplyPatchParam != nil {
-		return json.Marshal(u.LiveSpecificApplyPatchParam)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveFunctionToolChoiceParam(v LiveFunctionToolChoiceParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveMCPToolChoiceParam(v LiveMCPToolChoiceParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificFileSearchParam(v LiveSpecificFileSearchParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificWebSearchParam(v LiveSpecificWebSearchParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificWebSearchPreviewParam(v LiveSpecificWebSearchPreviewParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificImageGenParam(v LiveSpecificImageGenParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificComputerParam(v LiveSpecificComputerParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificCodeInterpreterParam(v LiveSpecificCodeInterpreterParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificProgrammaticToolCallingParam(v LiveSpecificProgrammaticToolCallingParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificFunctionShellParam(v LiveSpecificFunctionShellParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificCustomToolParam(v LiveSpecificCustomToolParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceVariant1LiveSpecificApplyPatchParam(v LiveSpecificApplyPatchParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalLiveResponsesDelegationSettingsInputParamToolChoiceVariant1 converts an untyped value to LiveResponsesDelegationSettingsInputParamToolChoiceVariant1.
-func UnmarshalLiveResponsesDelegationSettingsInputParamToolChoiceVariant1(v any) LiveResponsesDelegationSettingsInputParamToolChoiceVariant1 {
-	b, _ := json.Marshal(v)
-	var result LiveResponsesDelegationSettingsInputParamToolChoiceVariant1
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// LiveResponsesDelegationSettingsInputParamToolChoice represents a union type.
-type LiveResponsesDelegationSettingsInputParamToolChoice struct {
-	LiveToolChoiceEnum                                          *LiveToolChoiceEnum
-	LiveResponsesDelegationSettingsInputParamToolChoiceVariant1 *LiveResponsesDelegationSettingsInputParamToolChoiceVariant1
-	LiveAllowedToolsChoiceParam                                 *LiveAllowedToolsChoiceParam
-}
-
-func (u *LiveResponsesDelegationSettingsInputParamToolChoice) UnmarshalJSON(data []byte) error {
-	*u = LiveResponsesDelegationSettingsInputParamToolChoice{}
-	var refusal error
-	var livetoolchoiceenum LiveToolChoiceEnum
-	if err := json.Unmarshal(data, &livetoolchoiceenum); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveToolChoiceEnum(livetoolchoiceenum) {
-		u.LiveToolChoiceEnum = &livetoolchoiceenum
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var liveresponsesdelegationsettingsinputparamtoolchoicevariant1 LiveResponsesDelegationSettingsInputParamToolChoiceVariant1
-	if err := json.Unmarshal(data, &liveresponsesdelegationsettingsinputparamtoolchoicevariant1); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveResponsesDelegationSettingsInputParamToolChoiceVariant1(liveresponsesdelegationsettingsinputparamtoolchoicevariant1) {
-		u.LiveResponsesDelegationSettingsInputParamToolChoiceVariant1 = &liveresponsesdelegationsettingsinputparamtoolchoicevariant1
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var liveallowedtoolschoiceparam LiveAllowedToolsChoiceParam
-	if err := json.Unmarshal(data, &liveallowedtoolschoiceparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveAllowedToolsChoiceParam(liveallowedtoolschoiceparam) {
-		u.LiveAllowedToolsChoiceParam = &liveallowedtoolschoiceparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u LiveResponsesDelegationSettingsInputParamToolChoice) MarshalJSON() ([]byte, error) {
-	if u.LiveToolChoiceEnum != nil {
-		return json.Marshal(u.LiveToolChoiceEnum)
-	}
-	if u.LiveResponsesDelegationSettingsInputParamToolChoiceVariant1 != nil {
-		return json.Marshal(u.LiveResponsesDelegationSettingsInputParamToolChoiceVariant1)
-	}
-	if u.LiveAllowedToolsChoiceParam != nil {
-		return json.Marshal(u.LiveAllowedToolsChoiceParam)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveToolChoiceEnum(v LiveToolChoiceEnum) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveResponsesDelegationSettingsInputParamToolChoiceVariant1(v LiveResponsesDelegationSettingsInputParamToolChoiceVariant1) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveAllowedToolsChoiceParam(v LiveAllowedToolsChoiceParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalLiveResponsesDelegationSettingsInputParamToolChoice converts an untyped value to LiveResponsesDelegationSettingsInputParamToolChoice.
-func UnmarshalLiveResponsesDelegationSettingsInputParamToolChoice(v any) LiveResponsesDelegationSettingsInputParamToolChoice {
-	b, _ := json.Marshal(v)
-	var result LiveResponsesDelegationSettingsInputParamToolChoice
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
 // LiveResponsesDelegationParam Delegate tasks to a Responses model managed by the Live session.
 type LiveResponsesDelegationParam struct {
 	// Type The delegation owner. Always `responses` for tasks handled by the Responses API.
@@ -492,105 +208,347 @@ func NewLiveResponsesDelegationSettingsUpdateInputParam(fields LiveResponsesDele
 	return ConstructModel(fields)
 }
 
-// LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1 represents a union type.
-type LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1 struct {
-	LiveFunctionToolChoiceParam              *LiveFunctionToolChoiceParam
-	LiveMCPToolChoiceParam                   *LiveMCPToolChoiceParam
-	LiveSpecificFileSearchParam              *LiveSpecificFileSearchParam
-	LiveSpecificWebSearchParam               *LiveSpecificWebSearchParam
-	LiveSpecificWebSearchPreviewParam        *LiveSpecificWebSearchPreviewParam
-	LiveSpecificImageGenParam                *LiveSpecificImageGenParam
-	LiveSpecificComputerParam                *LiveSpecificComputerParam
-	LiveSpecificCodeInterpreterParam         *LiveSpecificCodeInterpreterParam
-	LiveSpecificProgrammaticToolCallingParam *LiveSpecificProgrammaticToolCallingParam
-	LiveSpecificFunctionShellParam           *LiveSpecificFunctionShellParam
-	LiveSpecificCustomToolParam              *LiveSpecificCustomToolParam
-	LiveSpecificApplyPatchParam              *LiveSpecificApplyPatchParam
+// LiveResponsesDelegationUpdateParam Update the Responses backend for an existing Live session without changing delegation ownership.
+type LiveResponsesDelegationUpdateParam struct {
+	// Type The delegation owner. Always `responses` for tasks handled by the Responses API.
+	Type LiveResponsesDelegationUpdateParamTypeEnum `json:"type"`
+	// Responses Responses backend settings to update. Omitted settings keep their existing values.
+	Responses *LiveResponsesDelegationSettingsUpdateInputParam `json:"responses,omitempty"`
 }
 
-func (u *LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1) UnmarshalJSON(data []byte) error {
-	*u = LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1{}
+func (value *LiveResponsesDelegationUpdateParam) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"responses"}); err != nil {
+		return err
+	}
+	type LiveResponsesDelegationUpdateParamAlias LiveResponsesDelegationUpdateParam
+	var decoded LiveResponsesDelegationUpdateParamAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = LiveResponsesDelegationUpdateParam(decoded)
+	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewLiveResponsesDelegationUpdateParam returns a validated LiveResponsesDelegationUpdateParam built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewLiveResponsesDelegationUpdateParam(fields LiveResponsesDelegationUpdateParam) (*LiveResponsesDelegationUpdateParam, error) {
+	return ConstructModel(fields)
+}
+
+// LiveResponsesDelegationUpdateParamTypeEnum The delegation owner. Always `responses` for tasks handled by the Responses API.
+type LiveResponsesDelegationUpdateParamTypeEnum string
+
+const (
+	LiveResponsesDelegationUpdateParamTypeEnumResponses LiveResponsesDelegationUpdateParamTypeEnum = "responses"
+)
+
+func (value *LiveResponsesDelegationUpdateParamTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "responses":
+		*value = LiveResponsesDelegationUpdateParamTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "LiveResponsesDelegationUpdateParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown LiveResponsesDelegationUpdateParamTypeEnum: %v", raw)}
+	}
+}
+
+// LiveResponsesDelegationSettingsInputParamToolsItem represents a union type.
+type LiveResponsesDelegationSettingsInputParamToolsItem struct {
+	LiveFunctionToolInputParam        *LiveFunctionToolInputParam
+	LiveWebSearchToolInputParam       *LiveWebSearchToolInputParam
+	LiveFileSearchToolInputParam      *LiveFileSearchToolInputParam
+	LiveCodeInterpreterToolInputParam *LiveCodeInterpreterToolInputParam
+	LiveHostedShellToolInputParam     *LiveHostedShellToolInputParam
+	LiveImageGenerationToolInputParam *LiveImageGenerationToolInputParam
+	LiveMCPToolInputParam             *LiveMCPToolInputParam
+	LiveCustomToolInputParam          *LiveCustomToolInputParam
+	LiveNamespaceToolInputParam       *LiveNamespaceToolInputParam
+	LiveToolSearchToolInputParam      *LiveToolSearchToolInputParam
+	LiveProgrammaticToolInputParam    *LiveProgrammaticToolInputParam
+	LiveComputerToolInputParam        *LiveComputerToolInputParam
+	LiveApplyPatchToolInputParam      *LiveApplyPatchToolInputParam
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
+func (u *LiveResponsesDelegationSettingsInputParamToolsItem) UnmarshalJSON(data []byte) error {
+	*u = LiveResponsesDelegationSettingsInputParamToolsItem{}
 	var refusal error
-	var livefunctiontoolchoiceparam LiveFunctionToolChoiceParam
-	if err := json.Unmarshal(data, &livefunctiontoolchoiceparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveFunctionToolChoiceParam(livefunctiontoolchoiceparam) {
-		u.LiveFunctionToolChoiceParam = &livefunctiontoolchoiceparam
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "function":
+					var livefunctiontoolinputparam LiveFunctionToolInputParam
+					if err := json.Unmarshal(data, &livefunctiontoolinputparam); err != nil {
+						return err
+					}
+					u.LiveFunctionToolInputParam = &livefunctiontoolinputparam
+					return nil
+				case "web_search":
+					var livewebsearchtoolinputparam LiveWebSearchToolInputParam
+					if err := json.Unmarshal(data, &livewebsearchtoolinputparam); err != nil {
+						return err
+					}
+					u.LiveWebSearchToolInputParam = &livewebsearchtoolinputparam
+					return nil
+				case "file_search":
+					var livefilesearchtoolinputparam LiveFileSearchToolInputParam
+					if err := json.Unmarshal(data, &livefilesearchtoolinputparam); err != nil {
+						return err
+					}
+					u.LiveFileSearchToolInputParam = &livefilesearchtoolinputparam
+					return nil
+				case "code_interpreter":
+					var livecodeinterpretertoolinputparam LiveCodeInterpreterToolInputParam
+					if err := json.Unmarshal(data, &livecodeinterpretertoolinputparam); err != nil {
+						return err
+					}
+					u.LiveCodeInterpreterToolInputParam = &livecodeinterpretertoolinputparam
+					return nil
+				case "shell":
+					var livehostedshelltoolinputparam LiveHostedShellToolInputParam
+					if err := json.Unmarshal(data, &livehostedshelltoolinputparam); err != nil {
+						return err
+					}
+					u.LiveHostedShellToolInputParam = &livehostedshelltoolinputparam
+					return nil
+				case "image_generation":
+					var liveimagegenerationtoolinputparam LiveImageGenerationToolInputParam
+					if err := json.Unmarshal(data, &liveimagegenerationtoolinputparam); err != nil {
+						return err
+					}
+					u.LiveImageGenerationToolInputParam = &liveimagegenerationtoolinputparam
+					return nil
+				case "mcp":
+					var livemcptoolinputparam LiveMCPToolInputParam
+					if err := json.Unmarshal(data, &livemcptoolinputparam); err != nil {
+						return err
+					}
+					u.LiveMCPToolInputParam = &livemcptoolinputparam
+					return nil
+				case "custom":
+					var livecustomtoolinputparam LiveCustomToolInputParam
+					if err := json.Unmarshal(data, &livecustomtoolinputparam); err != nil {
+						return err
+					}
+					u.LiveCustomToolInputParam = &livecustomtoolinputparam
+					return nil
+				case "namespace":
+					var livenamespacetoolinputparam LiveNamespaceToolInputParam
+					if err := json.Unmarshal(data, &livenamespacetoolinputparam); err != nil {
+						return err
+					}
+					u.LiveNamespaceToolInputParam = &livenamespacetoolinputparam
+					return nil
+				case "tool_search":
+					var livetoolsearchtoolinputparam LiveToolSearchToolInputParam
+					if err := json.Unmarshal(data, &livetoolsearchtoolinputparam); err != nil {
+						return err
+					}
+					u.LiveToolSearchToolInputParam = &livetoolsearchtoolinputparam
+					return nil
+				case "programmatic_tool_calling":
+					var liveprogrammatictoolinputparam LiveProgrammaticToolInputParam
+					if err := json.Unmarshal(data, &liveprogrammatictoolinputparam); err != nil {
+						return err
+					}
+					u.LiveProgrammaticToolInputParam = &liveprogrammatictoolinputparam
+					return nil
+				case "computer":
+					var livecomputertoolinputparam LiveComputerToolInputParam
+					if err := json.Unmarshal(data, &livecomputertoolinputparam); err != nil {
+						return err
+					}
+					u.LiveComputerToolInputParam = &livecomputertoolinputparam
+					return nil
+				case "apply_patch":
+					var liveapplypatchtoolinputparam LiveApplyPatchToolInputParam
+					if err := json.Unmarshal(data, &liveapplypatchtoolinputparam); err != nil {
+						return err
+					}
+					u.LiveApplyPatchToolInputParam = &liveapplypatchtoolinputparam
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveFunctionToolInputParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveFunctionToolInputParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveWebSearchToolInputParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveWebSearchToolInputParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveFileSearchToolInputParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveFileSearchToolInputParam = &lossless2
+			return nil
+		}
+		var lossless3 LiveCodeInterpreterToolInputParam
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.LiveCodeInterpreterToolInputParam = &lossless3
+			return nil
+		}
+		var lossless4 LiveHostedShellToolInputParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.LiveHostedShellToolInputParam = &lossless4
+			return nil
+		}
+		var lossless5 LiveImageGenerationToolInputParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.LiveImageGenerationToolInputParam = &lossless5
+			return nil
+		}
+		var lossless6 LiveMCPToolInputParam
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.LiveMCPToolInputParam = &lossless6
+			return nil
+		}
+		var lossless7 LiveCustomToolInputParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.LiveCustomToolInputParam = &lossless7
+			return nil
+		}
+		var lossless8 LiveNamespaceToolInputParam
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.LiveNamespaceToolInputParam = &lossless8
+			return nil
+		}
+		var lossless9 LiveToolSearchToolInputParam
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.LiveToolSearchToolInputParam = &lossless9
+			return nil
+		}
+		var lossless10 LiveProgrammaticToolInputParam
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.LiveProgrammaticToolInputParam = &lossless10
+			return nil
+		}
+		var lossless11 LiveComputerToolInputParam
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.LiveComputerToolInputParam = &lossless11
+			return nil
+		}
+		var lossless12 LiveApplyPatchToolInputParam
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.LiveApplyPatchToolInputParam = &lossless12
+			return nil
+		}
+	}
+	var livefunctiontoolinputparam LiveFunctionToolInputParam
+	if err := json.Unmarshal(data, &livefunctiontoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveFunctionToolInputParam(livefunctiontoolinputparam) {
+		u.LiveFunctionToolInputParam = &livefunctiontoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livemcptoolchoiceparam LiveMCPToolChoiceParam
-	if err := json.Unmarshal(data, &livemcptoolchoiceparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveMCPToolChoiceParam(livemcptoolchoiceparam) {
-		u.LiveMCPToolChoiceParam = &livemcptoolchoiceparam
+	var livewebsearchtoolinputparam LiveWebSearchToolInputParam
+	if err := json.Unmarshal(data, &livewebsearchtoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveWebSearchToolInputParam(livewebsearchtoolinputparam) {
+		u.LiveWebSearchToolInputParam = &livewebsearchtoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificfilesearchparam LiveSpecificFileSearchParam
-	if err := json.Unmarshal(data, &livespecificfilesearchparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificFileSearchParam(livespecificfilesearchparam) {
-		u.LiveSpecificFileSearchParam = &livespecificfilesearchparam
+	var livefilesearchtoolinputparam LiveFileSearchToolInputParam
+	if err := json.Unmarshal(data, &livefilesearchtoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveFileSearchToolInputParam(livefilesearchtoolinputparam) {
+		u.LiveFileSearchToolInputParam = &livefilesearchtoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificwebsearchparam LiveSpecificWebSearchParam
-	if err := json.Unmarshal(data, &livespecificwebsearchparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificWebSearchParam(livespecificwebsearchparam) {
-		u.LiveSpecificWebSearchParam = &livespecificwebsearchparam
+	var livecodeinterpretertoolinputparam LiveCodeInterpreterToolInputParam
+	if err := json.Unmarshal(data, &livecodeinterpretertoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveCodeInterpreterToolInputParam(livecodeinterpretertoolinputparam) {
+		u.LiveCodeInterpreterToolInputParam = &livecodeinterpretertoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificwebsearchpreviewparam LiveSpecificWebSearchPreviewParam
-	if err := json.Unmarshal(data, &livespecificwebsearchpreviewparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificWebSearchPreviewParam(livespecificwebsearchpreviewparam) {
-		u.LiveSpecificWebSearchPreviewParam = &livespecificwebsearchpreviewparam
+	var livehostedshelltoolinputparam LiveHostedShellToolInputParam
+	if err := json.Unmarshal(data, &livehostedshelltoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveHostedShellToolInputParam(livehostedshelltoolinputparam) {
+		u.LiveHostedShellToolInputParam = &livehostedshelltoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificimagegenparam LiveSpecificImageGenParam
-	if err := json.Unmarshal(data, &livespecificimagegenparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificImageGenParam(livespecificimagegenparam) {
-		u.LiveSpecificImageGenParam = &livespecificimagegenparam
+	var liveimagegenerationtoolinputparam LiveImageGenerationToolInputParam
+	if err := json.Unmarshal(data, &liveimagegenerationtoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveImageGenerationToolInputParam(liveimagegenerationtoolinputparam) {
+		u.LiveImageGenerationToolInputParam = &liveimagegenerationtoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificcomputerparam LiveSpecificComputerParam
-	if err := json.Unmarshal(data, &livespecificcomputerparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificComputerParam(livespecificcomputerparam) {
-		u.LiveSpecificComputerParam = &livespecificcomputerparam
+	var livemcptoolinputparam LiveMCPToolInputParam
+	if err := json.Unmarshal(data, &livemcptoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveMCPToolInputParam(livemcptoolinputparam) {
+		u.LiveMCPToolInputParam = &livemcptoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificcodeinterpreterparam LiveSpecificCodeInterpreterParam
-	if err := json.Unmarshal(data, &livespecificcodeinterpreterparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificCodeInterpreterParam(livespecificcodeinterpreterparam) {
-		u.LiveSpecificCodeInterpreterParam = &livespecificcodeinterpreterparam
+	var livecustomtoolinputparam LiveCustomToolInputParam
+	if err := json.Unmarshal(data, &livecustomtoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveCustomToolInputParam(livecustomtoolinputparam) {
+		u.LiveCustomToolInputParam = &livecustomtoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificprogrammatictoolcallingparam LiveSpecificProgrammaticToolCallingParam
-	if err := json.Unmarshal(data, &livespecificprogrammatictoolcallingparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificProgrammaticToolCallingParam(livespecificprogrammatictoolcallingparam) {
-		u.LiveSpecificProgrammaticToolCallingParam = &livespecificprogrammatictoolcallingparam
+	var livenamespacetoolinputparam LiveNamespaceToolInputParam
+	if err := json.Unmarshal(data, &livenamespacetoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveNamespaceToolInputParam(livenamespacetoolinputparam) {
+		u.LiveNamespaceToolInputParam = &livenamespacetoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificfunctionshellparam LiveSpecificFunctionShellParam
-	if err := json.Unmarshal(data, &livespecificfunctionshellparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificFunctionShellParam(livespecificfunctionshellparam) {
-		u.LiveSpecificFunctionShellParam = &livespecificfunctionshellparam
+	var livetoolsearchtoolinputparam LiveToolSearchToolInputParam
+	if err := json.Unmarshal(data, &livetoolsearchtoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveToolSearchToolInputParam(livetoolsearchtoolinputparam) {
+		u.LiveToolSearchToolInputParam = &livetoolsearchtoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificcustomtoolparam LiveSpecificCustomToolParam
-	if err := json.Unmarshal(data, &livespecificcustomtoolparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificCustomToolParam(livespecificcustomtoolparam) {
-		u.LiveSpecificCustomToolParam = &livespecificcustomtoolparam
+	var liveprogrammatictoolinputparam LiveProgrammaticToolInputParam
+	if err := json.Unmarshal(data, &liveprogrammatictoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveProgrammaticToolInputParam(liveprogrammatictoolinputparam) {
+		u.LiveProgrammaticToolInputParam = &liveprogrammatictoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var livespecificapplypatchparam LiveSpecificApplyPatchParam
-	if err := json.Unmarshal(data, &livespecificapplypatchparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificApplyPatchParam(livespecificapplypatchparam) {
-		u.LiveSpecificApplyPatchParam = &livespecificapplypatchparam
+	var livecomputertoolinputparam LiveComputerToolInputParam
+	if err := json.Unmarshal(data, &livecomputertoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveComputerToolInputParam(livecomputertoolinputparam) {
+		u.LiveComputerToolInputParam = &livecomputertoolinputparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var liveapplypatchtoolinputparam LiveApplyPatchToolInputParam
+	if err := json.Unmarshal(data, &liveapplypatchtoolinputparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveApplyPatchToolInputParam(liveapplypatchtoolinputparam) {
+		u.LiveApplyPatchToolInputParam = &liveapplypatchtoolinputparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
@@ -598,110 +556,170 @@ func (u *LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1) Unma
 	return refusal
 }
 
-func (u LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1) MarshalJSON() ([]byte, error) {
-	if u.LiveFunctionToolChoiceParam != nil {
-		return json.Marshal(u.LiveFunctionToolChoiceParam)
+func (u LiveResponsesDelegationSettingsInputParamToolsItem) MarshalJSON() ([]byte, error) {
+	if u.LiveFunctionToolInputParam != nil {
+		return json.Marshal(u.LiveFunctionToolInputParam)
 	}
-	if u.LiveMCPToolChoiceParam != nil {
-		return json.Marshal(u.LiveMCPToolChoiceParam)
+	if u.LiveWebSearchToolInputParam != nil {
+		return json.Marshal(u.LiveWebSearchToolInputParam)
 	}
-	if u.LiveSpecificFileSearchParam != nil {
-		return json.Marshal(u.LiveSpecificFileSearchParam)
+	if u.LiveFileSearchToolInputParam != nil {
+		return json.Marshal(u.LiveFileSearchToolInputParam)
 	}
-	if u.LiveSpecificWebSearchParam != nil {
-		return json.Marshal(u.LiveSpecificWebSearchParam)
+	if u.LiveCodeInterpreterToolInputParam != nil {
+		return json.Marshal(u.LiveCodeInterpreterToolInputParam)
 	}
-	if u.LiveSpecificWebSearchPreviewParam != nil {
-		return json.Marshal(u.LiveSpecificWebSearchPreviewParam)
+	if u.LiveHostedShellToolInputParam != nil {
+		return json.Marshal(u.LiveHostedShellToolInputParam)
 	}
-	if u.LiveSpecificImageGenParam != nil {
-		return json.Marshal(u.LiveSpecificImageGenParam)
+	if u.LiveImageGenerationToolInputParam != nil {
+		return json.Marshal(u.LiveImageGenerationToolInputParam)
 	}
-	if u.LiveSpecificComputerParam != nil {
-		return json.Marshal(u.LiveSpecificComputerParam)
+	if u.LiveMCPToolInputParam != nil {
+		return json.Marshal(u.LiveMCPToolInputParam)
 	}
-	if u.LiveSpecificCodeInterpreterParam != nil {
-		return json.Marshal(u.LiveSpecificCodeInterpreterParam)
+	if u.LiveCustomToolInputParam != nil {
+		return json.Marshal(u.LiveCustomToolInputParam)
 	}
-	if u.LiveSpecificProgrammaticToolCallingParam != nil {
-		return json.Marshal(u.LiveSpecificProgrammaticToolCallingParam)
+	if u.LiveNamespaceToolInputParam != nil {
+		return json.Marshal(u.LiveNamespaceToolInputParam)
 	}
-	if u.LiveSpecificFunctionShellParam != nil {
-		return json.Marshal(u.LiveSpecificFunctionShellParam)
+	if u.LiveToolSearchToolInputParam != nil {
+		return json.Marshal(u.LiveToolSearchToolInputParam)
 	}
-	if u.LiveSpecificCustomToolParam != nil {
-		return json.Marshal(u.LiveSpecificCustomToolParam)
+	if u.LiveProgrammaticToolInputParam != nil {
+		return json.Marshal(u.LiveProgrammaticToolInputParam)
 	}
-	if u.LiveSpecificApplyPatchParam != nil {
-		return json.Marshal(u.LiveSpecificApplyPatchParam)
+	if u.LiveComputerToolInputParam != nil {
+		return json.Marshal(u.LiveComputerToolInputParam)
+	}
+	if u.LiveApplyPatchToolInputParam != nil {
+		return json.Marshal(u.LiveApplyPatchToolInputParam)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
 	}
 	return []byte("null"), nil
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveFunctionToolChoiceParam(v LiveFunctionToolChoiceParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveFunctionToolInputParam(v LiveFunctionToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveMCPToolChoiceParam(v LiveMCPToolChoiceParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveWebSearchToolInputParam(v LiveWebSearchToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificFileSearchParam(v LiveSpecificFileSearchParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveFileSearchToolInputParam(v LiveFileSearchToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificWebSearchParam(v LiveSpecificWebSearchParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveCodeInterpreterToolInputParam(v LiveCodeInterpreterToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificWebSearchPreviewParam(v LiveSpecificWebSearchPreviewParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveHostedShellToolInputParam(v LiveHostedShellToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificImageGenParam(v LiveSpecificImageGenParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveImageGenerationToolInputParam(v LiveImageGenerationToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificComputerParam(v LiveSpecificComputerParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveMCPToolInputParam(v LiveMCPToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificCodeInterpreterParam(v LiveSpecificCodeInterpreterParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveCustomToolInputParam(v LiveCustomToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificProgrammaticToolCallingParam(v LiveSpecificProgrammaticToolCallingParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveNamespaceToolInputParam(v LiveNamespaceToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificFunctionShellParam(v LiveSpecificFunctionShellParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveToolSearchToolInputParam(v LiveToolSearchToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificCustomToolParam(v LiveSpecificCustomToolParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveProgrammaticToolInputParam(v LiveProgrammaticToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1LiveSpecificApplyPatchParam(v LiveSpecificApplyPatchParam) bool {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveComputerToolInputParam(v LiveComputerToolInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-// UnmarshalLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1 converts an untyped value to LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1.
-func UnmarshalLiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1(v any) LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1 {
+func isNonEmptyLiveResponsesDelegationSettingsInputParamToolsItemLiveApplyPatchToolInputParam(v LiveApplyPatchToolInputParam) bool {
 	b, _ := json.Marshal(v)
-	var result LiveResponsesDelegationSettingsUpdateInputParamToolChoiceVariant1
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalLiveResponsesDelegationSettingsInputParamToolsItem converts an untyped value to LiveResponsesDelegationSettingsInputParamToolsItem.
+func UnmarshalLiveResponsesDelegationSettingsInputParamToolsItem(v any) LiveResponsesDelegationSettingsInputParamToolsItem {
+	b, _ := json.Marshal(v)
+	var result LiveResponsesDelegationSettingsInputParamToolsItem
 	_ = json.Unmarshal(b, &result)
 	return result
+}
+
+// LiveResponsesDelegationSettingsInputParamToolChoice represents a union type.
+type LiveResponsesDelegationSettingsInputParamToolChoice struct {
+	LiveToolChoiceEnum          *LiveToolChoiceEnum
+	LiveAllowedToolsChoiceParam *LiveAllowedToolsChoiceParam
+}
+
+func (u *LiveResponsesDelegationSettingsInputParamToolChoice) UnmarshalJSON(data []byte) error {
+	*u = LiveResponsesDelegationSettingsInputParamToolChoice{}
+	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveToolChoiceEnum
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveToolChoiceEnum = &lossless0
+			return nil
+		}
+		var lossless1 LiveAllowedToolsChoiceParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveAllowedToolsChoiceParam = &lossless1
+			return nil
+		}
+	}
+	var livetoolchoiceenum LiveToolChoiceEnum
+	if err := json.Unmarshal(data, &livetoolchoiceenum); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveToolChoiceEnum(livetoolchoiceenum) {
+		u.LiveToolChoiceEnum = &livetoolchoiceenum
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var liveallowedtoolschoiceparam LiveAllowedToolsChoiceParam
+	if err := json.Unmarshal(data, &liveallowedtoolschoiceparam); err == nil && isNonEmptyLiveResponsesDelegationSettingsInputParamToolChoiceLiveAllowedToolsChoiceParam(liveallowedtoolschoiceparam) {
+		u.LiveAllowedToolsChoiceParam = &liveallowedtoolschoiceparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u LiveResponsesDelegationSettingsInputParamToolChoice) MarshalJSON() ([]byte, error) {
+	if u.LiveToolChoiceEnum != nil {
+		return json.Marshal(u.LiveToolChoiceEnum)
+	}
+	if u.LiveAllowedToolsChoiceParam != nil {
+		return json.Marshal(u.LiveAllowedToolsChoiceParam)
+	}
+	return []byte("null"), nil
 }

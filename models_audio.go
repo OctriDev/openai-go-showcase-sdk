@@ -78,95 +78,6 @@ func NewCreateSpeechRequest(fields CreateSpeechRequest) (*CreateSpeechRequest, e
 	return ConstructModel(fields)
 }
 
-// CreateSpeechRequestVoiceVariant0Variant1Enum Required enumerated value serialized in the `voice` wire field.
-type CreateSpeechRequestVoiceVariant0Variant1Enum string
-
-const (
-	CreateSpeechRequestVoiceVariant0Variant1EnumFable CreateSpeechRequestVoiceVariant0Variant1Enum = "fable"
-	CreateSpeechRequestVoiceVariant0Variant1EnumOnyx  CreateSpeechRequestVoiceVariant0Variant1Enum = "onyx"
-	CreateSpeechRequestVoiceVariant0Variant1EnumNova  CreateSpeechRequestVoiceVariant0Variant1Enum = "nova"
-)
-
-// CreateSpeechRequestVoiceVariant1 Custom voice reference.
-type CreateSpeechRequestVoiceVariant1 struct {
-	// Id The custom voice ID, e.g. `voice_1234`.
-	Id string `json:"id"`
-}
-
-func (value *CreateSpeechRequestVoiceVariant1) UnmarshalJSON(data []byte) error {
-	type CreateSpeechRequestVoiceVariant1Alias CreateSpeechRequestVoiceVariant1
-	var decoded CreateSpeechRequestVoiceVariant1Alias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = CreateSpeechRequestVoiceVariant1(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"id"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewCreateSpeechRequestVoiceVariant1 returns a validated CreateSpeechRequestVoiceVariant1 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewCreateSpeechRequestVoiceVariant1(fields CreateSpeechRequestVoiceVariant1) (*CreateSpeechRequestVoiceVariant1, error) {
-	return ConstructModel(fields)
-}
-
-// CreateSpeechRequestVoice represents a union type.
-type CreateSpeechRequestVoice struct {
-	CreateSpeechRequestVoiceVariant0Variant1Enum *CreateSpeechRequestVoiceVariant0Variant1Enum
-	CreateSpeechRequestVoiceVariant1             *CreateSpeechRequestVoiceVariant1
-}
-
-func (u *CreateSpeechRequestVoice) UnmarshalJSON(data []byte) error {
-	*u = CreateSpeechRequestVoice{}
-	var refusal error
-	var createspeechrequestvoicevariant0variant1enum CreateSpeechRequestVoiceVariant0Variant1Enum
-	if err := json.Unmarshal(data, &createspeechrequestvoicevariant0variant1enum); err == nil {
-		u.CreateSpeechRequestVoiceVariant0Variant1Enum = &createspeechrequestvoicevariant0variant1enum
-		return nil
-	}
-	var createspeechrequestvoicevariant1 CreateSpeechRequestVoiceVariant1
-	if err := json.Unmarshal(data, &createspeechrequestvoicevariant1); err == nil && isNonEmptyCreateSpeechRequestVoiceCreateSpeechRequestVoiceVariant1(createspeechrequestvoicevariant1) {
-		u.CreateSpeechRequestVoiceVariant1 = &createspeechrequestvoicevariant1
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u CreateSpeechRequestVoice) MarshalJSON() ([]byte, error) {
-	if u.CreateSpeechRequestVoiceVariant0Variant1Enum != nil {
-		return json.Marshal(u.CreateSpeechRequestVoiceVariant0Variant1Enum)
-	}
-	if u.CreateSpeechRequestVoiceVariant1 != nil {
-		return json.Marshal(u.CreateSpeechRequestVoiceVariant1)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyCreateSpeechRequestVoiceCreateSpeechRequestVoiceVariant1(v CreateSpeechRequestVoiceVariant1) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalCreateSpeechRequestVoice converts an untyped value to CreateSpeechRequestVoice.
-func UnmarshalCreateSpeechRequestVoice(v any) CreateSpeechRequestVoice {
-	b, _ := json.Marshal(v)
-	var result CreateSpeechRequestVoice
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
 // CreateSpeechRequestResponseFormatEnum The format to audio in. Supported formats are `mp3`, `opus`, `aac`, `flac`, `wav`, and `pcm`.
 type CreateSpeechRequestResponseFormatEnum string
 
@@ -224,6 +135,19 @@ func (u *CreateSpeechResponseStreamEvent) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 SpeechAudioDeltaEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.SpeechAudioDeltaEvent = &lossless0
+			return nil
+		}
+		var lossless1 SpeechAudioDoneEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SpeechAudioDoneEvent = &lossless1
+			return nil
 		}
 	}
 	var speechaudiodeltaevent SpeechAudioDeltaEvent
@@ -367,67 +291,6 @@ const (
 	CreateTranscriptionRequestTimestampGranularitiesEnumWord    CreateTranscriptionRequestTimestampGranularitiesEnum = "word"
 	CreateTranscriptionRequestTimestampGranularitiesEnumSegment CreateTranscriptionRequestTimestampGranularitiesEnum = "segment"
 )
-
-// CreateTranscriptionRequestChunkingStrategyVariant0Enum Automatically set chunking parameters based on the audio. Must be set to `"auto"`.
-type CreateTranscriptionRequestChunkingStrategyVariant0Enum string
-
-const (
-	CreateTranscriptionRequestChunkingStrategyVariant0EnumAuto CreateTranscriptionRequestChunkingStrategyVariant0Enum = "auto"
-)
-
-// CreateTranscriptionRequestChunkingStrategy represents a union type.
-type CreateTranscriptionRequestChunkingStrategy struct {
-	CreateTranscriptionRequestChunkingStrategyVariant0Enum *CreateTranscriptionRequestChunkingStrategyVariant0Enum
-	VadConfig                                              *VadConfig
-}
-
-func (u *CreateTranscriptionRequestChunkingStrategy) UnmarshalJSON(data []byte) error {
-	*u = CreateTranscriptionRequestChunkingStrategy{}
-	var refusal error
-	var createtranscriptionrequestchunkingstrategyvariant0enum CreateTranscriptionRequestChunkingStrategyVariant0Enum
-	if err := json.Unmarshal(data, &createtranscriptionrequestchunkingstrategyvariant0enum); err == nil && isNonEmptyCreateTranscriptionRequestChunkingStrategyCreateTranscriptionRequestChunkingStrategyVariant0Enum(createtranscriptionrequestchunkingstrategyvariant0enum) {
-		u.CreateTranscriptionRequestChunkingStrategyVariant0Enum = &createtranscriptionrequestchunkingstrategyvariant0enum
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var vadconfig VadConfig
-	if err := json.Unmarshal(data, &vadconfig); err == nil && isNonEmptyCreateTranscriptionRequestChunkingStrategyVadConfig(vadconfig) {
-		u.VadConfig = &vadconfig
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u CreateTranscriptionRequestChunkingStrategy) MarshalJSON() ([]byte, error) {
-	if u.CreateTranscriptionRequestChunkingStrategyVariant0Enum != nil {
-		return json.Marshal(u.CreateTranscriptionRequestChunkingStrategyVariant0Enum)
-	}
-	if u.VadConfig != nil {
-		return json.Marshal(u.VadConfig)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyCreateTranscriptionRequestChunkingStrategyCreateTranscriptionRequestChunkingStrategyVariant0Enum(v CreateTranscriptionRequestChunkingStrategyVariant0Enum) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateTranscriptionRequestChunkingStrategyVadConfig(v VadConfig) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalCreateTranscriptionRequestChunkingStrategy converts an untyped value to CreateTranscriptionRequestChunkingStrategy.
-func UnmarshalCreateTranscriptionRequestChunkingStrategy(v any) CreateTranscriptionRequestChunkingStrategy {
-	b, _ := json.Marshal(v)
-	var result CreateTranscriptionRequestChunkingStrategy
-	_ = json.Unmarshal(b, &result)
-	return result
-}
 
 // CreateTranscriptionResponseDiarizedJson Represents a diarized transcription response returned by the model, including the combined transcript and speaker-segment annotations.
 type CreateTranscriptionResponseDiarizedJson struct {
@@ -580,6 +443,24 @@ func (u *CreateTranscriptionResponseStreamEvent) UnmarshalJSON(data []byte) erro
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 TranscriptTextSegmentEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.TranscriptTextSegmentEvent = &lossless0
+			return nil
+		}
+		var lossless1 TranscriptTextDeltaEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.TranscriptTextDeltaEvent = &lossless1
+			return nil
+		}
+		var lossless2 TranscriptTextDoneEvent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.TranscriptTextDoneEvent = &lossless2
+			return nil
+		}
+	}
 	var transcripttextsegmentevent TranscriptTextSegmentEvent
 	if err := json.Unmarshal(data, &transcripttextsegmentevent); err == nil && isNonEmptyCreateTranscriptionResponseStreamEventTranscriptTextSegmentEvent(transcripttextsegmentevent) {
 		u.TranscriptTextSegmentEvent = &transcripttextsegmentevent
@@ -698,4 +579,127 @@ type CreateTranslationRequest struct {
 	ResponseFormat *CreateTranslationRequestResponseFormatEnum `json:"response_format,omitempty"`
 	// Temperature The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
 	Temperature *float64 `json:"temperature,omitempty"`
+}
+
+func (value *CreateTranslationRequest) UnmarshalJSON(data []byte) error {
+	type CreateTranslationRequestAlias CreateTranslationRequest
+	var decoded CreateTranslationRequestAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateTranslationRequest(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"file", "model"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"file", "model"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateTranslationRequest returns a validated CreateTranslationRequest built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateTranslationRequest(fields CreateTranslationRequest) (*CreateTranslationRequest, error) {
+	return ConstructModel(fields)
+}
+
+// CreateTranslationRequestResponseFormatEnum The format of the output, in one of these options: `json`, `text`, `srt`, `verbose_json`, or `vtt`.
+type CreateTranslationRequestResponseFormatEnum string
+
+const (
+	CreateTranslationRequestResponseFormatEnumJson        CreateTranslationRequestResponseFormatEnum = "json"
+	CreateTranslationRequestResponseFormatEnumText        CreateTranslationRequestResponseFormatEnum = "text"
+	CreateTranslationRequestResponseFormatEnumSrt         CreateTranslationRequestResponseFormatEnum = "srt"
+	CreateTranslationRequestResponseFormatEnumVerboseJson CreateTranslationRequestResponseFormatEnum = "verbose_json"
+	CreateTranslationRequestResponseFormatEnumVtt         CreateTranslationRequestResponseFormatEnum = "vtt"
+)
+
+// CreateTranslationResponseJson Typed representation of the `CreateTranslationResponseJson` API schema.
+type CreateTranslationResponseJson struct {
+	// Text Required `string` value serialized in the `text` wire field.
+	Text string `json:"text"`
+}
+
+func (value *CreateTranslationResponseJson) UnmarshalJSON(data []byte) error {
+	type CreateTranslationResponseJsonAlias CreateTranslationResponseJson
+	var decoded CreateTranslationResponseJsonAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateTranslationResponseJson(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"text"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"text"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateTranslationResponseJson returns a validated CreateTranslationResponseJson built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateTranslationResponseJson(fields CreateTranslationResponseJson) (*CreateTranslationResponseJson, error) {
+	return ConstructModel(fields)
+}
+
+// CreateTranslationResponseVerboseJson Typed representation of the `CreateTranslationResponseVerboseJson` API schema.
+type CreateTranslationResponseVerboseJson struct {
+	// Language The language of the output translation (always `english`).
+	Language string `json:"language"`
+	// Duration The duration of the input audio.
+	Duration float64 `json:"duration"`
+	// Text The translated text.
+	Text string `json:"text"`
+	// Segments Segments of the translated text and their corresponding details.
+	Segments []TranscriptionSegment `json:"segments,omitempty"`
+}
+
+func (value *CreateTranslationResponseVerboseJson) UnmarshalJSON(data []byte) error {
+	type CreateTranslationResponseVerboseJsonAlias CreateTranslationResponseVerboseJson
+	var decoded CreateTranslationResponseVerboseJsonAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateTranslationResponseVerboseJson(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"language", "duration", "text"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"language", "duration", "text"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateTranslationResponseVerboseJson returns a validated CreateTranslationResponseVerboseJson built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateTranslationResponseVerboseJson(fields CreateTranslationResponseVerboseJson) (*CreateTranslationResponseVerboseJson, error) {
+	return ConstructModel(fields)
+}
+
+// CreateVoiceConsentRequest Typed representation of the `CreateVoiceConsentRequest` API schema.
+type CreateVoiceConsentRequest struct {
+	// Name The label to use for this consent recording.
+	Name string `json:"name"`
+	// Recording The consent audio recording file. Maximum size is 10 MiB.
+	//
+	// Supported MIME types:
+	// `audio/mpeg`, `audio/wav`, `audio/x-wav`, `audio/ogg`, `audio/aac`, `audio/flac`, `audio/webm`, `audio/mp4`.
+	Recording []byte `json:"recording"`
+	// Language The BCP 47 language tag for the consent phrase (for example, `en-US`).
+	Language string `json:"language"`
 }

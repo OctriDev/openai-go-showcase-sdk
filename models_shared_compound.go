@@ -163,6 +163,19 @@ func (u *CompoundFilterFiltersItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ComparisonFilter
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ComparisonFilter = &lossless0
+			return nil
+		}
+		var lossless1 CompoundFilter
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CompoundFilter = &lossless1
+			return nil
+		}
+	}
 	var comparisonfilter ComparisonFilter
 	if err := json.Unmarshal(data, &comparisonfilter); err == nil && isNonEmptyCompoundFilterFiltersItemComparisonFilter(comparisonfilter) {
 		u.ComparisonFilter = &comparisonfilter

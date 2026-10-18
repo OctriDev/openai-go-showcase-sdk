@@ -503,6 +503,54 @@ func (u *BetaComputerAction) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaClickParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaClickParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaDoubleClickAction
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaDoubleClickAction = &lossless1
+			return nil
+		}
+		var lossless2 BetaDragParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaDragParam = &lossless2
+			return nil
+		}
+		var lossless3 BetaKeyPressAction
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaKeyPressAction = &lossless3
+			return nil
+		}
+		var lossless4 BetaMoveParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.BetaMoveParam = &lossless4
+			return nil
+		}
+		var lossless5 BetaScreenshotParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BetaScreenshotParam = &lossless5
+			return nil
+		}
+		var lossless6 BetaScrollParam
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.BetaScrollParam = &lossless6
+			return nil
+		}
+		var lossless7 BetaTypeParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.BetaTypeParam = &lossless7
+			return nil
+		}
+		var lossless8 BetaWaitParam
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.BetaWaitParam = &lossless8
+			return nil
+		}
+	}
 	var betaclickparam BetaClickParam
 	if err := json.Unmarshal(data, &betaclickparam); err == nil && isNonEmptyBetaComputerActionBetaClickParam(betaclickparam) {
 		u.BetaClickParam = &betaclickparam
@@ -669,40 +717,3 @@ type BetaComputerScreenshotContent struct {
 	// PromptCacheBreakpoint Marks the exact end of a reusable prompt prefix. The breakpoint inherits its TTL from the request's `prompt_cache_options.ttl`; the boundary is not rounded to a token block.
 	PromptCacheBreakpoint *BetaPromptCacheBreakpointConfig `json:"prompt_cache_breakpoint,omitempty"`
 }
-
-func (value *BetaComputerScreenshotContent) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"computer_screenshot"}); err != nil {
-		return err
-	}
-	type BetaComputerScreenshotContentAlias BetaComputerScreenshotContent
-	var decoded BetaComputerScreenshotContentAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaComputerScreenshotContent(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "image_url", "file_id", "detail"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "detail"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewBetaComputerScreenshotContent returns a validated BetaComputerScreenshotContent built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaComputerScreenshotContent(fields BetaComputerScreenshotContent) (*BetaComputerScreenshotContent, error) {
-	return ConstructModel(fields)
-}
-
-// BetaComputerScreenshotContentTypeEnum Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
-type BetaComputerScreenshotContentTypeEnum string
-
-const (
-	BetaComputerScreenshotContentTypeEnumComputerScreenshot BetaComputerScreenshotContentTypeEnum = "computer_screenshot"
-)

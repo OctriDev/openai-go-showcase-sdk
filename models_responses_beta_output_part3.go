@@ -5,6 +5,139 @@ package sdk
 
 import "encoding/json"
 
+func isNonEmptyBetaOutputItemBetaMultiAgentCallOutput(v BetaMultiAgentCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaWebSearchToolCall(v BetaWebSearchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaComputerToolCall(v BetaComputerToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaComputerToolCallOutputResource(v BetaComputerToolCallOutputResource) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaReasoningItem(v BetaReasoningItem) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaProgram(v BetaProgram) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaProgramOutput(v BetaProgramOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaToolSearchCall(v BetaToolSearchCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaToolSearchOutput(v BetaToolSearchOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaAdditionalTools(v BetaAdditionalTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaCompactionBody(v BetaCompactionBody) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaImageGenToolCall(v BetaImageGenToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaCodeInterpreterToolCall(v BetaCodeInterpreterToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaLocalShellToolCall(v BetaLocalShellToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaLocalShellToolCallOutput(v BetaLocalShellToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaFunctionShellCall(v BetaFunctionShellCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaFunctionShellCallOutput(v BetaFunctionShellCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaApplyPatchToolCall(v BetaApplyPatchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaApplyPatchToolCallOutput(v BetaApplyPatchToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaMCPToolCall(v BetaMCPToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaMCPListTools(v BetaMCPListTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaMCPApprovalRequest(v BetaMCPApprovalRequest) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaMCPApprovalResponseResource(v BetaMCPApprovalResponseResource) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaCustomToolCall(v BetaCustomToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaOutputItemBetaCustomToolCallOutputResource(v BetaCustomToolCallOutputResource) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaOutputItem converts an untyped value to BetaOutputItem.
+func UnmarshalBetaOutputItem(v any) BetaOutputItem {
+	b, _ := json.Marshal(v)
+	var result BetaOutputItem
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
 // BetaOutputContent represents a union type.
 type BetaOutputContent struct {
 	BetaOutputTextContent    *BetaOutputTextContent
@@ -50,6 +183,24 @@ func (u *BetaOutputContent) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaOutputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaOutputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 BetaRefusalContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaRefusalContent = &lossless1
+			return nil
+		}
+		var lossless2 BetaReasoningTextContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaReasoningTextContent = &lossless2
+			return nil
 		}
 	}
 	var betaoutputtextcontent BetaOutputTextContent
@@ -160,6 +311,24 @@ func (u *BetaOutputTextContentParamAnnotationsItem) UnmarshalJSON(data []byte) e
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaFileCitationParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaFileCitationParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaUrlCitationParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaUrlCitationParam = &lossless1
+			return nil
+		}
+		var lossless2 BetaContainerFileCitationParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaContainerFileCitationParam = &lossless2
+			return nil
 		}
 	}
 	var betafilecitationparam BetaFileCitationParam

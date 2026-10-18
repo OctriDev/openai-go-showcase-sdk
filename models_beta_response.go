@@ -270,6 +270,19 @@ func (u *BetaResponseSteerInputItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaUserMessageItemParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaUserMessageItemParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaFunctionCallOutputItemParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaFunctionCallOutputItemParam = &lossless1
+			return nil
+		}
+	}
 	var betausermessageitemparam BetaUserMessageItemParam
 	if err := json.Unmarshal(data, &betausermessageitemparam); err == nil && isNonEmptyBetaResponseSteerInputItemBetaUserMessageItemParam(betausermessageitemparam) {
 		u.BetaUserMessageItemParam = &betausermessageitemparam

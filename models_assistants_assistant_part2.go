@@ -5,6 +5,85 @@ package sdk
 
 import "encoding/json"
 
+func (u *AssistantObjectToolsItem) UnmarshalJSON(data []byte) error {
+	*u = AssistantObjectToolsItem{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "code_interpreter":
+					var assistanttoolscode AssistantToolsCode
+					if err := json.Unmarshal(data, &assistanttoolscode); err != nil {
+						return err
+					}
+					u.AssistantToolsCode = &assistanttoolscode
+					return nil
+				case "file_search":
+					var assistanttoolsfilesearch AssistantToolsFileSearch
+					if err := json.Unmarshal(data, &assistanttoolsfilesearch); err != nil {
+						return err
+					}
+					u.AssistantToolsFileSearch = &assistanttoolsfilesearch
+					return nil
+				case "function":
+					var assistanttoolsfunction AssistantToolsFunction
+					if err := json.Unmarshal(data, &assistanttoolsfunction); err != nil {
+						return err
+					}
+					u.AssistantToolsFunction = &assistanttoolsfunction
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearch = &lossless1
+			return nil
+		}
+		var lossless2 AssistantToolsFunction
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AssistantToolsFunction = &lossless2
+			return nil
+		}
+	}
+	var assistanttoolscode AssistantToolsCode
+	if err := json.Unmarshal(data, &assistanttoolscode); err == nil && isNonEmptyAssistantObjectToolsItemAssistantToolsCode(assistanttoolscode) {
+		u.AssistantToolsCode = &assistanttoolscode
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var assistanttoolsfilesearch AssistantToolsFileSearch
+	if err := json.Unmarshal(data, &assistanttoolsfilesearch); err == nil && isNonEmptyAssistantObjectToolsItemAssistantToolsFileSearch(assistanttoolsfilesearch) {
+		u.AssistantToolsFileSearch = &assistanttoolsfilesearch
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var assistanttoolsfunction AssistantToolsFunction
+	if err := json.Unmarshal(data, &assistanttoolsfunction); err == nil && isNonEmptyAssistantObjectToolsItemAssistantToolsFunction(assistanttoolsfunction) {
+		u.AssistantToolsFunction = &assistanttoolsfunction
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
 func (u AssistantObjectToolsItem) MarshalJSON() ([]byte, error) {
 	if u.AssistantToolsCode != nil {
 		return json.Marshal(u.AssistantToolsCode)

@@ -9,6 +9,65 @@ import (
 	"fmt"
 )
 
+// RealtimeTranslationServerEventSessionClosed Returned when a realtime translation session is closed.
+type RealtimeTranslationServerEventSessionClosed struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `session.closed`.
+	Type RealtimeTranslationServerEventSessionClosedTypeEnum `json:"type"`
+}
+
+func (value *RealtimeTranslationServerEventSessionClosed) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"session.closed"}); err != nil {
+		return err
+	}
+	type RealtimeTranslationServerEventSessionClosedAlias RealtimeTranslationServerEventSessionClosed
+	var decoded RealtimeTranslationServerEventSessionClosedAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeTranslationServerEventSessionClosed(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeTranslationServerEventSessionClosed returns a validated RealtimeTranslationServerEventSessionClosed built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeTranslationServerEventSessionClosed(fields RealtimeTranslationServerEventSessionClosed) (*RealtimeTranslationServerEventSessionClosed, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeTranslationServerEventSessionClosedTypeEnum The event type, must be `session.closed`.
+type RealtimeTranslationServerEventSessionClosedTypeEnum string
+
+const (
+	RealtimeTranslationServerEventSessionClosedTypeEnumSessionClosed RealtimeTranslationServerEventSessionClosedTypeEnum = "session.closed"
+)
+
+func (value *RealtimeTranslationServerEventSessionClosedTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "session.closed":
+		*value = RealtimeTranslationServerEventSessionClosedTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "RealtimeTranslationServerEventSessionClosedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeTranslationServerEventSessionClosedTypeEnum: %v", raw)}
+	}
+}
+
 // RealtimeTranslationServerEventSessionCreated Returned when a translation session is created. Emitted automatically when a
 // new connection is established as the first server event. This event contains
 // the default translation session configuration.
@@ -631,70 +690,4 @@ func NewRealtimeTranslationSessionCreateRequestAudioInput(fields RealtimeTransla
 type RealtimeTranslationSessionCreateRequestAudioInputTranscription struct {
 	// Model The transcription model to use for source transcript deltas.
 	Model string `json:"model"`
-}
-
-func (value *RealtimeTranslationSessionCreateRequestAudioInputTranscription) UnmarshalJSON(data []byte) error {
-	type RealtimeTranslationSessionCreateRequestAudioInputTranscriptionAlias RealtimeTranslationSessionCreateRequestAudioInputTranscription
-	var decoded RealtimeTranslationSessionCreateRequestAudioInputTranscriptionAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeTranslationSessionCreateRequestAudioInputTranscription(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"model"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"model"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeTranslationSessionCreateRequestAudioInputTranscription returns a validated RealtimeTranslationSessionCreateRequestAudioInputTranscription built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeTranslationSessionCreateRequestAudioInputTranscription(fields RealtimeTranslationSessionCreateRequestAudioInputTranscription) (*RealtimeTranslationSessionCreateRequestAudioInputTranscription, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction Optional input noise reduction. Set to `null` to disable it.
-type RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction struct {
-	// Type Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
-	Type NoiseReductionType `json:"type"`
-}
-
-func (value *RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction) UnmarshalJSON(data []byte) error {
-	type RealtimeTranslationSessionCreateRequestAudioInputNoiseReductionAlias RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction
-	var decoded RealtimeTranslationSessionCreateRequestAudioInputNoiseReductionAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeTranslationSessionCreateRequestAudioInputNoiseReduction returns a validated RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeTranslationSessionCreateRequestAudioInputNoiseReduction(fields RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction) (*RealtimeTranslationSessionCreateRequestAudioInputNoiseReduction, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeTranslationSessionCreateRequestAudioOutput Optional object value serialized in the `output` wire field.
-type RealtimeTranslationSessionCreateRequestAudioOutput struct {
-	// Language Target language for translated output audio and transcript deltas.
-	Language *string `json:"language,omitempty"`
 }

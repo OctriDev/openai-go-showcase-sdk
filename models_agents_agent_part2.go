@@ -60,6 +60,34 @@ func (u *AgentToolResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AgentToolResourceFunction
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AgentToolResourceFunction = &lossless0
+			return nil
+		}
+		var lossless1 AgentToolResourceProgrammaticToolCalling
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AgentToolResourceProgrammaticToolCalling = &lossless1
+			return nil
+		}
+		var lossless2 AgentToolResourceMcp
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AgentToolResourceMcp = &lossless2
+			return nil
+		}
+		var lossless3 AgentToolResourceWebSearch
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.AgentToolResourceWebSearch = &lossless3
+			return nil
+		}
+		var lossless4 AgentToolResourceComputerUse
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.AgentToolResourceComputerUse = &lossless4
+			return nil
+		}
+	}
 	var agenttoolresourcefunction AgentToolResourceFunction
 	if err := json.Unmarshal(data, &agenttoolresourcefunction); err == nil && isNonEmptyAgentToolResourceAgentToolResourceFunction(agenttoolresourcefunction) {
 		u.AgentToolResourceFunction = &agenttoolresourcefunction
@@ -573,147 +601,4 @@ type AgentToolConfigParam struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *AgentToolConfigParam) UnmarshalJSON(data []byte) error {
-	*u = AgentToolConfigParam{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "function":
-					var agenttoolconfigparamfunction AgentToolConfigParamFunction
-					if err := json.Unmarshal(data, &agenttoolconfigparamfunction); err != nil {
-						return err
-					}
-					u.AgentToolConfigParamFunction = &agenttoolconfigparamfunction
-					return nil
-				case "tool_search":
-					var agenttoolconfigparamtoolsearch AgentToolConfigParamToolSearch
-					if err := json.Unmarshal(data, &agenttoolconfigparamtoolsearch); err != nil {
-						return err
-					}
-					u.AgentToolConfigParamToolSearch = &agenttoolconfigparamtoolsearch
-					return nil
-				case "programmatic_tool_calling":
-					var agenttoolconfigparamprogrammatictoolcalling AgentToolConfigParamProgrammaticToolCalling
-					if err := json.Unmarshal(data, &agenttoolconfigparamprogrammatictoolcalling); err != nil {
-						return err
-					}
-					u.AgentToolConfigParamProgrammaticToolCalling = &agenttoolconfigparamprogrammatictoolcalling
-					return nil
-				case "mcp":
-					var agenttoolconfigparammcp AgentToolConfigParamMcp
-					if err := json.Unmarshal(data, &agenttoolconfigparammcp); err != nil {
-						return err
-					}
-					u.AgentToolConfigParamMcp = &agenttoolconfigparammcp
-					return nil
-				case "web_search":
-					var agenttoolconfigparamwebsearch AgentToolConfigParamWebSearch
-					if err := json.Unmarshal(data, &agenttoolconfigparamwebsearch); err != nil {
-						return err
-					}
-					u.AgentToolConfigParamWebSearch = &agenttoolconfigparamwebsearch
-					return nil
-				case "computer_use":
-					var agenttoolconfigparamcomputeruse AgentToolConfigParamComputerUse
-					if err := json.Unmarshal(data, &agenttoolconfigparamcomputeruse); err != nil {
-						return err
-					}
-					u.AgentToolConfigParamComputerUse = &agenttoolconfigparamcomputeruse
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var agenttoolconfigparamfunction AgentToolConfigParamFunction
-	if err := json.Unmarshal(data, &agenttoolconfigparamfunction); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamFunction(agenttoolconfigparamfunction) {
-		u.AgentToolConfigParamFunction = &agenttoolconfigparamfunction
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var agenttoolconfigparamtoolsearch AgentToolConfigParamToolSearch
-	if err := json.Unmarshal(data, &agenttoolconfigparamtoolsearch); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamToolSearch(agenttoolconfigparamtoolsearch) {
-		u.AgentToolConfigParamToolSearch = &agenttoolconfigparamtoolsearch
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var agenttoolconfigparamprogrammatictoolcalling AgentToolConfigParamProgrammaticToolCalling
-	if err := json.Unmarshal(data, &agenttoolconfigparamprogrammatictoolcalling); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamProgrammaticToolCalling(agenttoolconfigparamprogrammatictoolcalling) {
-		u.AgentToolConfigParamProgrammaticToolCalling = &agenttoolconfigparamprogrammatictoolcalling
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var agenttoolconfigparammcp AgentToolConfigParamMcp
-	if err := json.Unmarshal(data, &agenttoolconfigparammcp); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamMcp(agenttoolconfigparammcp) {
-		u.AgentToolConfigParamMcp = &agenttoolconfigparammcp
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var agenttoolconfigparamwebsearch AgentToolConfigParamWebSearch
-	if err := json.Unmarshal(data, &agenttoolconfigparamwebsearch); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamWebSearch(agenttoolconfigparamwebsearch) {
-		u.AgentToolConfigParamWebSearch = &agenttoolconfigparamwebsearch
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var agenttoolconfigparamcomputeruse AgentToolConfigParamComputerUse
-	if err := json.Unmarshal(data, &agenttoolconfigparamcomputeruse); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamComputerUse(agenttoolconfigparamcomputeruse) {
-		u.AgentToolConfigParamComputerUse = &agenttoolconfigparamcomputeruse
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u AgentToolConfigParam) MarshalJSON() ([]byte, error) {
-	if u.AgentToolConfigParamFunction != nil {
-		return json.Marshal(u.AgentToolConfigParamFunction)
-	}
-	if u.AgentToolConfigParamToolSearch != nil {
-		return json.Marshal(u.AgentToolConfigParamToolSearch)
-	}
-	if u.AgentToolConfigParamProgrammaticToolCalling != nil {
-		return json.Marshal(u.AgentToolConfigParamProgrammaticToolCalling)
-	}
-	if u.AgentToolConfigParamMcp != nil {
-		return json.Marshal(u.AgentToolConfigParamMcp)
-	}
-	if u.AgentToolConfigParamWebSearch != nil {
-		return json.Marshal(u.AgentToolConfigParamWebSearch)
-	}
-	if u.AgentToolConfigParamComputerUse != nil {
-		return json.Marshal(u.AgentToolConfigParamComputerUse)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyAgentToolConfigParamAgentToolConfigParamFunction(v AgentToolConfigParamFunction) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyAgentToolConfigParamAgentToolConfigParamToolSearch(v AgentToolConfigParamToolSearch) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyAgentToolConfigParamAgentToolConfigParamProgrammaticToolCalling(v AgentToolConfigParamProgrammaticToolCalling) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

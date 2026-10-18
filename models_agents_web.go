@@ -302,6 +302,29 @@ func (u *WebSearchActionResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 WebSearchActionResourceSearch
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.WebSearchActionResourceSearch = &lossless0
+			return nil
+		}
+		var lossless1 WebSearchActionResourceOpenPage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.WebSearchActionResourceOpenPage = &lossless1
+			return nil
+		}
+		var lossless2 WebSearchActionResourceFindInPage
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.WebSearchActionResourceFindInPage = &lossless2
+			return nil
+		}
+		var lossless3 WebSearchActionResourceOther
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.WebSearchActionResourceOther = &lossless3
+			return nil
+		}
+	}
 	var websearchactionresourcesearch WebSearchActionResourceSearch
 	if err := json.Unmarshal(data, &websearchactionresourcesearch); err == nil && isNonEmptyWebSearchActionResourceWebSearchActionResourceSearch(websearchactionresourcesearch) {
 		u.WebSearchActionResourceSearch = &websearchactionresourcesearch

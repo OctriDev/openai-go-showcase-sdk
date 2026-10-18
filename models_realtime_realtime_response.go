@@ -542,6 +542,19 @@ func (u *RealtimeResponseCreateParamsToolsItem) UnmarshalJSON(data []byte) error
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeFunctionTool
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeFunctionTool = &lossless0
+			return nil
+		}
+		var lossless1 MCPTool
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MCPTool = &lossless1
+			return nil
+		}
+	}
 	var realtimefunctiontool RealtimeFunctionTool
 	if err := json.Unmarshal(data, &realtimefunctiontool); err == nil && isNonEmptyRealtimeResponseCreateParamsToolsItemRealtimeFunctionTool(realtimefunctiontool) {
 		u.RealtimeFunctionTool = &realtimefunctiontool
@@ -627,6 +640,24 @@ func (u *RealtimeResponseCreateParamsToolChoice) UnmarshalJSON(data []byte) erro
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ToolChoiceOptions
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ToolChoiceOptions = &lossless0
+			return nil
+		}
+		var lossless1 ToolChoiceFunction
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ToolChoiceFunction = &lossless1
+			return nil
+		}
+		var lossless2 ToolChoiceMCP
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ToolChoiceMCP = &lossless2
+			return nil
+		}
+	}
 	var toolchoiceoptions ToolChoiceOptions
 	if err := json.Unmarshal(data, &toolchoiceoptions); err == nil && isNonEmptyRealtimeResponseCreateParamsToolChoiceToolChoiceOptions(toolchoiceoptions) {
 		u.ToolChoiceOptions = &toolchoiceoptions
@@ -649,43 +680,4 @@ func (u *RealtimeResponseCreateParamsToolChoice) UnmarshalJSON(data []byte) erro
 		refusal = err
 	}
 	return refusal
-}
-
-func (u RealtimeResponseCreateParamsToolChoice) MarshalJSON() ([]byte, error) {
-	if u.ToolChoiceOptions != nil {
-		return json.Marshal(u.ToolChoiceOptions)
-	}
-	if u.ToolChoiceFunction != nil {
-		return json.Marshal(u.ToolChoiceFunction)
-	}
-	if u.ToolChoiceMCP != nil {
-		return json.Marshal(u.ToolChoiceMCP)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyRealtimeResponseCreateParamsToolChoiceToolChoiceOptions(v ToolChoiceOptions) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyRealtimeResponseCreateParamsToolChoiceToolChoiceFunction(v ToolChoiceFunction) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyRealtimeResponseCreateParamsToolChoiceToolChoiceMCP(v ToolChoiceMCP) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalRealtimeResponseCreateParamsToolChoice converts an untyped value to RealtimeResponseCreateParamsToolChoice.
-func UnmarshalRealtimeResponseCreateParamsToolChoice(v any) RealtimeResponseCreateParamsToolChoice {
-	b, _ := json.Marshal(v)
-	var result RealtimeResponseCreateParamsToolChoice
-	_ = json.Unmarshal(b, &result)
-	return result
 }

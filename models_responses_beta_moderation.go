@@ -333,6 +333,19 @@ func (u *BetaModerationInput) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaModerationResultBody
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaModerationResultBody = &lossless0
+			return nil
+		}
+		var lossless1 BetaModerationErrorBody
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaModerationErrorBody = &lossless1
+			return nil
+		}
+	}
 	var betamoderationresultbody BetaModerationResultBody
 	if err := json.Unmarshal(data, &betamoderationresultbody); err == nil && isNonEmptyBetaModerationInputBetaModerationResultBody(betamoderationresultbody) {
 		u.BetaModerationResultBody = &betamoderationresultbody
@@ -418,6 +431,19 @@ func (u *BetaModerationOutput) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaModerationResultBody
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaModerationResultBody = &lossless0
+			return nil
+		}
+		var lossless1 BetaModerationErrorBody
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaModerationErrorBody = &lossless1
+			return nil
 		}
 	}
 	var betamoderationresultbody BetaModerationResultBody

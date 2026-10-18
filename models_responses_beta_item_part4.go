@@ -5,165 +5,208 @@ package sdk
 
 import "encoding/json"
 
-func isNonEmptyBetaItemFieldBetaMessage(v BetaMessage) bool {
+func isNonEmptyBetaItemResourceBetaOutputMessage(v BetaOutputMessage) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaProgram(v BetaProgram) bool {
+func isNonEmptyBetaItemResourceBetaFileSearchToolCall(v BetaFileSearchToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaProgramOutput(v BetaProgramOutput) bool {
+func isNonEmptyBetaItemResourceBetaComputerToolCall(v BetaComputerToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaFunctionToolCall(v BetaFunctionToolCall) bool {
+func isNonEmptyBetaItemResourceBetaComputerToolCallOutputResource(v BetaComputerToolCallOutputResource) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaMultiAgentCall(v BetaMultiAgentCall) bool {
+func isNonEmptyBetaItemResourceBetaWebSearchToolCall(v BetaWebSearchToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaMultiAgentCallOutput(v BetaMultiAgentCallOutput) bool {
+func isNonEmptyBetaItemResourceBetaFunctionToolCallResource(v BetaFunctionToolCallResource) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaToolSearchCall(v BetaToolSearchCall) bool {
+func isNonEmptyBetaItemResourceBetaFunctionToolCallOutputResource(v BetaFunctionToolCallOutputResource) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaToolSearchOutput(v BetaToolSearchOutput) bool {
+func isNonEmptyBetaItemResourceBetaAgentMessage(v BetaAgentMessage) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaAdditionalTools(v BetaAdditionalTools) bool {
+func isNonEmptyBetaItemResourceBetaMultiAgentCall(v BetaMultiAgentCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaAgentMessage(v BetaAgentMessage) bool {
+func isNonEmptyBetaItemResourceBetaMultiAgentCallOutput(v BetaMultiAgentCallOutput) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaFunctionToolCallOutput(v BetaFunctionToolCallOutput) bool {
+func isNonEmptyBetaItemResourceBetaToolSearchCall(v BetaToolSearchCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaFileSearchToolCall(v BetaFileSearchToolCall) bool {
+func isNonEmptyBetaItemResourceBetaToolSearchOutput(v BetaToolSearchOutput) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaWebSearchToolCall(v BetaWebSearchToolCall) bool {
+func isNonEmptyBetaItemResourceBetaAdditionalTools(v BetaAdditionalTools) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaImageGenToolCall(v BetaImageGenToolCall) bool {
+func isNonEmptyBetaItemResourceBetaResponseConfigurationUpdate(v BetaResponseConfigurationUpdate) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaComputerToolCall(v BetaComputerToolCall) bool {
+func isNonEmptyBetaItemResourceBetaReasoningItem(v BetaReasoningItem) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaComputerToolCallOutputResource(v BetaComputerToolCallOutputResource) bool {
+func isNonEmptyBetaItemResourceBetaProgram(v BetaProgram) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaReasoningItem(v BetaReasoningItem) bool {
+func isNonEmptyBetaItemResourceBetaProgramOutput(v BetaProgramOutput) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaCompactionBody(v BetaCompactionBody) bool {
+func isNonEmptyBetaItemResourceBetaCompactionBody(v BetaCompactionBody) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaCodeInterpreterToolCall(v BetaCodeInterpreterToolCall) bool {
+func isNonEmptyBetaItemResourceBetaImageGenToolCall(v BetaImageGenToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaLocalShellToolCall(v BetaLocalShellToolCall) bool {
+func isNonEmptyBetaItemResourceBetaCodeInterpreterToolCall(v BetaCodeInterpreterToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaLocalShellToolCallOutput(v BetaLocalShellToolCallOutput) bool {
+func isNonEmptyBetaItemResourceBetaLocalShellToolCall(v BetaLocalShellToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaFunctionShellCall(v BetaFunctionShellCall) bool {
+func isNonEmptyBetaItemResourceBetaLocalShellToolCallOutput(v BetaLocalShellToolCallOutput) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaFunctionShellCallOutput(v BetaFunctionShellCallOutput) bool {
+func isNonEmptyBetaItemResourceBetaFunctionShellCall(v BetaFunctionShellCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaApplyPatchToolCall(v BetaApplyPatchToolCall) bool {
+func isNonEmptyBetaItemResourceBetaFunctionShellCallOutput(v BetaFunctionShellCallOutput) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaApplyPatchToolCallOutput(v BetaApplyPatchToolCallOutput) bool {
+func isNonEmptyBetaItemResourceBetaApplyPatchToolCall(v BetaApplyPatchToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaMCPListTools(v BetaMCPListTools) bool {
+func isNonEmptyBetaItemResourceBetaApplyPatchToolCallOutput(v BetaApplyPatchToolCallOutput) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaMCPApprovalRequest(v BetaMCPApprovalRequest) bool {
+func isNonEmptyBetaItemResourceBetaMCPListTools(v BetaMCPListTools) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaMCPApprovalResponseResource(v BetaMCPApprovalResponseResource) bool {
+func isNonEmptyBetaItemResourceBetaMCPApprovalRequest(v BetaMCPApprovalRequest) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaMCPToolCall(v BetaMCPToolCall) bool {
+func isNonEmptyBetaItemResourceBetaMCPApprovalResponseResource(v BetaMCPApprovalResponseResource) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaCustomToolCall(v BetaCustomToolCall) bool {
+func isNonEmptyBetaItemResourceBetaMCPToolCall(v BetaMCPToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaItemFieldBetaCustomToolCallOutput(v BetaCustomToolCallOutput) bool {
+func isNonEmptyBetaItemResourceBetaCustomToolCallResource(v BetaCustomToolCallResource) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-// UnmarshalBetaItemField converts an untyped value to BetaItemField.
-func UnmarshalBetaItemField(v any) BetaItemField {
+func isNonEmptyBetaItemResourceBetaCustomToolCallOutputResource(v BetaCustomToolCallOutputResource) bool {
 	b, _ := json.Marshal(v)
-	var result BetaItemField
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaItemResource converts an untyped value to BetaItemResource.
+func UnmarshalBetaItemResource(v any) BetaItemResource {
+	b, _ := json.Marshal(v)
+	var result BetaItemResource
 	_ = json.Unmarshal(b, &result)
 	return result
+}
+
+// BetaItemField represents a union type.
+type BetaItemField struct {
+	BetaMessage                        *BetaMessage
+	BetaProgram                        *BetaProgram
+	BetaProgramOutput                  *BetaProgramOutput
+	BetaFunctionToolCall               *BetaFunctionToolCall
+	BetaMultiAgentCall                 *BetaMultiAgentCall
+	BetaMultiAgentCallOutput           *BetaMultiAgentCallOutput
+	BetaToolSearchCall                 *BetaToolSearchCall
+	BetaToolSearchOutput               *BetaToolSearchOutput
+	BetaAdditionalTools                *BetaAdditionalTools
+	BetaAgentMessage                   *BetaAgentMessage
+	BetaFunctionToolCallOutput         *BetaFunctionToolCallOutput
+	BetaFileSearchToolCall             *BetaFileSearchToolCall
+	BetaWebSearchToolCall              *BetaWebSearchToolCall
+	BetaImageGenToolCall               *BetaImageGenToolCall
+	BetaComputerToolCall               *BetaComputerToolCall
+	BetaComputerToolCallOutputResource *BetaComputerToolCallOutputResource
+	BetaReasoningItem                  *BetaReasoningItem
+	BetaCompactionBody                 *BetaCompactionBody
+	BetaCodeInterpreterToolCall        *BetaCodeInterpreterToolCall
+	BetaLocalShellToolCall             *BetaLocalShellToolCall
+	BetaLocalShellToolCallOutput       *BetaLocalShellToolCallOutput
+	BetaFunctionShellCall              *BetaFunctionShellCall
+	BetaFunctionShellCallOutput        *BetaFunctionShellCallOutput
+	BetaApplyPatchToolCall             *BetaApplyPatchToolCall
+	BetaApplyPatchToolCallOutput       *BetaApplyPatchToolCallOutput
+	BetaMCPListTools                   *BetaMCPListTools
+	BetaMCPApprovalRequest             *BetaMCPApprovalRequest
+	BetaMCPApprovalResponseResource    *BetaMCPApprovalResponseResource
+	BetaMCPToolCall                    *BetaMCPToolCall
+	BetaCustomToolCall                 *BetaCustomToolCall
+	BetaCustomToolCallOutput           *BetaCustomToolCallOutput
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
 }

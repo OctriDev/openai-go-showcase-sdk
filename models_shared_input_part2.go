@@ -9,6 +9,42 @@ import (
 	"fmt"
 )
 
+const (
+	InputFileContentTypeEnumInputFile InputFileContentTypeEnum = "input_file"
+)
+
+func (value *InputFileContentTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "input_file":
+		*value = InputFileContentTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "InputFileContentTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown InputFileContentTypeEnum: %v", raw)}
+	}
+}
+
+// InputFidelity Control how much effort the model will exert to match the style and features, especially facial features, of input images. Supports `high` and `low` on `gpt-image-1` and `gpt-image-1.5`; `gpt-image-1-mini` supports only `low`. For `gpt-image-2`, omit this parameter. Defaults to `low` on supported models.
+type InputFidelity string
+
+const (
+	InputFidelityHigh InputFidelity = "high"
+	InputFidelityLow  InputFidelity = "low"
+)
+
+// InputTextContentParam A text input to the model.
+type InputTextContentParam struct {
+	// Type The type of the input item. Always `input_text`.
+	Type InputTextContentParamTypeEnum `json:"type"`
+	// Text The text input to the model.
+	Text string `json:"text"`
+	// PromptCacheBreakpoint Optional API value serialized in the `prompt_cache_breakpoint` wire field.
+	PromptCacheBreakpoint *NullableValue[PromptCacheBreakpointParam] `json:"prompt_cache_breakpoint,omitempty"`
+}
+
 func (value *InputTextContentParam) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {

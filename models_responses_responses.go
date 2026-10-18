@@ -48,6 +48,19 @@ func (u *ResponsesClientEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ResponsesClientEventResponseCreate
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ResponsesClientEventResponseCreate = &lossless0
+			return nil
+		}
+		var lossless1 ResponseSteerEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ResponseSteerEvent = &lossless1
+			return nil
+		}
+	}
 	var responsesclienteventresponsecreate ResponsesClientEventResponseCreate
 	if err := json.Unmarshal(data, &responsesclienteventresponsecreate); err == nil && isNonEmptyResponsesClientEventResponsesClientEventResponseCreate(responsesclienteventresponsecreate) {
 		u.ResponsesClientEventResponseCreate = &responsesclienteventresponsecreate
@@ -711,11 +724,4 @@ func (value *ResponsesServerEventVariant6) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-// NewResponsesServerEventVariant6 returns a validated ResponsesServerEventVariant6 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewResponsesServerEventVariant6(fields ResponsesServerEventVariant6) (*ResponsesServerEventVariant6, error) {
-	return ConstructModel(fields)
 }

@@ -9,6 +9,51 @@ import (
 	"fmt"
 )
 
+// ComputerCallOutputStatus Typed representation of the `ComputerCallOutputStatus` API schema.
+type ComputerCallOutputStatus string
+
+const (
+	ComputerCallOutputStatusCompleted  ComputerCallOutputStatus = "completed"
+	ComputerCallOutputStatusIncomplete ComputerCallOutputStatus = "incomplete"
+	ComputerCallOutputStatusFailed     ComputerCallOutputStatus = "failed"
+)
+
+// ComputerTool A tool that controls a virtual computer. Learn more about the [computer tool](https://developers.openai.com/api/docs/guides/tools-computer-use).
+type ComputerTool struct {
+	// Type The type of the computer tool. Always `computer`.
+	Type ComputerToolTypeEnum `json:"type"`
+}
+
+func (value *ComputerTool) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"computer"}); err != nil {
+		return err
+	}
+	type ComputerToolAlias ComputerTool
+	var decoded ComputerToolAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ComputerTool(decoded)
+	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewComputerTool returns a validated ComputerTool built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewComputerTool(fields ComputerTool) (*ComputerTool, error) {
+	return ConstructModel(fields)
+}
+
 // ComputerToolTypeEnum The type of the computer tool. Always `computer`.
 type ComputerToolTypeEnum string
 

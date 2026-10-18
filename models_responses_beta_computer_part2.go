@@ -9,6 +9,43 @@ import (
 	"fmt"
 )
 
+func (value *BetaComputerScreenshotContent) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"computer_screenshot"}); err != nil {
+		return err
+	}
+	type BetaComputerScreenshotContentAlias BetaComputerScreenshotContent
+	var decoded BetaComputerScreenshotContentAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = BetaComputerScreenshotContent(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "image_url", "file_id", "detail"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "detail"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewBetaComputerScreenshotContent returns a validated BetaComputerScreenshotContent built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewBetaComputerScreenshotContent(fields BetaComputerScreenshotContent) (*BetaComputerScreenshotContent, error) {
+	return ConstructModel(fields)
+}
+
+// BetaComputerScreenshotContentTypeEnum Specifies the event type. For a computer screenshot, this property is always set to `computer_screenshot`.
+type BetaComputerScreenshotContentTypeEnum string
+
+const (
+	BetaComputerScreenshotContentTypeEnumComputerScreenshot BetaComputerScreenshotContentTypeEnum = "computer_screenshot"
+)
+
 func (value *BetaComputerScreenshotContentTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {

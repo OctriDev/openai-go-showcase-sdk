@@ -8,6 +8,65 @@ import (
 	"encoding/json"
 )
 
+func (value *UpdateVectorStoreFileAttributesRequest) UnmarshalJSON(data []byte) error {
+	type UpdateVectorStoreFileAttributesRequestAlias UpdateVectorStoreFileAttributesRequest
+	var decoded UpdateVectorStoreFileAttributesRequestAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = UpdateVectorStoreFileAttributesRequest(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"attributes"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewUpdateVectorStoreFileAttributesRequest returns a validated UpdateVectorStoreFileAttributesRequest built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewUpdateVectorStoreFileAttributesRequest(fields UpdateVectorStoreFileAttributesRequest) (*UpdateVectorStoreFileAttributesRequest, error) {
+	return ConstructModel(fields)
+}
+
+// UpdateVectorStoreRequest Typed representation of the `UpdateVectorStoreRequest` API schema.
+type UpdateVectorStoreRequest struct {
+	// Name The name of the vector store.
+	Name *NullableValue[string] `json:"name,omitempty"`
+	// ExpiresAfter Optional API value serialized in the `expires_after` wire field.
+	ExpiresAfter *VectorStoreExpirationAfter `json:"expires_after,omitempty"`
+	// Metadata Set of 16 key-value pairs that can be attached to an object. This can be
+	// useful for storing additional information about the object in a structured
+	// format, and querying for objects via API or the dashboard.
+	//
+	// Keys are strings with a maximum length of 64 characters. Values are strings
+	// with a maximum length of 512 characters.
+	Metadata *NullableValue[Metadata] `json:"metadata,omitempty"`
+}
+
+func (value *UpdateVectorStoreRequest) UnmarshalJSON(data []byte) error {
+	type UpdateVectorStoreRequestAlias UpdateVectorStoreRequest
+	var decoded UpdateVectorStoreRequestAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = UpdateVectorStoreRequest(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if raw, ok := rawFields["name"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Name = &NullableValue[string]{}
+	}
+	if raw, ok := rawFields["metadata"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Metadata = &NullableValue[Metadata]{}
+	}
+	return nil
+}
+
 // NewUpdateVectorStoreRequest returns a validated UpdateVectorStoreRequest built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
@@ -630,55 +689,3 @@ func NewVectorStoreSearchResultContentObject(fields VectorStoreSearchResultConte
 
 // VectorStoreSearchResultContentObjectTypeEnum The type of content.
 type VectorStoreSearchResultContentObjectTypeEnum string
-
-const (
-	VectorStoreSearchResultContentObjectTypeEnumText VectorStoreSearchResultContentObjectTypeEnum = "text"
-)
-
-// VectorStoreSearchResultItem Typed representation of the `VectorStoreSearchResultItem` API schema.
-type VectorStoreSearchResultItem struct {
-	// FileId The ID of the vector store file.
-	FileId string `json:"file_id"`
-	// Filename The name of the vector store file.
-	Filename string `json:"filename"`
-	// Score The similarity score for the result.
-	Score float64 `json:"score"`
-	// Attributes Set of 16 key-value pairs that can be attached to an object. This can be
-	// useful for storing additional information about the object in a structured
-	// format, and querying for objects via API or the dashboard. Keys are strings
-	// with a maximum length of 64 characters. Values are strings with a maximum
-	// length of 512 characters, booleans, or numbers.
-	Attributes NullableValue[VectorStoreFileAttributes] `json:"attributes"`
-	// Content Content chunks from the file.
-	Content []VectorStoreSearchResultContentObject `json:"content"`
-}
-
-func (value *VectorStoreSearchResultItem) UnmarshalJSON(data []byte) error {
-	type VectorStoreSearchResultItemAlias VectorStoreSearchResultItem
-	var decoded VectorStoreSearchResultItemAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = VectorStoreSearchResultItem(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"file_id", "filename", "score", "attributes", "content"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"file_id", "filename", "score", "content"}); err != nil {
-		return err
-	}
-	if err := ValidateRange("score", value.Score, RangeOpts{Min: Ptr[float64](0), Max: Ptr[float64](1)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewVectorStoreSearchResultItem returns a validated VectorStoreSearchResultItem built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewVectorStoreSearchResultItem(fields VectorStoreSearchResultItem) (*VectorStoreSearchResultItem, error) {
-	return ConstructModel(fields)
-}

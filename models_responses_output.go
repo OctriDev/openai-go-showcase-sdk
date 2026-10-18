@@ -52,6 +52,24 @@ func (u *OutputContent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 OutputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.OutputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 RefusalContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RefusalContent = &lossless1
+			return nil
+		}
+		var lossless2 ReasoningTextContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ReasoningTextContent = &lossless2
+			return nil
+		}
+	}
 	var outputtextcontent OutputTextContent
 	if err := json.Unmarshal(data, &outputtextcontent); err == nil && isNonEmptyOutputContentOutputTextContent(outputtextcontent) {
 		u.OutputTextContent = &outputtextcontent
@@ -362,6 +380,149 @@ func (u *OutputItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 OutputMessage
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.OutputMessage = &lossless0
+			return nil
+		}
+		var lossless1 FileSearchToolCall
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.FileSearchToolCall = &lossless1
+			return nil
+		}
+		var lossless2 FunctionToolCall
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.FunctionToolCall = &lossless2
+			return nil
+		}
+		var lossless3 FunctionToolCallOutputResource
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.FunctionToolCallOutputResource = &lossless3
+			return nil
+		}
+		var lossless4 WebSearchToolCall
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.WebSearchToolCall = &lossless4
+			return nil
+		}
+		var lossless5 ComputerToolCall
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ComputerToolCall = &lossless5
+			return nil
+		}
+		var lossless6 ComputerToolCallOutputResource
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.ComputerToolCallOutputResource = &lossless6
+			return nil
+		}
+		var lossless7 ReasoningItem
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.ReasoningItem = &lossless7
+			return nil
+		}
+		var lossless8 Program
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.Program = &lossless8
+			return nil
+		}
+		var lossless9 ProgramOutput
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.ProgramOutput = &lossless9
+			return nil
+		}
+		var lossless10 ToolSearchCall
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.ToolSearchCall = &lossless10
+			return nil
+		}
+		var lossless11 ToolSearchOutput
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.ToolSearchOutput = &lossless11
+			return nil
+		}
+		var lossless12 AdditionalTools
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.AdditionalTools = &lossless12
+			return nil
+		}
+		var lossless13 CompactionBody
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.CompactionBody = &lossless13
+			return nil
+		}
+		var lossless14 ImageGenToolCall
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.ImageGenToolCall = &lossless14
+			return nil
+		}
+		var lossless15 CodeInterpreterToolCall
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.CodeInterpreterToolCall = &lossless15
+			return nil
+		}
+		var lossless16 LocalShellToolCall
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.LocalShellToolCall = &lossless16
+			return nil
+		}
+		var lossless17 LocalShellToolCallOutput
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.LocalShellToolCallOutput = &lossless17
+			return nil
+		}
+		var lossless18 FunctionShellCall
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.FunctionShellCall = &lossless18
+			return nil
+		}
+		var lossless19 FunctionShellCallOutput
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.FunctionShellCallOutput = &lossless19
+			return nil
+		}
+		var lossless20 ApplyPatchToolCall
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.ApplyPatchToolCall = &lossless20
+			return nil
+		}
+		var lossless21 ApplyPatchToolCallOutput
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.ApplyPatchToolCallOutput = &lossless21
+			return nil
+		}
+		var lossless22 MCPToolCall
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.MCPToolCall = &lossless22
+			return nil
+		}
+		var lossless23 MCPListTools
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.MCPListTools = &lossless23
+			return nil
+		}
+		var lossless24 MCPApprovalRequest
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.MCPApprovalRequest = &lossless24
+			return nil
+		}
+		var lossless25 MCPApprovalResponseResource
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.MCPApprovalResponseResource = &lossless25
+			return nil
+		}
+		var lossless26 CustomToolCall
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.CustomToolCall = &lossless26
+			return nil
+		}
+		var lossless27 CustomToolCallOutputResource
+		if json.Unmarshal(data, &lossless27) == nil && keepsEveryKey(raw, lossless27) {
+			u.CustomToolCallOutputResource = &lossless27
+			return nil
+		}
+	}
 	var outputmessage OutputMessage
 	if err := json.Unmarshal(data, &outputmessage); err == nil && isNonEmptyOutputItemOutputMessage(outputmessage) {
 		u.OutputMessage = &outputmessage
@@ -559,170 +720,4 @@ func (u *OutputItem) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
-}
-
-func (u OutputItem) MarshalJSON() ([]byte, error) {
-	if u.OutputMessage != nil {
-		return json.Marshal(u.OutputMessage)
-	}
-	if u.FileSearchToolCall != nil {
-		return json.Marshal(u.FileSearchToolCall)
-	}
-	if u.FunctionToolCall != nil {
-		return json.Marshal(u.FunctionToolCall)
-	}
-	if u.FunctionToolCallOutputResource != nil {
-		return json.Marshal(u.FunctionToolCallOutputResource)
-	}
-	if u.WebSearchToolCall != nil {
-		return json.Marshal(u.WebSearchToolCall)
-	}
-	if u.ComputerToolCall != nil {
-		return json.Marshal(u.ComputerToolCall)
-	}
-	if u.ComputerToolCallOutputResource != nil {
-		return json.Marshal(u.ComputerToolCallOutputResource)
-	}
-	if u.ReasoningItem != nil {
-		return json.Marshal(u.ReasoningItem)
-	}
-	if u.Program != nil {
-		return json.Marshal(u.Program)
-	}
-	if u.ProgramOutput != nil {
-		return json.Marshal(u.ProgramOutput)
-	}
-	if u.ToolSearchCall != nil {
-		return json.Marshal(u.ToolSearchCall)
-	}
-	if u.ToolSearchOutput != nil {
-		return json.Marshal(u.ToolSearchOutput)
-	}
-	if u.AdditionalTools != nil {
-		return json.Marshal(u.AdditionalTools)
-	}
-	if u.CompactionBody != nil {
-		return json.Marshal(u.CompactionBody)
-	}
-	if u.ImageGenToolCall != nil {
-		return json.Marshal(u.ImageGenToolCall)
-	}
-	if u.CodeInterpreterToolCall != nil {
-		return json.Marshal(u.CodeInterpreterToolCall)
-	}
-	if u.LocalShellToolCall != nil {
-		return json.Marshal(u.LocalShellToolCall)
-	}
-	if u.LocalShellToolCallOutput != nil {
-		return json.Marshal(u.LocalShellToolCallOutput)
-	}
-	if u.FunctionShellCall != nil {
-		return json.Marshal(u.FunctionShellCall)
-	}
-	if u.FunctionShellCallOutput != nil {
-		return json.Marshal(u.FunctionShellCallOutput)
-	}
-	if u.ApplyPatchToolCall != nil {
-		return json.Marshal(u.ApplyPatchToolCall)
-	}
-	if u.ApplyPatchToolCallOutput != nil {
-		return json.Marshal(u.ApplyPatchToolCallOutput)
-	}
-	if u.MCPToolCall != nil {
-		return json.Marshal(u.MCPToolCall)
-	}
-	if u.MCPListTools != nil {
-		return json.Marshal(u.MCPListTools)
-	}
-	if u.MCPApprovalRequest != nil {
-		return json.Marshal(u.MCPApprovalRequest)
-	}
-	if u.MCPApprovalResponseResource != nil {
-		return json.Marshal(u.MCPApprovalResponseResource)
-	}
-	if u.CustomToolCall != nil {
-		return json.Marshal(u.CustomToolCall)
-	}
-	if u.CustomToolCallOutputResource != nil {
-		return json.Marshal(u.CustomToolCallOutputResource)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyOutputItemOutputMessage(v OutputMessage) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemFileSearchToolCall(v FileSearchToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemFunctionToolCall(v FunctionToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemFunctionToolCallOutputResource(v FunctionToolCallOutputResource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemWebSearchToolCall(v WebSearchToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemComputerToolCall(v ComputerToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemComputerToolCallOutputResource(v ComputerToolCallOutputResource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemReasoningItem(v ReasoningItem) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemProgram(v Program) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemProgramOutput(v ProgramOutput) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemToolSearchCall(v ToolSearchCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemToolSearchOutput(v ToolSearchOutput) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemAdditionalTools(v AdditionalTools) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemCompactionBody(v CompactionBody) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyOutputItemImageGenToolCall(v ImageGenToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

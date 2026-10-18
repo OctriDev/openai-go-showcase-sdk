@@ -5,6 +5,89 @@ package sdk
 
 import "encoding/json"
 
+func (u *BetaFunctionShellCallItemParamEnvironment) UnmarshalJSON(data []byte) error {
+	*u = BetaFunctionShellCallItemParamEnvironment{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "local":
+					var betalocalenvironmentparam BetaLocalEnvironmentParam
+					if err := json.Unmarshal(data, &betalocalenvironmentparam); err != nil {
+						return err
+					}
+					u.BetaLocalEnvironmentParam = &betalocalenvironmentparam
+					return nil
+				case "container_reference":
+					var betacontainerreferenceparam BetaContainerReferenceParam
+					if err := json.Unmarshal(data, &betacontainerreferenceparam); err != nil {
+						return err
+					}
+					u.BetaContainerReferenceParam = &betacontainerreferenceparam
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaLocalEnvironmentParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaLocalEnvironmentParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaContainerReferenceParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaContainerReferenceParam = &lossless1
+			return nil
+		}
+	}
+	var betalocalenvironmentparam BetaLocalEnvironmentParam
+	if err := json.Unmarshal(data, &betalocalenvironmentparam); err == nil && isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaLocalEnvironmentParam(betalocalenvironmentparam) {
+		u.BetaLocalEnvironmentParam = &betalocalenvironmentparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betacontainerreferenceparam BetaContainerReferenceParam
+	if err := json.Unmarshal(data, &betacontainerreferenceparam); err == nil && isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaContainerReferenceParam(betacontainerreferenceparam) {
+		u.BetaContainerReferenceParam = &betacontainerreferenceparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u BetaFunctionShellCallItemParamEnvironment) MarshalJSON() ([]byte, error) {
+	if u.BetaLocalEnvironmentParam != nil {
+		return json.Marshal(u.BetaLocalEnvironmentParam)
+	}
+	if u.BetaContainerReferenceParam != nil {
+		return json.Marshal(u.BetaContainerReferenceParam)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaLocalEnvironmentParam(v BetaLocalEnvironmentParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaContainerReferenceParam(v BetaContainerReferenceParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
 // UnmarshalBetaFunctionShellCallItemParamEnvironment converts an untyped value to BetaFunctionShellCallItemParamEnvironment.
 func UnmarshalBetaFunctionShellCallItemParamEnvironment(v any) BetaFunctionShellCallItemParamEnvironment {
 	b, _ := json.Marshal(v)
@@ -50,6 +133,19 @@ func (u *BetaFunctionShellCallEnvironment) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaLocalEnvironmentResource
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaLocalEnvironmentResource = &lossless0
+			return nil
+		}
+		var lossless1 BetaContainerReferenceResource
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaContainerReferenceResource = &lossless1
+			return nil
 		}
 	}
 	var betalocalenvironmentresource BetaLocalEnvironmentResource
@@ -137,6 +233,19 @@ func (u *BetaFunctionShellCallOutputContentOutcome) UnmarshalJSON(data []byte) e
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaFunctionShellCallOutputTimeoutOutcome
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaFunctionShellCallOutputTimeoutOutcome = &lossless0
+			return nil
+		}
+		var lossless1 BetaFunctionShellCallOutputExitOutcome
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaFunctionShellCallOutputExitOutcome = &lossless1
+			return nil
 		}
 	}
 	var betafunctionshellcalloutputtimeoutoutcome BetaFunctionShellCallOutputTimeoutOutcome

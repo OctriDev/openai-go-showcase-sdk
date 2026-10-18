@@ -428,6 +428,19 @@ func (u *CustomToolParamFormat) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CustomTextFormatParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CustomTextFormatParam = &lossless0
+			return nil
+		}
+		var lossless1 CustomGrammarFormatParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CustomGrammarFormatParam = &lossless1
+			return nil
+		}
+	}
 	var customtextformatparam CustomTextFormatParam
 	if err := json.Unmarshal(data, &customtextformatparam); err == nil && isNonEmptyCustomToolParamFormatCustomTextFormatParam(customtextformatparam) {
 		u.CustomTextFormatParam = &customtextformatparam

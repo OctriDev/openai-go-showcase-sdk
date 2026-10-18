@@ -8,6 +8,13 @@ import (
 	"fmt"
 )
 
+// NewResponsesServerEventVariant6 returns a validated ResponsesServerEventVariant6 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewResponsesServerEventVariant6(fields ResponsesServerEventVariant6) (*ResponsesServerEventVariant6, error) {
+	return ConstructModel(fields)
+}
+
 // ResponsesServerEventVariant7 Emitted when a code interpreter call is in progress.
 type ResponsesServerEventVariant7 struct {
 	// Type The type of the event. Always `response.code_interpreter_call.in_progress`.
@@ -707,6 +714,3 @@ func (value *ResponsesServerEventVariant20) UnmarshalJSON(data []byte) error {
 func NewResponsesServerEventVariant20(fields ResponsesServerEventVariant20) (*ResponsesServerEventVariant20, error) {
 	return ConstructModel(fields)
 }
-
-// ResponseShellCallCommandDeltaStreamingEventTypeEnum The type of the event, always `response.shell_call_command.delta`.
-type ResponseShellCallCommandDeltaStreamingEventTypeEnum string

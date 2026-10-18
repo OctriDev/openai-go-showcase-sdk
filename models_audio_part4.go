@@ -5,6 +5,195 @@ package sdk
 
 import "encoding/json"
 
+func (u CreateSpeechRequestVoice) MarshalJSON() ([]byte, error) {
+	if u.String != nil {
+		return json.Marshal(u.String)
+	}
+	if u.CreateSpeechRequestVoiceVariant1Enum != nil {
+		return json.Marshal(u.CreateSpeechRequestVoiceVariant1Enum)
+	}
+	if u.CreateSpeechRequestVoiceVariant2 != nil {
+		return json.Marshal(u.CreateSpeechRequestVoiceVariant2)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateSpeechRequestVoiceCreateSpeechRequestVoiceVariant2(v CreateSpeechRequestVoiceVariant2) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateSpeechRequestVoice converts an untyped value to CreateSpeechRequestVoice.
+func UnmarshalCreateSpeechRequestVoice(v any) CreateSpeechRequestVoice {
+	b, _ := json.Marshal(v)
+	var result CreateSpeechRequestVoice
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// CreateTranscriptionRequestChunkingStrategyVariant0Enum Automatically set chunking parameters based on the audio. Must be set to `"auto"`.
+type CreateTranscriptionRequestChunkingStrategyVariant0Enum string
+
+const (
+	CreateTranscriptionRequestChunkingStrategyVariant0EnumAuto CreateTranscriptionRequestChunkingStrategyVariant0Enum = "auto"
+)
+
+// CreateTranscriptionRequestChunkingStrategy represents a union type.
+type CreateTranscriptionRequestChunkingStrategy struct {
+	CreateTranscriptionRequestChunkingStrategyVariant0Enum *CreateTranscriptionRequestChunkingStrategyVariant0Enum
+	VadConfig                                              *VadConfig
+}
+
+func (u *CreateTranscriptionRequestChunkingStrategy) UnmarshalJSON(data []byte) error {
+	*u = CreateTranscriptionRequestChunkingStrategy{}
+	var refusal error
+	var createtranscriptionrequestchunkingstrategyvariant0enum CreateTranscriptionRequestChunkingStrategyVariant0Enum
+	if err := json.Unmarshal(data, &createtranscriptionrequestchunkingstrategyvariant0enum); err == nil {
+		u.CreateTranscriptionRequestChunkingStrategyVariant0Enum = &createtranscriptionrequestchunkingstrategyvariant0enum
+		return nil
+	}
+	var vadconfig VadConfig
+	if err := json.Unmarshal(data, &vadconfig); err == nil && isNonEmptyCreateTranscriptionRequestChunkingStrategyVadConfig(vadconfig) {
+		u.VadConfig = &vadconfig
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateTranscriptionRequestChunkingStrategy) MarshalJSON() ([]byte, error) {
+	if u.CreateTranscriptionRequestChunkingStrategyVariant0Enum != nil {
+		return json.Marshal(u.CreateTranscriptionRequestChunkingStrategyVariant0Enum)
+	}
+	if u.VadConfig != nil {
+		return json.Marshal(u.VadConfig)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateTranscriptionRequestChunkingStrategyVadConfig(v VadConfig) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateTranscriptionRequestChunkingStrategy converts an untyped value to CreateTranscriptionRequestChunkingStrategy.
+func UnmarshalCreateTranscriptionRequestChunkingStrategy(v any) CreateTranscriptionRequestChunkingStrategy {
+	b, _ := json.Marshal(v)
+	var result CreateTranscriptionRequestChunkingStrategy
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// CreateTranscriptionResponseDiarizedJsonUsage represents a union type.
+type CreateTranscriptionResponseDiarizedJsonUsage struct {
+	TranscriptTextUsageTokens   *TranscriptTextUsageTokens
+	TranscriptTextUsageDuration *TranscriptTextUsageDuration
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
+func (u *CreateTranscriptionResponseDiarizedJsonUsage) UnmarshalJSON(data []byte) error {
+	*u = CreateTranscriptionResponseDiarizedJsonUsage{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "tokens":
+					var transcripttextusagetokens TranscriptTextUsageTokens
+					if err := json.Unmarshal(data, &transcripttextusagetokens); err != nil {
+						return err
+					}
+					u.TranscriptTextUsageTokens = &transcripttextusagetokens
+					return nil
+				case "duration":
+					var transcripttextusageduration TranscriptTextUsageDuration
+					if err := json.Unmarshal(data, &transcripttextusageduration); err != nil {
+						return err
+					}
+					u.TranscriptTextUsageDuration = &transcripttextusageduration
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 TranscriptTextUsageTokens
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.TranscriptTextUsageTokens = &lossless0
+			return nil
+		}
+		var lossless1 TranscriptTextUsageDuration
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.TranscriptTextUsageDuration = &lossless1
+			return nil
+		}
+	}
+	var transcripttextusagetokens TranscriptTextUsageTokens
+	if err := json.Unmarshal(data, &transcripttextusagetokens); err == nil && isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageTokens(transcripttextusagetokens) {
+		u.TranscriptTextUsageTokens = &transcripttextusagetokens
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var transcripttextusageduration TranscriptTextUsageDuration
+	if err := json.Unmarshal(data, &transcripttextusageduration); err == nil && isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageDuration(transcripttextusageduration) {
+		u.TranscriptTextUsageDuration = &transcripttextusageduration
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateTranscriptionResponseDiarizedJsonUsage) MarshalJSON() ([]byte, error) {
+	if u.TranscriptTextUsageTokens != nil {
+		return json.Marshal(u.TranscriptTextUsageTokens)
+	}
+	if u.TranscriptTextUsageDuration != nil {
+		return json.Marshal(u.TranscriptTextUsageDuration)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageTokens(v TranscriptTextUsageTokens) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageDuration(v TranscriptTextUsageDuration) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateTranscriptionResponseDiarizedJsonUsage converts an untyped value to CreateTranscriptionResponseDiarizedJsonUsage.
+func UnmarshalCreateTranscriptionResponseDiarizedJsonUsage(v any) CreateTranscriptionResponseDiarizedJsonUsage {
+	b, _ := json.Marshal(v)
+	var result CreateTranscriptionResponseDiarizedJsonUsage
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// CreateTranscriptionResponseJsonUsage represents a union type.
+type CreateTranscriptionResponseJsonUsage struct {
+	TranscriptTextUsageTokens   *TranscriptTextUsageTokens
+	TranscriptTextUsageDuration *TranscriptTextUsageDuration
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
 func (u *CreateTranscriptionResponseJsonUsage) UnmarshalJSON(data []byte) error {
 	*u = CreateTranscriptionResponseJsonUsage{}
 	var refusal error
@@ -33,6 +222,19 @@ func (u *CreateTranscriptionResponseJsonUsage) UnmarshalJSON(data []byte) error 
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 TranscriptTextUsageTokens
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.TranscriptTextUsageTokens = &lossless0
+			return nil
+		}
+		var lossless1 TranscriptTextUsageDuration
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.TranscriptTextUsageDuration = &lossless1
+			return nil
 		}
 	}
 	var transcripttextusagetokens TranscriptTextUsageTokens

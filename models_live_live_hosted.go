@@ -257,6 +257,24 @@ func (u *LiveHostedShellToolInputParamEnvironment) UnmarshalJSON(data []byte) er
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveHostedShellContainerAutoParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveHostedShellContainerAutoParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveContainerReferenceParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveContainerReferenceParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveLocalEnvironmentParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveLocalEnvironmentParam = &lossless2
+			return nil
+		}
+	}
 	var livehostedshellcontainerautoparam LiveHostedShellContainerAutoParam
 	if err := json.Unmarshal(data, &livehostedshellcontainerautoparam); err == nil && isNonEmptyLiveHostedShellToolInputParamEnvironmentLiveHostedShellContainerAutoParam(livehostedshellcontainerautoparam) {
 		u.LiveHostedShellContainerAutoParam = &livehostedshellcontainerautoparam
@@ -359,6 +377,19 @@ func (u *LiveHostedShellContainerAutoParamNetworkPolicy) UnmarshalJSON(data []by
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveContainerNetworkPolicyDisabledParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveContainerNetworkPolicyDisabledParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveHostedShellNetworkPolicyAllowlistParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveHostedShellNetworkPolicyAllowlistParam = &lossless1
+			return nil
+		}
+	}
 	var livecontainernetworkpolicydisabledparam LiveContainerNetworkPolicyDisabledParam
 	if err := json.Unmarshal(data, &livecontainernetworkpolicydisabledparam); err == nil && isNonEmptyLiveHostedShellContainerAutoParamNetworkPolicyLiveContainerNetworkPolicyDisabledParam(livecontainernetworkpolicydisabledparam) {
 		u.LiveContainerNetworkPolicyDisabledParam = &livecontainernetworkpolicydisabledparam
@@ -444,6 +475,19 @@ func (u *LiveHostedShellContainerAutoParamSkillsItem) UnmarshalJSON(data []byte)
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveSkillReferenceParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveSkillReferenceParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveInlineSkillParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveInlineSkillParam = &lossless1
+			return nil
 		}
 	}
 	var liveskillreferenceparam LiveSkillReferenceParam

@@ -172,6 +172,19 @@ func (u *RotateMcpOauthTokenEndpointAuthParam) UnmarshalJSON(data []byte) error 
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RotateMcpOauthTokenEndpointAuthParamClientSecretBasic
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RotateMcpOauthTokenEndpointAuthParamClientSecretBasic = &lossless0
+			return nil
+		}
+		var lossless1 RotateMcpOauthTokenEndpointAuthParamClientSecretPost
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RotateMcpOauthTokenEndpointAuthParamClientSecretPost = &lossless1
+			return nil
+		}
+	}
 	var rotatemcpoauthtokenendpointauthparamclientsecretbasic RotateMcpOauthTokenEndpointAuthParamClientSecretBasic
 	if err := json.Unmarshal(data, &rotatemcpoauthtokenendpointauthparamclientsecretbasic); err == nil && isNonEmptyRotateMcpOauthTokenEndpointAuthParamRotateMcpOauthTokenEndpointAuthParamClientSecretBasic(rotatemcpoauthtokenendpointauthparamclientsecretbasic) {
 		u.RotateMcpOauthTokenEndpointAuthParamClientSecretBasic = &rotatemcpoauthtokenendpointauthparamclientsecretbasic
@@ -501,6 +514,24 @@ func (u *RotateVaultCredentialAuthParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RotateVaultCredentialAuthParamMcpOauth
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RotateVaultCredentialAuthParamMcpOauth = &lossless0
+			return nil
+		}
+		var lossless1 RotateVaultCredentialAuthParamStaticBearer
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RotateVaultCredentialAuthParamStaticBearer = &lossless1
+			return nil
+		}
+		var lossless2 RotateVaultCredentialAuthParamEnvironmentVariable
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RotateVaultCredentialAuthParamEnvironmentVariable = &lossless2
+			return nil
 		}
 	}
 	var rotatevaultcredentialauthparammcpoauth RotateVaultCredentialAuthParamMcpOauth

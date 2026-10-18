@@ -5,6 +5,172 @@ package sdk
 
 import "encoding/json"
 
+func (u OutputItem) MarshalJSON() ([]byte, error) {
+	if u.OutputMessage != nil {
+		return json.Marshal(u.OutputMessage)
+	}
+	if u.FileSearchToolCall != nil {
+		return json.Marshal(u.FileSearchToolCall)
+	}
+	if u.FunctionToolCall != nil {
+		return json.Marshal(u.FunctionToolCall)
+	}
+	if u.FunctionToolCallOutputResource != nil {
+		return json.Marshal(u.FunctionToolCallOutputResource)
+	}
+	if u.WebSearchToolCall != nil {
+		return json.Marshal(u.WebSearchToolCall)
+	}
+	if u.ComputerToolCall != nil {
+		return json.Marshal(u.ComputerToolCall)
+	}
+	if u.ComputerToolCallOutputResource != nil {
+		return json.Marshal(u.ComputerToolCallOutputResource)
+	}
+	if u.ReasoningItem != nil {
+		return json.Marshal(u.ReasoningItem)
+	}
+	if u.Program != nil {
+		return json.Marshal(u.Program)
+	}
+	if u.ProgramOutput != nil {
+		return json.Marshal(u.ProgramOutput)
+	}
+	if u.ToolSearchCall != nil {
+		return json.Marshal(u.ToolSearchCall)
+	}
+	if u.ToolSearchOutput != nil {
+		return json.Marshal(u.ToolSearchOutput)
+	}
+	if u.AdditionalTools != nil {
+		return json.Marshal(u.AdditionalTools)
+	}
+	if u.CompactionBody != nil {
+		return json.Marshal(u.CompactionBody)
+	}
+	if u.ImageGenToolCall != nil {
+		return json.Marshal(u.ImageGenToolCall)
+	}
+	if u.CodeInterpreterToolCall != nil {
+		return json.Marshal(u.CodeInterpreterToolCall)
+	}
+	if u.LocalShellToolCall != nil {
+		return json.Marshal(u.LocalShellToolCall)
+	}
+	if u.LocalShellToolCallOutput != nil {
+		return json.Marshal(u.LocalShellToolCallOutput)
+	}
+	if u.FunctionShellCall != nil {
+		return json.Marshal(u.FunctionShellCall)
+	}
+	if u.FunctionShellCallOutput != nil {
+		return json.Marshal(u.FunctionShellCallOutput)
+	}
+	if u.ApplyPatchToolCall != nil {
+		return json.Marshal(u.ApplyPatchToolCall)
+	}
+	if u.ApplyPatchToolCallOutput != nil {
+		return json.Marshal(u.ApplyPatchToolCallOutput)
+	}
+	if u.MCPToolCall != nil {
+		return json.Marshal(u.MCPToolCall)
+	}
+	if u.MCPListTools != nil {
+		return json.Marshal(u.MCPListTools)
+	}
+	if u.MCPApprovalRequest != nil {
+		return json.Marshal(u.MCPApprovalRequest)
+	}
+	if u.MCPApprovalResponseResource != nil {
+		return json.Marshal(u.MCPApprovalResponseResource)
+	}
+	if u.CustomToolCall != nil {
+		return json.Marshal(u.CustomToolCall)
+	}
+	if u.CustomToolCallOutputResource != nil {
+		return json.Marshal(u.CustomToolCallOutputResource)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyOutputItemOutputMessage(v OutputMessage) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemFileSearchToolCall(v FileSearchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemFunctionToolCall(v FunctionToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemFunctionToolCallOutputResource(v FunctionToolCallOutputResource) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemWebSearchToolCall(v WebSearchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemComputerToolCall(v ComputerToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemComputerToolCallOutputResource(v ComputerToolCallOutputResource) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemReasoningItem(v ReasoningItem) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemProgram(v Program) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemProgramOutput(v ProgramOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemToolSearchCall(v ToolSearchCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemToolSearchOutput(v ToolSearchOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemAdditionalTools(v AdditionalTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemCompactionBody(v CompactionBody) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyOutputItemImageGenToolCall(v ImageGenToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
 func isNonEmptyOutputItemCodeInterpreterToolCall(v CodeInterpreterToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"

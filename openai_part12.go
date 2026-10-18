@@ -5,6 +5,65 @@ package sdk
 
 import "context"
 
+// CreateSessionStream creates a managed agent session, optionally submits initial input, and returns the session or streams its events when stream is true. See [running sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions).
+//
+// Parameters:
+//
+//	environment: An inline execution environment or a reference to an
+//	environment template.
+//	stream: Whether to stream session events as server-sent events. Defaults to
+//	`false`.
+//	spendControl: Optional spending limit in USD cents. Omission or null creates
+//	an unlimited session.
+//	metadata: Up to 16 string key-value pairs, with keys up to 64 and values up
+//	to 512 characters. Omission or null defaults to an empty map.
+//	agent: Agent configuration. With `agent_id`, supplied fields override the
+//	saved agent for this session. Without `agent_id`, `model` is required.
+//	agentId: The ID of a saved reusable agent. Omit `agent` to use its
+//	configuration unchanged.
+//	vaultIds: The IDs of vaults made available to the session.
+//	input: Initial input to submit when the session is created. A string is
+//	shorthand for a single user message. Required when `environment.type` is
+//	`none`, or when `stream` is `true` for an environment that is not
+//	`self_hosted`; optional for self-hosted and non-streaming execution
+//	environments.
+func (sdk *AgentsNamespace) CreateSessionStream(ctx context.Context, environment EnvironmentParam, stream bool, spendControl *NullableValue[SessionSpendControlParam], metadata *NullableValue[map[string]string], agent *SessionAgentConfigParam, agentId *string, vaultIds *NullableValue[[]string], input *NullableValue[CreateSessionInputParam], opts ...RequestOption) (<-chan SessionEvent, <-chan error) {
+	return CreateAgentSessionStream(ctx, sdk.config, environment, stream, spendControl, metadata, agent, agentId, vaultIds, input, opts...)
+}
+
+// RetrieveSession retrieves the current state of a managed agent session. See [managing sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).
+//
+// Parameters:
+//
+//	sessionId: The ID of the session.
+func (sdk *AgentsNamespace) RetrieveSession(ctx context.Context, params RetrieveAgentSessionParams, opts ...RequestOption) (*SessionResource, error) {
+	return RetrieveAgentSession(ctx, sdk.config, params, opts...)
+}
+
+// UpdateSession updates session metadata, model, reasoning effort, or service tier. Model settings apply to subsequent turns. Omitted fields are unchanged. See [managing sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).
+//
+// Parameters:
+//
+//	sessionId: The ID of the session.
+//	spendControl: Omit to retain the limit; null or a null limit removes it
+//	without resetting spend.
+//	agent: Model settings for subsequent turns. Omitted fields stay unchanged.
+//	metadata: Replaces all metadata. Omit to leave unchanged, or pass null or {}
+//	to clear it. Up to 16 string key-value pairs, with keys up to 64 and values
+//	up to 512 characters.
+func (sdk *AgentsNamespace) UpdateSession(ctx context.Context, params UpdateAgentSessionParams, opts ...RequestOption) (*SessionResource, error) {
+	return UpdateAgentSession(ctx, sdk.config, params, opts...)
+}
+
+// DeleteSession removes a managed agent session from the public API and returns a deletion confirmation. If backend execution has ended, deletion can cancel a still-open public turn and abandon unpublished outputs. Running execution must be cancelled first. Physical cleanup may continue asynchronously. See [managing sessions](https://developers.openai.com/api/docs/guides/agents-api/sessions/manage).
+//
+// Parameters:
+//
+//	sessionId: The ID of the session.
+func (sdk *AgentsNamespace) DeleteSession(ctx context.Context, params DeleteAgentSessionParams, opts ...RequestOption) (*DeletedSessionResource, error) {
+	return DeleteAgentSession(ctx, sdk.config, params, opts...)
+}
+
 // ListSessionArtifacts lists immutable artifacts published by completed hosted session turns. See [session artifacts](https://developers.openai.com/api/docs/guides/agents-api/environments/files#openai-hosted-artifacts).
 //
 // Parameters:

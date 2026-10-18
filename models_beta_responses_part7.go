@@ -3,10 +3,236 @@
 
 package sdk
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import "encoding/json"
+
+func (u BetaResponsesServerEvent) MarshalJSON() ([]byte, error) {
+	if u.BetaResponsesServerEventVariant0 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant0)
+	}
+	if u.BetaResponsesServerEventVariant1 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant1)
+	}
+	if u.BetaResponsesServerEventVariant2 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant2)
+	}
+	if u.BetaResponsesServerEventVariant3 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant3)
+	}
+	if u.BetaResponsesServerEventVariant4 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant4)
+	}
+	if u.BetaResponsesServerEventVariant5 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant5)
+	}
+	if u.BetaResponsesServerEventVariant6 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant6)
+	}
+	if u.BetaResponsesServerEventVariant7 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant7)
+	}
+	if u.BetaResponsesServerEventVariant8 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant8)
+	}
+	if u.BetaResponsesServerEventVariant9 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant9)
+	}
+	if u.BetaResponsesServerEventVariant10 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant10)
+	}
+	if u.BetaResponsesServerEventVariant11 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant11)
+	}
+	if u.BetaResponsesServerEventVariant12 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant12)
+	}
+	if u.BetaResponsesServerEventVariant13 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant13)
+	}
+	if u.BetaResponsesServerEventVariant14 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant14)
+	}
+	if u.BetaResponsesServerEventVariant15 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant15)
+	}
+	if u.BetaResponsesServerEventVariant16 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant16)
+	}
+	if u.BetaResponsesServerEventVariant17 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant17)
+	}
+	if u.BetaResponsesServerEventVariant18 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant18)
+	}
+	if u.BetaResponsesServerEventVariant19 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant19)
+	}
+	if u.BetaResponsesServerEventVariant20 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant20)
+	}
+	if u.BetaResponsesServerEventVariant21 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant21)
+	}
+	if u.BetaResponsesServerEventVariant22 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant22)
+	}
+	if u.BetaResponsesServerEventVariant23 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant23)
+	}
+	if u.BetaResponsesServerEventVariant24 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant24)
+	}
+	if u.BetaResponsesServerEventVariant25 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant25)
+	}
+	if u.BetaResponsesServerEventVariant26 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant26)
+	}
+	if u.BetaResponsesServerEventVariant27 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant27)
+	}
+	if u.BetaResponsesServerEventVariant28 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant28)
+	}
+	if u.BetaResponsesServerEventVariant29 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant29)
+	}
+	if u.BetaResponsesServerEventVariant30 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant30)
+	}
+	if u.BetaResponsesServerEventVariant31 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant31)
+	}
+	if u.BetaResponsesServerEventVariant32 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant32)
+	}
+	if u.BetaResponsesServerEventVariant33 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant33)
+	}
+	if u.BetaResponsesServerEventVariant34 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant34)
+	}
+	if u.BetaResponsesServerEventVariant35 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant35)
+	}
+	if u.BetaResponsesServerEventVariant36 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant36)
+	}
+	if u.BetaResponsesServerEventVariant37 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant37)
+	}
+	if u.BetaResponsesServerEventVariant38 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant38)
+	}
+	if u.BetaResponsesServerEventVariant39 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant39)
+	}
+	if u.BetaResponsesServerEventVariant40 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant40)
+	}
+	if u.BetaResponsesServerEventVariant41 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant41)
+	}
+	if u.BetaResponsesServerEventVariant42 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant42)
+	}
+	if u.BetaResponsesServerEventVariant43 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant43)
+	}
+	if u.BetaResponsesServerEventVariant44 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant44)
+	}
+	if u.BetaResponsesServerEventVariant45 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant45)
+	}
+	if u.BetaResponsesServerEventVariant46 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant46)
+	}
+	if u.BetaResponsesServerEventVariant47 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant47)
+	}
+	if u.BetaResponsesServerEventVariant48 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant48)
+	}
+	if u.BetaResponsesServerEventVariant49 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant49)
+	}
+	if u.BetaResponsesServerEventVariant50 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant50)
+	}
+	if u.BetaResponsesServerEventVariant51 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant51)
+	}
+	if u.BetaResponsesServerEventVariant52 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant52)
+	}
+	if u.BetaResponsesServerEventVariant53 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant53)
+	}
+	if u.BetaResponsesServerEventVariant54 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant54)
+	}
+	if u.BetaResponsesServerEventVariant55 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant55)
+	}
+	if u.BetaResponsesServerEventVariant56 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant56)
+	}
+	if u.BetaResponsesServerEventVariant57 != nil {
+		return json.Marshal(u.BetaResponsesServerEventVariant57)
+	}
+	if u.BetaResponseWsError != nil {
+		return json.Marshal(u.BetaResponseWsError)
+	}
+	if u.BetaResponseSteerAcceptedEvent != nil {
+		return json.Marshal(u.BetaResponseSteerAcceptedEvent)
+	}
+	if u.BetaResponseSteerPendingEvent != nil {
+		return json.Marshal(u.BetaResponseSteerPendingEvent)
+	}
+	if u.BetaResponseSteerFailedEvent != nil {
+		return json.Marshal(u.BetaResponseSteerFailedEvent)
+	}
+	if u.BetaResponseInjectCreatedEvent != nil {
+		return json.Marshal(u.BetaResponseInjectCreatedEvent)
+	}
+	if u.BetaResponseInjectFailedEvent != nil {
+		return json.Marshal(u.BetaResponseInjectFailedEvent)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyBetaResponsesServerEventBetaResponsesServerEventVariant0(v BetaResponsesServerEventVariant0) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaResponsesServerEventBetaResponsesServerEventVariant1(v BetaResponsesServerEventVariant1) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaResponsesServerEventBetaResponsesServerEventVariant2(v BetaResponsesServerEventVariant2) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaResponsesServerEventBetaResponsesServerEventVariant3(v BetaResponsesServerEventVariant3) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaResponsesServerEventBetaResponsesServerEventVariant4(v BetaResponsesServerEventVariant4) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaResponsesServerEventBetaResponsesServerEventVariant5(v BetaResponsesServerEventVariant5) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
 
 func isNonEmptyBetaResponsesServerEventBetaResponsesServerEventVariant6(v BetaResponsesServerEventVariant6) bool {
 	b, _ := json.Marshal(v)
@@ -382,6 +608,24 @@ func (u *BetaResponsesClientEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaResponsesClientEventResponseCreate
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaResponsesClientEventResponseCreate = &lossless0
+			return nil
+		}
+		var lossless1 BetaResponseSteerEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaResponseSteerEvent = &lossless1
+			return nil
+		}
+		var lossless2 BetaResponseInjectEvent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaResponseInjectEvent = &lossless2
+			return nil
+		}
+	}
 	var betaresponsesclienteventresponsecreate BetaResponsesClientEventResponseCreate
 	if err := json.Unmarshal(data, &betaresponsesclienteventresponsecreate); err == nil && isNonEmptyBetaResponsesClientEventBetaResponsesClientEventResponseCreate(betaresponsesclienteventresponsecreate) {
 		u.BetaResponsesClientEventResponseCreate = &betaresponsesclienteventresponsecreate
@@ -435,208 +679,4 @@ func isNonEmptyBetaResponsesClientEventBetaResponseSteerEvent(v BetaResponseStee
 func isNonEmptyBetaResponsesClientEventBetaResponseInjectEvent(v BetaResponseInjectEvent) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalBetaResponsesClientEvent converts an untyped value to BetaResponsesClientEvent.
-func UnmarshalBetaResponsesClientEvent(v any) BetaResponsesClientEvent {
-	b, _ := json.Marshal(v)
-	var result BetaResponsesClientEvent
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-type BetaResponsesClientEventResponseCreateVariant0 struct {
-	// Type The type of the client event. Always `response.create`.
-	Type BetaResponsesClientEventResponseCreateVariant0TypeEnum `json:"type"`
-	// StreamId The WebSocket lane for this response. Requests with the same
-	// `stream_id` are processed FIFO, and events for the response echo the
-	// same `stream_id`.
-	//
-	// `stream_id` controls routing; `previous_response_id` controls
-	// conversation lineage, so a new lane can fork from a response created
-	// on another lane.
-	StreamId *string `json:"stream_id,omitempty"`
-}
-
-func (value *BetaResponsesClientEventResponseCreateVariant0) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.create"}); err != nil {
-		return err
-	}
-	type BetaResponsesClientEventResponseCreateVariant0Alias BetaResponsesClientEventResponseCreateVariant0
-	var decoded BetaResponsesClientEventResponseCreateVariant0Alias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaResponsesClientEventResponseCreateVariant0(decoded)
-	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if value.StreamId != nil {
-		if err := ValidateLength("stream_id", *value.StreamId, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](256)}); err != nil {
-			return err
-		}
-		if err := ValidatePattern("stream_id", *value.StreamId, "^[A-Za-z0-9_.-]+$"); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// NewBetaResponsesClientEventResponseCreateVariant0 returns a validated BetaResponsesClientEventResponseCreateVariant0 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaResponsesClientEventResponseCreateVariant0(fields BetaResponsesClientEventResponseCreateVariant0) (*BetaResponsesClientEventResponseCreateVariant0, error) {
-	return ConstructModel(fields)
-}
-
-// BetaResponsesClientEventResponseCreateVariant0TypeEnum The type of the client event. Always `response.create`.
-type BetaResponsesClientEventResponseCreateVariant0TypeEnum string
-
-const (
-	BetaResponsesClientEventResponseCreateVariant0TypeEnumResponseCreate BetaResponsesClientEventResponseCreateVariant0TypeEnum = "response.create"
-)
-
-func (value *BetaResponsesClientEventResponseCreateVariant0TypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "response.create":
-		*value = BetaResponsesClientEventResponseCreateVariant0TypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaResponsesClientEventResponseCreateVariant0TypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaResponsesClientEventResponseCreateVariant0TypeEnum: %v", raw)}
-	}
-}
-
-// BetaResponsesClientEventResponseCreate Client event for creating a response over a persistent WebSocket connection.
-// This payload uses the same top-level fields as `POST /v1/responses`, plus
-// WebSocket-only envelope metadata.
-//
-// Notes:
-// - `stream` is implicit over WebSocket and should not be sent.
-// - `background` is not supported over WebSocket.
-// - `stream_id` is WebSocket-only and is not part of `POST /v1/responses`.
-type BetaResponsesClientEventResponseCreate struct {
-	// Type The type of the client event. Always `response.create`.
-	Type BetaResponsesClientEventResponseCreateVariant0TypeEnum `json:"type"`
-	// StreamId The WebSocket lane for this response. Requests with the same
-	// `stream_id` are processed FIFO, and events for the response echo the
-	// same `stream_id`.
-	//
-	// `stream_id` controls routing; `previous_response_id` controls
-	// conversation lineage, so a new lane can fork from a response created
-	// on another lane.
-	StreamId *string `json:"stream_id,omitempty"`
-	// Metadata Set of 16 key-value pairs that can be attached to an object. This can be
-	// useful for storing additional information about the object in a structured
-	// format, and querying for objects via API or the dashboard.
-	//
-	// Keys are strings with a maximum length of 64 characters. Values are strings
-	// with a maximum length of 512 characters.
-	Metadata *NullableValue[BetaMetadata] `json:"metadata,omitempty"`
-	// TopLogprobs An integer between 0 and 20 specifying the maximum number of most likely
-	// tokens to return at each token position, each with an associated log
-	// probability. In some cases, the number of returned tokens may be fewer than
-	// requested.
-	TopLogprobs *int64 `json:"top_logprobs,omitempty"`
-	// Temperature Optional API value serialized in the `temperature` wire field.
-	Temperature *NullableValue[float64] `json:"temperature,omitempty"`
-	// TopP Optional API value serialized in the `top_p` wire field.
-	TopP *NullableValue[float64] `json:"top_p,omitempty"`
-	// User This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations.
-	// A stable identifier for your end-users.
-	// Used to boost cache hit rates by better bucketing similar requests and  to help OpenAI detect and prevent abuse. [Learn more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
-	User *NullableValue[string] `json:"user,omitempty"`
-	// SafetyIdentifier Optional API value serialized in the `safety_identifier` wire field.
-	SafetyIdentifier *NullableValue[string] `json:"safety_identifier,omitempty"`
-	// PromptCacheKey Optional `string` value serialized in the `prompt_cache_key` wire field.
-	PromptCacheKey *NullableValue[string] `json:"prompt_cache_key,omitempty"`
-	// PromptCacheRetention Optional API value serialized in the `prompt_cache_retention` wire field.
-	PromptCacheRetention *NullableValue[BetaModelResponsePropertiesPromptCacheRetentionVariant0Enum] `json:"prompt_cache_retention,omitempty"`
-	// PromptCacheOptions Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl` defaults to `30m`, which is currently the only supported value. See the [prompt caching guide](https://developers.openai.com/api/docs/guides/prompt-caching) for current details.
-	PromptCacheOptions *BetaResponsePromptCacheOptionsParam `json:"prompt_cache_options,omitempty"`
-	// PreviousResponseId Optional `string` value serialized in the `previous_response_id` wire field.
-	PreviousResponseId *NullableValue[string] `json:"previous_response_id,omitempty"`
-	// Model Model ID used to generate the response, like `gpt-6-astra`. OpenAI
-	// offers a wide range of models with different capabilities, performance
-	// characteristics, and price points. Refer to the [model guide](https://developers.openai.com/api/docs/models)
-	// to browse and compare available models.
-	Model *BetaModelIdsResponses `json:"model,omitempty"`
-	// Background Optional `boolean` value serialized in the `background` wire field.
-	Background *NullableValue[bool] `json:"background,omitempty"`
-	// MaxToolCalls Optional `integer` value serialized in the `max_tool_calls` wire field.
-	MaxToolCalls *NullableValue[int64] `json:"max_tool_calls,omitempty"`
-	// Text Configuration options for a text response from the model. Can be plain
-	// text or structured JSON data. Learn more:
-	// - [Text inputs and outputs](https://developers.openai.com/api/docs/guides/text)
-	// - [Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
-	Text *BetaResponseTextParam `json:"text,omitempty"`
-	// Tools An array of tools the model may call while generating a response. You
-	// can specify which tool to use by setting the `tool_choice` parameter.
-	//
-	// We support the following categories of tools:
-	// - **Built-in tools**: Tools that are provided by OpenAI that extend the
-	//   model's capabilities, like [web search](https://developers.openai.com/api/docs/guides/tools-web-search)
-	//   or [file search](https://developers.openai.com/api/docs/guides/tools-file-search). Learn more about
-	//   [built-in tools](https://developers.openai.com/api/docs/guides/tools).
-	// - **MCP Tools**: Integrations with third-party systems via custom MCP servers
-	//   or predefined connectors such as Google Drive and SharePoint. Learn more about
-	//   [MCP Tools](https://developers.openai.com/api/docs/guides/tools-connectors-mcp).
-	// - **Function calls (custom tools)**: Functions that are defined by you,
-	//   enabling the model to call your own code with strongly typed arguments
-	//   and outputs. Learn more about
-	//   [function calling](https://developers.openai.com/api/docs/guides/function-calling). You can also use
-	//   custom tools to call your own code.
-	Tools []BetaTool `json:"tools,omitempty"`
-	// ToolChoice How the model should select which tool (or tools) to use when generating
-	// a response. See the `tools` parameter to see how to specify which tools
-	// the model can call.
-	ToolChoice *BetaToolChoiceParam `json:"tool_choice,omitempty"`
-	// Prompt Reference to a prompt template and its variables.
-	// [Learn more](https://developers.openai.com/api/docs/guides/text?api-mode=responses#version-prompts-in-code).
-	Prompt *NullableValue[BetaPrompt] `json:"prompt,omitempty"`
-	// AccessPrograms Domain-specific access programs to use for this request.
-	AccessPrograms *BetaAccessProgramsParam                                         `json:"access_programs,omitempty"`
-	ServiceTier    *NullableValue[BetaServiceTierResponses]                         `json:"service_tier,omitempty"`
-	Truncation     *NullableValue[BetaCreateResponseVariant2TruncationVariant0Enum] `json:"truncation,omitempty"`
-	Reasoning      *NullableValue[BetaReasoning]                                    `json:"reasoning,omitempty"`
-	// Input Text, image, or file inputs to the model, used to generate a response.
-	//
-	// Learn more:
-	// - [Text inputs and outputs](https://developers.openai.com/api/docs/guides/text)
-	// - [Image inputs](https://developers.openai.com/api/docs/guides/images-vision)
-	// - [File inputs](https://developers.openai.com/api/docs/guides/file-inputs)
-	// - [Conversation state](https://developers.openai.com/api/docs/guides/conversation-state)
-	// - [Function calling](https://developers.openai.com/api/docs/guides/function-calling)
-	Input *BetaInputParam `json:"input,omitempty"`
-	// Include Specify additional output data to include in the model response. Currently supported values are:
-	// - `web_search_call.action.sources`: Include the sources of the web search tool call.
-	// - `code_interpreter_call.outputs`: Includes the outputs of python code execution in code interpreter tool call items.
-	// - `computer_call_output.output.image_url`: Include image urls from the computer call output.
-	// - `file_search_call.results`: Include the search results of the file search tool call.
-	// - `message.input_image.image_url`: Include image urls from the input message.
-	// - `message.output_text.logprobs`: Include logprobs with assistant messages.
-	// - `reasoning.encrypted_content`: Includes an encrypted version of reasoning tokens in reasoning item outputs. This enables reasoning items to be used in multi-turn conversations when using the Responses API statelessly (like when the `store` parameter is set to `false`, or when an organization is enrolled in the zero data retention program).
-	Include           *NullableValue[[]BetaIncludeEnum]   `json:"include,omitempty"`
-	ParallelToolCalls *NullableValue[bool]                `json:"parallel_tool_calls,omitempty"`
-	Store             *NullableValue[bool]                `json:"store,omitempty"`
-	Instructions      *NullableValue[string]              `json:"instructions,omitempty"`
-	Moderation        *NullableValue[BetaModerationParam] `json:"moderation,omitempty"`
-	Stream            *NullableValue[bool]                `json:"stream,omitempty"`
-	// StreamOptions Options for streaming responses. Only set this when you set `stream: true`.
-	StreamOptions *NullableValue[BetaResponseStreamOptions] `json:"stream_options,omitempty"`
-	Conversation  *NullableValue[BetaConversationParam]     `json:"conversation,omitempty"`
-	// ContextManagement Context management configuration for this request.
-	ContextManagement *NullableValue[[]BetaContextManagementParam] `json:"context_management,omitempty"`
-	MaxOutputTokens   *NullableValue[int64]                        `json:"max_output_tokens,omitempty"`
-	MultiAgent        *NullableValue[BetaMultiAgentParam]          `json:"multi_agent,omitempty"`
 }

@@ -5,6 +5,201 @@ package sdk
 
 import "encoding/json"
 
+func (u BetaItem) MarshalJSON() ([]byte, error) {
+	if u.BetaInputMessage != nil {
+		return json.Marshal(u.BetaInputMessage)
+	}
+	if u.BetaOutputMessage != nil {
+		return json.Marshal(u.BetaOutputMessage)
+	}
+	if u.BetaFileSearchToolCall != nil {
+		return json.Marshal(u.BetaFileSearchToolCall)
+	}
+	if u.BetaComputerToolCall != nil {
+		return json.Marshal(u.BetaComputerToolCall)
+	}
+	if u.BetaComputerCallOutputItemParam != nil {
+		return json.Marshal(u.BetaComputerCallOutputItemParam)
+	}
+	if u.BetaWebSearchToolCall != nil {
+		return json.Marshal(u.BetaWebSearchToolCall)
+	}
+	if u.BetaFunctionToolCall != nil {
+		return json.Marshal(u.BetaFunctionToolCall)
+	}
+	if u.BetaFunctionCallOutputItemParam != nil {
+		return json.Marshal(u.BetaFunctionCallOutputItemParam)
+	}
+	if u.BetaAgentMessageItemParam != nil {
+		return json.Marshal(u.BetaAgentMessageItemParam)
+	}
+	if u.BetaMultiAgentCallItemParam != nil {
+		return json.Marshal(u.BetaMultiAgentCallItemParam)
+	}
+	if u.BetaMultiAgentCallOutputItemParam != nil {
+		return json.Marshal(u.BetaMultiAgentCallOutputItemParam)
+	}
+	if u.BetaToolSearchCallItemParam != nil {
+		return json.Marshal(u.BetaToolSearchCallItemParam)
+	}
+	if u.BetaToolSearchOutputItemParam != nil {
+		return json.Marshal(u.BetaToolSearchOutputItemParam)
+	}
+	if u.BetaAdditionalToolsItemParam != nil {
+		return json.Marshal(u.BetaAdditionalToolsItemParam)
+	}
+	if u.BetaResponseConfigurationUpdateItemParam != nil {
+		return json.Marshal(u.BetaResponseConfigurationUpdateItemParam)
+	}
+	if u.BetaReasoningItem != nil {
+		return json.Marshal(u.BetaReasoningItem)
+	}
+	if u.BetaCompactionSummaryItemParam != nil {
+		return json.Marshal(u.BetaCompactionSummaryItemParam)
+	}
+	if u.BetaImageGenToolCall != nil {
+		return json.Marshal(u.BetaImageGenToolCall)
+	}
+	if u.BetaCodeInterpreterToolCall != nil {
+		return json.Marshal(u.BetaCodeInterpreterToolCall)
+	}
+	if u.BetaLocalShellToolCall != nil {
+		return json.Marshal(u.BetaLocalShellToolCall)
+	}
+	if u.BetaLocalShellToolCallOutput != nil {
+		return json.Marshal(u.BetaLocalShellToolCallOutput)
+	}
+	if u.BetaFunctionShellCallItemParam != nil {
+		return json.Marshal(u.BetaFunctionShellCallItemParam)
+	}
+	if u.BetaFunctionShellCallOutputItemParam != nil {
+		return json.Marshal(u.BetaFunctionShellCallOutputItemParam)
+	}
+	if u.BetaApplyPatchToolCallItemParam != nil {
+		return json.Marshal(u.BetaApplyPatchToolCallItemParam)
+	}
+	if u.BetaApplyPatchToolCallOutputItemParam != nil {
+		return json.Marshal(u.BetaApplyPatchToolCallOutputItemParam)
+	}
+	if u.BetaMCPListTools != nil {
+		return json.Marshal(u.BetaMCPListTools)
+	}
+	if u.BetaMCPApprovalRequest != nil {
+		return json.Marshal(u.BetaMCPApprovalRequest)
+	}
+	if u.BetaMCPApprovalResponse != nil {
+		return json.Marshal(u.BetaMCPApprovalResponse)
+	}
+	if u.BetaMCPToolCall != nil {
+		return json.Marshal(u.BetaMCPToolCall)
+	}
+	if u.BetaCustomToolCallOutput != nil {
+		return json.Marshal(u.BetaCustomToolCallOutput)
+	}
+	if u.BetaCustomToolCall != nil {
+		return json.Marshal(u.BetaCustomToolCall)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyBetaItemBetaInputMessage(v BetaInputMessage) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaOutputMessage(v BetaOutputMessage) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFileSearchToolCall(v BetaFileSearchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaComputerToolCall(v BetaComputerToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaComputerCallOutputItemParam(v BetaComputerCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaWebSearchToolCall(v BetaWebSearchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFunctionToolCall(v BetaFunctionToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFunctionCallOutputItemParam(v BetaFunctionCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaAgentMessageItemParam(v BetaAgentMessageItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMultiAgentCallItemParam(v BetaMultiAgentCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMultiAgentCallOutputItemParam(v BetaMultiAgentCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaToolSearchCallItemParam(v BetaToolSearchCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaToolSearchOutputItemParam(v BetaToolSearchOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaAdditionalToolsItemParam(v BetaAdditionalToolsItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaResponseConfigurationUpdateItemParam(v BetaResponseConfigurationUpdateItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaReasoningItem(v BetaReasoningItem) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaCompactionSummaryItemParam(v BetaCompactionSummaryItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaImageGenToolCall(v BetaImageGenToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaCodeInterpreterToolCall(v BetaCodeInterpreterToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
 func isNonEmptyBetaItemBetaLocalShellToolCall(v BetaLocalShellToolCall) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
@@ -111,622 +306,4 @@ type BetaItemResource struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *BetaItemResource) UnmarshalJSON(data []byte) error {
-	*u = BetaItemResource{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "file_search_call":
-					var betafilesearchtoolcall BetaFileSearchToolCall
-					if err := json.Unmarshal(data, &betafilesearchtoolcall); err != nil {
-						return err
-					}
-					u.BetaFileSearchToolCall = &betafilesearchtoolcall
-					return nil
-				case "computer_call":
-					var betacomputertoolcall BetaComputerToolCall
-					if err := json.Unmarshal(data, &betacomputertoolcall); err != nil {
-						return err
-					}
-					u.BetaComputerToolCall = &betacomputertoolcall
-					return nil
-				case "computer_call_output":
-					var betacomputertoolcalloutputresource BetaComputerToolCallOutputResource
-					if err := json.Unmarshal(data, &betacomputertoolcalloutputresource); err != nil {
-						return err
-					}
-					u.BetaComputerToolCallOutputResource = &betacomputertoolcalloutputresource
-					return nil
-				case "web_search_call":
-					var betawebsearchtoolcall BetaWebSearchToolCall
-					if err := json.Unmarshal(data, &betawebsearchtoolcall); err != nil {
-						return err
-					}
-					u.BetaWebSearchToolCall = &betawebsearchtoolcall
-					return nil
-				case "function_call":
-					var betafunctiontoolcallresource BetaFunctionToolCallResource
-					if err := json.Unmarshal(data, &betafunctiontoolcallresource); err != nil {
-						return err
-					}
-					u.BetaFunctionToolCallResource = &betafunctiontoolcallresource
-					return nil
-				case "function_call_output":
-					var betafunctiontoolcalloutputresource BetaFunctionToolCallOutputResource
-					if err := json.Unmarshal(data, &betafunctiontoolcalloutputresource); err != nil {
-						return err
-					}
-					u.BetaFunctionToolCallOutputResource = &betafunctiontoolcalloutputresource
-					return nil
-				case "agent_message":
-					var betaagentmessage BetaAgentMessage
-					if err := json.Unmarshal(data, &betaagentmessage); err != nil {
-						return err
-					}
-					u.BetaAgentMessage = &betaagentmessage
-					return nil
-				case "multi_agent_call":
-					var betamultiagentcall BetaMultiAgentCall
-					if err := json.Unmarshal(data, &betamultiagentcall); err != nil {
-						return err
-					}
-					u.BetaMultiAgentCall = &betamultiagentcall
-					return nil
-				case "multi_agent_call_output":
-					var betamultiagentcalloutput BetaMultiAgentCallOutput
-					if err := json.Unmarshal(data, &betamultiagentcalloutput); err != nil {
-						return err
-					}
-					u.BetaMultiAgentCallOutput = &betamultiagentcalloutput
-					return nil
-				case "tool_search_call":
-					var betatoolsearchcall BetaToolSearchCall
-					if err := json.Unmarshal(data, &betatoolsearchcall); err != nil {
-						return err
-					}
-					u.BetaToolSearchCall = &betatoolsearchcall
-					return nil
-				case "tool_search_output":
-					var betatoolsearchoutput BetaToolSearchOutput
-					if err := json.Unmarshal(data, &betatoolsearchoutput); err != nil {
-						return err
-					}
-					u.BetaToolSearchOutput = &betatoolsearchoutput
-					return nil
-				case "additional_tools":
-					var betaadditionaltools BetaAdditionalTools
-					if err := json.Unmarshal(data, &betaadditionaltools); err != nil {
-						return err
-					}
-					u.BetaAdditionalTools = &betaadditionaltools
-					return nil
-				case "configuration_update":
-					var betaresponseconfigurationupdate BetaResponseConfigurationUpdate
-					if err := json.Unmarshal(data, &betaresponseconfigurationupdate); err != nil {
-						return err
-					}
-					u.BetaResponseConfigurationUpdate = &betaresponseconfigurationupdate
-					return nil
-				case "reasoning":
-					var betareasoningitem BetaReasoningItem
-					if err := json.Unmarshal(data, &betareasoningitem); err != nil {
-						return err
-					}
-					u.BetaReasoningItem = &betareasoningitem
-					return nil
-				case "program":
-					var betaprogram BetaProgram
-					if err := json.Unmarshal(data, &betaprogram); err != nil {
-						return err
-					}
-					u.BetaProgram = &betaprogram
-					return nil
-				case "program_output":
-					var betaprogramoutput BetaProgramOutput
-					if err := json.Unmarshal(data, &betaprogramoutput); err != nil {
-						return err
-					}
-					u.BetaProgramOutput = &betaprogramoutput
-					return nil
-				case "compaction":
-					var betacompactionbody BetaCompactionBody
-					if err := json.Unmarshal(data, &betacompactionbody); err != nil {
-						return err
-					}
-					u.BetaCompactionBody = &betacompactionbody
-					return nil
-				case "image_generation_call":
-					var betaimagegentoolcall BetaImageGenToolCall
-					if err := json.Unmarshal(data, &betaimagegentoolcall); err != nil {
-						return err
-					}
-					u.BetaImageGenToolCall = &betaimagegentoolcall
-					return nil
-				case "code_interpreter_call":
-					var betacodeinterpretertoolcall BetaCodeInterpreterToolCall
-					if err := json.Unmarshal(data, &betacodeinterpretertoolcall); err != nil {
-						return err
-					}
-					u.BetaCodeInterpreterToolCall = &betacodeinterpretertoolcall
-					return nil
-				case "local_shell_call":
-					var betalocalshelltoolcall BetaLocalShellToolCall
-					if err := json.Unmarshal(data, &betalocalshelltoolcall); err != nil {
-						return err
-					}
-					u.BetaLocalShellToolCall = &betalocalshelltoolcall
-					return nil
-				case "local_shell_call_output":
-					var betalocalshelltoolcalloutput BetaLocalShellToolCallOutput
-					if err := json.Unmarshal(data, &betalocalshelltoolcalloutput); err != nil {
-						return err
-					}
-					u.BetaLocalShellToolCallOutput = &betalocalshelltoolcalloutput
-					return nil
-				case "shell_call":
-					var betafunctionshellcall BetaFunctionShellCall
-					if err := json.Unmarshal(data, &betafunctionshellcall); err != nil {
-						return err
-					}
-					u.BetaFunctionShellCall = &betafunctionshellcall
-					return nil
-				case "shell_call_output":
-					var betafunctionshellcalloutput BetaFunctionShellCallOutput
-					if err := json.Unmarshal(data, &betafunctionshellcalloutput); err != nil {
-						return err
-					}
-					u.BetaFunctionShellCallOutput = &betafunctionshellcalloutput
-					return nil
-				case "apply_patch_call":
-					var betaapplypatchtoolcall BetaApplyPatchToolCall
-					if err := json.Unmarshal(data, &betaapplypatchtoolcall); err != nil {
-						return err
-					}
-					u.BetaApplyPatchToolCall = &betaapplypatchtoolcall
-					return nil
-				case "apply_patch_call_output":
-					var betaapplypatchtoolcalloutput BetaApplyPatchToolCallOutput
-					if err := json.Unmarshal(data, &betaapplypatchtoolcalloutput); err != nil {
-						return err
-					}
-					u.BetaApplyPatchToolCallOutput = &betaapplypatchtoolcalloutput
-					return nil
-				case "mcp_list_tools":
-					var betamcplisttools BetaMCPListTools
-					if err := json.Unmarshal(data, &betamcplisttools); err != nil {
-						return err
-					}
-					u.BetaMCPListTools = &betamcplisttools
-					return nil
-				case "mcp_approval_request":
-					var betamcpapprovalrequest BetaMCPApprovalRequest
-					if err := json.Unmarshal(data, &betamcpapprovalrequest); err != nil {
-						return err
-					}
-					u.BetaMCPApprovalRequest = &betamcpapprovalrequest
-					return nil
-				case "mcp_approval_response":
-					var betamcpapprovalresponseresource BetaMCPApprovalResponseResource
-					if err := json.Unmarshal(data, &betamcpapprovalresponseresource); err != nil {
-						return err
-					}
-					u.BetaMCPApprovalResponseResource = &betamcpapprovalresponseresource
-					return nil
-				case "mcp_call":
-					var betamcptoolcall BetaMCPToolCall
-					if err := json.Unmarshal(data, &betamcptoolcall); err != nil {
-						return err
-					}
-					u.BetaMCPToolCall = &betamcptoolcall
-					return nil
-				case "custom_tool_call":
-					var betacustomtoolcallresource BetaCustomToolCallResource
-					if err := json.Unmarshal(data, &betacustomtoolcallresource); err != nil {
-						return err
-					}
-					u.BetaCustomToolCallResource = &betacustomtoolcallresource
-					return nil
-				case "custom_tool_call_output":
-					var betacustomtoolcalloutputresource BetaCustomToolCallOutputResource
-					if err := json.Unmarshal(data, &betacustomtoolcalloutputresource); err != nil {
-						return err
-					}
-					u.BetaCustomToolCallOutputResource = &betacustomtoolcalloutputresource
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var betainputmessageresource BetaInputMessageResource
-	if err := json.Unmarshal(data, &betainputmessageresource); err == nil && isNonEmptyBetaItemResourceBetaInputMessageResource(betainputmessageresource) {
-		u.BetaInputMessageResource = &betainputmessageresource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaoutputmessage BetaOutputMessage
-	if err := json.Unmarshal(data, &betaoutputmessage); err == nil && isNonEmptyBetaItemResourceBetaOutputMessage(betaoutputmessage) {
-		u.BetaOutputMessage = &betaoutputmessage
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betafilesearchtoolcall BetaFileSearchToolCall
-	if err := json.Unmarshal(data, &betafilesearchtoolcall); err == nil && isNonEmptyBetaItemResourceBetaFileSearchToolCall(betafilesearchtoolcall) {
-		u.BetaFileSearchToolCall = &betafilesearchtoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betacomputertoolcall BetaComputerToolCall
-	if err := json.Unmarshal(data, &betacomputertoolcall); err == nil && isNonEmptyBetaItemResourceBetaComputerToolCall(betacomputertoolcall) {
-		u.BetaComputerToolCall = &betacomputertoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betacomputertoolcalloutputresource BetaComputerToolCallOutputResource
-	if err := json.Unmarshal(data, &betacomputertoolcalloutputresource); err == nil && isNonEmptyBetaItemResourceBetaComputerToolCallOutputResource(betacomputertoolcalloutputresource) {
-		u.BetaComputerToolCallOutputResource = &betacomputertoolcalloutputresource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betawebsearchtoolcall BetaWebSearchToolCall
-	if err := json.Unmarshal(data, &betawebsearchtoolcall); err == nil && isNonEmptyBetaItemResourceBetaWebSearchToolCall(betawebsearchtoolcall) {
-		u.BetaWebSearchToolCall = &betawebsearchtoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betafunctiontoolcallresource BetaFunctionToolCallResource
-	if err := json.Unmarshal(data, &betafunctiontoolcallresource); err == nil && isNonEmptyBetaItemResourceBetaFunctionToolCallResource(betafunctiontoolcallresource) {
-		u.BetaFunctionToolCallResource = &betafunctiontoolcallresource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betafunctiontoolcalloutputresource BetaFunctionToolCallOutputResource
-	if err := json.Unmarshal(data, &betafunctiontoolcalloutputresource); err == nil && isNonEmptyBetaItemResourceBetaFunctionToolCallOutputResource(betafunctiontoolcalloutputresource) {
-		u.BetaFunctionToolCallOutputResource = &betafunctiontoolcalloutputresource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaagentmessage BetaAgentMessage
-	if err := json.Unmarshal(data, &betaagentmessage); err == nil && isNonEmptyBetaItemResourceBetaAgentMessage(betaagentmessage) {
-		u.BetaAgentMessage = &betaagentmessage
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betamultiagentcall BetaMultiAgentCall
-	if err := json.Unmarshal(data, &betamultiagentcall); err == nil && isNonEmptyBetaItemResourceBetaMultiAgentCall(betamultiagentcall) {
-		u.BetaMultiAgentCall = &betamultiagentcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betamultiagentcalloutput BetaMultiAgentCallOutput
-	if err := json.Unmarshal(data, &betamultiagentcalloutput); err == nil && isNonEmptyBetaItemResourceBetaMultiAgentCallOutput(betamultiagentcalloutput) {
-		u.BetaMultiAgentCallOutput = &betamultiagentcalloutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betatoolsearchcall BetaToolSearchCall
-	if err := json.Unmarshal(data, &betatoolsearchcall); err == nil && isNonEmptyBetaItemResourceBetaToolSearchCall(betatoolsearchcall) {
-		u.BetaToolSearchCall = &betatoolsearchcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betatoolsearchoutput BetaToolSearchOutput
-	if err := json.Unmarshal(data, &betatoolsearchoutput); err == nil && isNonEmptyBetaItemResourceBetaToolSearchOutput(betatoolsearchoutput) {
-		u.BetaToolSearchOutput = &betatoolsearchoutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaadditionaltools BetaAdditionalTools
-	if err := json.Unmarshal(data, &betaadditionaltools); err == nil && isNonEmptyBetaItemResourceBetaAdditionalTools(betaadditionaltools) {
-		u.BetaAdditionalTools = &betaadditionaltools
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaresponseconfigurationupdate BetaResponseConfigurationUpdate
-	if err := json.Unmarshal(data, &betaresponseconfigurationupdate); err == nil && isNonEmptyBetaItemResourceBetaResponseConfigurationUpdate(betaresponseconfigurationupdate) {
-		u.BetaResponseConfigurationUpdate = &betaresponseconfigurationupdate
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betareasoningitem BetaReasoningItem
-	if err := json.Unmarshal(data, &betareasoningitem); err == nil && isNonEmptyBetaItemResourceBetaReasoningItem(betareasoningitem) {
-		u.BetaReasoningItem = &betareasoningitem
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaprogram BetaProgram
-	if err := json.Unmarshal(data, &betaprogram); err == nil && isNonEmptyBetaItemResourceBetaProgram(betaprogram) {
-		u.BetaProgram = &betaprogram
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaprogramoutput BetaProgramOutput
-	if err := json.Unmarshal(data, &betaprogramoutput); err == nil && isNonEmptyBetaItemResourceBetaProgramOutput(betaprogramoutput) {
-		u.BetaProgramOutput = &betaprogramoutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betacompactionbody BetaCompactionBody
-	if err := json.Unmarshal(data, &betacompactionbody); err == nil && isNonEmptyBetaItemResourceBetaCompactionBody(betacompactionbody) {
-		u.BetaCompactionBody = &betacompactionbody
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaimagegentoolcall BetaImageGenToolCall
-	if err := json.Unmarshal(data, &betaimagegentoolcall); err == nil && isNonEmptyBetaItemResourceBetaImageGenToolCall(betaimagegentoolcall) {
-		u.BetaImageGenToolCall = &betaimagegentoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betacodeinterpretertoolcall BetaCodeInterpreterToolCall
-	if err := json.Unmarshal(data, &betacodeinterpretertoolcall); err == nil && isNonEmptyBetaItemResourceBetaCodeInterpreterToolCall(betacodeinterpretertoolcall) {
-		u.BetaCodeInterpreterToolCall = &betacodeinterpretertoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betalocalshelltoolcall BetaLocalShellToolCall
-	if err := json.Unmarshal(data, &betalocalshelltoolcall); err == nil && isNonEmptyBetaItemResourceBetaLocalShellToolCall(betalocalshelltoolcall) {
-		u.BetaLocalShellToolCall = &betalocalshelltoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betalocalshelltoolcalloutput BetaLocalShellToolCallOutput
-	if err := json.Unmarshal(data, &betalocalshelltoolcalloutput); err == nil && isNonEmptyBetaItemResourceBetaLocalShellToolCallOutput(betalocalshelltoolcalloutput) {
-		u.BetaLocalShellToolCallOutput = &betalocalshelltoolcalloutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betafunctionshellcall BetaFunctionShellCall
-	if err := json.Unmarshal(data, &betafunctionshellcall); err == nil && isNonEmptyBetaItemResourceBetaFunctionShellCall(betafunctionshellcall) {
-		u.BetaFunctionShellCall = &betafunctionshellcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betafunctionshellcalloutput BetaFunctionShellCallOutput
-	if err := json.Unmarshal(data, &betafunctionshellcalloutput); err == nil && isNonEmptyBetaItemResourceBetaFunctionShellCallOutput(betafunctionshellcalloutput) {
-		u.BetaFunctionShellCallOutput = &betafunctionshellcalloutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaapplypatchtoolcall BetaApplyPatchToolCall
-	if err := json.Unmarshal(data, &betaapplypatchtoolcall); err == nil && isNonEmptyBetaItemResourceBetaApplyPatchToolCall(betaapplypatchtoolcall) {
-		u.BetaApplyPatchToolCall = &betaapplypatchtoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betaapplypatchtoolcalloutput BetaApplyPatchToolCallOutput
-	if err := json.Unmarshal(data, &betaapplypatchtoolcalloutput); err == nil && isNonEmptyBetaItemResourceBetaApplyPatchToolCallOutput(betaapplypatchtoolcalloutput) {
-		u.BetaApplyPatchToolCallOutput = &betaapplypatchtoolcalloutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betamcplisttools BetaMCPListTools
-	if err := json.Unmarshal(data, &betamcplisttools); err == nil && isNonEmptyBetaItemResourceBetaMCPListTools(betamcplisttools) {
-		u.BetaMCPListTools = &betamcplisttools
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betamcpapprovalrequest BetaMCPApprovalRequest
-	if err := json.Unmarshal(data, &betamcpapprovalrequest); err == nil && isNonEmptyBetaItemResourceBetaMCPApprovalRequest(betamcpapprovalrequest) {
-		u.BetaMCPApprovalRequest = &betamcpapprovalrequest
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betamcpapprovalresponseresource BetaMCPApprovalResponseResource
-	if err := json.Unmarshal(data, &betamcpapprovalresponseresource); err == nil && isNonEmptyBetaItemResourceBetaMCPApprovalResponseResource(betamcpapprovalresponseresource) {
-		u.BetaMCPApprovalResponseResource = &betamcpapprovalresponseresource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betamcptoolcall BetaMCPToolCall
-	if err := json.Unmarshal(data, &betamcptoolcall); err == nil && isNonEmptyBetaItemResourceBetaMCPToolCall(betamcptoolcall) {
-		u.BetaMCPToolCall = &betamcptoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betacustomtoolcallresource BetaCustomToolCallResource
-	if err := json.Unmarshal(data, &betacustomtoolcallresource); err == nil && isNonEmptyBetaItemResourceBetaCustomToolCallResource(betacustomtoolcallresource) {
-		u.BetaCustomToolCallResource = &betacustomtoolcallresource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betacustomtoolcalloutputresource BetaCustomToolCallOutputResource
-	if err := json.Unmarshal(data, &betacustomtoolcalloutputresource); err == nil && isNonEmptyBetaItemResourceBetaCustomToolCallOutputResource(betacustomtoolcalloutputresource) {
-		u.BetaCustomToolCallOutputResource = &betacustomtoolcalloutputresource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u BetaItemResource) MarshalJSON() ([]byte, error) {
-	if u.BetaInputMessageResource != nil {
-		return json.Marshal(u.BetaInputMessageResource)
-	}
-	if u.BetaOutputMessage != nil {
-		return json.Marshal(u.BetaOutputMessage)
-	}
-	if u.BetaFileSearchToolCall != nil {
-		return json.Marshal(u.BetaFileSearchToolCall)
-	}
-	if u.BetaComputerToolCall != nil {
-		return json.Marshal(u.BetaComputerToolCall)
-	}
-	if u.BetaComputerToolCallOutputResource != nil {
-		return json.Marshal(u.BetaComputerToolCallOutputResource)
-	}
-	if u.BetaWebSearchToolCall != nil {
-		return json.Marshal(u.BetaWebSearchToolCall)
-	}
-	if u.BetaFunctionToolCallResource != nil {
-		return json.Marshal(u.BetaFunctionToolCallResource)
-	}
-	if u.BetaFunctionToolCallOutputResource != nil {
-		return json.Marshal(u.BetaFunctionToolCallOutputResource)
-	}
-	if u.BetaAgentMessage != nil {
-		return json.Marshal(u.BetaAgentMessage)
-	}
-	if u.BetaMultiAgentCall != nil {
-		return json.Marshal(u.BetaMultiAgentCall)
-	}
-	if u.BetaMultiAgentCallOutput != nil {
-		return json.Marshal(u.BetaMultiAgentCallOutput)
-	}
-	if u.BetaToolSearchCall != nil {
-		return json.Marshal(u.BetaToolSearchCall)
-	}
-	if u.BetaToolSearchOutput != nil {
-		return json.Marshal(u.BetaToolSearchOutput)
-	}
-	if u.BetaAdditionalTools != nil {
-		return json.Marshal(u.BetaAdditionalTools)
-	}
-	if u.BetaResponseConfigurationUpdate != nil {
-		return json.Marshal(u.BetaResponseConfigurationUpdate)
-	}
-	if u.BetaReasoningItem != nil {
-		return json.Marshal(u.BetaReasoningItem)
-	}
-	if u.BetaProgram != nil {
-		return json.Marshal(u.BetaProgram)
-	}
-	if u.BetaProgramOutput != nil {
-		return json.Marshal(u.BetaProgramOutput)
-	}
-	if u.BetaCompactionBody != nil {
-		return json.Marshal(u.BetaCompactionBody)
-	}
-	if u.BetaImageGenToolCall != nil {
-		return json.Marshal(u.BetaImageGenToolCall)
-	}
-	if u.BetaCodeInterpreterToolCall != nil {
-		return json.Marshal(u.BetaCodeInterpreterToolCall)
-	}
-	if u.BetaLocalShellToolCall != nil {
-		return json.Marshal(u.BetaLocalShellToolCall)
-	}
-	if u.BetaLocalShellToolCallOutput != nil {
-		return json.Marshal(u.BetaLocalShellToolCallOutput)
-	}
-	if u.BetaFunctionShellCall != nil {
-		return json.Marshal(u.BetaFunctionShellCall)
-	}
-	if u.BetaFunctionShellCallOutput != nil {
-		return json.Marshal(u.BetaFunctionShellCallOutput)
-	}
-	if u.BetaApplyPatchToolCall != nil {
-		return json.Marshal(u.BetaApplyPatchToolCall)
-	}
-	if u.BetaApplyPatchToolCallOutput != nil {
-		return json.Marshal(u.BetaApplyPatchToolCallOutput)
-	}
-	if u.BetaMCPListTools != nil {
-		return json.Marshal(u.BetaMCPListTools)
-	}
-	if u.BetaMCPApprovalRequest != nil {
-		return json.Marshal(u.BetaMCPApprovalRequest)
-	}
-	if u.BetaMCPApprovalResponseResource != nil {
-		return json.Marshal(u.BetaMCPApprovalResponseResource)
-	}
-	if u.BetaMCPToolCall != nil {
-		return json.Marshal(u.BetaMCPToolCall)
-	}
-	if u.BetaCustomToolCallResource != nil {
-		return json.Marshal(u.BetaCustomToolCallResource)
-	}
-	if u.BetaCustomToolCallOutputResource != nil {
-		return json.Marshal(u.BetaCustomToolCallOutputResource)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyBetaItemResourceBetaInputMessageResource(v BetaInputMessageResource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaOutputMessage(v BetaOutputMessage) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaFileSearchToolCall(v BetaFileSearchToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaComputerToolCall(v BetaComputerToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaComputerToolCallOutputResource(v BetaComputerToolCallOutputResource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaWebSearchToolCall(v BetaWebSearchToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaFunctionToolCallResource(v BetaFunctionToolCallResource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaFunctionToolCallOutputResource(v BetaFunctionToolCallOutputResource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemResourceBetaAgentMessage(v BetaAgentMessage) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

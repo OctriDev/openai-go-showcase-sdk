@@ -195,6 +195,24 @@ func (u *RealtimeMCPToolCallError) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeMCPProtocolError
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeMCPProtocolError = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeMCPToolExecutionError
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeMCPToolExecutionError = &lossless1
+			return nil
+		}
+		var lossless2 RealtimeMCPHTTPError
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RealtimeMCPHTTPError = &lossless2
+			return nil
+		}
+	}
 	var realtimemcpprotocolerror RealtimeMCPProtocolError
 	if err := json.Unmarshal(data, &realtimemcpprotocolerror); err == nil && isNonEmptyRealtimeMCPToolCallErrorRealtimeMCPProtocolError(realtimemcpprotocolerror) {
 		u.RealtimeMCPProtocolError = &realtimemcpprotocolerror

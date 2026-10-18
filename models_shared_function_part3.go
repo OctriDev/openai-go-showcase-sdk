@@ -254,6 +254,19 @@ func (u *FunctionShellCallOutputOutcomeParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 FunctionShellCallOutputTimeoutOutcomeParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.FunctionShellCallOutputTimeoutOutcomeParam = &lossless0
+			return nil
+		}
+		var lossless1 FunctionShellCallOutputExitOutcomeParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.FunctionShellCallOutputExitOutcomeParam = &lossless1
+			return nil
+		}
+	}
 	var functionshellcalloutputtimeoutoutcomeparam FunctionShellCallOutputTimeoutOutcomeParam
 	if err := json.Unmarshal(data, &functionshellcalloutputtimeoutoutcomeparam); err == nil && isNonEmptyFunctionShellCallOutputOutcomeParamFunctionShellCallOutputTimeoutOutcomeParam(functionshellcalloutputtimeoutoutcomeparam) {
 		u.FunctionShellCallOutputTimeoutOutcomeParam = &functionshellcalloutputtimeoutoutcomeparam
@@ -476,6 +489,24 @@ func (u *FunctionShellToolParamEnvironment) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ContainerAutoParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ContainerAutoParam = &lossless0
+			return nil
+		}
+		var lossless1 LocalEnvironmentParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LocalEnvironmentParam = &lossless1
+			return nil
+		}
+		var lossless2 ContainerReferenceParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ContainerReferenceParam = &lossless2
+			return nil
+		}
+	}
 	var containerautoparam ContainerAutoParam
 	if err := json.Unmarshal(data, &containerautoparam); err == nil && isNonEmptyFunctionShellToolParamEnvironmentContainerAutoParam(containerautoparam) {
 		u.ContainerAutoParam = &containerautoparam
@@ -578,6 +609,19 @@ func (u *FunctionShellCallEnvironment) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LocalEnvironmentResource
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LocalEnvironmentResource = &lossless0
+			return nil
+		}
+		var lossless1 ContainerReferenceResource
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ContainerReferenceResource = &lossless1
+			return nil
+		}
+	}
 	var localenvironmentresource LocalEnvironmentResource
 	if err := json.Unmarshal(data, &localenvironmentresource); err == nil && isNonEmptyFunctionShellCallEnvironmentLocalEnvironmentResource(localenvironmentresource) {
 		u.LocalEnvironmentResource = &localenvironmentresource
@@ -633,82 +677,4 @@ type FunctionShellCallOutputContentOutcome struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *FunctionShellCallOutputContentOutcome) UnmarshalJSON(data []byte) error {
-	*u = FunctionShellCallOutputContentOutcome{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "timeout":
-					var functionshellcalloutputtimeoutoutcome FunctionShellCallOutputTimeoutOutcome
-					if err := json.Unmarshal(data, &functionshellcalloutputtimeoutoutcome); err != nil {
-						return err
-					}
-					u.FunctionShellCallOutputTimeoutOutcome = &functionshellcalloutputtimeoutoutcome
-					return nil
-				case "exit":
-					var functionshellcalloutputexitoutcome FunctionShellCallOutputExitOutcome
-					if err := json.Unmarshal(data, &functionshellcalloutputexitoutcome); err != nil {
-						return err
-					}
-					u.FunctionShellCallOutputExitOutcome = &functionshellcalloutputexitoutcome
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var functionshellcalloutputtimeoutoutcome FunctionShellCallOutputTimeoutOutcome
-	if err := json.Unmarshal(data, &functionshellcalloutputtimeoutoutcome); err == nil && isNonEmptyFunctionShellCallOutputContentOutcomeFunctionShellCallOutputTimeoutOutcome(functionshellcalloutputtimeoutoutcome) {
-		u.FunctionShellCallOutputTimeoutOutcome = &functionshellcalloutputtimeoutoutcome
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var functionshellcalloutputexitoutcome FunctionShellCallOutputExitOutcome
-	if err := json.Unmarshal(data, &functionshellcalloutputexitoutcome); err == nil && isNonEmptyFunctionShellCallOutputContentOutcomeFunctionShellCallOutputExitOutcome(functionshellcalloutputexitoutcome) {
-		u.FunctionShellCallOutputExitOutcome = &functionshellcalloutputexitoutcome
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u FunctionShellCallOutputContentOutcome) MarshalJSON() ([]byte, error) {
-	if u.FunctionShellCallOutputTimeoutOutcome != nil {
-		return json.Marshal(u.FunctionShellCallOutputTimeoutOutcome)
-	}
-	if u.FunctionShellCallOutputExitOutcome != nil {
-		return json.Marshal(u.FunctionShellCallOutputExitOutcome)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyFunctionShellCallOutputContentOutcomeFunctionShellCallOutputTimeoutOutcome(v FunctionShellCallOutputTimeoutOutcome) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyFunctionShellCallOutputContentOutcomeFunctionShellCallOutputExitOutcome(v FunctionShellCallOutputExitOutcome) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalFunctionShellCallOutputContentOutcome converts an untyped value to FunctionShellCallOutputContentOutcome.
-func UnmarshalFunctionShellCallOutputContentOutcome(v any) FunctionShellCallOutputContentOutcome {
-	b, _ := json.Marshal(v)
-	var result FunctionShellCallOutputContentOutcome
-	_ = json.Unmarshal(b, &result)
-	return result
 }

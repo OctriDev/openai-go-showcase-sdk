@@ -288,6 +288,19 @@ func (u *McpTransportResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 McpTransportResourceHttp
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.McpTransportResourceHttp = &lossless0
+			return nil
+		}
+		var lossless1 McpTransportResourceStdio
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.McpTransportResourceStdio = &lossless1
+			return nil
+		}
+	}
 	var mcptransportresourcehttp McpTransportResourceHttp
 	if err := json.Unmarshal(data, &mcptransportresourcehttp); err == nil && isNonEmptyMcpTransportResourceMcpTransportResourceHttp(mcptransportresourcehttp) {
 		u.McpTransportResourceHttp = &mcptransportresourcehttp
@@ -527,6 +540,19 @@ func (u *McpTransportConfigParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 McpTransportConfigParamHttp
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.McpTransportConfigParamHttp = &lossless0
+			return nil
+		}
+		var lossless1 McpTransportConfigParamStdio
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.McpTransportConfigParamStdio = &lossless1
+			return nil
 		}
 	}
 	var mcptransportconfigparamhttp McpTransportConfigParamHttp

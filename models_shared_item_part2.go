@@ -3,6 +3,135 @@
 
 package sdk
 
+import (
+	"bytes"
+	"encoding/json"
+)
+
+func isNonEmptyItemCompactionSummaryItemParam(v CompactionSummaryItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemImageGenToolCall(v ImageGenToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemCodeInterpreterToolCall(v CodeInterpreterToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemLocalShellToolCall(v LocalShellToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemLocalShellToolCallOutput(v LocalShellToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemFunctionShellCallItemParam(v FunctionShellCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemFunctionShellCallOutputItemParam(v FunctionShellCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemApplyPatchToolCallItemParam(v ApplyPatchToolCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemApplyPatchToolCallOutputItemParam(v ApplyPatchToolCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPListTools(v MCPListTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPApprovalRequest(v MCPApprovalRequest) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPApprovalResponse(v MCPApprovalResponse) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPToolCall(v MCPToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemCustomToolCallOutput(v CustomToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemCustomToolCall(v CustomToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalItem converts an untyped value to Item.
+func UnmarshalItem(v any) Item {
+	b, _ := json.Marshal(v)
+	var result Item
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// ItemReferenceParam An internal identifier for an item to reference.
+type ItemReferenceParam struct {
+	// Type Optional API value serialized in the `type` wire field.
+	Type *NullableValue[ItemReferenceParamTypeVariant0Enum] `json:"type,omitempty"`
+	// Id The ID of the item to reference.
+	Id string `json:"id"`
+}
+
+func (value *ItemReferenceParam) UnmarshalJSON(data []byte) error {
+	type ItemReferenceParamAlias ItemReferenceParam
+	var decoded ItemReferenceParamAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ItemReferenceParam(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"id"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"id"}); err != nil {
+		return err
+	}
+	if raw, ok := rawFields["type"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Type = &NullableValue[ItemReferenceParamTypeVariant0Enum]{}
+	}
+	return nil
+}
+
+// NewItemReferenceParam returns a validated ItemReferenceParam built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewItemReferenceParam(fields ItemReferenceParam) (*ItemReferenceParam, error) {
+	return ConstructModel(fields)
+}
+
+// ItemReferenceParamTypeVariant0Enum The type of item to reference. Always `item_reference`.
+type ItemReferenceParamTypeVariant0Enum string
+
 const (
 	ItemReferenceParamTypeVariant0EnumItemReference ItemReferenceParamTypeVariant0Enum = "item_reference"
 )

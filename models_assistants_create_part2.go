@@ -255,6 +255,24 @@ func (u *CreateAssistantRequestToolsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearch = &lossless1
+			return nil
+		}
+		var lossless2 AssistantToolsFunction
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AssistantToolsFunction = &lossless2
+			return nil
+		}
+	}
 	var assistanttoolscode AssistantToolsCode
 	if err := json.Unmarshal(data, &assistanttoolscode); err == nil && isNonEmptyCreateAssistantRequestToolsItemAssistantToolsCode(assistanttoolscode) {
 		u.AssistantToolsCode = &assistanttoolscode
@@ -507,6 +525,19 @@ func (u *CreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingSt
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 CreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant1 = &lossless1
+			return nil
+		}
+	}
 	var createassistantrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0 CreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0
 	if err := json.Unmarshal(data, &createassistantrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0); err == nil && isNonEmptyCreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyCreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0(createassistantrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0) {
 		u.CreateAssistantRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0 = &createassistantrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0
@@ -599,6 +630,24 @@ func (u *CreateMessageRequestContentItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageContentImageFileObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageContentImageFileObject = &lossless0
+			return nil
+		}
+		var lossless1 MessageContentImageUrlObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MessageContentImageUrlObject = &lossless1
+			return nil
+		}
+		var lossless2 MessageRequestContentTextObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.MessageRequestContentTextObject = &lossless2
+			return nil
+		}
+	}
 	var messagecontentimagefileobject MessageContentImageFileObject
 	if err := json.Unmarshal(data, &messagecontentimagefileobject); err == nil && isNonEmptyCreateMessageRequestContentItemMessageContentImageFileObject(messagecontentimagefileobject) {
 		u.MessageContentImageFileObject = &messagecontentimagefileobject
@@ -660,13 +709,4 @@ func UnmarshalCreateMessageRequestContentItem(v any) CreateMessageRequestContent
 	var result CreateMessageRequestContentItem
 	_ = json.Unmarshal(b, &result)
 	return result
-}
-
-// CreateMessageRequestAttachmentsItemToolsItem represents a union type.
-type CreateMessageRequestAttachmentsItemToolsItem struct {
-	AssistantToolsCode               *AssistantToolsCode
-	AssistantToolsFileSearchTypeOnly *AssistantToolsFileSearchTypeOnly
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
 }

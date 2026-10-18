@@ -6,132 +6,7 @@ package sdk
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
-
-// NewTranscriptTextUsageDuration returns a validated TranscriptTextUsageDuration built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewTranscriptTextUsageDuration(fields TranscriptTextUsageDuration) (*TranscriptTextUsageDuration, error) {
-	return ConstructModel(fields)
-}
-
-// TranscriptTextUsageDurationTypeEnum The type of the usage object. Always `duration` for this variant.
-type TranscriptTextUsageDurationTypeEnum string
-
-const (
-	TranscriptTextUsageDurationTypeEnumDuration TranscriptTextUsageDurationTypeEnum = "duration"
-)
-
-func (value *TranscriptTextUsageDurationTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "duration":
-		*value = TranscriptTextUsageDurationTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "TranscriptTextUsageDurationTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown TranscriptTextUsageDurationTypeEnum: %v", raw)}
-	}
-}
-
-// TranscriptTextUsageTokens Usage statistics for models billed by token usage.
-type TranscriptTextUsageTokens struct {
-	// Type The type of the usage object. Always `tokens` for this variant.
-	Type TranscriptTextUsageTokensTypeEnum `json:"type"`
-	// InputTokens Number of input tokens billed for this request.
-	InputTokens int64 `json:"input_tokens"`
-	// InputTokenDetails Details about the input tokens billed for this request.
-	InputTokenDetails *TranscriptTextUsageTokensInputTokenDetails `json:"input_token_details,omitempty"`
-	// OutputTokens Number of output tokens generated.
-	OutputTokens int64 `json:"output_tokens"`
-	// TotalTokens Total number of tokens used (input + output).
-	TotalTokens int64 `json:"total_tokens"`
-}
-
-func (value *TranscriptTextUsageTokens) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"tokens"}); err != nil {
-		return err
-	}
-	type TranscriptTextUsageTokensAlias TranscriptTextUsageTokens
-	var decoded TranscriptTextUsageTokensAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = TranscriptTextUsageTokens(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "input_tokens", "output_tokens", "total_tokens"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "input_tokens", "output_tokens", "total_tokens"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewTranscriptTextUsageTokens returns a validated TranscriptTextUsageTokens built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewTranscriptTextUsageTokens(fields TranscriptTextUsageTokens) (*TranscriptTextUsageTokens, error) {
-	return ConstructModel(fields)
-}
-
-// TranscriptTextUsageTokensTypeEnum The type of the usage object. Always `tokens` for this variant.
-type TranscriptTextUsageTokensTypeEnum string
-
-const (
-	TranscriptTextUsageTokensTypeEnumTokens TranscriptTextUsageTokensTypeEnum = "tokens"
-)
-
-func (value *TranscriptTextUsageTokensTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "tokens":
-		*value = TranscriptTextUsageTokensTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "TranscriptTextUsageTokensTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown TranscriptTextUsageTokensTypeEnum: %v", raw)}
-	}
-}
-
-// TranscriptTextUsageTokensInputTokenDetails Details about the input tokens billed for this request.
-type TranscriptTextUsageTokensInputTokenDetails struct {
-	// TextTokens Number of text tokens billed for this request.
-	TextTokens *int64 `json:"text_tokens,omitempty"`
-	// AudioTokens Number of audio tokens billed for this request.
-	AudioTokens *int64 `json:"audio_tokens,omitempty"`
-}
-
-// NewTranscriptTextUsageTokensInputTokenDetails returns a validated TranscriptTextUsageTokensInputTokenDetails built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewTranscriptTextUsageTokensInputTokenDetails(fields TranscriptTextUsageTokensInputTokenDetails) (*TranscriptTextUsageTokensInputTokenDetails, error) {
-	return ConstructModel(fields)
-}
-
-// TranscriptionDiarizedSegment A segment of diarized transcript text with speaker metadata.
-type TranscriptionDiarizedSegment struct {
-	// Type The type of the segment. Always `transcript.text.segment`.
-	Type TranscriptionDiarizedSegmentTypeEnum `json:"type"`
-	// Id Unique identifier for the segment.
-	Id string `json:"id"`
-	// Start Start timestamp of the segment in seconds.
-	Start float64 `json:"start"`
-	// End End timestamp of the segment in seconds.
-	End float64 `json:"end"`
-	// Text Transcript text for this segment.
-	Text string `json:"text"`
-	// Speaker Speaker label for this segment. When known speakers are provided, the label matches `known_speaker_names[]`. Otherwise speakers are labeled sequentially using capital letters (`A`, `B`, ...).
-	Speaker string `json:"speaker"`
-}
 
 func (value *TranscriptionDiarizedSegment) UnmarshalJSON(data []byte) error {
 	type TranscriptionDiarizedSegmentAlias TranscriptionDiarizedSegment
@@ -580,55 +455,51 @@ const (
 	VoiceResourceTypeEnumAudioSample VoiceResourceTypeEnum = "audio_sample"
 )
 
-// CreateTranscriptionResponseDiarizedJsonUsage represents a union type.
-type CreateTranscriptionResponseDiarizedJsonUsage struct {
-	TranscriptTextUsageTokens   *TranscriptTextUsageTokens
-	TranscriptTextUsageDuration *TranscriptTextUsageDuration
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
+// CreateTranscriptionResponse represents a union type.
+type CreateTranscriptionResponse struct {
+	CreateTranscriptionResponseJson         *CreateTranscriptionResponseJson
+	CreateTranscriptionResponseDiarizedJson *CreateTranscriptionResponseDiarizedJson
+	CreateTranscriptionResponseVerboseJson  *CreateTranscriptionResponseVerboseJson
 }
 
-func (u *CreateTranscriptionResponseDiarizedJsonUsage) UnmarshalJSON(data []byte) error {
-	*u = CreateTranscriptionResponseDiarizedJsonUsage{}
+func (u *CreateTranscriptionResponse) UnmarshalJSON(data []byte) error {
+	*u = CreateTranscriptionResponse{}
 	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "tokens":
-					var transcripttextusagetokens TranscriptTextUsageTokens
-					if err := json.Unmarshal(data, &transcripttextusagetokens); err != nil {
-						return err
-					}
-					u.TranscriptTextUsageTokens = &transcripttextusagetokens
-					return nil
-				case "duration":
-					var transcripttextusageduration TranscriptTextUsageDuration
-					if err := json.Unmarshal(data, &transcripttextusageduration); err != nil {
-						return err
-					}
-					u.TranscriptTextUsageDuration = &transcripttextusageduration
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateTranscriptionResponseJson
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateTranscriptionResponseJson = &lossless0
+			return nil
+		}
+		var lossless1 CreateTranscriptionResponseDiarizedJson
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateTranscriptionResponseDiarizedJson = &lossless1
+			return nil
+		}
+		var lossless2 CreateTranscriptionResponseVerboseJson
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.CreateTranscriptionResponseVerboseJson = &lossless2
+			return nil
 		}
 	}
-	var transcripttextusagetokens TranscriptTextUsageTokens
-	if err := json.Unmarshal(data, &transcripttextusagetokens); err == nil && isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageTokens(transcripttextusagetokens) {
-		u.TranscriptTextUsageTokens = &transcripttextusagetokens
+	var createtranscriptionresponsejson CreateTranscriptionResponseJson
+	if err := json.Unmarshal(data, &createtranscriptionresponsejson); err == nil && isNonEmptyCreateTranscriptionResponseCreateTranscriptionResponseJson(createtranscriptionresponsejson) {
+		u.CreateTranscriptionResponseJson = &createtranscriptionresponsejson
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var transcripttextusageduration TranscriptTextUsageDuration
-	if err := json.Unmarshal(data, &transcripttextusageduration); err == nil && isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageDuration(transcripttextusageduration) {
-		u.TranscriptTextUsageDuration = &transcripttextusageduration
+	var createtranscriptionresponsediarizedjson CreateTranscriptionResponseDiarizedJson
+	if err := json.Unmarshal(data, &createtranscriptionresponsediarizedjson); err == nil && isNonEmptyCreateTranscriptionResponseCreateTranscriptionResponseDiarizedJson(createtranscriptionresponsediarizedjson) {
+		u.CreateTranscriptionResponseDiarizedJson = &createtranscriptionresponsediarizedjson
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var createtranscriptionresponseverbosejson CreateTranscriptionResponseVerboseJson
+	if err := json.Unmarshal(data, &createtranscriptionresponseverbosejson); err == nil && isNonEmptyCreateTranscriptionResponseCreateTranscriptionResponseVerboseJson(createtranscriptionresponseverbosejson) {
+		u.CreateTranscriptionResponseVerboseJson = &createtranscriptionresponseverbosejson
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
@@ -636,42 +507,177 @@ func (u *CreateTranscriptionResponseDiarizedJsonUsage) UnmarshalJSON(data []byte
 	return refusal
 }
 
-func (u CreateTranscriptionResponseDiarizedJsonUsage) MarshalJSON() ([]byte, error) {
-	if u.TranscriptTextUsageTokens != nil {
-		return json.Marshal(u.TranscriptTextUsageTokens)
+func (u CreateTranscriptionResponse) MarshalJSON() ([]byte, error) {
+	if u.CreateTranscriptionResponseJson != nil {
+		return json.Marshal(u.CreateTranscriptionResponseJson)
 	}
-	if u.TranscriptTextUsageDuration != nil {
-		return json.Marshal(u.TranscriptTextUsageDuration)
+	if u.CreateTranscriptionResponseDiarizedJson != nil {
+		return json.Marshal(u.CreateTranscriptionResponseDiarizedJson)
 	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
+	if u.CreateTranscriptionResponseVerboseJson != nil {
+		return json.Marshal(u.CreateTranscriptionResponseVerboseJson)
 	}
 	return []byte("null"), nil
 }
 
-func isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageTokens(v TranscriptTextUsageTokens) bool {
+func isNonEmptyCreateTranscriptionResponseCreateTranscriptionResponseJson(v CreateTranscriptionResponseJson) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyCreateTranscriptionResponseDiarizedJsonUsageTranscriptTextUsageDuration(v TranscriptTextUsageDuration) bool {
+func isNonEmptyCreateTranscriptionResponseCreateTranscriptionResponseDiarizedJson(v CreateTranscriptionResponseDiarizedJson) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-// UnmarshalCreateTranscriptionResponseDiarizedJsonUsage converts an untyped value to CreateTranscriptionResponseDiarizedJsonUsage.
-func UnmarshalCreateTranscriptionResponseDiarizedJsonUsage(v any) CreateTranscriptionResponseDiarizedJsonUsage {
+func isNonEmptyCreateTranscriptionResponseCreateTranscriptionResponseVerboseJson(v CreateTranscriptionResponseVerboseJson) bool {
 	b, _ := json.Marshal(v)
-	var result CreateTranscriptionResponseDiarizedJsonUsage
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateTranscriptionResponse converts an untyped value to CreateTranscriptionResponse.
+func UnmarshalCreateTranscriptionResponse(v any) CreateTranscriptionResponse {
+	b, _ := json.Marshal(v)
+	var result CreateTranscriptionResponse
 	_ = json.Unmarshal(b, &result)
 	return result
 }
 
-// CreateTranscriptionResponseJsonUsage represents a union type.
-type CreateTranscriptionResponseJsonUsage struct {
-	TranscriptTextUsageTokens   *TranscriptTextUsageTokens
-	TranscriptTextUsageDuration *TranscriptTextUsageDuration
+// CreateTranslationResponse represents a union type.
+type CreateTranslationResponse struct {
+	CreateTranslationResponseJson        *CreateTranslationResponseJson
+	CreateTranslationResponseVerboseJson *CreateTranslationResponseVerboseJson
+}
 
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
+func (u *CreateTranslationResponse) UnmarshalJSON(data []byte) error {
+	*u = CreateTranslationResponse{}
+	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateTranslationResponseJson
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateTranslationResponseJson = &lossless0
+			return nil
+		}
+		var lossless1 CreateTranslationResponseVerboseJson
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateTranslationResponseVerboseJson = &lossless1
+			return nil
+		}
+	}
+	var createtranslationresponsejson CreateTranslationResponseJson
+	if err := json.Unmarshal(data, &createtranslationresponsejson); err == nil && isNonEmptyCreateTranslationResponseCreateTranslationResponseJson(createtranslationresponsejson) {
+		u.CreateTranslationResponseJson = &createtranslationresponsejson
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var createtranslationresponseverbosejson CreateTranslationResponseVerboseJson
+	if err := json.Unmarshal(data, &createtranslationresponseverbosejson); err == nil && isNonEmptyCreateTranslationResponseCreateTranslationResponseVerboseJson(createtranslationresponseverbosejson) {
+		u.CreateTranslationResponseVerboseJson = &createtranslationresponseverbosejson
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateTranslationResponse) MarshalJSON() ([]byte, error) {
+	if u.CreateTranslationResponseJson != nil {
+		return json.Marshal(u.CreateTranslationResponseJson)
+	}
+	if u.CreateTranslationResponseVerboseJson != nil {
+		return json.Marshal(u.CreateTranslationResponseVerboseJson)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateTranslationResponseCreateTranslationResponseJson(v CreateTranslationResponseJson) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateTranslationResponseCreateTranslationResponseVerboseJson(v CreateTranslationResponseVerboseJson) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateTranslationResponse converts an untyped value to CreateTranslationResponse.
+func UnmarshalCreateTranslationResponse(v any) CreateTranslationResponse {
+	b, _ := json.Marshal(v)
+	var result CreateTranslationResponse
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// CreateSpeechRequestVoiceVariant1Enum Required enumerated value serialized in the `voice` wire field.
+type CreateSpeechRequestVoiceVariant1Enum string
+
+const (
+	CreateSpeechRequestVoiceVariant1EnumFable CreateSpeechRequestVoiceVariant1Enum = "fable"
+	CreateSpeechRequestVoiceVariant1EnumOnyx  CreateSpeechRequestVoiceVariant1Enum = "onyx"
+	CreateSpeechRequestVoiceVariant1EnumNova  CreateSpeechRequestVoiceVariant1Enum = "nova"
+)
+
+// CreateSpeechRequestVoiceVariant2 Custom voice reference.
+type CreateSpeechRequestVoiceVariant2 struct {
+	// Id The custom voice ID, e.g. `voice_1234`.
+	Id string `json:"id"`
+}
+
+func (value *CreateSpeechRequestVoiceVariant2) UnmarshalJSON(data []byte) error {
+	type CreateSpeechRequestVoiceVariant2Alias CreateSpeechRequestVoiceVariant2
+	var decoded CreateSpeechRequestVoiceVariant2Alias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateSpeechRequestVoiceVariant2(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"id"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateSpeechRequestVoiceVariant2 returns a validated CreateSpeechRequestVoiceVariant2 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateSpeechRequestVoiceVariant2(fields CreateSpeechRequestVoiceVariant2) (*CreateSpeechRequestVoiceVariant2, error) {
+	return ConstructModel(fields)
+}
+
+// CreateSpeechRequestVoice represents a union type.
+type CreateSpeechRequestVoice struct {
+	String                               *string
+	CreateSpeechRequestVoiceVariant1Enum *CreateSpeechRequestVoiceVariant1Enum
+	CreateSpeechRequestVoiceVariant2     *CreateSpeechRequestVoiceVariant2
+}
+
+func (u *CreateSpeechRequestVoice) UnmarshalJSON(data []byte) error {
+	*u = CreateSpeechRequestVoice{}
+	var refusal error
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		u.String = &s
+		return nil
+	}
+	var createspeechrequestvoicevariant1enum CreateSpeechRequestVoiceVariant1Enum
+	if err := json.Unmarshal(data, &createspeechrequestvoicevariant1enum); err == nil {
+		u.CreateSpeechRequestVoiceVariant1Enum = &createspeechrequestvoicevariant1enum
+		return nil
+	}
+	var createspeechrequestvoicevariant2 CreateSpeechRequestVoiceVariant2
+	if err := json.Unmarshal(data, &createspeechrequestvoicevariant2); err == nil && isNonEmptyCreateSpeechRequestVoiceCreateSpeechRequestVoiceVariant2(createspeechrequestvoicevariant2) {
+		u.CreateSpeechRequestVoiceVariant2 = &createspeechrequestvoicevariant2
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
 }

@@ -62,7 +62,7 @@ type CreateChatCompletionRequestVariant1 struct {
 	// Setting to `{ "type": "json_object" }` enables the older JSON mode, which
 	// ensures the message the model generates is valid JSON. Using `json_schema`
 	// is preferred for models that support it.
-	ResponseFormat *ResponseFormat `json:"response_format,omitempty"`
+	ResponseFormat *CreateChatCompletionRequestVariant1ResponseFormat `json:"response_format,omitempty"`
 	// Audio Parameters for audio output. Required when audio output is requested with
 	// `modalities: ["audio"]`. [Learn more](https://developers.openai.com/api/docs/guides/audio).
 	Audio *NullableValue[CreateChatCompletionRequestVariant1Audio] `json:"audio,omitempty"`
@@ -120,7 +120,7 @@ type CreateChatCompletionRequestVariant1 struct {
 	// Tools A list of tools the model may call. You can provide either
 	// [custom tools](https://developers.openai.com/api/docs/guides/function-calling#custom-tools) or
 	// [function tools](https://developers.openai.com/api/docs/guides/function-calling).
-	Tools []ToolsItem `json:"tools,omitempty"`
+	Tools []CreateChatCompletionRequestVariant1Tools `json:"tools,omitempty"`
 	// ToolChoice Controls which (if any) tool is called by the model.
 	// `none` means the model will not call any tool and instead generates a message.
 	// `auto` means the model can pick between generating a message or calling one or more tools.
@@ -324,6 +324,94 @@ const (
 	CreateChatCompletionRequestVariant1WebSearchOptionsUserLocationTypeEnumApproximate CreateChatCompletionRequestVariant1WebSearchOptionsUserLocationTypeEnum = "approximate"
 )
 
+// CreateChatCompletionRequestVariant1ResponseFormat represents a union type.
+type CreateChatCompletionRequestVariant1ResponseFormat struct {
+	ResponseFormatText       *ResponseFormatText
+	ResponseFormatJsonSchema *ResponseFormatJsonSchema
+	ResponseFormatJsonObject *ResponseFormatJsonObject
+}
+
+func (u *CreateChatCompletionRequestVariant1ResponseFormat) UnmarshalJSON(data []byte) error {
+	*u = CreateChatCompletionRequestVariant1ResponseFormat{}
+	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ResponseFormatText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ResponseFormatText = &lossless0
+			return nil
+		}
+		var lossless1 ResponseFormatJsonSchema
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ResponseFormatJsonSchema = &lossless1
+			return nil
+		}
+		var lossless2 ResponseFormatJsonObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ResponseFormatJsonObject = &lossless2
+			return nil
+		}
+	}
+	var responseformattext ResponseFormatText
+	if err := json.Unmarshal(data, &responseformattext); err == nil && isNonEmptyCreateChatCompletionRequestVariant1ResponseFormatResponseFormatText(responseformattext) {
+		u.ResponseFormatText = &responseformattext
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var responseformatjsonschema ResponseFormatJsonSchema
+	if err := json.Unmarshal(data, &responseformatjsonschema); err == nil && isNonEmptyCreateChatCompletionRequestVariant1ResponseFormatResponseFormatJsonSchema(responseformatjsonschema) {
+		u.ResponseFormatJsonSchema = &responseformatjsonschema
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var responseformatjsonobject ResponseFormatJsonObject
+	if err := json.Unmarshal(data, &responseformatjsonobject); err == nil && isNonEmptyCreateChatCompletionRequestVariant1ResponseFormatResponseFormatJsonObject(responseformatjsonobject) {
+		u.ResponseFormatJsonObject = &responseformatjsonobject
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateChatCompletionRequestVariant1ResponseFormat) MarshalJSON() ([]byte, error) {
+	if u.ResponseFormatText != nil {
+		return json.Marshal(u.ResponseFormatText)
+	}
+	if u.ResponseFormatJsonSchema != nil {
+		return json.Marshal(u.ResponseFormatJsonSchema)
+	}
+	if u.ResponseFormatJsonObject != nil {
+		return json.Marshal(u.ResponseFormatJsonObject)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateChatCompletionRequestVariant1ResponseFormatResponseFormatText(v ResponseFormatText) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateChatCompletionRequestVariant1ResponseFormatResponseFormatJsonSchema(v ResponseFormatJsonSchema) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateChatCompletionRequestVariant1ResponseFormatResponseFormatJsonObject(v ResponseFormatJsonObject) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateChatCompletionRequestVariant1ResponseFormat converts an untyped value to CreateChatCompletionRequestVariant1ResponseFormat.
+func UnmarshalCreateChatCompletionRequestVariant1ResponseFormat(v any) CreateChatCompletionRequestVariant1ResponseFormat {
+	b, _ := json.Marshal(v)
+	var result CreateChatCompletionRequestVariant1ResponseFormat
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
 // CreateChatCompletionRequestVariant1Audio Parameters for audio output. Required when audio output is requested with
 // `modalities: ["audio"]`. [Learn more](https://developers.openai.com/api/docs/guides/audio).
 type CreateChatCompletionRequestVariant1Audio struct {
@@ -377,6 +465,73 @@ const (
 	CreateChatCompletionRequestVariant1AudioFormatEnumOpus  CreateChatCompletionRequestVariant1AudioFormatEnum = "opus"
 	CreateChatCompletionRequestVariant1AudioFormatEnumPcm16 CreateChatCompletionRequestVariant1AudioFormatEnum = "pcm16"
 )
+
+// CreateChatCompletionRequestVariant1Tools represents a union type.
+type CreateChatCompletionRequestVariant1Tools struct {
+	ChatCompletionTool        *ChatCompletionTool
+	CustomToolChatCompletions *CustomToolChatCompletions
+}
+
+func (u *CreateChatCompletionRequestVariant1Tools) UnmarshalJSON(data []byte) error {
+	*u = CreateChatCompletionRequestVariant1Tools{}
+	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionTool
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionTool = &lossless0
+			return nil
+		}
+		var lossless1 CustomToolChatCompletions
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CustomToolChatCompletions = &lossless1
+			return nil
+		}
+	}
+	var chatcompletiontool ChatCompletionTool
+	if err := json.Unmarshal(data, &chatcompletiontool); err == nil && isNonEmptyCreateChatCompletionRequestVariant1ToolsChatCompletionTool(chatcompletiontool) {
+		u.ChatCompletionTool = &chatcompletiontool
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var customtoolchatcompletions CustomToolChatCompletions
+	if err := json.Unmarshal(data, &customtoolchatcompletions); err == nil && isNonEmptyCreateChatCompletionRequestVariant1ToolsCustomToolChatCompletions(customtoolchatcompletions) {
+		u.CustomToolChatCompletions = &customtoolchatcompletions
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateChatCompletionRequestVariant1Tools) MarshalJSON() ([]byte, error) {
+	if u.ChatCompletionTool != nil {
+		return json.Marshal(u.ChatCompletionTool)
+	}
+	if u.CustomToolChatCompletions != nil {
+		return json.Marshal(u.CustomToolChatCompletions)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateChatCompletionRequestVariant1ToolsChatCompletionTool(v ChatCompletionTool) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateChatCompletionRequestVariant1ToolsCustomToolChatCompletions(v CustomToolChatCompletions) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateChatCompletionRequestVariant1Tools converts an untyped value to CreateChatCompletionRequestVariant1Tools.
+func UnmarshalCreateChatCompletionRequestVariant1Tools(v any) CreateChatCompletionRequestVariant1Tools {
+	b, _ := json.Marshal(v)
+	var result CreateChatCompletionRequestVariant1Tools
+	_ = json.Unmarshal(b, &result)
+	return result
+}
 
 // CreateChatCompletionRequestVariant1FunctionCallVariant0Enum `none` means the model will not call a function and instead generates a message. `auto` means the model can pick between generating a message or calling a function.
 type CreateChatCompletionRequestVariant1FunctionCallVariant0Enum string
@@ -432,301 +587,3 @@ func UnmarshalCreateChatCompletionRequestVariant1FunctionCall(v any) CreateChatC
 	_ = json.Unmarshal(b, &result)
 	return result
 }
-
-// CreateChatCompletionRequest Typed representation of the `CreateChatCompletionRequest` API schema.
-type CreateChatCompletionRequest struct {
-	// Metadata Set of 16 key-value pairs that can be attached to an object. This can be
-	// useful for storing additional information about the object in a structured
-	// format, and querying for objects via API or the dashboard.
-	//
-	// Keys are strings with a maximum length of 64 characters. Values are strings
-	// with a maximum length of 512 characters.
-	Metadata *NullableValue[Metadata] `json:"metadata,omitempty"`
-	// TopLogprobs An integer between 0 and 20 specifying the maximum number of most likely
-	// tokens to return at each token position, each with an associated log
-	// probability. In some cases, the number of returned tokens may be fewer than
-	// requested.
-	// `logprobs` must be set to `true` if this parameter is used.
-	TopLogprobs *NullableValue[int64] `json:"top_logprobs,omitempty"`
-	// Temperature Optional API value serialized in the `temperature` wire field.
-	Temperature *NullableValue[float64] `json:"temperature,omitempty"`
-	// TopP Optional API value serialized in the `top_p` wire field.
-	TopP *NullableValue[float64] `json:"top_p,omitempty"`
-	// User This field is being replaced by `safety_identifier` and `prompt_cache_key`. Use `prompt_cache_key` instead to maintain caching optimizations.
-	// A stable identifier for your end-users.
-	// Used to boost cache hit rates by better bucketing similar requests and  to help OpenAI detect and prevent abuse. [Learn more](https://developers.openai.com/api/docs/guides/safety-best-practices#implement-safety-identifiers).
-	User *NullableValue[string] `json:"user,omitempty"`
-	// SafetyIdentifier Optional API value serialized in the `safety_identifier` wire field.
-	SafetyIdentifier *NullableValue[string] `json:"safety_identifier,omitempty"`
-	// PromptCacheKey Optional `string` value serialized in the `prompt_cache_key` wire field.
-	PromptCacheKey *NullableValue[string] `json:"prompt_cache_key,omitempty"`
-	// PromptCacheRetention Optional API value serialized in the `prompt_cache_retention` wire field.
-	PromptCacheRetention *NullableValue[ModelResponsePropertiesPromptCacheRetentionVariant0Enum] `json:"prompt_cache_retention,omitempty"`
-	// PromptCacheOptions Options for prompt caching. Supported for `gpt-5.6` and later models. By default, OpenAI automatically chooses one implicit cache breakpoint. You can add explicit breakpoints to content blocks with `prompt_cache_breakpoint`. Each request can write up to four breakpoints. For cache matching, OpenAI considers up to the latest 80 breakpoints in the conversation, without a content-block lookback limit. Set `mode` to `explicit` to disable the implicit breakpoint. The `ttl` defaults to `30m`, which is currently the only supported value. See the [prompt caching guide](https://developers.openai.com/api/docs/guides/prompt-caching) for current details.
-	PromptCacheOptions *PromptCacheOptionsParam `json:"prompt_cache_options,omitempty"`
-	// Messages A list of messages comprising the conversation so far. Depending on the
-	// [model](https://developers.openai.com/api/docs/models) you use, different message types (modalities) are
-	// supported, like [text](https://developers.openai.com/api/docs/guides/text),
-	// [images](https://developers.openai.com/api/docs/guides/images-vision), and [audio](https://developers.openai.com/api/docs/guides/audio).
-	Messages []ChatCompletionRequestMessage `json:"messages"`
-	// Model Model ID used to generate the response, like `gpt-6-astra` or `o3`. OpenAI
-	// offers a wide range of models with different capabilities, performance
-	// characteristics, and price points. Refer to the [model guide](https://developers.openai.com/api/docs/models)
-	// to browse and compare available models.
-	Model       string                      `json:"model"`
-	ServiceTier *NullableValue[ServiceTier] `json:"service_tier,omitempty"`
-	// Modalities Output types that you would like the model to generate.
-	// Most models are capable of generating text, which is the default:
-	//
-	// `["text"]`
-	//
-	// The `gpt-4o-audio-preview` model can also be used to
-	// [generate audio](https://developers.openai.com/api/docs/guides/audio). To request that this model generate
-	// both text and audio responses, you can use:
-	//
-	// `["text", "audio"]`
-	Modalities      *NullableValue[[]string]        `json:"modalities,omitempty"`
-	Verbosity       *NullableValue[Verbosity]       `json:"verbosity,omitempty"`
-	ReasoningEffort *NullableValue[ReasoningEffort] `json:"reasoning_effort,omitempty"`
-	// MaxCompletionTokens An upper bound for the number of tokens that can be generated for a completion, including visible output tokens and [reasoning tokens](https://developers.openai.com/api/docs/guides/reasoning).
-	MaxCompletionTokens *NullableValue[int64] `json:"max_completion_tokens,omitempty"`
-	// FrequencyPenalty Number between -2.0 and 2.0. Positive values penalize new tokens based on
-	// their existing frequency in the text so far, decreasing the model's
-	// likelihood to repeat the same line verbatim.
-	FrequencyPenalty *NullableValue[float64] `json:"frequency_penalty,omitempty"`
-	// PresencePenalty Number between -2.0 and 2.0. Positive values penalize new tokens based on
-	// whether they appear in the text so far, increasing the model's likelihood
-	// to talk about new topics.
-	PresencePenalty *NullableValue[float64] `json:"presence_penalty,omitempty"`
-	// WebSearchOptions This tool searches the web for relevant results to use in a response.
-	// Learn more about the [web search tool](https://developers.openai.com/api/docs/guides/tools-web-search).
-	WebSearchOptions *CreateChatCompletionRequestVariant1WebSearchOptions `json:"web_search_options,omitempty"`
-	// ResponseFormat An object specifying the format that the model must output.
-	//
-	// Setting to `{ "type": "json_schema", "json_schema": {...} }` enables
-	// Structured Outputs which ensures the model will match your supplied JSON
-	// schema. Learn more in the [Structured Outputs
-	// guide](https://developers.openai.com/api/docs/guides/structured-outputs).
-	//
-	// Setting to `{ "type": "json_object" }` enables the older JSON mode, which
-	// ensures the message the model generates is valid JSON. Using `json_schema`
-	// is preferred for models that support it.
-	ResponseFormat *ResponseFormat `json:"response_format,omitempty"`
-	// Audio Parameters for audio output. Required when audio output is requested with
-	// `modalities: ["audio"]`. [Learn more](https://developers.openai.com/api/docs/guides/audio).
-	Audio *NullableValue[CreateChatCompletionRequestVariant1Audio] `json:"audio,omitempty"`
-	// Store Whether or not to store the output of this chat completion request for
-	// use in our [model distillation](https://developers.openai.com/api/docs/guides/supervised-fine-tuning#distilling-from-a-larger-model) or
-	// [evals](https://developers.openai.com/api/docs/guides/evals) products.
-	//
-	// Supports text and image inputs. Note: image inputs over 8MB will be dropped.
-	Store      *NullableValue[bool]            `json:"store,omitempty"`
-	Moderation *NullableValue[ModerationParam] `json:"moderation,omitempty"`
-	// Stream If set to true, the model response data will be streamed to the client
-	// as it is generated using [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format).
-	// See the [Streaming section below](https://developers.openai.com/api/reference/resources/chat/subresources/completions/streaming-events)
-	// for more information, along with the [streaming responses](https://developers.openai.com/api/docs/guides/streaming-responses)
-	// guide for more information on how to handle the streaming events.
-	Stream *NullableValue[bool] `json:"stream,omitempty"`
-	// Stop Not supported with latest reasoning models `o3` and `o4-mini`.
-	//
-	// Up to 4 sequences where the API will stop generating further tokens. The
-	// returned text will not contain the stop sequence.
-	Stop *NullableValue[StopConfiguration] `json:"stop,omitempty"`
-	// LogitBias Modify the likelihood of specified tokens appearing in the completion.
-	//
-	// Accepts a JSON object that maps tokens (specified by their token ID in the
-	// tokenizer) to an associated bias value from -100 to 100. Mathematically,
-	// the bias is added to the logits generated by the model prior to sampling.
-	// The exact effect will vary per model, but values between -1 and 1 should
-	// decrease or increase likelihood of selection; values like -100 or 100
-	// should result in a ban or exclusive selection of the relevant token.
-	LogitBias *NullableValue[map[string]int64] `json:"logit_bias,omitempty"`
-	// Logprobs Whether to return log probabilities of the output tokens or not. If true,
-	// returns the log probabilities of each output token returned in the
-	// `content` of `message`.
-	Logprobs *NullableValue[bool] `json:"logprobs,omitempty"`
-	// MaxTokens The maximum number of [tokens](https://platform.openai.com/tokenizer) that can be generated in the
-	// chat completion. This value can be used to control
-	// [costs](https://openai.com/api/pricing/) for text generated via API.
-	//
-	// This value is now deprecated in favor of `max_completion_tokens`, and is
-	// not compatible with [o-series models](https://developers.openai.com/api/docs/guides/reasoning).
-	MaxTokens *NullableValue[int64] `json:"max_tokens,omitempty"`
-	// N How many chat completion choices to generate for each input message. Note that you will be charged based on the number of generated tokens across all of the choices. Keep `n` as `1` to minimize costs.
-	N *NullableValue[int64] `json:"n,omitempty"`
-	// Prediction Configuration for a [Predicted Output](https://developers.openai.com/api/docs/guides/predicted-outputs),
-	// which can greatly improve response times when large parts of the model
-	// response are known ahead of time. This is most common when you are
-	// regenerating a file with only minor changes to most of the content.
-	Prediction *NullableValue[PredictionContent] `json:"prediction,omitempty"`
-	// Seed This feature is in Beta.
-	// If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.
-	// Determinism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend.
-	Seed *NullableValue[int64] `json:"seed,omitempty"`
-	// StreamOptions Options for streaming response. Only set this when you set `stream: true`.
-	StreamOptions *NullableValue[ChatCompletionStreamOptions] `json:"stream_options,omitempty"`
-	// Tools A list of tools the model may call. You can provide either
-	// [custom tools](https://developers.openai.com/api/docs/guides/function-calling#custom-tools) or
-	// [function tools](https://developers.openai.com/api/docs/guides/function-calling).
-	Tools []ToolsItem `json:"tools,omitempty"`
-	// ToolChoice Controls which (if any) tool is called by the model.
-	// `none` means the model will not call any tool and instead generates a message.
-	// `auto` means the model can pick between generating a message or calling one or more tools.
-	// `required` means the model must call one or more tools.
-	// Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
-	//
-	// `none` is the default when no tools are present. `auto` is the default if tools are present.
-	ToolChoice *ChatCompletionToolChoiceOption `json:"tool_choice,omitempty"`
-	// ParallelToolCalls Whether to enable [parallel function calling](https://developers.openai.com/api/docs/guides/function-calling#parallel-function-calling) during tool use.
-	ParallelToolCalls *bool `json:"parallel_tool_calls,omitempty"`
-	// FunctionCall Deprecated in favor of `tool_choice`.
-	//
-	// Controls which (if any) function is called by the model.
-	//
-	// `none` means the model will not call a function and instead generates a
-	// message.
-	//
-	// `auto` means the model can pick between generating a message or calling a
-	// function.
-	//
-	// Specifying a particular function via `{"name": "my_function"}` forces the
-	// model to call that function.
-	//
-	// `none` is the default when no functions are present. `auto` is the default
-	// if functions are present.
-	FunctionCall *CreateChatCompletionRequestVariant1FunctionCall `json:"function_call,omitempty"`
-	// Functions Deprecated in favor of `tools`.
-	//
-	// A list of functions the model may generate JSON inputs for.
-	Functions []ChatCompletionFunctions `json:"functions,omitempty"`
-}
-
-func (value *CreateChatCompletionRequest) UnmarshalJSON(data []byte) error {
-	type CreateChatCompletionRequestAlias CreateChatCompletionRequest
-	var decoded CreateChatCompletionRequestAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = CreateChatCompletionRequest(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"model", "messages"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"model", "messages"}); err != nil {
-		return err
-	}
-	if err := ValidateItems("messages", value.Messages, LengthOpts{Min: Ptr[int](1)}); err != nil {
-		return err
-	}
-	if func() bool { _, ok := rawFields["functions"]; return ok }() {
-		if err := ValidateItems("functions", value.Functions, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](128)}); err != nil {
-			return err
-		}
-	}
-	if raw, ok := rawFields["metadata"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Metadata = &NullableValue[Metadata]{}
-	}
-	if raw, ok := rawFields["top_logprobs"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.TopLogprobs = &NullableValue[int64]{}
-	}
-	if raw, ok := rawFields["temperature"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Temperature = &NullableValue[float64]{}
-	}
-	if raw, ok := rawFields["top_p"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.TopP = &NullableValue[float64]{}
-	}
-	if raw, ok := rawFields["user"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.User = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["safety_identifier"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.SafetyIdentifier = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["prompt_cache_key"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.PromptCacheKey = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["prompt_cache_retention"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.PromptCacheRetention = &NullableValue[ModelResponsePropertiesPromptCacheRetentionVariant0Enum]{}
-	}
-	if raw, ok := rawFields["service_tier"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.ServiceTier = &NullableValue[ServiceTier]{}
-	}
-	if raw, ok := rawFields["modalities"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Modalities = &NullableValue[[]string]{}
-	}
-	if raw, ok := rawFields["verbosity"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Verbosity = &NullableValue[Verbosity]{}
-	}
-	if raw, ok := rawFields["reasoning_effort"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.ReasoningEffort = &NullableValue[ReasoningEffort]{}
-	}
-	if raw, ok := rawFields["max_completion_tokens"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.MaxCompletionTokens = &NullableValue[int64]{}
-	}
-	if raw, ok := rawFields["frequency_penalty"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.FrequencyPenalty = &NullableValue[float64]{}
-	}
-	if raw, ok := rawFields["presence_penalty"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.PresencePenalty = &NullableValue[float64]{}
-	}
-	if raw, ok := rawFields["audio"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Audio = &NullableValue[CreateChatCompletionRequestVariant1Audio]{}
-	}
-	if raw, ok := rawFields["store"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Store = &NullableValue[bool]{}
-	}
-	if raw, ok := rawFields["moderation"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Moderation = &NullableValue[ModerationParam]{}
-	}
-	if raw, ok := rawFields["stream"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Stream = &NullableValue[bool]{}
-	}
-	if raw, ok := rawFields["stop"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Stop = &NullableValue[StopConfiguration]{}
-	}
-	if raw, ok := rawFields["logit_bias"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.LogitBias = &NullableValue[map[string]int64]{}
-	}
-	if raw, ok := rawFields["logprobs"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Logprobs = &NullableValue[bool]{}
-	}
-	if raw, ok := rawFields["max_tokens"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.MaxTokens = &NullableValue[int64]{}
-	}
-	if raw, ok := rawFields["n"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.N = &NullableValue[int64]{}
-	}
-	if raw, ok := rawFields["prediction"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Prediction = &NullableValue[PredictionContent]{}
-	}
-	if raw, ok := rawFields["seed"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Seed = &NullableValue[int64]{}
-	}
-	if raw, ok := rawFields["stream_options"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.StreamOptions = &NullableValue[ChatCompletionStreamOptions]{}
-	}
-	return nil
-}
-
-// NewCreateChatCompletionRequest returns a validated CreateChatCompletionRequest built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewCreateChatCompletionRequest(fields CreateChatCompletionRequest) (*CreateChatCompletionRequest, error) {
-	return ConstructModel(fields)
-}
-
-// ModelResponsePropertiesPromptCacheRetentionVariant0Enum Deprecated. Use `prompt_cache_options.ttl` instead.
-//
-// The retention policy for the prompt cache. Set to `24h` to enable extended prompt caching, which keeps cached prefixes active for longer, up to a maximum of 24 hours. [Learn more](https://developers.openai.com/api/docs/guides/prompt-caching#prompt-cache-retention).
-// This field expresses a maximum retention policy, while
-// `prompt_cache_options.ttl` expresses a minimum cache lifetime. The two
-// fields are independent and do not interact.
-// For `gpt-5.5`, `gpt-5.5-pro`, and future models, only `24h` is supported.
-//
-// For older models that support both `in_memory` and `24h`, the default depends on your organization's data retention policy:
-//   - Organizations without ZDR enabled default to `24h`.
-//   - Organizations with ZDR enabled default to `in_memory` when `prompt_cache_retention` is not specified.
-type ModelResponsePropertiesPromptCacheRetentionVariant0Enum string

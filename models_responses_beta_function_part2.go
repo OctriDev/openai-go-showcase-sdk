@@ -9,6 +9,24 @@ import (
 	"fmt"
 )
 
+const (
+	BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnumTimeout BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum = "timeout"
+)
+
+func (value *BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "timeout":
+		*value = BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum: %v", raw)}
+	}
+}
+
 // BetaFunctionShellCallItemParam A tool representing a request to execute one or more shell commands.
 type BetaFunctionShellCallItemParam struct {
 	// Agent Optional API value serialized in the `agent` wire field.
@@ -689,17 +707,3 @@ func (value *BetaFunctionShellCall) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-// NewBetaFunctionShellCall returns a validated BetaFunctionShellCall built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaFunctionShellCall(fields BetaFunctionShellCall) (*BetaFunctionShellCall, error) {
-	return ConstructModel(fields)
-}
-
-// BetaFunctionShellCallTypeEnum The type of the item. Always `shell_call`.
-type BetaFunctionShellCallTypeEnum string
-
-const (
-	BetaFunctionShellCallTypeEnumShellCall BetaFunctionShellCallTypeEnum = "shell_call"
-)

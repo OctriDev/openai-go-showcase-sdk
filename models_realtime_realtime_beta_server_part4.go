@@ -155,6 +155,19 @@ func (u *RealtimeBetaServerEventConversationItemInputAudioTranscriptionCompleted
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 TranscriptTextUsageTokens
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.TranscriptTextUsageTokens = &lossless0
+			return nil
+		}
+		var lossless1 TranscriptTextUsageDuration
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.TranscriptTextUsageDuration = &lossless1
+			return nil
+		}
+	}
 	var transcripttextusagetokens TranscriptTextUsageTokens
 	if err := json.Unmarshal(data, &transcripttextusagetokens); err == nil && isNonEmptyRealtimeBetaServerEventConversationItemInputAudioTranscriptionCompletedUsageTranscriptTextUsageTokens(transcripttextusagetokens) {
 		u.TranscriptTextUsageTokens = &transcripttextusagetokens

@@ -5,51 +5,8 @@ package sdk
 
 import "encoding/json"
 
-// ModelIdsLiveVariant1Enum Required enumerated value serialized in the `model` wire field.
-type ModelIdsLiveVariant1Enum string
-
-const (
-	ModelIdsLiveVariant1EnumGptLive1 ModelIdsLiveVariant1Enum = "gpt-live-1"
-)
-
-// ModelIdsLive represents a union type.
-type ModelIdsLive struct {
-	String                   *string
-	ModelIdsLiveVariant1Enum *ModelIdsLiveVariant1Enum
-}
-
-func (u *ModelIdsLive) UnmarshalJSON(data []byte) error {
-	*u = ModelIdsLive{}
-	var s string
-	if err := json.Unmarshal(data, &s); err == nil {
-		u.String = &s
-		return nil
-	}
-	var modelidslivevariant1enum ModelIdsLiveVariant1Enum
-	if err := json.Unmarshal(data, &modelidslivevariant1enum); err == nil {
-		u.ModelIdsLiveVariant1Enum = &modelidslivevariant1enum
-		return nil
-	}
-	return nil
-}
-
-func (u ModelIdsLive) MarshalJSON() ([]byte, error) {
-	if u.String != nil {
-		return json.Marshal(u.String)
-	}
-	if u.ModelIdsLiveVariant1Enum != nil {
-		return json.Marshal(u.ModelIdsLiveVariant1Enum)
-	}
-	return []byte("null"), nil
-}
-
-// UnmarshalModelIdsLive converts an untyped value to ModelIdsLive.
-func UnmarshalModelIdsLive(v any) ModelIdsLive {
-	b, _ := json.Marshal(v)
-	var result ModelIdsLive
-	_ = json.Unmarshal(b, &result)
-	return result
-}
+// ModelIdsLive is an alias for string.
+type ModelIdsLive = string
 
 // PropertiesStore is an alias for bool.
 type PropertiesStore = bool
@@ -102,6 +59,24 @@ func (u *Delegation) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveClientDelegationParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveClientDelegationParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveResponsesDelegationParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveResponsesDelegationParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveDecisionsDelegationParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveDecisionsDelegationParam = &lossless2
+			return nil
 		}
 	}
 	var liveclientdelegationparam LiveClientDelegationParam

@@ -9,6 +9,157 @@ import (
 	"fmt"
 )
 
+func (u *BetaToolCallCallerParam) UnmarshalJSON(data []byte) error {
+	*u = BetaToolCallCallerParam{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "direct":
+					var betadirecttoolcallcallerparam BetaDirectToolCallCallerParam
+					if err := json.Unmarshal(data, &betadirecttoolcallcallerparam); err != nil {
+						return err
+					}
+					u.BetaDirectToolCallCallerParam = &betadirecttoolcallcallerparam
+					return nil
+				case "program":
+					var betaprogramtoolcallcallerparam BetaProgramToolCallCallerParam
+					if err := json.Unmarshal(data, &betaprogramtoolcallcallerparam); err != nil {
+						return err
+					}
+					u.BetaProgramToolCallCallerParam = &betaprogramtoolcallcallerparam
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaDirectToolCallCallerParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaDirectToolCallCallerParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaProgramToolCallCallerParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaProgramToolCallCallerParam = &lossless1
+			return nil
+		}
+	}
+	var betadirecttoolcallcallerparam BetaDirectToolCallCallerParam
+	if err := json.Unmarshal(data, &betadirecttoolcallcallerparam); err == nil && isNonEmptyBetaToolCallCallerParamBetaDirectToolCallCallerParam(betadirecttoolcallcallerparam) {
+		u.BetaDirectToolCallCallerParam = &betadirecttoolcallcallerparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betaprogramtoolcallcallerparam BetaProgramToolCallCallerParam
+	if err := json.Unmarshal(data, &betaprogramtoolcallcallerparam); err == nil && isNonEmptyBetaToolCallCallerParamBetaProgramToolCallCallerParam(betaprogramtoolcallcallerparam) {
+		u.BetaProgramToolCallCallerParam = &betaprogramtoolcallcallerparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u BetaToolCallCallerParam) MarshalJSON() ([]byte, error) {
+	if u.BetaDirectToolCallCallerParam != nil {
+		return json.Marshal(u.BetaDirectToolCallCallerParam)
+	}
+	if u.BetaProgramToolCallCallerParam != nil {
+		return json.Marshal(u.BetaProgramToolCallCallerParam)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyBetaToolCallCallerParamBetaDirectToolCallCallerParam(v BetaDirectToolCallCallerParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolCallCallerParamBetaProgramToolCallCallerParam(v BetaProgramToolCallCallerParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaToolCallCallerParam converts an untyped value to BetaToolCallCallerParam.
+func UnmarshalBetaToolCallCallerParam(v any) BetaToolCallCallerParam {
+	b, _ := json.Marshal(v)
+	var result BetaToolCallCallerParam
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// BetaToolSearchOutputItemParam Typed representation of the `BetaToolSearchOutputItemParam` API schema.
+type BetaToolSearchOutputItemParam struct {
+	// Agent Optional API value serialized in the `agent` wire field.
+	Agent *NullableValue[BetaAgentTagParam] `json:"agent,omitempty"`
+	// Id Optional `string` value serialized in the `id` wire field.
+	Id *NullableValue[string] `json:"id,omitempty"`
+	// CallId Optional API value serialized in the `call_id` wire field.
+	CallId *NullableValue[string] `json:"call_id,omitempty"`
+	// Type The item type. Always `tool_search_output`.
+	Type BetaToolSearchOutputItemParamTypeEnum `json:"type"`
+	// Execution Whether tool search was executed by the server or by the client.
+	Execution *BetaToolSearchExecutionType `json:"execution,omitempty"`
+	// Tools The loaded tool definitions returned by the tool search output.
+	Tools []BetaToolSearchOutputTool `json:"tools"`
+	// Status Optional API value serialized in the `status` wire field.
+	Status *NullableValue[BetaFunctionCallItemStatus] `json:"status,omitempty"`
+}
+
+func (value *BetaToolSearchOutputItemParam) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"tool_search_output"}); err != nil {
+		return err
+	}
+	type BetaToolSearchOutputItemParamAlias BetaToolSearchOutputItemParam
+	var decoded BetaToolSearchOutputItemParamAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = BetaToolSearchOutputItemParam(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "tools"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "tools"}); err != nil {
+		return err
+	}
+	if raw, ok := rawFields["agent"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Agent = &NullableValue[BetaAgentTagParam]{}
+	}
+	if raw, ok := rawFields["id"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Id = &NullableValue[string]{}
+	}
+	if raw, ok := rawFields["call_id"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.CallId = &NullableValue[string]{}
+	}
+	if raw, ok := rawFields["status"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Status = &NullableValue[BetaFunctionCallItemStatus]{}
+	}
+	return nil
+}
+
+// NewBetaToolSearchOutputItemParam returns a validated BetaToolSearchOutputItemParam built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewBetaToolSearchOutputItemParam(fields BetaToolSearchOutputItemParam) (*BetaToolSearchOutputItemParam, error) {
+	return ConstructModel(fields)
+}
+
 // BetaToolSearchOutputItemParamTypeEnum The item type. Always `tool_search_output`.
 type BetaToolSearchOutputItemParamTypeEnum string
 
@@ -193,6 +344,89 @@ func (u *BetaToolSearchOutputTool) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaFunctionTool
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaFunctionTool = &lossless0
+			return nil
+		}
+		var lossless1 BetaFileSearchTool
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaFileSearchTool = &lossless1
+			return nil
+		}
+		var lossless2 BetaComputerTool
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaComputerTool = &lossless2
+			return nil
+		}
+		var lossless3 BetaComputerUsePreviewTool
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaComputerUsePreviewTool = &lossless3
+			return nil
+		}
+		var lossless4 BetaWebSearchTool
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.BetaWebSearchTool = &lossless4
+			return nil
+		}
+		var lossless5 BetaMCPTool
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BetaMCPTool = &lossless5
+			return nil
+		}
+		var lossless6 BetaCodeInterpreterTool
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.BetaCodeInterpreterTool = &lossless6
+			return nil
+		}
+		var lossless7 BetaProgrammaticToolCallingParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.BetaProgrammaticToolCallingParam = &lossless7
+			return nil
+		}
+		var lossless8 BetaImageGenTool
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.BetaImageGenTool = &lossless8
+			return nil
+		}
+		var lossless9 BetaLocalShellToolParam
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.BetaLocalShellToolParam = &lossless9
+			return nil
+		}
+		var lossless10 BetaFunctionShellToolParam
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.BetaFunctionShellToolParam = &lossless10
+			return nil
+		}
+		var lossless11 BetaCustomToolParam
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.BetaCustomToolParam = &lossless11
+			return nil
+		}
+		var lossless12 BetaToolSearchOutputNamespaceToolParam
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.BetaToolSearchOutputNamespaceToolParam = &lossless12
+			return nil
+		}
+		var lossless13 BetaToolSearchToolParam
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.BetaToolSearchToolParam = &lossless13
+			return nil
+		}
+		var lossless14 BetaWebSearchPreviewTool
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.BetaWebSearchPreviewTool = &lossless14
+			return nil
+		}
+		var lossless15 BetaApplyPatchToolParam
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.BetaApplyPatchToolParam = &lossless15
+			return nil
 		}
 	}
 	var betafunctiontool BetaFunctionTool
@@ -492,224 +726,4 @@ func (value *BetaToolSearchOutputNamespaceToolParam) UnmarshalJSON(data []byte) 
 		return err
 	}
 	return nil
-}
-
-// NewBetaToolSearchOutputNamespaceToolParam returns a validated BetaToolSearchOutputNamespaceToolParam built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolSearchOutputNamespaceToolParam(fields BetaToolSearchOutputNamespaceToolParam) (*BetaToolSearchOutputNamespaceToolParam, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolSearchOutputNamespaceToolParamTypeEnum The type of the tool. Always `namespace`.
-type BetaToolSearchOutputNamespaceToolParamTypeEnum string
-
-const (
-	BetaToolSearchOutputNamespaceToolParamTypeEnumNamespace BetaToolSearchOutputNamespaceToolParamTypeEnum = "namespace"
-)
-
-func (value *BetaToolSearchOutputNamespaceToolParamTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "namespace":
-		*value = BetaToolSearchOutputNamespaceToolParamTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolSearchOutputNamespaceToolParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolSearchOutputNamespaceToolParamTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolSearchOutputFunctionToolParam Typed representation of the `BetaToolSearchOutputFunctionToolParam` API schema.
-type BetaToolSearchOutputFunctionToolParam struct {
-	// Name The name of the loaded function tool.
-	Name string `json:"name"`
-	// Description Optional `string` value serialized in the `description` wire field.
-	Description *NullableValue[string] `json:"description,omitempty"`
-	// Parameters Optional API value serialized in the `parameters` wire field.
-	Parameters *NullableValue[BetaEmptyModelParam] `json:"parameters,omitempty"`
-	// Strict Optional `boolean` value serialized in the `strict` wire field.
-	Strict *NullableValue[bool] `json:"strict,omitempty"`
-	// Type Required enumerated value serialized in the `type` wire field.
-	Type BetaToolSearchOutputFunctionToolParamTypeEnum `json:"type"`
-	// Async Whether the tool response can be returned asynchronously versus immediately returned on next response creation.
-	Async *bool `json:"async,omitempty"`
-	// OutputSchema A JSON Schema describing the JSON value encoded in string outputs for this function tool. This does not describe content-array outputs.
-	OutputSchema *NullableValue[map[string]any] `json:"output_schema,omitempty"`
-	// DeferLoading Whether this function should be deferred and discovered via tool search.
-	DeferLoading *bool `json:"defer_loading,omitempty"`
-	// AllowedCallers The tool invocation context(s).
-	AllowedCallers *NullableValue[[]BetaCallableToolAllowedCaller] `json:"allowed_callers,omitempty"`
-}
-
-func (value *BetaToolSearchOutputFunctionToolParam) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"function"}); err != nil {
-		return err
-	}
-	type BetaToolSearchOutputFunctionToolParamAlias BetaToolSearchOutputFunctionToolParam
-	var decoded BetaToolSearchOutputFunctionToolParamAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaToolSearchOutputFunctionToolParam(decoded)
-	if err := ValidateRequired(rawFields, []string{"name", "type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"name", "type"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("name", value.Name, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](128)}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["description"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Description = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["parameters"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Parameters = &NullableValue[BetaEmptyModelParam]{}
-	}
-	if raw, ok := rawFields["strict"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Strict = &NullableValue[bool]{}
-	}
-	if raw, ok := rawFields["output_schema"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.OutputSchema = &NullableValue[map[string]any]{}
-	}
-	if raw, ok := rawFields["allowed_callers"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.AllowedCallers = &NullableValue[[]BetaCallableToolAllowedCaller]{}
-	}
-	return nil
-}
-
-// NewBetaToolSearchOutputFunctionToolParam returns a validated BetaToolSearchOutputFunctionToolParam built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolSearchOutputFunctionToolParam(fields BetaToolSearchOutputFunctionToolParam) (*BetaToolSearchOutputFunctionToolParam, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolSearchOutputFunctionToolParamTypeEnum Required enumerated value serialized in the `type` wire field.
-type BetaToolSearchOutputFunctionToolParamTypeEnum string
-
-const (
-	BetaToolSearchOutputFunctionToolParamTypeEnumFunction BetaToolSearchOutputFunctionToolParamTypeEnum = "function"
-)
-
-func (value *BetaToolSearchOutputFunctionToolParamTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "function":
-		*value = BetaToolSearchOutputFunctionToolParamTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolSearchOutputFunctionToolParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolSearchOutputFunctionToolParamTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolSearchCallItemParam Typed representation of the `BetaToolSearchCallItemParam` API schema.
-type BetaToolSearchCallItemParam struct {
-	// Agent Optional API value serialized in the `agent` wire field.
-	Agent *NullableValue[BetaAgentTagParam] `json:"agent,omitempty"`
-	// Id Optional `string` value serialized in the `id` wire field.
-	Id *NullableValue[string] `json:"id,omitempty"`
-	// CallId Optional API value serialized in the `call_id` wire field.
-	CallId *NullableValue[string] `json:"call_id,omitempty"`
-	// Type The item type. Always `tool_search_call`.
-	Type BetaToolSearchCallItemParamTypeEnum `json:"type"`
-	// Execution Whether tool search was executed by the server or by the client.
-	Execution *BetaToolSearchExecutionType `json:"execution,omitempty"`
-	// Arguments The arguments supplied to the tool search call.
-	Arguments BetaEmptyModelParam `json:"arguments"`
-	// Status Optional API value serialized in the `status` wire field.
-	Status *NullableValue[BetaFunctionCallItemStatus] `json:"status,omitempty"`
-}
-
-func (value *BetaToolSearchCallItemParam) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"tool_search_call"}); err != nil {
-		return err
-	}
-	type BetaToolSearchCallItemParamAlias BetaToolSearchCallItemParam
-	var decoded BetaToolSearchCallItemParamAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaToolSearchCallItemParam(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "arguments"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "arguments"}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["agent"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Agent = &NullableValue[BetaAgentTagParam]{}
-	}
-	if raw, ok := rawFields["id"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Id = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["call_id"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.CallId = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["status"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Status = &NullableValue[BetaFunctionCallItemStatus]{}
-	}
-	return nil
-}
-
-// NewBetaToolSearchCallItemParam returns a validated BetaToolSearchCallItemParam built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolSearchCallItemParam(fields BetaToolSearchCallItemParam) (*BetaToolSearchCallItemParam, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolSearchCallItemParamTypeEnum The item type. Always `tool_search_call`.
-type BetaToolSearchCallItemParamTypeEnum string
-
-const (
-	BetaToolSearchCallItemParamTypeEnumToolSearchCall BetaToolSearchCallItemParamTypeEnum = "tool_search_call"
-)
-
-func (value *BetaToolSearchCallItemParamTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "tool_search_call":
-		*value = BetaToolSearchCallItemParamTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolSearchCallItemParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolSearchCallItemParamTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolSearchOutput Typed representation of the `BetaToolSearchOutput` API schema.
-type BetaToolSearchOutput struct {
-	// Agent The agent that produced this item.
-	Agent *BetaAgentTag `json:"agent,omitempty"`
-	// Type The type of the item. Always `tool_search_output`.
-	Type BetaToolSearchOutputTypeEnum `json:"type"`
-	// Id The unique ID of the tool search output item.
-	Id string `json:"id"`
-	// CallId Required `string` value serialized in the `call_id` wire field.
-	CallId NullableValue[string] `json:"call_id"`
-	// Execution Whether tool search was executed by the server or by the client.
-	Execution BetaToolSearchExecutionType `json:"execution"`
-	// Tools The loaded tool definitions returned by tool search.
-	Tools []BetaTool `json:"tools"`
-	// Status The status of the tool search output item that was recorded.
-	Status BetaFunctionCallOutputStatusEnum `json:"status"`
-	// CreatedBy The identifier of the actor that created the item.
-	CreatedBy *string `json:"created_by,omitempty"`
 }

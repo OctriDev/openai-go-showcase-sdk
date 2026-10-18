@@ -77,6 +77,19 @@ type EvalItemContent struct {
 func (u *EvalItemContent) UnmarshalJSON(data []byte) error {
 	*u = EvalItemContent{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 EvalItemContentItem
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.EvalItemContentItem = &lossless0
+			return nil
+		}
+		var lossless1 []EvalItemContentItem
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ListOfEvalItemContentItem = &lossless1
+			return nil
+		}
+	}
 	var evalitemcontentitem EvalItemContentItem
 	if err := json.Unmarshal(data, &evalitemcontentitem); err == nil && isNonEmptyEvalItemContentEvalItemContentItem(evalitemcontentitem) {
 		u.EvalItemContentItem = &evalitemcontentitem
@@ -185,6 +198,29 @@ func (u *EvalItemContentItem) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &s); err == nil {
 		u.String = &s
 		return nil
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 EvalItemContentOutputText
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EvalItemContentOutputText = &lossless1
+			return nil
+		}
+		var lossless2 EvalItemInputImage
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.EvalItemInputImage = &lossless2
+			return nil
+		}
+		var lossless3 InputAudio
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.InputAudio = &lossless3
+			return nil
+		}
 	}
 	var inputtextcontent InputTextContent
 	if err := json.Unmarshal(data, &inputtextcontent); err == nil && isNonEmptyEvalItemContentItemInputTextContent(inputtextcontent) {

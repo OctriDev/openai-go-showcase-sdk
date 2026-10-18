@@ -22,53 +22,6 @@ func NewLiveInitialSessionAudioOutputParam(fields LiveInitialSessionAudioOutputP
 	return ConstructModel(fields)
 }
 
-// LiveInitialSessionAudioOutputParamVoice represents a union type.
-type LiveInitialSessionAudioOutputParamVoice struct {
-	String               *string
-	LiveCustomVoiceParam *LiveCustomVoiceParam
-}
-
-func (u *LiveInitialSessionAudioOutputParamVoice) UnmarshalJSON(data []byte) error {
-	*u = LiveInitialSessionAudioOutputParamVoice{}
-	var refusal error
-	var s string
-	if err := json.Unmarshal(data, &s); err == nil {
-		u.String = &s
-		return nil
-	}
-	var livecustomvoiceparam LiveCustomVoiceParam
-	if err := json.Unmarshal(data, &livecustomvoiceparam); err == nil && isNonEmptyLiveInitialSessionAudioOutputParamVoiceLiveCustomVoiceParam(livecustomvoiceparam) {
-		u.LiveCustomVoiceParam = &livecustomvoiceparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u LiveInitialSessionAudioOutputParamVoice) MarshalJSON() ([]byte, error) {
-	if u.String != nil {
-		return json.Marshal(u.String)
-	}
-	if u.LiveCustomVoiceParam != nil {
-		return json.Marshal(u.LiveCustomVoiceParam)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyLiveInitialSessionAudioOutputParamVoiceLiveCustomVoiceParam(v LiveCustomVoiceParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalLiveInitialSessionAudioOutputParamVoice converts an untyped value to LiveInitialSessionAudioOutputParamVoice.
-func UnmarshalLiveInitialSessionAudioOutputParamVoice(v any) LiveInitialSessionAudioOutputParamVoice {
-	b, _ := json.Marshal(v)
-	var result LiveInitialSessionAudioOutputParamVoice
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
 // LiveInitialMessageStatus Typed representation of the `LiveInitialMessageStatus` API schema.
 type LiveInitialMessageStatus string
 
@@ -527,6 +480,24 @@ func (u *LiveInitialItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveInitialDeveloperMessageItemParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveInitialDeveloperMessageItemParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveInitialUserMessageItemParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveInitialUserMessageItemParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveInitialAssistantMessageItemParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveInitialAssistantMessageItemParam = &lossless2
+			return nil
+		}
+	}
 	var liveinitialdevelopermessageitemparam LiveInitialDeveloperMessageItemParam
 	if err := json.Unmarshal(data, &liveinitialdevelopermessageitemparam); err == nil && isNonEmptyLiveInitialItemLiveInitialDeveloperMessageItemParam(liveinitialdevelopermessageitemparam) {
 		u.LiveInitialDeveloperMessageItemParam = &liveinitialdevelopermessageitemparam
@@ -605,55 +576,66 @@ func NewLiveInitialSessionAudioParam(fields LiveInitialSessionAudioParam) (*Live
 	return ConstructModel(fields)
 }
 
-// LiveInitialAssistantMessageItemParamContentItem represents a union type.
-type LiveInitialAssistantMessageItemParamContentItem struct {
-	LiveInitialTextContentPartParam       *LiveInitialTextContentPartParam
-	LiveInitialOutputTextContentPartParam *LiveInitialOutputTextContentPartParam
+// LiveInitialSessionAudioOutputParamVoiceVariant1Enum Optional enumerated value serialized in the `voice` wire field.
+type LiveInitialSessionAudioOutputParamVoiceVariant1Enum string
 
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
+const (
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumAlloy    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "alloy"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumAsh      LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "ash"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumBallad   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "ballad"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumBeacon   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "beacon"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumBossa    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "bossa"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumBrise    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "brise"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumCedar    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "cedar"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumCinder   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "cinder"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumCoral    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "coral"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumDelta    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "delta"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumEcho     LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "echo"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumFlitz    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "flitz"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumGleam    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "gleam"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumHarema   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "harema"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumJuni     LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "juni"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumMarin    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "marin"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumMeridian LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "meridian"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumNira     LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "nira"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumNoeul    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "noeul"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumNuri     LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "nuri"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumQuartz   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "quartz"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumRipple   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "ripple"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumSage     LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "sage"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumShida    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "shida"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumShimmer  LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "shimmer"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumSillage  LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "sillage"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumStone    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "stone"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumTempo    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "tempo"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumVerse    LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "verse"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumVesper   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "vesper"
+	LiveInitialSessionAudioOutputParamVoiceVariant1EnumWillow   LiveInitialSessionAudioOutputParamVoiceVariant1Enum = "willow"
+)
+
+// LiveInitialSessionAudioOutputParamVoice represents a union type.
+type LiveInitialSessionAudioOutputParamVoice struct {
+	String                                              *string
+	LiveInitialSessionAudioOutputParamVoiceVariant1Enum *LiveInitialSessionAudioOutputParamVoiceVariant1Enum
+	LiveCustomVoiceParam                                *LiveCustomVoiceParam
 }
 
-func (u *LiveInitialAssistantMessageItemParamContentItem) UnmarshalJSON(data []byte) error {
-	*u = LiveInitialAssistantMessageItemParamContentItem{}
+func (u *LiveInitialSessionAudioOutputParamVoice) UnmarshalJSON(data []byte) error {
+	*u = LiveInitialSessionAudioOutputParamVoice{}
 	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "text":
-					var liveinitialtextcontentpartparam LiveInitialTextContentPartParam
-					if err := json.Unmarshal(data, &liveinitialtextcontentpartparam); err != nil {
-						return err
-					}
-					u.LiveInitialTextContentPartParam = &liveinitialtextcontentpartparam
-					return nil
-				case "output_text":
-					var liveinitialoutputtextcontentpartparam LiveInitialOutputTextContentPartParam
-					if err := json.Unmarshal(data, &liveinitialoutputtextcontentpartparam); err != nil {
-						return err
-					}
-					u.LiveInitialOutputTextContentPartParam = &liveinitialoutputtextcontentpartparam
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var liveinitialtextcontentpartparam LiveInitialTextContentPartParam
-	if err := json.Unmarshal(data, &liveinitialtextcontentpartparam); err == nil && isNonEmptyLiveInitialAssistantMessageItemParamContentItemLiveInitialTextContentPartParam(liveinitialtextcontentpartparam) {
-		u.LiveInitialTextContentPartParam = &liveinitialtextcontentpartparam
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		u.String = &s
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
 	}
-	var liveinitialoutputtextcontentpartparam LiveInitialOutputTextContentPartParam
-	if err := json.Unmarshal(data, &liveinitialoutputtextcontentpartparam); err == nil && isNonEmptyLiveInitialAssistantMessageItemParamContentItemLiveInitialOutputTextContentPartParam(liveinitialoutputtextcontentpartparam) {
-		u.LiveInitialOutputTextContentPartParam = &liveinitialoutputtextcontentpartparam
+	var liveinitialsessionaudiooutputparamvoicevariant1enum LiveInitialSessionAudioOutputParamVoiceVariant1Enum
+	if err := json.Unmarshal(data, &liveinitialsessionaudiooutputparamvoicevariant1enum); err == nil {
+		u.LiveInitialSessionAudioOutputParamVoiceVariant1Enum = &liveinitialsessionaudiooutputparamvoicevariant1enum
+		return nil
+	}
+	var livecustomvoiceparam LiveCustomVoiceParam
+	if err := json.Unmarshal(data, &livecustomvoiceparam); err == nil && isNonEmptyLiveInitialSessionAudioOutputParamVoiceLiveCustomVoiceParam(livecustomvoiceparam) {
+		u.LiveCustomVoiceParam = &livecustomvoiceparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
@@ -661,33 +643,37 @@ func (u *LiveInitialAssistantMessageItemParamContentItem) UnmarshalJSON(data []b
 	return refusal
 }
 
-func (u LiveInitialAssistantMessageItemParamContentItem) MarshalJSON() ([]byte, error) {
-	if u.LiveInitialTextContentPartParam != nil {
-		return json.Marshal(u.LiveInitialTextContentPartParam)
+func (u LiveInitialSessionAudioOutputParamVoice) MarshalJSON() ([]byte, error) {
+	if u.String != nil {
+		return json.Marshal(u.String)
 	}
-	if u.LiveInitialOutputTextContentPartParam != nil {
-		return json.Marshal(u.LiveInitialOutputTextContentPartParam)
+	if u.LiveInitialSessionAudioOutputParamVoiceVariant1Enum != nil {
+		return json.Marshal(u.LiveInitialSessionAudioOutputParamVoiceVariant1Enum)
 	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
+	if u.LiveCustomVoiceParam != nil {
+		return json.Marshal(u.LiveCustomVoiceParam)
 	}
 	return []byte("null"), nil
 }
 
-func isNonEmptyLiveInitialAssistantMessageItemParamContentItemLiveInitialTextContentPartParam(v LiveInitialTextContentPartParam) bool {
+func isNonEmptyLiveInitialSessionAudioOutputParamVoiceLiveCustomVoiceParam(v LiveCustomVoiceParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyLiveInitialAssistantMessageItemParamContentItemLiveInitialOutputTextContentPartParam(v LiveInitialOutputTextContentPartParam) bool {
+// UnmarshalLiveInitialSessionAudioOutputParamVoice converts an untyped value to LiveInitialSessionAudioOutputParamVoice.
+func UnmarshalLiveInitialSessionAudioOutputParamVoice(v any) LiveInitialSessionAudioOutputParamVoice {
 	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalLiveInitialAssistantMessageItemParamContentItem converts an untyped value to LiveInitialAssistantMessageItemParamContentItem.
-func UnmarshalLiveInitialAssistantMessageItemParamContentItem(v any) LiveInitialAssistantMessageItemParamContentItem {
-	b, _ := json.Marshal(v)
-	var result LiveInitialAssistantMessageItemParamContentItem
+	var result LiveInitialSessionAudioOutputParamVoice
 	_ = json.Unmarshal(b, &result)
 	return result
+}
+
+// LiveInitialAssistantMessageItemParamContentItem represents a union type.
+type LiveInitialAssistantMessageItemParamContentItem struct {
+	LiveInitialTextContentPartParam       *LiveInitialTextContentPartParam
+	LiveInitialOutputTextContentPartParam *LiveInitialOutputTextContentPartParam
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
 }

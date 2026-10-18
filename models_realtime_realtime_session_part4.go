@@ -5,24 +5,6 @@ package sdk
 
 import "encoding/json"
 
-// UnmarshalRealtimeSessionCreateResponseGAToolsItem converts an untyped value to RealtimeSessionCreateResponseGAToolsItem.
-func UnmarshalRealtimeSessionCreateResponseGAToolsItem(v any) RealtimeSessionCreateResponseGAToolsItem {
-	b, _ := json.Marshal(v)
-	var result RealtimeSessionCreateResponseGAToolsItem
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// RealtimeSessionCreateResponseGAToolChoice represents a union type.
-type RealtimeSessionCreateResponseGAToolChoice struct {
-	ToolChoiceOptions  *ToolChoiceOptions
-	ToolChoiceFunction *ToolChoiceFunction
-	ToolChoiceMCP      *ToolChoiceMCP
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}
-
 func (u *RealtimeSessionCreateResponseGAToolChoice) UnmarshalJSON(data []byte) error {
 	*u = RealtimeSessionCreateResponseGAToolChoice{}
 	var refusal error
@@ -51,6 +33,24 @@ func (u *RealtimeSessionCreateResponseGAToolChoice) UnmarshalJSON(data []byte) e
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ToolChoiceOptions
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ToolChoiceOptions = &lossless0
+			return nil
+		}
+		var lossless1 ToolChoiceFunction
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ToolChoiceFunction = &lossless1
+			return nil
+		}
+		var lossless2 ToolChoiceMCP
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ToolChoiceMCP = &lossless2
+			return nil
 		}
 	}
 	var toolchoiceoptions ToolChoiceOptions
@@ -112,6 +112,80 @@ func isNonEmptyRealtimeSessionCreateResponseGAToolChoiceToolChoiceMCP(v ToolChoi
 func UnmarshalRealtimeSessionCreateResponseGAToolChoice(v any) RealtimeSessionCreateResponseGAToolChoice {
 	b, _ := json.Marshal(v)
 	var result RealtimeSessionCreateResponseGAToolChoice
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// RealtimeSessionCreateResponseTracingVariant0Enum Default tracing mode for the session.
+type RealtimeSessionCreateResponseTracingVariant0Enum string
+
+const (
+	RealtimeSessionCreateResponseTracingVariant0EnumAuto RealtimeSessionCreateResponseTracingVariant0Enum = "auto"
+)
+
+// RealtimeSessionCreateResponseTracingVariant1 Granular configuration for tracing.
+type RealtimeSessionCreateResponseTracingVariant1 struct {
+	// WorkflowName The name of the workflow to attach to this trace. This is used to
+	// name the trace in the traces dashboard.
+	WorkflowName *string `json:"workflow_name,omitempty"`
+	// GroupId The group id to attach to this trace to enable filtering and
+	// grouping in the traces dashboard.
+	GroupId *string `json:"group_id,omitempty"`
+	// Metadata The arbitrary metadata to attach to this trace to enable
+	// filtering in the traces dashboard.
+	Metadata map[string]any `json:"metadata,omitempty"`
+}
+
+// NewRealtimeSessionCreateResponseTracingVariant1 returns a validated RealtimeSessionCreateResponseTracingVariant1 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeSessionCreateResponseTracingVariant1(fields RealtimeSessionCreateResponseTracingVariant1) (*RealtimeSessionCreateResponseTracingVariant1, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeSessionCreateResponseTracing represents a union type.
+type RealtimeSessionCreateResponseTracing struct {
+	RealtimeSessionCreateResponseTracingVariant0Enum *RealtimeSessionCreateResponseTracingVariant0Enum
+	RealtimeSessionCreateResponseTracingVariant1     *RealtimeSessionCreateResponseTracingVariant1
+}
+
+func (u *RealtimeSessionCreateResponseTracing) UnmarshalJSON(data []byte) error {
+	*u = RealtimeSessionCreateResponseTracing{}
+	var refusal error
+	var realtimesessioncreateresponsetracingvariant0enum RealtimeSessionCreateResponseTracingVariant0Enum
+	if err := json.Unmarshal(data, &realtimesessioncreateresponsetracingvariant0enum); err == nil {
+		u.RealtimeSessionCreateResponseTracingVariant0Enum = &realtimesessioncreateresponsetracingvariant0enum
+		return nil
+	}
+	var realtimesessioncreateresponsetracingvariant1 RealtimeSessionCreateResponseTracingVariant1
+	if err := json.Unmarshal(data, &realtimesessioncreateresponsetracingvariant1); err == nil && isNonEmptyRealtimeSessionCreateResponseTracingRealtimeSessionCreateResponseTracingVariant1(realtimesessioncreateresponsetracingvariant1) {
+		u.RealtimeSessionCreateResponseTracingVariant1 = &realtimesessioncreateresponsetracingvariant1
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u RealtimeSessionCreateResponseTracing) MarshalJSON() ([]byte, error) {
+	if u.RealtimeSessionCreateResponseTracingVariant0Enum != nil {
+		return json.Marshal(u.RealtimeSessionCreateResponseTracingVariant0Enum)
+	}
+	if u.RealtimeSessionCreateResponseTracingVariant1 != nil {
+		return json.Marshal(u.RealtimeSessionCreateResponseTracingVariant1)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyRealtimeSessionCreateResponseTracingRealtimeSessionCreateResponseTracingVariant1(v RealtimeSessionCreateResponseTracingVariant1) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRealtimeSessionCreateResponseTracing converts an untyped value to RealtimeSessionCreateResponseTracing.
+func UnmarshalRealtimeSessionCreateResponseTracing(v any) RealtimeSessionCreateResponseTracing {
+	b, _ := json.Marshal(v)
+	var result RealtimeSessionCreateResponseTracing
 	_ = json.Unmarshal(b, &result)
 	return result
 }

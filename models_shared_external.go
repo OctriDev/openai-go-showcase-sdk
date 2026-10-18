@@ -122,6 +122,29 @@ func (u *ExternalStorageResponseProvider) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AwsExternalStorageProviderResponse
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AwsExternalStorageProviderResponse = &lossless0
+			return nil
+		}
+		var lossless1 AzureExternalStorageProviderResponse
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AzureExternalStorageProviderResponse = &lossless1
+			return nil
+		}
+		var lossless2 GcpExternalStorageProviderResponse
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.GcpExternalStorageProviderResponse = &lossless2
+			return nil
+		}
+		var lossless3 OciExternalStorageProviderResponse
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.OciExternalStorageProviderResponse = &lossless3
+			return nil
+		}
+	}
 	var awsexternalstorageproviderresponse AwsExternalStorageProviderResponse
 	if err := json.Unmarshal(data, &awsexternalstorageproviderresponse); err == nil && isNonEmptyExternalStorageResponseProviderAwsExternalStorageProviderResponse(awsexternalstorageproviderresponse) {
 		u.AwsExternalStorageProviderResponse = &awsexternalstorageproviderresponse

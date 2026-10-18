@@ -164,6 +164,94 @@ func (u *SessionTurnItemResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageItemResource
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageItemResource = &lossless0
+			return nil
+		}
+		var lossless1 ReasoningItemResource
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ReasoningItemResource = &lossless1
+			return nil
+		}
+		var lossless2 FunctionCallItemResource
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.FunctionCallItemResource = &lossless2
+			return nil
+		}
+		var lossless3 FunctionCallOutputItemResource
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.FunctionCallOutputItemResource = &lossless3
+			return nil
+		}
+		var lossless4 AgentMessageItemResource
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.AgentMessageItemResource = &lossless4
+			return nil
+		}
+		var lossless5 McpCallItemResource
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.McpCallItemResource = &lossless5
+			return nil
+		}
+		var lossless6 ComputerUseCallItemResource
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.ComputerUseCallItemResource = &lossless6
+			return nil
+		}
+		var lossless7 BrowserAuthenticationRequestItemResource
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.BrowserAuthenticationRequestItemResource = &lossless7
+			return nil
+		}
+		var lossless8 ComputerUseApprovalRequestResultItemResource
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.ComputerUseApprovalRequestResultItemResource = &lossless8
+			return nil
+		}
+		var lossless9 WebSearchCallItemResource
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.WebSearchCallItemResource = &lossless9
+			return nil
+		}
+		var lossless10 CommandExecutionItemResource
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.CommandExecutionItemResource = &lossless10
+			return nil
+		}
+		var lossless11 CreateSubagentCallItemResource
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.CreateSubagentCallItemResource = &lossless11
+			return nil
+		}
+		var lossless12 SendSubagentInputCallItemResource
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.SendSubagentInputCallItemResource = &lossless12
+			return nil
+		}
+		var lossless13 ResumeSubagentCallItemResource
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.ResumeSubagentCallItemResource = &lossless13
+			return nil
+		}
+		var lossless14 WaitForSubagentsCallItemResource
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.WaitForSubagentsCallItemResource = &lossless14
+			return nil
+		}
+		var lossless15 InterruptSubagentCallItemResource
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.InterruptSubagentCallItemResource = &lossless15
+			return nil
+		}
+		var lossless16 CloseSubagentCallItemResource
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.CloseSubagentCallItemResource = &lossless16
+			return nil
+		}
+	}
 	var messageitemresource MessageItemResource
 	if err := json.Unmarshal(data, &messageitemresource); err == nil && isNonEmptySessionTurnItemResourceMessageItemResource(messageitemresource) {
 		u.MessageItemResource = &messageitemresource

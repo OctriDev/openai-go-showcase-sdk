@@ -55,6 +55,24 @@ func (u *RealtimeTranslationClientEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeTranslationClientEventSessionUpdate
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeTranslationClientEventSessionUpdate = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeTranslationClientEventInputAudioBufferAppend
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeTranslationClientEventInputAudioBufferAppend = &lossless1
+			return nil
+		}
+		var lossless2 RealtimeTranslationClientEventSessionClose
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RealtimeTranslationClientEventSessionClose = &lossless2
+			return nil
+		}
+	}
 	var realtimetranslationclienteventsessionupdate RealtimeTranslationClientEventSessionUpdate
 	if err := json.Unmarshal(data, &realtimetranslationclienteventsessionupdate); err == nil && isNonEmptyRealtimeTranslationClientEventRealtimeTranslationClientEventSessionUpdate(realtimetranslationclienteventsessionupdate) {
 		u.RealtimeTranslationClientEventSessionUpdate = &realtimetranslationclienteventsessionupdate
@@ -533,6 +551,44 @@ func (u *RealtimeTranslationServerEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeServerEventError
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeServerEventError = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeTranslationServerEventSessionCreated
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeTranslationServerEventSessionCreated = &lossless1
+			return nil
+		}
+		var lossless2 RealtimeTranslationServerEventSessionUpdated
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RealtimeTranslationServerEventSessionUpdated = &lossless2
+			return nil
+		}
+		var lossless3 RealtimeTranslationServerEventSessionClosed
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.RealtimeTranslationServerEventSessionClosed = &lossless3
+			return nil
+		}
+		var lossless4 RealtimeTranslationServerEventSessionInputTranscriptDelta
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.RealtimeTranslationServerEventSessionInputTranscriptDelta = &lossless4
+			return nil
+		}
+		var lossless5 RealtimeTranslationServerEventSessionOutputTranscriptDelta
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.RealtimeTranslationServerEventSessionOutputTranscriptDelta = &lossless5
+			return nil
+		}
+		var lossless6 RealtimeTranslationServerEventSessionOutputAudioDelta
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.RealtimeTranslationServerEventSessionOutputAudioDelta = &lossless6
+			return nil
+		}
+	}
 	var realtimeservereventerror RealtimeServerEventError
 	if err := json.Unmarshal(data, &realtimeservereventerror); err == nil && isNonEmptyRealtimeTranslationServerEventRealtimeServerEventError(realtimeservereventerror) {
 		u.RealtimeServerEventError = &realtimeservereventerror
@@ -654,63 +710,4 @@ func UnmarshalRealtimeTranslationServerEvent(v any) RealtimeTranslationServerEve
 	var result RealtimeTranslationServerEvent
 	_ = json.Unmarshal(b, &result)
 	return result
-}
-
-// RealtimeTranslationServerEventSessionClosed Returned when a realtime translation session is closed.
-type RealtimeTranslationServerEventSessionClosed struct {
-	// EventId The unique ID of the server event.
-	EventId string `json:"event_id"`
-	// Type The event type, must be `session.closed`.
-	Type RealtimeTranslationServerEventSessionClosedTypeEnum `json:"type"`
-}
-
-func (value *RealtimeTranslationServerEventSessionClosed) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"session.closed"}); err != nil {
-		return err
-	}
-	type RealtimeTranslationServerEventSessionClosedAlias RealtimeTranslationServerEventSessionClosed
-	var decoded RealtimeTranslationServerEventSessionClosedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeTranslationServerEventSessionClosed(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeTranslationServerEventSessionClosed returns a validated RealtimeTranslationServerEventSessionClosed built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeTranslationServerEventSessionClosed(fields RealtimeTranslationServerEventSessionClosed) (*RealtimeTranslationServerEventSessionClosed, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeTranslationServerEventSessionClosedTypeEnum The event type, must be `session.closed`.
-type RealtimeTranslationServerEventSessionClosedTypeEnum string
-
-const (
-	RealtimeTranslationServerEventSessionClosedTypeEnumSessionClosed RealtimeTranslationServerEventSessionClosedTypeEnum = "session.closed"
-)
-
-func (value *RealtimeTranslationServerEventSessionClosedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "session.closed":
-		*value = RealtimeTranslationServerEventSessionClosedTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeTranslationServerEventSessionClosedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeTranslationServerEventSessionClosedTypeEnum: %v", raw)}
-	}
 }

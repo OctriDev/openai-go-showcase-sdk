@@ -8,6 +8,9 @@ import (
 	"fmt"
 )
 
+// ResponseShellCallCommandDeltaStreamingEventTypeEnum The type of the event, always `response.shell_call_command.delta`.
+type ResponseShellCallCommandDeltaStreamingEventTypeEnum string
+
 const (
 	ResponseShellCallCommandDeltaStreamingEventTypeEnumResponseShellCallCommandDelta ResponseShellCallCommandDeltaStreamingEventTypeEnum = "response.shell_call_command.delta"
 )

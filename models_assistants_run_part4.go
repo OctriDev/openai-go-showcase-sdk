@@ -108,6 +108,44 @@ func (u *RunStepStreamEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStepStreamEventVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStepStreamEventVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 RunStepStreamEventVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStepStreamEventVariant1 = &lossless1
+			return nil
+		}
+		var lossless2 RunStepStreamEventVariant2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RunStepStreamEventVariant2 = &lossless2
+			return nil
+		}
+		var lossless3 RunStepStreamEventVariant3
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.RunStepStreamEventVariant3 = &lossless3
+			return nil
+		}
+		var lossless4 RunStepStreamEventVariant4
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.RunStepStreamEventVariant4 = &lossless4
+			return nil
+		}
+		var lossless5 RunStepStreamEventVariant5
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.RunStepStreamEventVariant5 = &lossless5
+			return nil
+		}
+		var lossless6 RunStepStreamEventVariant6
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.RunStepStreamEventVariant6 = &lossless6
+			return nil
+		}
+	}
 	var runstepstreameventvariant0 RunStepStreamEventVariant0
 	if err := json.Unmarshal(data, &runstepstreameventvariant0); err == nil && isNonEmptyRunStepStreamEventRunStepStreamEventVariant0(runstepstreameventvariant0) {
 		u.RunStepStreamEventVariant0 = &runstepstreameventvariant0
@@ -669,24 +707,3 @@ type RunStreamEventVariant7EventEnum string
 const (
 	RunStreamEventVariant7EventEnumThreadRunCancelling RunStreamEventVariant7EventEnum = "thread.run.cancelling"
 )
-
-func (value *RunStreamEventVariant7EventEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "thread.run.cancelling":
-		*value = RunStreamEventVariant7EventEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RunStreamEventVariant7EventEnum", Code: "enum", Message: fmt.Sprintf("unknown RunStreamEventVariant7EventEnum: %v", raw)}
-	}
-}
-
-// RunStreamEventVariant8 Occurs when a [run](https://developers.openai.com/api/docs/assistants/migration) is cancelled.
-type RunStreamEventVariant8 struct {
-	Event RunStreamEventVariant8EventEnum `json:"event"`
-	// Data Represents an execution run on a [thread](https://developers.openai.com/api/docs/assistants/migration).
-	Data RunObject `json:"data"`
-}

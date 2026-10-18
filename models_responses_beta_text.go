@@ -56,6 +56,24 @@ func (u *BetaTextResponseFormatConfiguration) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaResponseFormatText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaResponseFormatText = &lossless0
+			return nil
+		}
+		var lossless1 BetaTextResponseFormatJsonSchema
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaTextResponseFormatJsonSchema = &lossless1
+			return nil
+		}
+		var lossless2 BetaResponseFormatJsonObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaResponseFormatJsonObject = &lossless2
+			return nil
+		}
+	}
 	var betaresponseformattext BetaResponseFormatText
 	if err := json.Unmarshal(data, &betaresponseformattext); err == nil && isNonEmptyBetaTextResponseFormatConfigurationBetaResponseFormatText(betaresponseformattext) {
 		u.BetaResponseFormatText = &betaresponseformattext

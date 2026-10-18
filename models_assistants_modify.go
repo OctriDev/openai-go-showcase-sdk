@@ -446,6 +446,24 @@ func (u *ModifyAssistantRequestToolsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearch = &lossless1
+			return nil
+		}
+		var lossless2 AssistantToolsFunction
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AssistantToolsFunction = &lossless2
+			return nil
+		}
+	}
 	var assistanttoolscode AssistantToolsCode
 	if err := json.Unmarshal(data, &assistanttoolscode); err == nil && isNonEmptyModifyAssistantRequestToolsItemAssistantToolsCode(assistanttoolscode) {
 		u.AssistantToolsCode = &assistanttoolscode

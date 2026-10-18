@@ -104,6 +104,54 @@ func (u *ComputerAction) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ClickParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ClickParam = &lossless0
+			return nil
+		}
+		var lossless1 DoubleClickAction
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.DoubleClickAction = &lossless1
+			return nil
+		}
+		var lossless2 DragParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.DragParam = &lossless2
+			return nil
+		}
+		var lossless3 KeyPressAction
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.KeyPressAction = &lossless3
+			return nil
+		}
+		var lossless4 MoveParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.MoveParam = &lossless4
+			return nil
+		}
+		var lossless5 ScreenshotParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ScreenshotParam = &lossless5
+			return nil
+		}
+		var lossless6 ScrollParam
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.ScrollParam = &lossless6
+			return nil
+		}
+		var lossless7 TypeParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.TypeParam = &lossless7
+			return nil
+		}
+		var lossless8 WaitParam
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.WaitParam = &lossless8
+			return nil
+		}
+	}
 	var clickparam ClickParam
 	if err := json.Unmarshal(data, &clickparam); err == nil && isNonEmptyComputerActionClickParam(clickparam) {
 		u.ClickParam = &clickparam
@@ -663,50 +711,5 @@ func (value *ComputerCallSafetyCheckParam) UnmarshalJSON(data []byte) error {
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
 func NewComputerCallSafetyCheckParam(fields ComputerCallSafetyCheckParam) (*ComputerCallSafetyCheckParam, error) {
-	return ConstructModel(fields)
-}
-
-// ComputerCallOutputStatus Typed representation of the `ComputerCallOutputStatus` API schema.
-type ComputerCallOutputStatus string
-
-const (
-	ComputerCallOutputStatusCompleted  ComputerCallOutputStatus = "completed"
-	ComputerCallOutputStatusIncomplete ComputerCallOutputStatus = "incomplete"
-	ComputerCallOutputStatusFailed     ComputerCallOutputStatus = "failed"
-)
-
-// ComputerTool A tool that controls a virtual computer. Learn more about the [computer tool](https://developers.openai.com/api/docs/guides/tools-computer-use).
-type ComputerTool struct {
-	// Type The type of the computer tool. Always `computer`.
-	Type ComputerToolTypeEnum `json:"type"`
-}
-
-func (value *ComputerTool) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"computer"}); err != nil {
-		return err
-	}
-	type ComputerToolAlias ComputerTool
-	var decoded ComputerToolAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ComputerTool(decoded)
-	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewComputerTool returns a validated ComputerTool built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewComputerTool(fields ComputerTool) (*ComputerTool, error) {
 	return ConstructModel(fields)
 }

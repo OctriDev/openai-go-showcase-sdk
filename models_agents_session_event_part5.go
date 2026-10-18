@@ -252,6 +252,174 @@ func (u *SessionEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 SessionEventError
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.SessionEventError = &lossless0
+			return nil
+		}
+		var lossless1 SessionEventAgentSessionEnvironmentReady
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SessionEventAgentSessionEnvironmentReady = &lossless1
+			return nil
+		}
+		var lossless2 SessionEventAgentSessionEnvironmentSuspended
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.SessionEventAgentSessionEnvironmentSuspended = &lossless2
+			return nil
+		}
+		var lossless3 SessionEventAgentSessionEnvironmentExpired
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.SessionEventAgentSessionEnvironmentExpired = &lossless3
+			return nil
+		}
+		var lossless4 SessionEventAgentSessionEnvironmentReset
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.SessionEventAgentSessionEnvironmentReset = &lossless4
+			return nil
+		}
+		var lossless5 SessionEventAgentOutputCommandExecutionOutputDelta
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.SessionEventAgentOutputCommandExecutionOutputDelta = &lossless5
+			return nil
+		}
+		var lossless6 SessionEventAgentSessionCreated
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.SessionEventAgentSessionCreated = &lossless6
+			return nil
+		}
+		var lossless7 SessionEventAgentSessionTurnCreated
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.SessionEventAgentSessionTurnCreated = &lossless7
+			return nil
+		}
+		var lossless8 SessionEventAgentSessionTurnInProgress
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.SessionEventAgentSessionTurnInProgress = &lossless8
+			return nil
+		}
+		var lossless9 SessionEventAgentSessionTurnCompleted
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.SessionEventAgentSessionTurnCompleted = &lossless9
+			return nil
+		}
+		var lossless10 SessionEventAgentSessionTurnFailed
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.SessionEventAgentSessionTurnFailed = &lossless10
+			return nil
+		}
+		var lossless11 SessionEventAgentSessionTurnCancelled
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.SessionEventAgentSessionTurnCancelled = &lossless11
+			return nil
+		}
+		var lossless12 SessionEventAgentSessionTurnItemAdded
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.SessionEventAgentSessionTurnItemAdded = &lossless12
+			return nil
+		}
+		var lossless13 SessionEventAgentSessionIdle
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.SessionEventAgentSessionIdle = &lossless13
+			return nil
+		}
+		var lossless14 SessionEventAgentSessionInProgress
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.SessionEventAgentSessionInProgress = &lossless14
+			return nil
+		}
+		var lossless15 SessionEventAgentSessionRequiresAction
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.SessionEventAgentSessionRequiresAction = &lossless15
+			return nil
+		}
+		var lossless16 SessionEventAgentSessionFailed
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.SessionEventAgentSessionFailed = &lossless16
+			return nil
+		}
+		var lossless17 SessionEventAgentSessionEnvironmentPending
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.SessionEventAgentSessionEnvironmentPending = &lossless17
+			return nil
+		}
+		var lossless18 SessionEventAgentSessionEnvironmentConnected
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.SessionEventAgentSessionEnvironmentConnected = &lossless18
+			return nil
+		}
+		var lossless19 SessionEventAgentSessionEnvironmentDisconnected
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.SessionEventAgentSessionEnvironmentDisconnected = &lossless19
+			return nil
+		}
+		var lossless20 SessionEventAgentSessionEnvironmentFailed
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.SessionEventAgentSessionEnvironmentFailed = &lossless20
+			return nil
+		}
+		var lossless21 SessionEventAgentSessionSubagentCreated
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.SessionEventAgentSessionSubagentCreated = &lossless21
+			return nil
+		}
+		var lossless22 SessionEventAgentSessionSubagentActive
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.SessionEventAgentSessionSubagentActive = &lossless22
+			return nil
+		}
+		var lossless23 SessionEventAgentSessionSubagentClosed
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.SessionEventAgentSessionSubagentClosed = &lossless23
+			return nil
+		}
+		var lossless24 SessionEventAgentSessionTurnItemDone
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.SessionEventAgentSessionTurnItemDone = &lossless24
+			return nil
+		}
+		var lossless25 SessionEventAgentSessionTurnContentPartAdded
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.SessionEventAgentSessionTurnContentPartAdded = &lossless25
+			return nil
+		}
+		var lossless26 SessionEventAgentSessionTurnContentPartDone
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.SessionEventAgentSessionTurnContentPartDone = &lossless26
+			return nil
+		}
+		var lossless27 SessionEventAgentSessionTurnOutputTextDelta
+		if json.Unmarshal(data, &lossless27) == nil && keepsEveryKey(raw, lossless27) {
+			u.SessionEventAgentSessionTurnOutputTextDelta = &lossless27
+			return nil
+		}
+		var lossless28 SessionEventAgentSessionTurnOutputTextDone
+		if json.Unmarshal(data, &lossless28) == nil && keepsEveryKey(raw, lossless28) {
+			u.SessionEventAgentSessionTurnOutputTextDone = &lossless28
+			return nil
+		}
+		var lossless29 SessionEventAgentSessionTurnReasoningSummaryPartAdded
+		if json.Unmarshal(data, &lossless29) == nil && keepsEveryKey(raw, lossless29) {
+			u.SessionEventAgentSessionTurnReasoningSummaryPartAdded = &lossless29
+			return nil
+		}
+		var lossless30 SessionEventAgentSessionTurnReasoningSummaryPartDone
+		if json.Unmarshal(data, &lossless30) == nil && keepsEveryKey(raw, lossless30) {
+			u.SessionEventAgentSessionTurnReasoningSummaryPartDone = &lossless30
+			return nil
+		}
+		var lossless31 SessionEventAgentSessionTurnReasoningSummaryTextDelta
+		if json.Unmarshal(data, &lossless31) == nil && keepsEveryKey(raw, lossless31) {
+			u.SessionEventAgentSessionTurnReasoningSummaryTextDelta = &lossless31
+			return nil
+		}
+		var lossless32 SessionEventAgentSessionTurnReasoningSummaryTextDone
+		if json.Unmarshal(data, &lossless32) == nil && keepsEveryKey(raw, lossless32) {
+			u.SessionEventAgentSessionTurnReasoningSummaryTextDone = &lossless32
+			return nil
+		}
+	}
 	var sessioneventerror SessionEventError
 	if err := json.Unmarshal(data, &sessioneventerror); err == nil && isNonEmptySessionEventSessionEventError(sessioneventerror) {
 		u.SessionEventError = &sessioneventerror
@@ -484,245 +652,4 @@ func (u *SessionEvent) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
-}
-
-func (u SessionEvent) MarshalJSON() ([]byte, error) {
-	if u.SessionEventError != nil {
-		return json.Marshal(u.SessionEventError)
-	}
-	if u.SessionEventAgentSessionEnvironmentReady != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentReady)
-	}
-	if u.SessionEventAgentSessionEnvironmentSuspended != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentSuspended)
-	}
-	if u.SessionEventAgentSessionEnvironmentExpired != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentExpired)
-	}
-	if u.SessionEventAgentSessionEnvironmentReset != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentReset)
-	}
-	if u.SessionEventAgentOutputCommandExecutionOutputDelta != nil {
-		return json.Marshal(u.SessionEventAgentOutputCommandExecutionOutputDelta)
-	}
-	if u.SessionEventAgentSessionCreated != nil {
-		return json.Marshal(u.SessionEventAgentSessionCreated)
-	}
-	if u.SessionEventAgentSessionTurnCreated != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnCreated)
-	}
-	if u.SessionEventAgentSessionTurnInProgress != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnInProgress)
-	}
-	if u.SessionEventAgentSessionTurnCompleted != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnCompleted)
-	}
-	if u.SessionEventAgentSessionTurnFailed != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnFailed)
-	}
-	if u.SessionEventAgentSessionTurnCancelled != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnCancelled)
-	}
-	if u.SessionEventAgentSessionTurnItemAdded != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnItemAdded)
-	}
-	if u.SessionEventAgentSessionIdle != nil {
-		return json.Marshal(u.SessionEventAgentSessionIdle)
-	}
-	if u.SessionEventAgentSessionInProgress != nil {
-		return json.Marshal(u.SessionEventAgentSessionInProgress)
-	}
-	if u.SessionEventAgentSessionRequiresAction != nil {
-		return json.Marshal(u.SessionEventAgentSessionRequiresAction)
-	}
-	if u.SessionEventAgentSessionFailed != nil {
-		return json.Marshal(u.SessionEventAgentSessionFailed)
-	}
-	if u.SessionEventAgentSessionEnvironmentPending != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentPending)
-	}
-	if u.SessionEventAgentSessionEnvironmentConnected != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentConnected)
-	}
-	if u.SessionEventAgentSessionEnvironmentDisconnected != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentDisconnected)
-	}
-	if u.SessionEventAgentSessionEnvironmentFailed != nil {
-		return json.Marshal(u.SessionEventAgentSessionEnvironmentFailed)
-	}
-	if u.SessionEventAgentSessionSubagentCreated != nil {
-		return json.Marshal(u.SessionEventAgentSessionSubagentCreated)
-	}
-	if u.SessionEventAgentSessionSubagentActive != nil {
-		return json.Marshal(u.SessionEventAgentSessionSubagentActive)
-	}
-	if u.SessionEventAgentSessionSubagentClosed != nil {
-		return json.Marshal(u.SessionEventAgentSessionSubagentClosed)
-	}
-	if u.SessionEventAgentSessionTurnItemDone != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnItemDone)
-	}
-	if u.SessionEventAgentSessionTurnContentPartAdded != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnContentPartAdded)
-	}
-	if u.SessionEventAgentSessionTurnContentPartDone != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnContentPartDone)
-	}
-	if u.SessionEventAgentSessionTurnOutputTextDelta != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnOutputTextDelta)
-	}
-	if u.SessionEventAgentSessionTurnOutputTextDone != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnOutputTextDone)
-	}
-	if u.SessionEventAgentSessionTurnReasoningSummaryPartAdded != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryPartAdded)
-	}
-	if u.SessionEventAgentSessionTurnReasoningSummaryPartDone != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryPartDone)
-	}
-	if u.SessionEventAgentSessionTurnReasoningSummaryTextDelta != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryTextDelta)
-	}
-	if u.SessionEventAgentSessionTurnReasoningSummaryTextDone != nil {
-		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryTextDone)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptySessionEventSessionEventError(v SessionEventError) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentReady(v SessionEventAgentSessionEnvironmentReady) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentSuspended(v SessionEventAgentSessionEnvironmentSuspended) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentExpired(v SessionEventAgentSessionEnvironmentExpired) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentReset(v SessionEventAgentSessionEnvironmentReset) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentOutputCommandExecutionOutputDelta(v SessionEventAgentOutputCommandExecutionOutputDelta) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionCreated(v SessionEventAgentSessionCreated) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnCreated(v SessionEventAgentSessionTurnCreated) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnInProgress(v SessionEventAgentSessionTurnInProgress) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnCompleted(v SessionEventAgentSessionTurnCompleted) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnFailed(v SessionEventAgentSessionTurnFailed) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnCancelled(v SessionEventAgentSessionTurnCancelled) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnItemAdded(v SessionEventAgentSessionTurnItemAdded) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionIdle(v SessionEventAgentSessionIdle) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionInProgress(v SessionEventAgentSessionInProgress) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionRequiresAction(v SessionEventAgentSessionRequiresAction) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionFailed(v SessionEventAgentSessionFailed) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentPending(v SessionEventAgentSessionEnvironmentPending) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentConnected(v SessionEventAgentSessionEnvironmentConnected) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentDisconnected(v SessionEventAgentSessionEnvironmentDisconnected) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionEnvironmentFailed(v SessionEventAgentSessionEnvironmentFailed) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionSubagentCreated(v SessionEventAgentSessionSubagentCreated) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionSubagentActive(v SessionEventAgentSessionSubagentActive) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionSubagentClosed(v SessionEventAgentSessionSubagentClosed) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnItemDone(v SessionEventAgentSessionTurnItemDone) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnContentPartAdded(v SessionEventAgentSessionTurnContentPartAdded) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptySessionEventSessionEventAgentSessionTurnContentPartDone(v SessionEventAgentSessionTurnContentPartDone) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

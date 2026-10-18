@@ -197,6 +197,19 @@ func (u *HostedEnvironmentFileResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 HostedEnvironmentFileResourceFileId
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.HostedEnvironmentFileResourceFileId = &lossless0
+			return nil
+		}
+		var lossless1 HostedEnvironmentFileResourceInline
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.HostedEnvironmentFileResourceInline = &lossless1
+			return nil
+		}
+	}
 	var hostedenvironmentfileresourcefileid HostedEnvironmentFileResourceFileId
 	if err := json.Unmarshal(data, &hostedenvironmentfileresourcefileid); err == nil && isNonEmptyHostedEnvironmentFileResourceHostedEnvironmentFileResourceFileId(hostedenvironmentfileresourcefileid) {
 		u.HostedEnvironmentFileResourceFileId = &hostedenvironmentfileresourcefileid
@@ -426,6 +439,19 @@ func (u *HostedSkillResource) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 HostedSkillResourceSkillReference
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.HostedSkillResourceSkillReference = &lossless0
+			return nil
+		}
+		var lossless1 HostedSkillResourceInline
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.HostedSkillResourceInline = &lossless1
+			return nil
 		}
 	}
 	var hostedskillresourceskillreference HostedSkillResourceSkillReference
@@ -684,33 +710,4 @@ type HostedSkillParamInline struct {
 	Description string `json:"description"`
 	// Source The inline ZIP archive.
 	Source InlineCapabilitySourceParam `json:"source"`
-}
-
-func (value *HostedSkillParamInline) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"inline"}); err != nil {
-		return err
-	}
-	type HostedSkillParamInlineAlias HostedSkillParamInline
-	var decoded HostedSkillParamInlineAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = HostedSkillParamInline(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "name", "description", "source"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "name", "description", "source"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("name", value.Name, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](64)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("description", value.Description, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return err
-	}
-	return nil
 }

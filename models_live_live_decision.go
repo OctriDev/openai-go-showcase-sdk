@@ -357,6 +357,24 @@ func (u *LiveDecisionQuestion) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveDecisionChoiceQuestionParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveDecisionChoiceQuestionParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveDecisionPredicateQuestionParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveDecisionPredicateQuestionParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveDecisionScoreQuestionParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveDecisionScoreQuestionParam = &lossless2
+			return nil
+		}
+	}
 	var livedecisionchoicequestionparam LiveDecisionChoiceQuestionParam
 	if err := json.Unmarshal(data, &livedecisionchoicequestionparam); err == nil && isNonEmptyLiveDecisionQuestionLiveDecisionChoiceQuestionParam(livedecisionchoicequestionparam) {
 		u.LiveDecisionChoiceQuestionParam = &livedecisionchoicequestionparam
@@ -665,39 +683,3 @@ type LiveDecisionInputTextParam struct {
 	// Text The text input to the model.
 	Text string `json:"text"`
 }
-
-func (value *LiveDecisionInputTextParam) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"input_text"}); err != nil {
-		return err
-	}
-	type LiveDecisionInputTextParamAlias LiveDecisionInputTextParam
-	var decoded LiveDecisionInputTextParamAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = LiveDecisionInputTextParam(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "text"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "text"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("text", value.Text, LengthOpts{Max: Ptr[int](10485760)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewLiveDecisionInputTextParam returns a validated LiveDecisionInputTextParam built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewLiveDecisionInputTextParam(fields LiveDecisionInputTextParam) (*LiveDecisionInputTextParam, error) {
-	return ConstructModel(fields)
-}
-
-// LiveDecisionInputTextParamTypeEnum The type of the input item. Always `input_text`.
-type LiveDecisionInputTextParamTypeEnum string

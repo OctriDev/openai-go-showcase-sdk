@@ -145,6 +145,19 @@ type BetaContent struct {
 func (u *BetaContent) UnmarshalJSON(data []byte) error {
 	*u = BetaContent{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaInputContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaInputContent = &lossless0
+			return nil
+		}
+		var lossless1 BetaOutputContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaOutputContent = &lossless1
+			return nil
+		}
+	}
 	var betainputcontent BetaInputContent
 	if err := json.Unmarshal(data, &betainputcontent); err == nil && isNonEmptyBetaContentBetaInputContent(betainputcontent) {
 		u.BetaInputContent = &betainputcontent

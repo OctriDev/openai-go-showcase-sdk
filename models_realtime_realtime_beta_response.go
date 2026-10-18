@@ -548,6 +548,24 @@ func (u *RealtimeBetaResponseCreateParamsToolChoice) UnmarshalJSON(data []byte) 
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ToolChoiceOptions
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ToolChoiceOptions = &lossless0
+			return nil
+		}
+		var lossless1 ToolChoiceFunction
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ToolChoiceFunction = &lossless1
+			return nil
+		}
+		var lossless2 ToolChoiceMCP
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ToolChoiceMCP = &lossless2
+			return nil
+		}
+	}
 	var toolchoiceoptions ToolChoiceOptions
 	if err := json.Unmarshal(data, &toolchoiceoptions); err == nil && isNonEmptyRealtimeBetaResponseCreateParamsToolChoiceToolChoiceOptions(toolchoiceoptions) {
 		u.ToolChoiceOptions = &toolchoiceoptions

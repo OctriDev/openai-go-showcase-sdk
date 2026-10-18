@@ -146,6 +146,19 @@ func (u *RealtimeCreateClientSecretRequestSession) UnmarshalJSON(data []byte) er
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeSessionCreateRequestGA
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeSessionCreateRequestGA = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeTranscriptionSessionCreateRequestGA
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeTranscriptionSessionCreateRequestGA = &lossless1
+			return nil
+		}
+	}
 	var realtimesessioncreaterequestga RealtimeSessionCreateRequestGA
 	if err := json.Unmarshal(data, &realtimesessioncreaterequestga); err == nil && isNonEmptyRealtimeCreateClientSecretRequestSessionRealtimeSessionCreateRequestGA(realtimesessioncreaterequestga) {
 		u.RealtimeSessionCreateRequestGA = &realtimesessioncreaterequestga
@@ -231,6 +244,19 @@ func (u *RealtimeCreateClientSecretResponseSession) UnmarshalJSON(data []byte) e
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeSessionCreateResponseGA
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeSessionCreateResponseGA = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeTranscriptionSessionCreateResponseGA
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeTranscriptionSessionCreateResponseGA = &lossless1
+			return nil
 		}
 	}
 	var realtimesessioncreateresponsega RealtimeSessionCreateResponseGA

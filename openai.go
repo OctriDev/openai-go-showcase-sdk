@@ -413,6 +413,32 @@ func (sdk *AssistantsNamespace) ListMessages(ctx context.Context, params ListMes
 	return ListMessages(ctx, sdk.config, params, opts...)
 }
 
+// ListMessagesPaginated lists messages belonging to a thread. Use `run_id` to filter by the run that generated the messages and `order` to control their creation-time order. Use `after` or `before` cursors to navigate the results.
+//
+// Returns a list of messages for a given thread.
+//
+// Parameters:
+//
+//	threadId: The ID of the
+//	[thread](https://developers.openai.com/api/docs/assistants/migration) the
+//	messages belong to.
+//	limit: A limit on the number of objects to be returned. Limit can range
+//	between 1 and 100, and the default is 20.
+//	order: Sort order by the `created_at` timestamp of the objects. `asc` for
+//	ascending order and `desc` for descending order.
+//	after: A cursor for use in pagination. `after` is an object ID that defines
+//	your place in the list. For instance, if you make a list request and receive
+//	100 objects, ending with obj_foo, your subsequent call can include
+//	after=obj_foo in order to fetch the next page of the list.
+//	before: A cursor for use in pagination. `before` is an object ID that
+//	defines your place in the list. For instance, if you make a list request and
+//	receive 100 objects, starting with obj_foo, your subsequent call can include
+//	before=obj_foo in order to fetch the previous page of the list.
+//	runId: Filter messages by the run ID that generated them.
+func (sdk *AssistantsNamespace) ListMessagesPaginated(ctx context.Context, params ListMessagesParams, yield func(*MessageObject) bool, opts ...RequestOption) error {
+	return ListMessagesPaginated(ctx, sdk.config, params, yield, opts...)
+}
+
 // CreateMessage creates a message in a thread. Provide the message `role` and `content`, and optionally include file attachments or metadata. Use this operation to add a user or assistant message to an existing conversation thread.
 //
 // Create a message.
@@ -700,18 +726,4 @@ func (sdk *AssistantsNamespace) CreateRun(ctx context.Context, params CreateRunP
 //	the max context length.
 func (sdk *AssistantsNamespace) CreateRunStream(ctx context.Context, threadId string, assistantId string, stream NullableValue[bool], include *[]string, model *NullableValue[string], reasoningEffort *NullableValue[ReasoningEffort], instructions *NullableValue[string], additionalInstructions *NullableValue[string], additionalMessages *NullableValue[[]CreateMessageRequest], tools *NullableValue[[]CreateRunRequestToolsItem], metadata *NullableValue[Metadata], temperature *NullableValue[float64], topP *NullableValue[float64], maxPromptTokens *NullableValue[int64], maxCompletionTokens *NullableValue[int64], truncationStrategy *TruncationObject, toolChoice *AssistantsApiToolChoiceOption, parallelToolCalls *bool, responseFormat *NullableValue[AssistantsApiResponseFormatOption], opts ...RequestOption) (<-chan AssistantStreamEvent, <-chan error) {
 	return CreateRunStream(ctx, sdk.config, threadId, assistantId, stream, include, model, reasoningEffort, instructions, additionalInstructions, additionalMessages, tools, metadata, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, parallelToolCalls, responseFormat, opts...)
-}
-
-// GetRun retrieves a run associated with a thread. Use the thread and run IDs to inspect the run’s current status, timestamps, and any required action or error.
-//
-// Retrieves a run.
-//
-// Parameters:
-//
-//	threadId: The ID of the
-//	[thread](https://developers.openai.com/api/docs/assistants/migration) that
-//	was run.
-//	runId: The ID of the run to retrieve.
-func (sdk *AssistantsNamespace) GetRun(ctx context.Context, params GetRunParams, opts ...RequestOption) (*RunObject, error) {
-	return GetRun(ctx, sdk.config, params, opts...)
 }

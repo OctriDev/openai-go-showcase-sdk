@@ -151,6 +151,84 @@ func (u *LiveClientEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveSessionStartEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveSessionStartEvent = &lossless0
+			return nil
+		}
+		var lossless1 LiveSessionUpdateParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveSessionUpdateParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveInputAudioAppendEvent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveInputAudioAppendEvent = &lossless2
+			return nil
+		}
+		var lossless3 LiveInputAudioMuteParam
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.LiveInputAudioMuteParam = &lossless3
+			return nil
+		}
+		var lossless4 LiveInputAudioUnmuteParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.LiveInputAudioUnmuteParam = &lossless4
+			return nil
+		}
+		var lossless5 LiveOutputAudioFixturePlayParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.LiveOutputAudioFixturePlayParam = &lossless5
+			return nil
+		}
+		var lossless6 LiveInstructionsAppendParam
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.LiveInstructionsAppendParam = &lossless6
+			return nil
+		}
+		var lossless7 LiveThinkingAppendParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.LiveThinkingAppendParam = &lossless7
+			return nil
+		}
+		var lossless8 LiveCommentaryAppendParam
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.LiveCommentaryAppendParam = &lossless8
+			return nil
+		}
+		var lossless9 LiveDecisionCreateParam
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.LiveDecisionCreateParam = &lossless9
+			return nil
+		}
+		var lossless10 LiveDecisionItemCreateParam
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.LiveDecisionItemCreateParam = &lossless10
+			return nil
+		}
+		var lossless11 LiveDecisionItemDeleteParam
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.LiveDecisionItemDeleteParam = &lossless11
+			return nil
+		}
+		var lossless12 LiveResponseItemCreateParam
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.LiveResponseItemCreateParam = &lossless12
+			return nil
+		}
+		var lossless13 LiveResponseCreateParam
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.LiveResponseCreateParam = &lossless13
+			return nil
+		}
+		var lossless14 LiveSessionCloseParam
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.LiveSessionCloseParam = &lossless14
+			return nil
+		}
+	}
 	var livesessionstartevent LiveSessionStartEvent
 	if err := json.Unmarshal(data, &livesessionstartevent); err == nil && isNonEmptyLiveClientEventLiveSessionStartEvent(livesessionstartevent) {
 		u.LiveSessionStartEvent = &livesessionstartevent

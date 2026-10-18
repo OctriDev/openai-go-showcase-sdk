@@ -274,6 +274,24 @@ func (u *CreateMcpOauthTokenEndpointAuthParam) UnmarshalJSON(data []byte) error 
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateMcpOauthTokenEndpointAuthParamNone
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateMcpOauthTokenEndpointAuthParamNone = &lossless0
+			return nil
+		}
+		var lossless1 CreateMcpOauthTokenEndpointAuthParamClientSecretBasic
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateMcpOauthTokenEndpointAuthParamClientSecretBasic = &lossless1
+			return nil
+		}
+		var lossless2 CreateMcpOauthTokenEndpointAuthParamClientSecretPost
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.CreateMcpOauthTokenEndpointAuthParamClientSecretPost = &lossless2
+			return nil
+		}
+	}
 	var createmcpoauthtokenendpointauthparamnone CreateMcpOauthTokenEndpointAuthParamNone
 	if err := json.Unmarshal(data, &createmcpoauthtokenendpointauthparamnone); err == nil && isNonEmptyCreateMcpOauthTokenEndpointAuthParamCreateMcpOauthTokenEndpointAuthParamNone(createmcpoauthtokenendpointauthparamnone) {
 		u.CreateMcpOauthTokenEndpointAuthParamNone = &createmcpoauthtokenendpointauthparamnone
@@ -655,6 +673,24 @@ func (u *CreateVaultCredentialAuthParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateVaultCredentialAuthParamMcpOauth
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateVaultCredentialAuthParamMcpOauth = &lossless0
+			return nil
+		}
+		var lossless1 CreateVaultCredentialAuthParamStaticBearer
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateVaultCredentialAuthParamStaticBearer = &lossless1
+			return nil
+		}
+		var lossless2 CreateVaultCredentialAuthParamEnvironmentVariable
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.CreateVaultCredentialAuthParamEnvironmentVariable = &lossless2
+			return nil
+		}
+	}
 	var createvaultcredentialauthparammcpoauth CreateVaultCredentialAuthParamMcpOauth
 	if err := json.Unmarshal(data, &createvaultcredentialauthparammcpoauth); err == nil && isNonEmptyCreateVaultCredentialAuthParamCreateVaultCredentialAuthParamMcpOauth(createvaultcredentialauthparammcpoauth) {
 		u.CreateVaultCredentialAuthParamMcpOauth = &createvaultcredentialauthparammcpoauth
@@ -677,35 +713,4 @@ func (u *CreateVaultCredentialAuthParam) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
-}
-
-func (u CreateVaultCredentialAuthParam) MarshalJSON() ([]byte, error) {
-	if u.CreateVaultCredentialAuthParamMcpOauth != nil {
-		return json.Marshal(u.CreateVaultCredentialAuthParamMcpOauth)
-	}
-	if u.CreateVaultCredentialAuthParamStaticBearer != nil {
-		return json.Marshal(u.CreateVaultCredentialAuthParamStaticBearer)
-	}
-	if u.CreateVaultCredentialAuthParamEnvironmentVariable != nil {
-		return json.Marshal(u.CreateVaultCredentialAuthParamEnvironmentVariable)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyCreateVaultCredentialAuthParamCreateVaultCredentialAuthParamMcpOauth(v CreateVaultCredentialAuthParamMcpOauth) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateVaultCredentialAuthParamCreateVaultCredentialAuthParamStaticBearer(v CreateVaultCredentialAuthParamStaticBearer) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateVaultCredentialAuthParamCreateVaultCredentialAuthParamEnvironmentVariable(v CreateVaultCredentialAuthParamEnvironmentVariable) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

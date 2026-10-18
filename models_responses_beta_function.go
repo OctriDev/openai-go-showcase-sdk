@@ -299,6 +299,24 @@ func (u *BetaFunctionAndCustomToolCallOutput) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaInputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaInputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 BetaInputImageContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaInputImageContent = &lossless1
+			return nil
+		}
+		var lossless2 BetaInputFileContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaInputFileContent = &lossless2
+			return nil
+		}
+	}
 	var betainputtextcontent BetaInputTextContent
 	if err := json.Unmarshal(data, &betainputtextcontent); err == nil && isNonEmptyBetaFunctionAndCustomToolCallOutputBetaInputTextContent(betainputtextcontent) {
 		u.BetaInputTextContent = &betainputtextcontent
@@ -542,6 +560,19 @@ func (u *BetaFunctionShellCallOutputOutcomeParam) UnmarshalJSON(data []byte) err
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaFunctionShellCallOutputTimeoutOutcomeParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaFunctionShellCallOutputTimeoutOutcomeParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaFunctionShellCallOutputExitOutcomeParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaFunctionShellCallOutputExitOutcomeParam = &lossless1
+			return nil
+		}
+	}
 	var betafunctionshellcalloutputtimeoutoutcomeparam BetaFunctionShellCallOutputTimeoutOutcomeParam
 	if err := json.Unmarshal(data, &betafunctionshellcalloutputtimeoutoutcomeparam); err == nil && isNonEmptyBetaFunctionShellCallOutputOutcomeParamBetaFunctionShellCallOutputTimeoutOutcomeParam(betafunctionshellcalloutputtimeoutoutcomeparam) {
 		u.BetaFunctionShellCallOutputTimeoutOutcomeParam = &betafunctionshellcalloutputtimeoutoutcomeparam
@@ -687,21 +718,3 @@ func NewBetaFunctionShellCallOutputTimeoutOutcomeParam(fields BetaFunctionShellC
 
 // BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum The outcome type. Always `timeout`.
 type BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum string
-
-const (
-	BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnumTimeout BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum = "timeout"
-)
-
-func (value *BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "timeout":
-		*value = BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaFunctionShellCallOutputTimeoutOutcomeParamTypeEnum: %v", raw)}
-	}
-}

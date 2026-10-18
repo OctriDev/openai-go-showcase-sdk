@@ -629,6 +629,24 @@ func (u *EnvironmentResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 EnvironmentResourceNone
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.EnvironmentResourceNone = &lossless0
+			return nil
+		}
+		var lossless1 EnvironmentResourceOpenaiHosted
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EnvironmentResourceOpenaiHosted = &lossless1
+			return nil
+		}
+		var lossless2 EnvironmentResourceSelfHosted
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.EnvironmentResourceSelfHosted = &lossless2
+			return nil
+		}
+	}
 	var environmentresourcenone EnvironmentResourceNone
 	if err := json.Unmarshal(data, &environmentresourcenone); err == nil && isNonEmptyEnvironmentResourceEnvironmentResourceNone(environmentresourcenone) {
 		u.EnvironmentResourceNone = &environmentresourcenone
@@ -690,10 +708,4 @@ func UnmarshalEnvironmentResource(v any) EnvironmentResource {
 	var result EnvironmentResource
 	_ = json.Unmarshal(b, &result)
 	return result
-}
-
-// EnvironmentParamNone Runs the agent without an execution environment.
-type EnvironmentParamNone struct {
-	// Type The type of the object. Always `none`.
-	Type EnvironmentParamNoneTypeEnum `json:"type"`
 }

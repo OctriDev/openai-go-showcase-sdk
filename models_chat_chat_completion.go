@@ -640,6 +640,24 @@ func (u *ChatCompletionToolChoiceOption) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionAllowedToolsChoice
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionAllowedToolsChoice = &lossless0
+			return nil
+		}
+		var lossless1 ChatCompletionNamedToolChoice
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ChatCompletionNamedToolChoice = &lossless1
+			return nil
+		}
+		var lossless2 ChatCompletionNamedToolChoiceCustom
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ChatCompletionNamedToolChoiceCustom = &lossless2
+			return nil
+		}
+	}
 	var betatoolchoiceoptions BetaToolChoiceOptions
 	if err := json.Unmarshal(data, &betatoolchoiceoptions); err == nil {
 		u.BetaToolChoiceOptions = &betatoolchoiceoptions
@@ -667,33 +685,4 @@ func (u *ChatCompletionToolChoiceOption) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
-}
-
-func (u ChatCompletionToolChoiceOption) MarshalJSON() ([]byte, error) {
-	if u.BetaToolChoiceOptions != nil {
-		return json.Marshal(u.BetaToolChoiceOptions)
-	}
-	if u.ChatCompletionAllowedToolsChoice != nil {
-		return json.Marshal(u.ChatCompletionAllowedToolsChoice)
-	}
-	if u.ChatCompletionNamedToolChoice != nil {
-		return json.Marshal(u.ChatCompletionNamedToolChoice)
-	}
-	if u.ChatCompletionNamedToolChoiceCustom != nil {
-		return json.Marshal(u.ChatCompletionNamedToolChoiceCustom)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyChatCompletionToolChoiceOptionChatCompletionAllowedToolsChoice(v ChatCompletionAllowedToolsChoice) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyChatCompletionToolChoiceOptionChatCompletionNamedToolChoice(v ChatCompletionNamedToolChoice) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

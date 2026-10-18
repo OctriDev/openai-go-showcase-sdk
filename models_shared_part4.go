@@ -9,132 +9,6 @@ import (
 	"fmt"
 )
 
-func (u *Filters) UnmarshalJSON(data []byte) error {
-	*u = Filters{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "eq":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "ne":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "gt":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "gte":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "lt":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "lte":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "in":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "nin":
-					var comparisonfilter ComparisonFilter
-					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
-						return err
-					}
-					u.ComparisonFilter = &comparisonfilter
-					return nil
-				case "and":
-					var compoundfilter CompoundFilter
-					if err := json.Unmarshal(data, &compoundfilter); err != nil {
-						return err
-					}
-					u.CompoundFilter = &compoundfilter
-					return nil
-				case "or":
-					var compoundfilter CompoundFilter
-					if err := json.Unmarshal(data, &compoundfilter); err != nil {
-						return err
-					}
-					u.CompoundFilter = &compoundfilter
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var comparisonfilter ComparisonFilter
-	if err := json.Unmarshal(data, &comparisonfilter); err == nil && isNonEmptyFiltersComparisonFilter(comparisonfilter) {
-		u.ComparisonFilter = &comparisonfilter
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var compoundfilter CompoundFilter
-	if err := json.Unmarshal(data, &compoundfilter); err == nil && isNonEmptyFiltersCompoundFilter(compoundfilter) {
-		u.CompoundFilter = &compoundfilter
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u Filters) MarshalJSON() ([]byte, error) {
-	if u.ComparisonFilter != nil {
-		return json.Marshal(u.ComparisonFilter)
-	}
-	if u.CompoundFilter != nil {
-		return json.Marshal(u.CompoundFilter)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyFiltersComparisonFilter(v ComparisonFilter) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyFiltersCompoundFilter(v CompoundFilter) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
 // UnmarshalFilters converts an untyped value to Filters.
 func UnmarshalFilters(v any) Filters {
 	b, _ := json.Marshal(v)
@@ -713,3 +587,119 @@ func (value *OciExternalStorageProviderResponseTypeEnum) UnmarshalJSON(data []by
 
 // OrderEnum Typed representation of the `OrderEnum` API schema.
 type OrderEnum string
+
+const (
+	OrderEnumAsc  OrderEnum = "asc"
+	OrderEnumDesc OrderEnum = "desc"
+)
+
+// ListOrderParam The order in which paginated resources are returned.
+type ListOrderParam string
+
+const (
+	ListOrderParamAsc  ListOrderParam = "asc"
+	ListOrderParamDesc ListOrderParam = "desc"
+)
+
+// ProjectEventTypeEnum Typed representation of the `ProjectEventTypeEnum` API schema.
+type ProjectEventTypeEnum string
+
+const (
+	ProjectEventTypeEnumBatchCompleted             ProjectEventTypeEnum = "batch.completed"
+	ProjectEventTypeEnumBatchFailed                ProjectEventTypeEnum = "batch.failed"
+	ProjectEventTypeEnumBatchExpired               ProjectEventTypeEnum = "batch.expired"
+	ProjectEventTypeEnumBatchCancelled             ProjectEventTypeEnum = "batch.cancelled"
+	ProjectEventTypeEnumResponseCompleted          ProjectEventTypeEnum = "response.completed"
+	ProjectEventTypeEnumResponseFailed             ProjectEventTypeEnum = "response.failed"
+	ProjectEventTypeEnumResponseCancelled          ProjectEventTypeEnum = "response.cancelled"
+	ProjectEventTypeEnumResponseIncomplete         ProjectEventTypeEnum = "response.incomplete"
+	ProjectEventTypeEnumEvalRunSucceeded           ProjectEventTypeEnum = "eval.run.succeeded"
+	ProjectEventTypeEnumEvalRunFailed              ProjectEventTypeEnum = "eval.run.failed"
+	ProjectEventTypeEnumEvalRunCanceled            ProjectEventTypeEnum = "eval.run.canceled"
+	ProjectEventTypeEnumFineTuningJobSucceeded     ProjectEventTypeEnum = "fine_tuning.job.succeeded"
+	ProjectEventTypeEnumFineTuningJobFailed        ProjectEventTypeEnum = "fine_tuning.job.failed"
+	ProjectEventTypeEnumFineTuningJobCancelled     ProjectEventTypeEnum = "fine_tuning.job.cancelled"
+	ProjectEventTypeEnumRealtimeCallIncoming       ProjectEventTypeEnum = "realtime.call.incoming"
+	ProjectEventTypeEnumVideoCompleted             ProjectEventTypeEnum = "video.completed"
+	ProjectEventTypeEnumVideoFailed                ProjectEventTypeEnum = "video.failed"
+	ProjectEventTypeEnumAgentEnvironmentReady      ProjectEventTypeEnum = "agent.environment.ready"
+	ProjectEventTypeEnumAgentEnvironmentFailed     ProjectEventTypeEnum = "agent.environment.failed"
+	ProjectEventTypeEnumAgentEnvironmentSuspended  ProjectEventTypeEnum = "agent.environment.suspended"
+	ProjectEventTypeEnumAgentEnvironmentExpired    ProjectEventTypeEnum = "agent.environment.expired"
+	ProjectEventTypeEnumAgentSessionCreated        ProjectEventTypeEnum = "agent.session.created"
+	ProjectEventTypeEnumAgentSessionActionRequired ProjectEventTypeEnum = "agent.session.action_required"
+	ProjectEventTypeEnumAgentSessionInProgress     ProjectEventTypeEnum = "agent.session.in_progress"
+	ProjectEventTypeEnumAgentSessionIdle           ProjectEventTypeEnum = "agent.session.idle"
+	ProjectEventTypeEnumAgentSessionFailed         ProjectEventTypeEnum = "agent.session.failed"
+	ProjectEventTypeEnumSafetyAlertCreated         ProjectEventTypeEnum = "safety.alert.created"
+)
+
+// WebhookEndpointWithSecretResource Typed representation of the `WebhookEndpointWithSecretResource` API schema.
+type WebhookEndpointWithSecretResource struct {
+	// Id The unique ID of the webhook endpoint.
+	Id string `json:"id"`
+	// Object The object type, which is always webhook_endpoint.
+	Object WebhookEndpointWithSecretResourceObjectEnum `json:"object"`
+	// CreatedAt The Unix timestamp when the endpoint was created.
+	CreatedAt int64 `json:"created_at"`
+	// UpdatedAt The Unix timestamp of the last endpoint configuration or signing-secret change. Initialized at creation; tests and unchanged updates do not advance it.
+	UpdatedAt *int64 `json:"updated_at,omitempty"`
+	// Name The human-readable name of the endpoint.
+	Name string `json:"name"`
+	// Url The HTTPS URL that receives webhook deliveries.
+	Url string `json:"url"`
+	// EventTypes The event types that trigger deliveries to this endpoint.
+	EventTypes []string `json:"event_types"`
+	// SigningSecretHint Required `string` value serialized in the `signing_secret_hint` wire field.
+	SigningSecretHint NullableValue[string] `json:"signing_secret_hint"`
+	// SigningSecret The endpoint's signing secret. This is returned only when the endpoint is created or the secret is rotated.
+	SigningSecret string `json:"signing_secret"`
+}
+
+func (value *WebhookEndpointWithSecretResource) UnmarshalJSON(data []byte) error {
+	type WebhookEndpointWithSecretResourceAlias WebhookEndpointWithSecretResource
+	var decoded WebhookEndpointWithSecretResourceAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = WebhookEndpointWithSecretResource(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"id", "object", "created_at", "name", "url", "event_types", "signing_secret_hint", "signing_secret"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"id", "object", "created_at", "name", "url", "event_types", "signing_secret"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewWebhookEndpointWithSecretResource returns a validated WebhookEndpointWithSecretResource built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewWebhookEndpointWithSecretResource(fields WebhookEndpointWithSecretResource) (*WebhookEndpointWithSecretResource, error) {
+	return ConstructModel(fields)
+}
+
+// WebhookEndpointWithSecretResourceObjectEnum The object type, which is always webhook_endpoint.
+type WebhookEndpointWithSecretResourceObjectEnum string
+
+const (
+	WebhookEndpointWithSecretResourceObjectEnumWebhookEndpoint WebhookEndpointWithSecretResourceObjectEnum = "webhook_endpoint"
+)
+
+// Error3 Typed representation of the `Error3` API schema.
+type Error3 struct {
+	// Code Required `string` value serialized in the `code` wire field.
+	Code NullableValue[string] `json:"code"`
+	// Message Required `string` value serialized in the `message` wire field.
+	Message string `json:"message"`
+	// Param Required `string` value serialized in the `param` wire field.
+	Param NullableValue[string] `json:"param"`
+	// Type Required `string` value serialized in the `type` wire field.
+	Type string `json:"type"`
+	// Misalignment Optional object value serialized in the `misalignment` wire field.
+	Misalignment *MisalignmentErrorDetailsResource `json:"misalignment,omitempty"`
+}

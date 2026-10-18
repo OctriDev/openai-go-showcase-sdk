@@ -584,6 +584,19 @@ func (u *ChatCompletionMessageToolCallsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionMessageToolCall
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionMessageToolCall = &lossless0
+			return nil
+		}
+		var lossless1 ChatCompletionMessageCustomToolCall
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ChatCompletionMessageCustomToolCall = &lossless1
+			return nil
+		}
+	}
 	var chatcompletionmessagetoolcall ChatCompletionMessageToolCall
 	if err := json.Unmarshal(data, &chatcompletionmessagetoolcall); err == nil && isNonEmptyChatCompletionMessageToolCallsItemChatCompletionMessageToolCall(chatcompletionmessagetoolcall) {
 		u.ChatCompletionMessageToolCall = &chatcompletionmessagetoolcall

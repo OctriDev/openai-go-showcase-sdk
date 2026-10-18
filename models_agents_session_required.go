@@ -260,6 +260,24 @@ func (u *SessionRequiredActionResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 SessionRequiredActionResourceComputerUseApprovalRequest
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.SessionRequiredActionResourceComputerUseApprovalRequest = &lossless0
+			return nil
+		}
+		var lossless1 SessionRequiredActionResourceFunctionCall
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SessionRequiredActionResourceFunctionCall = &lossless1
+			return nil
+		}
+		var lossless2 SessionRequiredActionResourceEnvironmentConnection
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.SessionRequiredActionResourceEnvironmentConnection = &lossless2
+			return nil
+		}
+	}
 	var sessionrequiredactionresourcecomputeruseapprovalrequest SessionRequiredActionResourceComputerUseApprovalRequest
 	if err := json.Unmarshal(data, &sessionrequiredactionresourcecomputeruseapprovalrequest); err == nil && isNonEmptySessionRequiredActionResourceSessionRequiredActionResourceComputerUseApprovalRequest(sessionrequiredactionresourcecomputeruseapprovalrequest) {
 		u.SessionRequiredActionResourceComputerUseApprovalRequest = &sessionrequiredactionresourcecomputeruseapprovalrequest

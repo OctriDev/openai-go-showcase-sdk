@@ -61,6 +61,19 @@ func (u *CreateModerationRequestInput) UnmarshalJSON(data []byte) error {
 		u.String = &s
 		return nil
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 []string
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ListOfString = &lossless0
+			return nil
+		}
+		var lossless1 []CreateModerationRequestInputItem
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ListOfCreateModerationRequestInputItem = &lossless1
+			return nil
+		}
+	}
 	var listofstring []string
 	if err := json.Unmarshal(data, &listofstring); err == nil && isNonEmptyCreateModerationRequestInputListOfString(listofstring) {
 		u.ListOfString = &listofstring
@@ -640,6 +653,19 @@ func (u *CreateModerationRequestInputItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateModerationRequestInputItemVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateModerationRequestInputItemVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 CreateModerationRequestInputItemVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateModerationRequestInputItemVariant1 = &lossless1
+			return nil
+		}
+	}
 	var createmoderationrequestinputitemvariant0 CreateModerationRequestInputItemVariant0
 	if err := json.Unmarshal(data, &createmoderationrequestinputitemvariant0); err == nil && isNonEmptyCreateModerationRequestInputItemCreateModerationRequestInputItemVariant0(createmoderationrequestinputitemvariant0) {
 		u.CreateModerationRequestInputItemVariant0 = &createmoderationrequestinputitemvariant0
@@ -665,22 +691,4 @@ func (u CreateModerationRequestInputItem) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.CreateModerationRequestInputItemVariant1)
 	}
 	return []byte("null"), nil
-}
-
-func isNonEmptyCreateModerationRequestInputItemCreateModerationRequestInputItemVariant0(v CreateModerationRequestInputItemVariant0) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateModerationRequestInputItemCreateModerationRequestInputItemVariant1(v CreateModerationRequestInputItemVariant1) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalCreateModerationRequestInputItem converts an untyped value to CreateModerationRequestInputItem.
-func UnmarshalCreateModerationRequestInputItem(v any) CreateModerationRequestInputItem {
-	b, _ := json.Marshal(v)
-	var result CreateModerationRequestInputItem
-	_ = json.Unmarshal(b, &result)
-	return result
 }
