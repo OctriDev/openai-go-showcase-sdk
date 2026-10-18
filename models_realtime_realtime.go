@@ -205,6 +205,24 @@ func (u *RealtimeAudioFormats) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeAudioFormatsVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeAudioFormatsVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeAudioFormatsVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeAudioFormatsVariant1 = &lossless1
+			return nil
+		}
+		var lossless2 RealtimeAudioFormatsVariant2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RealtimeAudioFormatsVariant2 = &lossless2
+			return nil
+		}
+	}
 	var realtimeaudioformatsvariant0 RealtimeAudioFormatsVariant0
 	if err := json.Unmarshal(data, &realtimeaudioformatsvariant0); err == nil && isNonEmptyRealtimeAudioFormatsRealtimeAudioFormatsVariant0(realtimeaudioformatsvariant0) {
 		u.RealtimeAudioFormatsVariant0 = &realtimeaudioformatsvariant0
@@ -684,24 +702,4 @@ func (value *RealtimeTurnDetectionVariant0) UnmarshalJSON(data []byte) error {
 		value.IdleTimeoutMs = &NullableValue[int64]{}
 	}
 	return nil
-}
-
-// NewRealtimeTurnDetectionVariant0 returns a validated RealtimeTurnDetectionVariant0 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeTurnDetectionVariant0(fields RealtimeTurnDetectionVariant0) (*RealtimeTurnDetectionVariant0, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeTurnDetectionVariant1 Server-side semantic turn detection which uses a model to determine when the user has finished speaking.
-type RealtimeTurnDetectionVariant1 struct {
-	// Type Type of turn detection, `semantic_vad` to turn on Semantic VAD.
-	Type string `json:"type"`
-	// Eagerness Used only for `semantic_vad` mode. The eagerness of the model to respond. `low` will wait longer for the user to continue speaking, `high` will respond more quickly. `auto` is the default and is equivalent to `medium`. `low`, `medium`, and `high` have max timeouts of 8s, 4s, and 2s respectively.
-	Eagerness *RealtimeTurnDetectionVariant1EagernessEnum `json:"eagerness,omitempty"`
-	// CreateResponse Whether or not to automatically generate a response when a VAD stop event occurs.
-	CreateResponse *bool `json:"create_response,omitempty"`
-	// InterruptResponse Whether or not to automatically interrupt any ongoing response with output to the default
-	// conversation (i.e. `conversation` of `auto`) when a VAD start event occurs.
-	InterruptResponse *bool `json:"interrupt_response,omitempty"`
 }

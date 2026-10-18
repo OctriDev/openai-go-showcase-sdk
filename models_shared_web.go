@@ -604,6 +604,24 @@ func (u *WebSearchToolCallAction) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 WebSearchActionSearch
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.WebSearchActionSearch = &lossless0
+			return nil
+		}
+		var lossless1 WebSearchActionOpenPage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.WebSearchActionOpenPage = &lossless1
+			return nil
+		}
+		var lossless2 WebSearchActionFind
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.WebSearchActionFind = &lossless2
+			return nil
+		}
+	}
 	var websearchactionsearch WebSearchActionSearch
 	if err := json.Unmarshal(data, &websearchactionsearch); err == nil && isNonEmptyWebSearchToolCallActionWebSearchActionSearch(websearchactionsearch) {
 		u.WebSearchActionSearch = &websearchactionsearch

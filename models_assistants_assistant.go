@@ -215,6 +215,39 @@ func (u *AssistantStreamEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ThreadStreamEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ThreadStreamEvent = &lossless0
+			return nil
+		}
+		var lossless1 RunStreamEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStreamEvent = &lossless1
+			return nil
+		}
+		var lossless2 RunStepStreamEvent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RunStepStreamEvent = &lossless2
+			return nil
+		}
+		var lossless3 MessageStreamEvent
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.MessageStreamEvent = &lossless3
+			return nil
+		}
+		var lossless4 ErrorEvent
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ErrorEvent = &lossless4
+			return nil
+		}
+		var lossless5 DoneEvent
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.DoneEvent = &lossless5
+			return nil
+		}
+	}
 	var threadstreamevent ThreadStreamEvent
 	if err := json.Unmarshal(data, &threadstreamevent); err == nil && isNonEmptyAssistantStreamEventThreadStreamEvent(threadstreamevent) {
 		u.ThreadStreamEvent = &threadstreamevent
@@ -649,65 +682,4 @@ type AssistantObjectToolsItem struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *AssistantObjectToolsItem) UnmarshalJSON(data []byte) error {
-	*u = AssistantObjectToolsItem{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "code_interpreter":
-					var assistanttoolscode AssistantToolsCode
-					if err := json.Unmarshal(data, &assistanttoolscode); err != nil {
-						return err
-					}
-					u.AssistantToolsCode = &assistanttoolscode
-					return nil
-				case "file_search":
-					var assistanttoolsfilesearch AssistantToolsFileSearch
-					if err := json.Unmarshal(data, &assistanttoolsfilesearch); err != nil {
-						return err
-					}
-					u.AssistantToolsFileSearch = &assistanttoolsfilesearch
-					return nil
-				case "function":
-					var assistanttoolsfunction AssistantToolsFunction
-					if err := json.Unmarshal(data, &assistanttoolsfunction); err != nil {
-						return err
-					}
-					u.AssistantToolsFunction = &assistanttoolsfunction
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var assistanttoolscode AssistantToolsCode
-	if err := json.Unmarshal(data, &assistanttoolscode); err == nil && isNonEmptyAssistantObjectToolsItemAssistantToolsCode(assistanttoolscode) {
-		u.AssistantToolsCode = &assistanttoolscode
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var assistanttoolsfilesearch AssistantToolsFileSearch
-	if err := json.Unmarshal(data, &assistanttoolsfilesearch); err == nil && isNonEmptyAssistantObjectToolsItemAssistantToolsFileSearch(assistanttoolsfilesearch) {
-		u.AssistantToolsFileSearch = &assistanttoolsfilesearch
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var assistanttoolsfunction AssistantToolsFunction
-	if err := json.Unmarshal(data, &assistanttoolsfunction); err == nil && isNonEmptyAssistantObjectToolsItemAssistantToolsFunction(assistanttoolsfunction) {
-		u.AssistantToolsFunction = &assistanttoolsfunction
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
 }

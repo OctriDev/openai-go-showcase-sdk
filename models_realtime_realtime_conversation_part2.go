@@ -8,6 +8,50 @@ import (
 	"fmt"
 )
 
+func (value *RealtimeConversationItemMessageUser) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"message"}); err != nil {
+		return err
+	}
+	type RealtimeConversationItemMessageUserAlias RealtimeConversationItemMessageUser
+	var decoded RealtimeConversationItemMessageUserAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeConversationItemMessageUser(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "role", "content"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "role", "content"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeConversationItemMessageUser returns a validated RealtimeConversationItemMessageUser built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeConversationItemMessageUser(fields RealtimeConversationItemMessageUser) (*RealtimeConversationItemMessageUser, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeConversationItemMessageUserObjectEnum Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item.
+type RealtimeConversationItemMessageUserObjectEnum string
+
+const (
+	RealtimeConversationItemMessageUserObjectEnumRealtimeItem RealtimeConversationItemMessageUserObjectEnum = "realtime.item"
+)
+
+// RealtimeConversationItemMessageUserTypeEnum The type of the item. Always `message`.
+type RealtimeConversationItemMessageUserTypeEnum string
+
+const (
+	RealtimeConversationItemMessageUserTypeEnumMessage RealtimeConversationItemMessageUserTypeEnum = "message"
+)
+
 func (value *RealtimeConversationItemMessageUserTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {

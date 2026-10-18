@@ -68,6 +68,39 @@ func (u *BetaInputItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaEasyInputMessage
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaEasyInputMessage = &lossless0
+			return nil
+		}
+		var lossless1 BetaItem
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaItem = &lossless1
+			return nil
+		}
+		var lossless2 BetaCompactionTriggerItemParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaCompactionTriggerItemParam = &lossless2
+			return nil
+		}
+		var lossless3 BetaItemReferenceParam
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaItemReferenceParam = &lossless3
+			return nil
+		}
+		var lossless4 BetaProgramItemParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.BetaProgramItemParam = &lossless4
+			return nil
+		}
+		var lossless5 BetaProgramOutputItemParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BetaProgramOutputItemParam = &lossless5
+			return nil
+		}
+	}
 	var betaeasyinputmessage BetaEasyInputMessage
 	if err := json.Unmarshal(data, &betaeasyinputmessage); err == nil && isNonEmptyBetaInputItemBetaEasyInputMessage(betaeasyinputmessage) {
 		u.BetaEasyInputMessage = &betaeasyinputmessage
@@ -684,32 +717,3 @@ func (value *BetaInputMessageTypeEnum) UnmarshalJSON(data []byte) error {
 
 // BetaInputMessageRoleEnum The role of the message input. One of `user`, `system`, or `developer`.
 type BetaInputMessageRoleEnum string
-
-const (
-	BetaInputMessageRoleEnumUser      BetaInputMessageRoleEnum = "user"
-	BetaInputMessageRoleEnumSystem    BetaInputMessageRoleEnum = "system"
-	BetaInputMessageRoleEnumDeveloper BetaInputMessageRoleEnum = "developer"
-)
-
-// BetaInputMessageStatusEnum The status of item. One of `in_progress`, `completed`, or
-// `incomplete`. Populated when items are returned via API.
-type BetaInputMessageStatusEnum string
-
-const (
-	BetaInputMessageStatusEnumInProgress BetaInputMessageStatusEnum = "in_progress"
-	BetaInputMessageStatusEnumCompleted  BetaInputMessageStatusEnum = "completed"
-	BetaInputMessageStatusEnumIncomplete BetaInputMessageStatusEnum = "incomplete"
-)
-
-// BetaInputMessageContentList is an array alias.
-type BetaInputMessageContentList = []BetaInputContent
-
-// BetaInputContent represents a union type.
-type BetaInputContent struct {
-	BetaInputTextContent  *BetaInputTextContent
-	BetaInputImageContent *BetaInputImageContent
-	BetaInputFileContent  *BetaInputFileContent
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}

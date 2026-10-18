@@ -322,7 +322,7 @@ type CreateRealtimeSessionParams struct {
 	OutputAudioFormat       *string
 	InputAudioTranscription *RealtimeSessionCreateRequestInputAudioTranscription
 	Speed                   *float64
-	Tracing                 *any
+	Tracing                 *RealtimeSessionCreateRequestTracing
 	TurnDetection           *RealtimeSessionCreateRequestTurnDetection
 	Tools                   *[]RealtimeSessionCreateRequestTools
 	ToolChoice              *string
@@ -456,7 +456,7 @@ func CreateRealtimeSession(ctx context.Context, clientConfig ClientConfig, param
 
 type CreateRealtimeTranscriptionSessionParams struct {
 	TurnDetection            *RealtimeTranscriptionSessionCreateRequestTurnDetection
-	InputAudioNoiseReduction *any
+	InputAudioNoiseReduction *RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction
 	InputAudioFormat         *string
 	InputAudioTranscription  *AudioTranscription
 	Include                  *[]string

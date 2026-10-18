@@ -51,6 +51,319 @@ func (u *ResponsesServerEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ResponsesServerEventVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ResponsesServerEventVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 ResponsesServerEventVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ResponsesServerEventVariant1 = &lossless1
+			return nil
+		}
+		var lossless2 ResponsesServerEventVariant2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ResponsesServerEventVariant2 = &lossless2
+			return nil
+		}
+		var lossless3 ResponsesServerEventVariant3
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ResponsesServerEventVariant3 = &lossless3
+			return nil
+		}
+		var lossless4 ResponsesServerEventVariant4
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ResponsesServerEventVariant4 = &lossless4
+			return nil
+		}
+		var lossless5 ResponsesServerEventVariant5
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ResponsesServerEventVariant5 = &lossless5
+			return nil
+		}
+		var lossless6 ResponsesServerEventVariant6
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.ResponsesServerEventVariant6 = &lossless6
+			return nil
+		}
+		var lossless7 ResponsesServerEventVariant7
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.ResponsesServerEventVariant7 = &lossless7
+			return nil
+		}
+		var lossless8 ResponsesServerEventVariant8
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.ResponsesServerEventVariant8 = &lossless8
+			return nil
+		}
+		var lossless9 ResponsesServerEventVariant9
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.ResponsesServerEventVariant9 = &lossless9
+			return nil
+		}
+		var lossless10 ResponsesServerEventVariant10
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.ResponsesServerEventVariant10 = &lossless10
+			return nil
+		}
+		var lossless11 ResponsesServerEventVariant11
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.ResponsesServerEventVariant11 = &lossless11
+			return nil
+		}
+		var lossless12 ResponsesServerEventVariant12
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.ResponsesServerEventVariant12 = &lossless12
+			return nil
+		}
+		var lossless13 ResponsesServerEventVariant13
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.ResponsesServerEventVariant13 = &lossless13
+			return nil
+		}
+		var lossless14 ResponsesServerEventVariant14
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.ResponsesServerEventVariant14 = &lossless14
+			return nil
+		}
+		var lossless15 ResponsesServerEventVariant15
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.ResponsesServerEventVariant15 = &lossless15
+			return nil
+		}
+		var lossless16 ResponsesServerEventVariant16
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.ResponsesServerEventVariant16 = &lossless16
+			return nil
+		}
+		var lossless17 ResponsesServerEventVariant17
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.ResponsesServerEventVariant17 = &lossless17
+			return nil
+		}
+		var lossless18 ResponsesServerEventVariant18
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.ResponsesServerEventVariant18 = &lossless18
+			return nil
+		}
+		var lossless19 ResponsesServerEventVariant19
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.ResponsesServerEventVariant19 = &lossless19
+			return nil
+		}
+		var lossless20 ResponsesServerEventVariant20
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.ResponsesServerEventVariant20 = &lossless20
+			return nil
+		}
+		var lossless21 ResponsesServerEventVariant21
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.ResponsesServerEventVariant21 = &lossless21
+			return nil
+		}
+		var lossless22 ResponsesServerEventVariant22
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.ResponsesServerEventVariant22 = &lossless22
+			return nil
+		}
+		var lossless23 ResponsesServerEventVariant23
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.ResponsesServerEventVariant23 = &lossless23
+			return nil
+		}
+		var lossless24 ResponsesServerEventVariant24
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.ResponsesServerEventVariant24 = &lossless24
+			return nil
+		}
+		var lossless25 ResponsesServerEventVariant25
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.ResponsesServerEventVariant25 = &lossless25
+			return nil
+		}
+		var lossless26 ResponsesServerEventVariant26
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.ResponsesServerEventVariant26 = &lossless26
+			return nil
+		}
+		var lossless27 ResponsesServerEventVariant27
+		if json.Unmarshal(data, &lossless27) == nil && keepsEveryKey(raw, lossless27) {
+			u.ResponsesServerEventVariant27 = &lossless27
+			return nil
+		}
+		var lossless28 ResponsesServerEventVariant28
+		if json.Unmarshal(data, &lossless28) == nil && keepsEveryKey(raw, lossless28) {
+			u.ResponsesServerEventVariant28 = &lossless28
+			return nil
+		}
+		var lossless29 ResponsesServerEventVariant29
+		if json.Unmarshal(data, &lossless29) == nil && keepsEveryKey(raw, lossless29) {
+			u.ResponsesServerEventVariant29 = &lossless29
+			return nil
+		}
+		var lossless30 ResponsesServerEventVariant30
+		if json.Unmarshal(data, &lossless30) == nil && keepsEveryKey(raw, lossless30) {
+			u.ResponsesServerEventVariant30 = &lossless30
+			return nil
+		}
+		var lossless31 ResponsesServerEventVariant31
+		if json.Unmarshal(data, &lossless31) == nil && keepsEveryKey(raw, lossless31) {
+			u.ResponsesServerEventVariant31 = &lossless31
+			return nil
+		}
+		var lossless32 ResponsesServerEventVariant32
+		if json.Unmarshal(data, &lossless32) == nil && keepsEveryKey(raw, lossless32) {
+			u.ResponsesServerEventVariant32 = &lossless32
+			return nil
+		}
+		var lossless33 ResponsesServerEventVariant33
+		if json.Unmarshal(data, &lossless33) == nil && keepsEveryKey(raw, lossless33) {
+			u.ResponsesServerEventVariant33 = &lossless33
+			return nil
+		}
+		var lossless34 ResponsesServerEventVariant34
+		if json.Unmarshal(data, &lossless34) == nil && keepsEveryKey(raw, lossless34) {
+			u.ResponsesServerEventVariant34 = &lossless34
+			return nil
+		}
+		var lossless35 ResponsesServerEventVariant35
+		if json.Unmarshal(data, &lossless35) == nil && keepsEveryKey(raw, lossless35) {
+			u.ResponsesServerEventVariant35 = &lossless35
+			return nil
+		}
+		var lossless36 ResponsesServerEventVariant36
+		if json.Unmarshal(data, &lossless36) == nil && keepsEveryKey(raw, lossless36) {
+			u.ResponsesServerEventVariant36 = &lossless36
+			return nil
+		}
+		var lossless37 ResponsesServerEventVariant37
+		if json.Unmarshal(data, &lossless37) == nil && keepsEveryKey(raw, lossless37) {
+			u.ResponsesServerEventVariant37 = &lossless37
+			return nil
+		}
+		var lossless38 ResponsesServerEventVariant38
+		if json.Unmarshal(data, &lossless38) == nil && keepsEveryKey(raw, lossless38) {
+			u.ResponsesServerEventVariant38 = &lossless38
+			return nil
+		}
+		var lossless39 ResponsesServerEventVariant39
+		if json.Unmarshal(data, &lossless39) == nil && keepsEveryKey(raw, lossless39) {
+			u.ResponsesServerEventVariant39 = &lossless39
+			return nil
+		}
+		var lossless40 ResponsesServerEventVariant40
+		if json.Unmarshal(data, &lossless40) == nil && keepsEveryKey(raw, lossless40) {
+			u.ResponsesServerEventVariant40 = &lossless40
+			return nil
+		}
+		var lossless41 ResponsesServerEventVariant41
+		if json.Unmarshal(data, &lossless41) == nil && keepsEveryKey(raw, lossless41) {
+			u.ResponsesServerEventVariant41 = &lossless41
+			return nil
+		}
+		var lossless42 ResponsesServerEventVariant42
+		if json.Unmarshal(data, &lossless42) == nil && keepsEveryKey(raw, lossless42) {
+			u.ResponsesServerEventVariant42 = &lossless42
+			return nil
+		}
+		var lossless43 ResponsesServerEventVariant43
+		if json.Unmarshal(data, &lossless43) == nil && keepsEveryKey(raw, lossless43) {
+			u.ResponsesServerEventVariant43 = &lossless43
+			return nil
+		}
+		var lossless44 ResponsesServerEventVariant44
+		if json.Unmarshal(data, &lossless44) == nil && keepsEveryKey(raw, lossless44) {
+			u.ResponsesServerEventVariant44 = &lossless44
+			return nil
+		}
+		var lossless45 ResponsesServerEventVariant45
+		if json.Unmarshal(data, &lossless45) == nil && keepsEveryKey(raw, lossless45) {
+			u.ResponsesServerEventVariant45 = &lossless45
+			return nil
+		}
+		var lossless46 ResponsesServerEventVariant46
+		if json.Unmarshal(data, &lossless46) == nil && keepsEveryKey(raw, lossless46) {
+			u.ResponsesServerEventVariant46 = &lossless46
+			return nil
+		}
+		var lossless47 ResponsesServerEventVariant47
+		if json.Unmarshal(data, &lossless47) == nil && keepsEveryKey(raw, lossless47) {
+			u.ResponsesServerEventVariant47 = &lossless47
+			return nil
+		}
+		var lossless48 ResponsesServerEventVariant48
+		if json.Unmarshal(data, &lossless48) == nil && keepsEveryKey(raw, lossless48) {
+			u.ResponsesServerEventVariant48 = &lossless48
+			return nil
+		}
+		var lossless49 ResponsesServerEventVariant49
+		if json.Unmarshal(data, &lossless49) == nil && keepsEveryKey(raw, lossless49) {
+			u.ResponsesServerEventVariant49 = &lossless49
+			return nil
+		}
+		var lossless50 ResponsesServerEventVariant50
+		if json.Unmarshal(data, &lossless50) == nil && keepsEveryKey(raw, lossless50) {
+			u.ResponsesServerEventVariant50 = &lossless50
+			return nil
+		}
+		var lossless51 ResponsesServerEventVariant51
+		if json.Unmarshal(data, &lossless51) == nil && keepsEveryKey(raw, lossless51) {
+			u.ResponsesServerEventVariant51 = &lossless51
+			return nil
+		}
+		var lossless52 ResponsesServerEventVariant52
+		if json.Unmarshal(data, &lossless52) == nil && keepsEveryKey(raw, lossless52) {
+			u.ResponsesServerEventVariant52 = &lossless52
+			return nil
+		}
+		var lossless53 ResponsesServerEventVariant53
+		if json.Unmarshal(data, &lossless53) == nil && keepsEveryKey(raw, lossless53) {
+			u.ResponsesServerEventVariant53 = &lossless53
+			return nil
+		}
+		var lossless54 ResponsesServerEventVariant54
+		if json.Unmarshal(data, &lossless54) == nil && keepsEveryKey(raw, lossless54) {
+			u.ResponsesServerEventVariant54 = &lossless54
+			return nil
+		}
+		var lossless55 ResponsesServerEventVariant55
+		if json.Unmarshal(data, &lossless55) == nil && keepsEveryKey(raw, lossless55) {
+			u.ResponsesServerEventVariant55 = &lossless55
+			return nil
+		}
+		var lossless56 ResponsesServerEventVariant56
+		if json.Unmarshal(data, &lossless56) == nil && keepsEveryKey(raw, lossless56) {
+			u.ResponsesServerEventVariant56 = &lossless56
+			return nil
+		}
+		var lossless57 ResponsesServerEventVariant57
+		if json.Unmarshal(data, &lossless57) == nil && keepsEveryKey(raw, lossless57) {
+			u.ResponsesServerEventVariant57 = &lossless57
+			return nil
+		}
+		var lossless58 ResponseWsError
+		if json.Unmarshal(data, &lossless58) == nil && keepsEveryKey(raw, lossless58) {
+			u.ResponseWsError = &lossless58
+			return nil
+		}
+		var lossless59 ResponseSteerAcceptedEvent
+		if json.Unmarshal(data, &lossless59) == nil && keepsEveryKey(raw, lossless59) {
+			u.ResponseSteerAcceptedEvent = &lossless59
+			return nil
+		}
+		var lossless60 ResponseSteerPendingEvent
+		if json.Unmarshal(data, &lossless60) == nil && keepsEveryKey(raw, lossless60) {
+			u.ResponseSteerPendingEvent = &lossless60
+			return nil
+		}
+		var lossless61 ResponseSteerFailedEvent
+		if json.Unmarshal(data, &lossless61) == nil && keepsEveryKey(raw, lossless61) {
+			u.ResponseSteerFailedEvent = &lossless61
+			return nil
+		}
+	}
 	var responsesservereventvariant0 ResponsesServerEventVariant0
 	if err := json.Unmarshal(data, &responsesservereventvariant0); err == nil && isNonEmptyResponsesServerEventResponsesServerEventVariant0(responsesservereventvariant0) {
 		u.ResponsesServerEventVariant0 = &responsesservereventvariant0
@@ -486,257 +799,4 @@ func (u *ResponsesServerEvent) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
-}
-
-func (u ResponsesServerEvent) MarshalJSON() ([]byte, error) {
-	if u.ResponsesServerEventVariant0 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant0)
-	}
-	if u.ResponsesServerEventVariant1 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant1)
-	}
-	if u.ResponsesServerEventVariant2 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant2)
-	}
-	if u.ResponsesServerEventVariant3 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant3)
-	}
-	if u.ResponsesServerEventVariant4 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant4)
-	}
-	if u.ResponsesServerEventVariant5 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant5)
-	}
-	if u.ResponsesServerEventVariant6 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant6)
-	}
-	if u.ResponsesServerEventVariant7 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant7)
-	}
-	if u.ResponsesServerEventVariant8 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant8)
-	}
-	if u.ResponsesServerEventVariant9 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant9)
-	}
-	if u.ResponsesServerEventVariant10 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant10)
-	}
-	if u.ResponsesServerEventVariant11 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant11)
-	}
-	if u.ResponsesServerEventVariant12 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant12)
-	}
-	if u.ResponsesServerEventVariant13 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant13)
-	}
-	if u.ResponsesServerEventVariant14 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant14)
-	}
-	if u.ResponsesServerEventVariant15 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant15)
-	}
-	if u.ResponsesServerEventVariant16 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant16)
-	}
-	if u.ResponsesServerEventVariant17 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant17)
-	}
-	if u.ResponsesServerEventVariant18 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant18)
-	}
-	if u.ResponsesServerEventVariant19 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant19)
-	}
-	if u.ResponsesServerEventVariant20 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant20)
-	}
-	if u.ResponsesServerEventVariant21 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant21)
-	}
-	if u.ResponsesServerEventVariant22 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant22)
-	}
-	if u.ResponsesServerEventVariant23 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant23)
-	}
-	if u.ResponsesServerEventVariant24 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant24)
-	}
-	if u.ResponsesServerEventVariant25 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant25)
-	}
-	if u.ResponsesServerEventVariant26 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant26)
-	}
-	if u.ResponsesServerEventVariant27 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant27)
-	}
-	if u.ResponsesServerEventVariant28 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant28)
-	}
-	if u.ResponsesServerEventVariant29 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant29)
-	}
-	if u.ResponsesServerEventVariant30 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant30)
-	}
-	if u.ResponsesServerEventVariant31 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant31)
-	}
-	if u.ResponsesServerEventVariant32 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant32)
-	}
-	if u.ResponsesServerEventVariant33 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant33)
-	}
-	if u.ResponsesServerEventVariant34 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant34)
-	}
-	if u.ResponsesServerEventVariant35 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant35)
-	}
-	if u.ResponsesServerEventVariant36 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant36)
-	}
-	if u.ResponsesServerEventVariant37 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant37)
-	}
-	if u.ResponsesServerEventVariant38 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant38)
-	}
-	if u.ResponsesServerEventVariant39 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant39)
-	}
-	if u.ResponsesServerEventVariant40 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant40)
-	}
-	if u.ResponsesServerEventVariant41 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant41)
-	}
-	if u.ResponsesServerEventVariant42 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant42)
-	}
-	if u.ResponsesServerEventVariant43 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant43)
-	}
-	if u.ResponsesServerEventVariant44 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant44)
-	}
-	if u.ResponsesServerEventVariant45 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant45)
-	}
-	if u.ResponsesServerEventVariant46 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant46)
-	}
-	if u.ResponsesServerEventVariant47 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant47)
-	}
-	if u.ResponsesServerEventVariant48 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant48)
-	}
-	if u.ResponsesServerEventVariant49 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant49)
-	}
-	if u.ResponsesServerEventVariant50 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant50)
-	}
-	if u.ResponsesServerEventVariant51 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant51)
-	}
-	if u.ResponsesServerEventVariant52 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant52)
-	}
-	if u.ResponsesServerEventVariant53 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant53)
-	}
-	if u.ResponsesServerEventVariant54 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant54)
-	}
-	if u.ResponsesServerEventVariant55 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant55)
-	}
-	if u.ResponsesServerEventVariant56 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant56)
-	}
-	if u.ResponsesServerEventVariant57 != nil {
-		return json.Marshal(u.ResponsesServerEventVariant57)
-	}
-	if u.ResponseWsError != nil {
-		return json.Marshal(u.ResponseWsError)
-	}
-	if u.ResponseSteerAcceptedEvent != nil {
-		return json.Marshal(u.ResponseSteerAcceptedEvent)
-	}
-	if u.ResponseSteerPendingEvent != nil {
-		return json.Marshal(u.ResponseSteerPendingEvent)
-	}
-	if u.ResponseSteerFailedEvent != nil {
-		return json.Marshal(u.ResponseSteerFailedEvent)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant0(v ResponsesServerEventVariant0) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant1(v ResponsesServerEventVariant1) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant2(v ResponsesServerEventVariant2) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant3(v ResponsesServerEventVariant3) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant4(v ResponsesServerEventVariant4) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant5(v ResponsesServerEventVariant5) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant6(v ResponsesServerEventVariant6) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant7(v ResponsesServerEventVariant7) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant8(v ResponsesServerEventVariant8) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant9(v ResponsesServerEventVariant9) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant10(v ResponsesServerEventVariant10) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponsesServerEventResponsesServerEventVariant11(v ResponsesServerEventVariant11) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

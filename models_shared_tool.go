@@ -174,6 +174,89 @@ func (u *Tool) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 FunctionTool
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.FunctionTool = &lossless0
+			return nil
+		}
+		var lossless1 FileSearchTool
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.FileSearchTool = &lossless1
+			return nil
+		}
+		var lossless2 ComputerTool
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ComputerTool = &lossless2
+			return nil
+		}
+		var lossless3 ComputerUsePreviewTool
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ComputerUsePreviewTool = &lossless3
+			return nil
+		}
+		var lossless4 WebSearchTool
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.WebSearchTool = &lossless4
+			return nil
+		}
+		var lossless5 MCPTool
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.MCPTool = &lossless5
+			return nil
+		}
+		var lossless6 CodeInterpreterTool
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.CodeInterpreterTool = &lossless6
+			return nil
+		}
+		var lossless7 ProgrammaticToolCallingParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.ProgrammaticToolCallingParam = &lossless7
+			return nil
+		}
+		var lossless8 ImageGenTool
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.ImageGenTool = &lossless8
+			return nil
+		}
+		var lossless9 LocalShellToolParam
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.LocalShellToolParam = &lossless9
+			return nil
+		}
+		var lossless10 FunctionShellToolParam
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.FunctionShellToolParam = &lossless10
+			return nil
+		}
+		var lossless11 CustomToolParam
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.CustomToolParam = &lossless11
+			return nil
+		}
+		var lossless12 NamespaceToolParam
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.NamespaceToolParam = &lossless12
+			return nil
+		}
+		var lossless13 ToolSearchToolParam
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.ToolSearchToolParam = &lossless13
+			return nil
+		}
+		var lossless14 WebSearchPreviewTool
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.WebSearchPreviewTool = &lossless14
+			return nil
+		}
+		var lossless15 ApplyPatchToolParam
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.ApplyPatchToolParam = &lossless15
+			return nil
+		}
+	}
 	var functiontool FunctionTool
 	if err := json.Unmarshal(data, &functiontool); err == nil && isNonEmptyToolFunctionTool(functiontool) {
 		u.FunctionTool = &functiontool

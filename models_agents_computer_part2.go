@@ -8,6 +8,41 @@ import (
 	"fmt"
 )
 
+// NewComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam returns a validated ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam(fields ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam) (*ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam, error) {
+	return ConstructModel(fields)
+}
+
+// ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum Required enumerated value serialized in the `type` wire field.
+type ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum string
+
+const (
+	ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnumBrowserAuthentication ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum = "browser_authentication"
+)
+
+func (value *ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "browser_authentication":
+		*value = ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamTypeEnum: %v", raw)}
+	}
+}
+
+// ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnum Required enumerated value serialized in the `action` wire field.
+type ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnum string
+
+const (
+	ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnumSubmit ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnum = "submit"
+)
+
 func (value *ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParamActionEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
@@ -33,6 +68,9 @@ type ComputerUseApprovalResponseParamBrowserAuthenticationCancelParam struct {
 func (value *ComputerUseApprovalResponseParamBrowserAuthenticationCancelParam) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"browser_authentication"}); err != nil {
 		return err
 	}
 	if err := ValidateRawEnum("action", rawFields["action"], []string{"cancel"}); err != nil {
@@ -66,6 +104,20 @@ type ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamTypeEnum st
 const (
 	ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamTypeEnumBrowserAuthentication ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamTypeEnum = "browser_authentication"
 )
+
+func (value *ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "browser_authentication":
+		*value = ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamTypeEnum: %v", raw)}
+	}
+}
 
 // ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamActionEnum Required enumerated value serialized in the `action` wire field.
 type ComputerUseApprovalResponseParamBrowserAuthenticationCancelParamActionEnum string
@@ -125,6 +177,19 @@ func (u *ComputerUseApprovalResponseParamBrowserAuthentication) UnmarshalJSON(da
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam = &lossless0
+			return nil
+		}
+		var lossless1 ComputerUseApprovalResponseParamBrowserAuthenticationCancelParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ComputerUseApprovalResponseParamBrowserAuthenticationCancelParam = &lossless1
+			return nil
 		}
 	}
 	var computeruseapprovalresponseparambrowserauthenticationsubmitparam ComputerUseApprovalResponseParamBrowserAuthenticationSubmitParam
@@ -271,6 +336,19 @@ func (u *ComputerUseApprovalResponseParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ComputerUseApprovalResponseParamBrowserAuthentication
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ComputerUseApprovalResponseParamBrowserAuthentication = &lossless0
+			return nil
+		}
+		var lossless1 ComputerUseApprovalResponseParamBrowserOriginAccessParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ComputerUseApprovalResponseParamBrowserOriginAccessParam = &lossless1
+			return nil
 		}
 	}
 	var computeruseapprovalresponseparambrowserauthentication ComputerUseApprovalResponseParamBrowserAuthentication

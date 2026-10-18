@@ -8,6 +8,20 @@ import (
 	"fmt"
 )
 
+func (value *ResponseSteerRequiredInputVariant0TypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "function_call_output":
+		*value = ResponseSteerRequiredInputVariant0TypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "ResponseSteerRequiredInputVariant0TypeEnum", Code: "enum", Message: fmt.Sprintf("unknown ResponseSteerRequiredInputVariant0TypeEnum: %v", raw)}
+	}
+}
+
 // ResponseSteerRequiredInputVariant1 Supply `output` using the custom tool call output input schema. The
 // original custom tool call supplies the tool's name.
 type ResponseSteerRequiredInputVariant1 struct {
@@ -455,6 +469,44 @@ func (u *ResponseSteerRequiredInput) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ResponseSteerRequiredInputVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ResponseSteerRequiredInputVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 ResponseSteerRequiredInputVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ResponseSteerRequiredInputVariant1 = &lossless1
+			return nil
+		}
+		var lossless2 ResponseSteerRequiredInputVariant2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ResponseSteerRequiredInputVariant2 = &lossless2
+			return nil
+		}
+		var lossless3 ResponseSteerRequiredInputVariant3
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ResponseSteerRequiredInputVariant3 = &lossless3
+			return nil
+		}
+		var lossless4 ResponseSteerRequiredInputVariant4
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ResponseSteerRequiredInputVariant4 = &lossless4
+			return nil
+		}
+		var lossless5 ResponseSteerRequiredInputVariant5
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ResponseSteerRequiredInputVariant5 = &lossless5
+			return nil
+		}
+		var lossless6 ResponseSteerRequiredInputVariant6
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.ResponseSteerRequiredInputVariant6 = &lossless6
+			return nil
 		}
 	}
 	var responsesteerrequiredinputvariant0 ResponseSteerRequiredInputVariant0

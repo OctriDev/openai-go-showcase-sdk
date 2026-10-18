@@ -493,6 +493,19 @@ func (u *ContainerAutoParamNetworkPolicy) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ContainerNetworkPolicyDisabledParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ContainerNetworkPolicyDisabledParam = &lossless0
+			return nil
+		}
+		var lossless1 ContainerNetworkPolicyAllowlistParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ContainerNetworkPolicyAllowlistParam = &lossless1
+			return nil
+		}
+	}
 	var containernetworkpolicydisabledparam ContainerNetworkPolicyDisabledParam
 	if err := json.Unmarshal(data, &containernetworkpolicydisabledparam); err == nil && isNonEmptyContainerAutoParamNetworkPolicyContainerNetworkPolicyDisabledParam(containernetworkpolicydisabledparam) {
 		u.ContainerNetworkPolicyDisabledParam = &containernetworkpolicydisabledparam
@@ -578,6 +591,19 @@ func (u *ContainerAutoParamSkillsItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 SkillReferenceParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.SkillReferenceParam = &lossless0
+			return nil
+		}
+		var lossless1 InlineSkillParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.InlineSkillParam = &lossless1
+			return nil
 		}
 	}
 	var skillreferenceparam SkillReferenceParam

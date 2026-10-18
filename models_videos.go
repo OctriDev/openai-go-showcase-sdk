@@ -291,6 +291,19 @@ type CreateVideoMultipartBodyInputReference struct {
 func (u *CreateVideoMultipartBodyInputReference) UnmarshalJSON(data []byte) error {
 	*u = CreateVideoMultipartBodyInputReference{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 []byte
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ListOfByte = &lossless0
+			return nil
+		}
+		var lossless1 ImageRefParam2
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ImageRefParam2 = &lossless1
+			return nil
+		}
+	}
 	var listofbyte []byte
 	if err := json.Unmarshal(data, &listofbyte); err == nil && isNonEmptyCreateVideoMultipartBodyInputReferenceListOfByte(listofbyte) {
 		u.ListOfByte = &listofbyte
@@ -535,6 +548,19 @@ type CreateVideoEditMultipartBodyVideo struct {
 func (u *CreateVideoEditMultipartBodyVideo) UnmarshalJSON(data []byte) error {
 	*u = CreateVideoEditMultipartBodyVideo{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 []byte
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ListOfByte = &lossless0
+			return nil
+		}
+		var lossless1 VideoReferenceInputParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.VideoReferenceInputParam = &lossless1
+			return nil
+		}
+	}
 	var listofbyte []byte
 	if err := json.Unmarshal(data, &listofbyte); err == nil && isNonEmptyCreateVideoEditMultipartBodyVideoListOfByte(listofbyte) {
 		u.ListOfByte = &listofbyte
@@ -662,34 +688,4 @@ func NewCreateVideoExtendMultipartBody(fields CreateVideoExtendMultipartBody) (*
 type CreateVideoExtendMultipartBodyVideo struct {
 	VideoReferenceInputParam *VideoReferenceInputParam
 	ListOfByte               *[]byte
-}
-
-func (u *CreateVideoExtendMultipartBodyVideo) UnmarshalJSON(data []byte) error {
-	*u = CreateVideoExtendMultipartBodyVideo{}
-	var refusal error
-	var videoreferenceinputparam VideoReferenceInputParam
-	if err := json.Unmarshal(data, &videoreferenceinputparam); err == nil && isNonEmptyCreateVideoExtendMultipartBodyVideoVideoReferenceInputParam(videoreferenceinputparam) {
-		u.VideoReferenceInputParam = &videoreferenceinputparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var listofbyte []byte
-	if err := json.Unmarshal(data, &listofbyte); err == nil && isNonEmptyCreateVideoExtendMultipartBodyVideoListOfByte(listofbyte) {
-		u.ListOfByte = &listofbyte
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u CreateVideoExtendMultipartBodyVideo) MarshalJSON() ([]byte, error) {
-	if u.VideoReferenceInputParam != nil {
-		return json.Marshal(u.VideoReferenceInputParam)
-	}
-	if u.ListOfByte != nil {
-		return json.Marshal(u.ListOfByte)
-	}
-	return []byte("null"), nil
 }

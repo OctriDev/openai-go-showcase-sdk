@@ -9,6 +9,112 @@ import (
 	"fmt"
 )
 
+func (value *ToolSearchCall) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"tool_search_call"}); err != nil {
+		return err
+	}
+	type ToolSearchCallAlias ToolSearchCall
+	var decoded ToolSearchCallAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ToolSearchCall(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "id", "call_id", "execution", "arguments", "status"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "id", "execution", "status"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewToolSearchCall returns a validated ToolSearchCall built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewToolSearchCall(fields ToolSearchCall) (*ToolSearchCall, error) {
+	return ConstructModel(fields)
+}
+
+// ToolSearchCallTypeEnum The type of the item. Always `tool_search_call`.
+type ToolSearchCallTypeEnum string
+
+const (
+	ToolSearchCallTypeEnumToolSearchCall ToolSearchCallTypeEnum = "tool_search_call"
+)
+
+func (value *ToolSearchCallTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "tool_search_call":
+		*value = ToolSearchCallTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "ToolSearchCallTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown ToolSearchCallTypeEnum: %v", raw)}
+	}
+}
+
+// ToolSearchToolParam Hosted or BYOT tool search configuration for deferred tools.
+type ToolSearchToolParam struct {
+	// Type The type of the tool. Always `tool_search`.
+	Type ToolSearchToolParamTypeEnum `json:"type"`
+	// Execution Whether tool search is executed by the server or by the client.
+	Execution *ToolSearchExecutionType `json:"execution,omitempty"`
+	// Description Optional `string` value serialized in the `description` wire field.
+	Description *NullableValue[string] `json:"description,omitempty"`
+	// Parameters Optional API value serialized in the `parameters` wire field.
+	Parameters *NullableValue[EmptyModelParam] `json:"parameters,omitempty"`
+}
+
+func (value *ToolSearchToolParam) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"tool_search"}); err != nil {
+		return err
+	}
+	type ToolSearchToolParamAlias ToolSearchToolParam
+	var decoded ToolSearchToolParamAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ToolSearchToolParam(decoded)
+	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	if raw, ok := rawFields["description"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Description = &NullableValue[string]{}
+	}
+	if raw, ok := rawFields["parameters"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Parameters = &NullableValue[EmptyModelParam]{}
+	}
+	return nil
+}
+
+// NewToolSearchToolParam returns a validated ToolSearchToolParam built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewToolSearchToolParam(fields ToolSearchToolParam) (*ToolSearchToolParam, error) {
+	return ConstructModel(fields)
+}
+
+// ToolSearchToolParamTypeEnum The type of the tool. Always `tool_search`.
+type ToolSearchToolParamTypeEnum string
+
+const (
+	ToolSearchToolParamTypeEnumToolSearch ToolSearchToolParamTypeEnum = "tool_search"
+)
+
 func (value *ToolSearchToolParamTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
@@ -441,6 +547,19 @@ func (u *ToolSearchOutputNamespaceToolParamToolsItem) UnmarshalJSON(data []byte)
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ToolSearchOutputFunctionToolParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ToolSearchOutputFunctionToolParam = &lossless0
+			return nil
+		}
+		var lossless1 CustomToolParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CustomToolParam = &lossless1
+			return nil
 		}
 	}
 	var toolsearchoutputfunctiontoolparam ToolSearchOutputFunctionToolParam

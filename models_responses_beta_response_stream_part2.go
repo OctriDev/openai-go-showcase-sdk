@@ -434,6 +434,304 @@ func (u *BetaResponseStreamEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaResponseAudioDeltaEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaResponseAudioDeltaEvent = &lossless0
+			return nil
+		}
+		var lossless1 BetaResponseAudioDoneEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaResponseAudioDoneEvent = &lossless1
+			return nil
+		}
+		var lossless2 BetaResponseAudioTranscriptDeltaEvent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaResponseAudioTranscriptDeltaEvent = &lossless2
+			return nil
+		}
+		var lossless3 BetaResponseAudioTranscriptDoneEvent
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaResponseAudioTranscriptDoneEvent = &lossless3
+			return nil
+		}
+		var lossless4 BetaResponseCodeInterpreterCallCodeDeltaEvent
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.BetaResponseCodeInterpreterCallCodeDeltaEvent = &lossless4
+			return nil
+		}
+		var lossless5 BetaResponseCodeInterpreterCallCodeDoneEvent
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BetaResponseCodeInterpreterCallCodeDoneEvent = &lossless5
+			return nil
+		}
+		var lossless6 BetaResponseCodeInterpreterCallCompletedEvent
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.BetaResponseCodeInterpreterCallCompletedEvent = &lossless6
+			return nil
+		}
+		var lossless7 BetaResponseCodeInterpreterCallInProgressEvent
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.BetaResponseCodeInterpreterCallInProgressEvent = &lossless7
+			return nil
+		}
+		var lossless8 BetaResponseCodeInterpreterCallInterpretingEvent
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.BetaResponseCodeInterpreterCallInterpretingEvent = &lossless8
+			return nil
+		}
+		var lossless9 BetaResponseCompactionCompactingStreamingEvent
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.BetaResponseCompactionCompactingStreamingEvent = &lossless9
+			return nil
+		}
+		var lossless10 BetaResponseCompletedEvent
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.BetaResponseCompletedEvent = &lossless10
+			return nil
+		}
+		var lossless11 BetaResponseContentPartAddedEvent
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.BetaResponseContentPartAddedEvent = &lossless11
+			return nil
+		}
+		var lossless12 BetaResponseContentPartDoneEvent
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.BetaResponseContentPartDoneEvent = &lossless12
+			return nil
+		}
+		var lossless13 BetaResponseCreatedEvent
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.BetaResponseCreatedEvent = &lossless13
+			return nil
+		}
+		var lossless14 BetaResponseErrorEvent
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.BetaResponseErrorEvent = &lossless14
+			return nil
+		}
+		var lossless15 BetaResponseFileSearchCallCompletedEvent
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.BetaResponseFileSearchCallCompletedEvent = &lossless15
+			return nil
+		}
+		var lossless16 BetaResponseFileSearchCallInProgressEvent
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.BetaResponseFileSearchCallInProgressEvent = &lossless16
+			return nil
+		}
+		var lossless17 BetaResponseFileSearchCallSearchingEvent
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.BetaResponseFileSearchCallSearchingEvent = &lossless17
+			return nil
+		}
+		var lossless18 BetaResponseFunctionCallArgumentsDeltaEvent
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.BetaResponseFunctionCallArgumentsDeltaEvent = &lossless18
+			return nil
+		}
+		var lossless19 BetaResponseFunctionCallArgumentsDoneEvent
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.BetaResponseFunctionCallArgumentsDoneEvent = &lossless19
+			return nil
+		}
+		var lossless20 BetaResponseShellCallCommandAddedStreamingEvent
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.BetaResponseShellCallCommandAddedStreamingEvent = &lossless20
+			return nil
+		}
+		var lossless21 BetaResponseShellCallCommandDeltaStreamingEvent
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.BetaResponseShellCallCommandDeltaStreamingEvent = &lossless21
+			return nil
+		}
+		var lossless22 BetaResponseShellCallCommandDoneStreamingEvent
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.BetaResponseShellCallCommandDoneStreamingEvent = &lossless22
+			return nil
+		}
+		var lossless23 BetaResponseShellCallOutputContentDeltaStreamingEvent
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.BetaResponseShellCallOutputContentDeltaStreamingEvent = &lossless23
+			return nil
+		}
+		var lossless24 BetaResponseShellCallOutputContentDoneStreamingEvent
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.BetaResponseShellCallOutputContentDoneStreamingEvent = &lossless24
+			return nil
+		}
+		var lossless25 BetaResponseInProgressEvent
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.BetaResponseInProgressEvent = &lossless25
+			return nil
+		}
+		var lossless26 BetaResponseFailedEvent
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.BetaResponseFailedEvent = &lossless26
+			return nil
+		}
+		var lossless27 BetaResponseIncompleteEvent
+		if json.Unmarshal(data, &lossless27) == nil && keepsEveryKey(raw, lossless27) {
+			u.BetaResponseIncompleteEvent = &lossless27
+			return nil
+		}
+		var lossless28 BetaResponseOutputItemAddedEvent
+		if json.Unmarshal(data, &lossless28) == nil && keepsEveryKey(raw, lossless28) {
+			u.BetaResponseOutputItemAddedEvent = &lossless28
+			return nil
+		}
+		var lossless29 BetaResponseOutputItemDoneEvent
+		if json.Unmarshal(data, &lossless29) == nil && keepsEveryKey(raw, lossless29) {
+			u.BetaResponseOutputItemDoneEvent = &lossless29
+			return nil
+		}
+		var lossless30 BetaResponseReasoningSummaryPartAddedEvent
+		if json.Unmarshal(data, &lossless30) == nil && keepsEveryKey(raw, lossless30) {
+			u.BetaResponseReasoningSummaryPartAddedEvent = &lossless30
+			return nil
+		}
+		var lossless31 BetaResponseReasoningSummaryPartDoneEvent
+		if json.Unmarshal(data, &lossless31) == nil && keepsEveryKey(raw, lossless31) {
+			u.BetaResponseReasoningSummaryPartDoneEvent = &lossless31
+			return nil
+		}
+		var lossless32 BetaResponseReasoningSummaryTextDeltaEvent
+		if json.Unmarshal(data, &lossless32) == nil && keepsEveryKey(raw, lossless32) {
+			u.BetaResponseReasoningSummaryTextDeltaEvent = &lossless32
+			return nil
+		}
+		var lossless33 BetaResponseReasoningSummaryTextDoneEvent
+		if json.Unmarshal(data, &lossless33) == nil && keepsEveryKey(raw, lossless33) {
+			u.BetaResponseReasoningSummaryTextDoneEvent = &lossless33
+			return nil
+		}
+		var lossless34 BetaResponseReasoningTextDeltaEvent
+		if json.Unmarshal(data, &lossless34) == nil && keepsEveryKey(raw, lossless34) {
+			u.BetaResponseReasoningTextDeltaEvent = &lossless34
+			return nil
+		}
+		var lossless35 BetaResponseReasoningTextDoneEvent
+		if json.Unmarshal(data, &lossless35) == nil && keepsEveryKey(raw, lossless35) {
+			u.BetaResponseReasoningTextDoneEvent = &lossless35
+			return nil
+		}
+		var lossless36 BetaResponseRefusalDeltaEvent
+		if json.Unmarshal(data, &lossless36) == nil && keepsEveryKey(raw, lossless36) {
+			u.BetaResponseRefusalDeltaEvent = &lossless36
+			return nil
+		}
+		var lossless37 BetaResponseRefusalDoneEvent
+		if json.Unmarshal(data, &lossless37) == nil && keepsEveryKey(raw, lossless37) {
+			u.BetaResponseRefusalDoneEvent = &lossless37
+			return nil
+		}
+		var lossless38 BetaResponseTextDeltaEvent
+		if json.Unmarshal(data, &lossless38) == nil && keepsEveryKey(raw, lossless38) {
+			u.BetaResponseTextDeltaEvent = &lossless38
+			return nil
+		}
+		var lossless39 BetaResponseTextDoneEvent
+		if json.Unmarshal(data, &lossless39) == nil && keepsEveryKey(raw, lossless39) {
+			u.BetaResponseTextDoneEvent = &lossless39
+			return nil
+		}
+		var lossless40 BetaResponseWebSearchCallCompletedEvent
+		if json.Unmarshal(data, &lossless40) == nil && keepsEveryKey(raw, lossless40) {
+			u.BetaResponseWebSearchCallCompletedEvent = &lossless40
+			return nil
+		}
+		var lossless41 BetaResponseWebSearchCallInProgressEvent
+		if json.Unmarshal(data, &lossless41) == nil && keepsEveryKey(raw, lossless41) {
+			u.BetaResponseWebSearchCallInProgressEvent = &lossless41
+			return nil
+		}
+		var lossless42 BetaResponseWebSearchCallSearchingEvent
+		if json.Unmarshal(data, &lossless42) == nil && keepsEveryKey(raw, lossless42) {
+			u.BetaResponseWebSearchCallSearchingEvent = &lossless42
+			return nil
+		}
+		var lossless43 BetaResponseImageGenCallCompletedEvent
+		if json.Unmarshal(data, &lossless43) == nil && keepsEveryKey(raw, lossless43) {
+			u.BetaResponseImageGenCallCompletedEvent = &lossless43
+			return nil
+		}
+		var lossless44 BetaResponseImageGenCallGeneratingEvent
+		if json.Unmarshal(data, &lossless44) == nil && keepsEveryKey(raw, lossless44) {
+			u.BetaResponseImageGenCallGeneratingEvent = &lossless44
+			return nil
+		}
+		var lossless45 BetaResponseImageGenCallInProgressEvent
+		if json.Unmarshal(data, &lossless45) == nil && keepsEveryKey(raw, lossless45) {
+			u.BetaResponseImageGenCallInProgressEvent = &lossless45
+			return nil
+		}
+		var lossless46 BetaResponseImageGenCallPartialImageEvent
+		if json.Unmarshal(data, &lossless46) == nil && keepsEveryKey(raw, lossless46) {
+			u.BetaResponseImageGenCallPartialImageEvent = &lossless46
+			return nil
+		}
+		var lossless47 BetaResponseMCPCallArgumentsDeltaEvent
+		if json.Unmarshal(data, &lossless47) == nil && keepsEveryKey(raw, lossless47) {
+			u.BetaResponseMCPCallArgumentsDeltaEvent = &lossless47
+			return nil
+		}
+		var lossless48 BetaResponseMCPCallArgumentsDoneEvent
+		if json.Unmarshal(data, &lossless48) == nil && keepsEveryKey(raw, lossless48) {
+			u.BetaResponseMCPCallArgumentsDoneEvent = &lossless48
+			return nil
+		}
+		var lossless49 BetaResponseMCPCallCompletedEvent
+		if json.Unmarshal(data, &lossless49) == nil && keepsEveryKey(raw, lossless49) {
+			u.BetaResponseMCPCallCompletedEvent = &lossless49
+			return nil
+		}
+		var lossless50 BetaResponseMCPCallFailedEvent
+		if json.Unmarshal(data, &lossless50) == nil && keepsEveryKey(raw, lossless50) {
+			u.BetaResponseMCPCallFailedEvent = &lossless50
+			return nil
+		}
+		var lossless51 BetaResponseMCPCallInProgressEvent
+		if json.Unmarshal(data, &lossless51) == nil && keepsEveryKey(raw, lossless51) {
+			u.BetaResponseMCPCallInProgressEvent = &lossless51
+			return nil
+		}
+		var lossless52 BetaResponseMCPListToolsCompletedEvent
+		if json.Unmarshal(data, &lossless52) == nil && keepsEveryKey(raw, lossless52) {
+			u.BetaResponseMCPListToolsCompletedEvent = &lossless52
+			return nil
+		}
+		var lossless53 BetaResponseMCPListToolsFailedEvent
+		if json.Unmarshal(data, &lossless53) == nil && keepsEveryKey(raw, lossless53) {
+			u.BetaResponseMCPListToolsFailedEvent = &lossless53
+			return nil
+		}
+		var lossless54 BetaResponseMCPListToolsInProgressEvent
+		if json.Unmarshal(data, &lossless54) == nil && keepsEveryKey(raw, lossless54) {
+			u.BetaResponseMCPListToolsInProgressEvent = &lossless54
+			return nil
+		}
+		var lossless55 BetaResponseOutputTextAnnotationAddedEvent
+		if json.Unmarshal(data, &lossless55) == nil && keepsEveryKey(raw, lossless55) {
+			u.BetaResponseOutputTextAnnotationAddedEvent = &lossless55
+			return nil
+		}
+		var lossless56 BetaResponseQueuedEvent
+		if json.Unmarshal(data, &lossless56) == nil && keepsEveryKey(raw, lossless56) {
+			u.BetaResponseQueuedEvent = &lossless56
+			return nil
+		}
+		var lossless57 BetaResponseCustomToolCallInputDeltaEvent
+		if json.Unmarshal(data, &lossless57) == nil && keepsEveryKey(raw, lossless57) {
+			u.BetaResponseCustomToolCallInputDeltaEvent = &lossless57
+			return nil
+		}
+		var lossless58 BetaResponseCustomToolCallInputDoneEvent
+		if json.Unmarshal(data, &lossless58) == nil && keepsEveryKey(raw, lossless58) {
+			u.BetaResponseCustomToolCallInputDoneEvent = &lossless58
+			return nil
+		}
+	}
 	var betaresponseaudiodeltaevent BetaResponseAudioDeltaEvent
 	if err := json.Unmarshal(data, &betaresponseaudiodeltaevent); err == nil && isNonEmptyBetaResponseStreamEventBetaResponseAudioDeltaEvent(betaresponseaudiodeltaevent) {
 		u.BetaResponseAudioDeltaEvent = &betaresponseaudiodeltaevent

@@ -60,6 +60,24 @@ func (u *AssistantsApiResponseFormatOption) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ResponseFormatText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ResponseFormatText = &lossless0
+			return nil
+		}
+		var lossless1 ResponseFormatJsonObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ResponseFormatJsonObject = &lossless1
+			return nil
+		}
+		var lossless2 ResponseFormatJsonSchema
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ResponseFormatJsonSchema = &lossless2
+			return nil
+		}
+	}
 	var assistantsapiresponseformatoptionvariant0enum AssistantsApiResponseFormatOptionVariant0Enum
 	if err := json.Unmarshal(data, &assistantsapiresponseformatoptionvariant0enum); err == nil {
 		u.AssistantsApiResponseFormatOptionVariant0Enum = &assistantsapiresponseformatoptionvariant0enum

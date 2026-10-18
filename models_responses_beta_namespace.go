@@ -116,6 +116,19 @@ func (u *BetaNamespaceToolParamToolsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaFunctionToolParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaFunctionToolParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaCustomToolParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaCustomToolParam = &lossless1
+			return nil
+		}
+	}
 	var betafunctiontoolparam BetaFunctionToolParam
 	if err := json.Unmarshal(data, &betafunctiontoolparam); err == nil && isNonEmptyBetaNamespaceToolParamToolsItemBetaFunctionToolParam(betafunctiontoolparam) {
 		u.BetaFunctionToolParam = &betafunctiontoolparam

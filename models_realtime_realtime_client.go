@@ -119,6 +119,64 @@ func (u *RealtimeClientEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeClientEventConversationItemCreate
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeClientEventConversationItemCreate = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeClientEventConversationItemDelete
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeClientEventConversationItemDelete = &lossless1
+			return nil
+		}
+		var lossless2 RealtimeClientEventConversationItemRetrieve
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RealtimeClientEventConversationItemRetrieve = &lossless2
+			return nil
+		}
+		var lossless3 RealtimeClientEventConversationItemTruncate
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.RealtimeClientEventConversationItemTruncate = &lossless3
+			return nil
+		}
+		var lossless4 RealtimeClientEventInputAudioBufferAppend
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.RealtimeClientEventInputAudioBufferAppend = &lossless4
+			return nil
+		}
+		var lossless5 RealtimeClientEventInputAudioBufferClear
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.RealtimeClientEventInputAudioBufferClear = &lossless5
+			return nil
+		}
+		var lossless6 RealtimeClientEventOutputAudioBufferClear
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.RealtimeClientEventOutputAudioBufferClear = &lossless6
+			return nil
+		}
+		var lossless7 RealtimeClientEventInputAudioBufferCommit
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.RealtimeClientEventInputAudioBufferCommit = &lossless7
+			return nil
+		}
+		var lossless8 RealtimeClientEventResponseCancel
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.RealtimeClientEventResponseCancel = &lossless8
+			return nil
+		}
+		var lossless9 RealtimeClientEventResponseCreate
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.RealtimeClientEventResponseCreate = &lossless9
+			return nil
+		}
+		var lossless10 RealtimeClientEventSessionUpdate
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.RealtimeClientEventSessionUpdate = &lossless10
+			return nil
+		}
+	}
 	var realtimeclienteventconversationitemcreate RealtimeClientEventConversationItemCreate
 	if err := json.Unmarshal(data, &realtimeclienteventconversationitemcreate); err == nil && isNonEmptyRealtimeClientEventRealtimeClientEventConversationItemCreate(realtimeclienteventconversationitemcreate) {
 		u.RealtimeClientEventConversationItemCreate = &realtimeclienteventconversationitemcreate
@@ -662,58 +720,3 @@ func NewRealtimeClientEventInputAudioBufferAppend(fields RealtimeClientEventInpu
 
 // RealtimeClientEventInputAudioBufferAppendTypeEnum The event type, must be `input_audio_buffer.append`.
 type RealtimeClientEventInputAudioBufferAppendTypeEnum string
-
-const (
-	RealtimeClientEventInputAudioBufferAppendTypeEnumInputAudioBufferAppend RealtimeClientEventInputAudioBufferAppendTypeEnum = "input_audio_buffer.append"
-)
-
-func (value *RealtimeClientEventInputAudioBufferAppendTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "input_audio_buffer.append":
-		*value = RealtimeClientEventInputAudioBufferAppendTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeClientEventInputAudioBufferAppendTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeClientEventInputAudioBufferAppendTypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeClientEventInputAudioBufferClear Send this event to clear the audio bytes in the buffer. The server will
-// respond with an `input_audio_buffer.cleared` event.
-type RealtimeClientEventInputAudioBufferClear struct {
-	// EventId Optional client-generated ID used to identify this event.
-	EventId *string `json:"event_id,omitempty"`
-	// Type The event type, must be `input_audio_buffer.clear`.
-	Type RealtimeClientEventInputAudioBufferClearTypeEnum `json:"type"`
-}
-
-func (value *RealtimeClientEventInputAudioBufferClear) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"input_audio_buffer.clear"}); err != nil {
-		return err
-	}
-	type RealtimeClientEventInputAudioBufferClearAlias RealtimeClientEventInputAudioBufferClear
-	var decoded RealtimeClientEventInputAudioBufferClearAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeClientEventInputAudioBufferClear(decoded)
-	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if value.EventId != nil {
-		if err := ValidateLength("event_id", *value.EventId, LengthOpts{Max: Ptr[int](512)}); err != nil {
-			return err
-		}
-	}
-	return nil
-}

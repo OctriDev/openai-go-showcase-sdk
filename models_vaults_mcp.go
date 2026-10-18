@@ -226,6 +226,24 @@ func (u *McpOauthTokenEndpointAuthResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 McpOauthTokenEndpointAuthResourceNone
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.McpOauthTokenEndpointAuthResourceNone = &lossless0
+			return nil
+		}
+		var lossless1 McpOauthTokenEndpointAuthResourceClientSecretBasic
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.McpOauthTokenEndpointAuthResourceClientSecretBasic = &lossless1
+			return nil
+		}
+		var lossless2 McpOauthTokenEndpointAuthResourceClientSecretPost
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.McpOauthTokenEndpointAuthResourceClientSecretPost = &lossless2
+			return nil
+		}
+	}
 	var mcpoauthtokenendpointauthresourcenone McpOauthTokenEndpointAuthResourceNone
 	if err := json.Unmarshal(data, &mcpoauthtokenendpointauthresourcenone); err == nil && isNonEmptyMcpOauthTokenEndpointAuthResourceMcpOauthTokenEndpointAuthResourceNone(mcpoauthtokenendpointauthresourcenone) {
 		u.McpOauthTokenEndpointAuthResourceNone = &mcpoauthtokenendpointauthresourcenone

@@ -5,6 +5,107 @@ package sdk
 
 import "encoding/json"
 
+func (u *RunStepObjectStepDetails) UnmarshalJSON(data []byte) error {
+	*u = RunStepObjectStepDetails{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "message_creation":
+					var runstepdetailsmessagecreationobject RunStepDetailsMessageCreationObject
+					if err := json.Unmarshal(data, &runstepdetailsmessagecreationobject); err != nil {
+						return err
+					}
+					u.RunStepDetailsMessageCreationObject = &runstepdetailsmessagecreationobject
+					return nil
+				case "tool_calls":
+					var runstepdetailstoolcallsobject RunStepDetailsToolCallsObject
+					if err := json.Unmarshal(data, &runstepdetailstoolcallsobject); err != nil {
+						return err
+					}
+					u.RunStepDetailsToolCallsObject = &runstepdetailstoolcallsobject
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStepDetailsMessageCreationObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStepDetailsMessageCreationObject = &lossless0
+			return nil
+		}
+		var lossless1 RunStepDetailsToolCallsObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStepDetailsToolCallsObject = &lossless1
+			return nil
+		}
+	}
+	var runstepdetailsmessagecreationobject RunStepDetailsMessageCreationObject
+	if err := json.Unmarshal(data, &runstepdetailsmessagecreationobject); err == nil && isNonEmptyRunStepObjectStepDetailsRunStepDetailsMessageCreationObject(runstepdetailsmessagecreationobject) {
+		u.RunStepDetailsMessageCreationObject = &runstepdetailsmessagecreationobject
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var runstepdetailstoolcallsobject RunStepDetailsToolCallsObject
+	if err := json.Unmarshal(data, &runstepdetailstoolcallsobject); err == nil && isNonEmptyRunStepObjectStepDetailsRunStepDetailsToolCallsObject(runstepdetailstoolcallsobject) {
+		u.RunStepDetailsToolCallsObject = &runstepdetailstoolcallsobject
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u RunStepObjectStepDetails) MarshalJSON() ([]byte, error) {
+	if u.RunStepDetailsMessageCreationObject != nil {
+		return json.Marshal(u.RunStepDetailsMessageCreationObject)
+	}
+	if u.RunStepDetailsToolCallsObject != nil {
+		return json.Marshal(u.RunStepDetailsToolCallsObject)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyRunStepObjectStepDetailsRunStepDetailsMessageCreationObject(v RunStepDetailsMessageCreationObject) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRunStepObjectStepDetailsRunStepDetailsToolCallsObject(v RunStepDetailsToolCallsObject) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRunStepObjectStepDetails converts an untyped value to RunStepObjectStepDetails.
+func UnmarshalRunStepObjectStepDetails(v any) RunStepObjectStepDetails {
+	b, _ := json.Marshal(v)
+	var result RunStepObjectStepDetails
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// RunStepDetailsToolCallsObjectToolCallsItem represents a union type.
+type RunStepDetailsToolCallsObjectToolCallsItem struct {
+	RunStepDetailsToolCallsCodeObject       *RunStepDetailsToolCallsCodeObject
+	RunStepDetailsToolCallsFileSearchObject *RunStepDetailsToolCallsFileSearchObject
+	RunStepDetailsToolCallsFunctionObject   *RunStepDetailsToolCallsFunctionObject
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
 func (u *RunStepDetailsToolCallsObjectToolCallsItem) UnmarshalJSON(data []byte) error {
 	*u = RunStepDetailsToolCallsObjectToolCallsItem{}
 	var refusal error
@@ -40,6 +141,24 @@ func (u *RunStepDetailsToolCallsObjectToolCallsItem) UnmarshalJSON(data []byte) 
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStepDetailsToolCallsCodeObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStepDetailsToolCallsCodeObject = &lossless0
+			return nil
+		}
+		var lossless1 RunStepDetailsToolCallsFileSearchObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStepDetailsToolCallsFileSearchObject = &lossless1
+			return nil
+		}
+		var lossless2 RunStepDetailsToolCallsFunctionObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RunStepDetailsToolCallsFunctionObject = &lossless2
+			return nil
 		}
 	}
 	var runstepdetailstoolcallscodeobject RunStepDetailsToolCallsCodeObject
@@ -144,6 +263,19 @@ func (u *RunStepDetailsToolCallsCodeObjectCodeInterpreterOutputsItem) UnmarshalJ
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStepDetailsToolCallsCodeOutputLogsObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStepDetailsToolCallsCodeOutputLogsObject = &lossless0
+			return nil
+		}
+		var lossless1 RunStepDetailsToolCallsCodeOutputImageObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStepDetailsToolCallsCodeOutputImageObject = &lossless1
+			return nil
+		}
+	}
 	var runstepdetailstoolcallscodeoutputlogsobject RunStepDetailsToolCallsCodeOutputLogsObject
 	if err := json.Unmarshal(data, &runstepdetailstoolcallscodeoutputlogsobject); err == nil && isNonEmptyRunStepDetailsToolCallsCodeObjectCodeInterpreterOutputsItemRunStepDetailsToolCallsCodeOutputLogsObject(runstepdetailstoolcallscodeoutputlogsobject) {
 		u.RunStepDetailsToolCallsCodeOutputLogsObject = &runstepdetailstoolcallscodeoutputlogsobject
@@ -229,6 +361,19 @@ func (u *RunStepDeltaObjectDeltaStepDetails) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStepDeltaStepDetailsMessageCreationObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStepDeltaStepDetailsMessageCreationObject = &lossless0
+			return nil
+		}
+		var lossless1 RunStepDeltaStepDetailsToolCallsObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStepDeltaStepDetailsToolCallsObject = &lossless1
+			return nil
 		}
 	}
 	var runstepdeltastepdetailsmessagecreationobject RunStepDeltaStepDetailsMessageCreationObject
@@ -324,6 +469,24 @@ func (u *RunStepDeltaStepDetailsToolCallsObjectToolCallsItem) UnmarshalJSON(data
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStepDeltaStepDetailsToolCallsCodeObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStepDeltaStepDetailsToolCallsCodeObject = &lossless0
+			return nil
+		}
+		var lossless1 RunStepDeltaStepDetailsToolCallsFileSearchObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStepDeltaStepDetailsToolCallsFileSearchObject = &lossless1
+			return nil
+		}
+		var lossless2 RunStepDeltaStepDetailsToolCallsFunctionObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RunStepDeltaStepDetailsToolCallsFunctionObject = &lossless2
+			return nil
 		}
 	}
 	var runstepdeltastepdetailstoolcallscodeobject RunStepDeltaStepDetailsToolCallsCodeObject
@@ -426,6 +589,19 @@ func (u *RunStepDeltaStepDetailsToolCallsCodeObjectCodeInterpreterOutputsItem) U
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject = &lossless0
+			return nil
+		}
+		var lossless1 RunStepDeltaStepDetailsToolCallsCodeOutputImageObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStepDeltaStepDetailsToolCallsCodeOutputImageObject = &lossless1
+			return nil
 		}
 	}
 	var runstepdeltastepdetailstoolcallscodeoutputlogsobject RunStepDeltaStepDetailsToolCallsCodeOutputLogsObject

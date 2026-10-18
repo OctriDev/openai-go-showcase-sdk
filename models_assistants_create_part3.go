@@ -8,6 +8,15 @@ import (
 	"fmt"
 )
 
+// CreateMessageRequestAttachmentsItemToolsItem represents a union type.
+type CreateMessageRequestAttachmentsItemToolsItem struct {
+	AssistantToolsCode               *AssistantToolsCode
+	AssistantToolsFileSearchTypeOnly *AssistantToolsFileSearchTypeOnly
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
 func (u *CreateMessageRequestAttachmentsItemToolsItem) UnmarshalJSON(data []byte) error {
 	*u = CreateMessageRequestAttachmentsItemToolsItem{}
 	var refusal error
@@ -36,6 +45,19 @@ func (u *CreateMessageRequestAttachmentsItemToolsItem) UnmarshalJSON(data []byte
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearchTypeOnly
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearchTypeOnly = &lossless1
+			return nil
 		}
 	}
 	var assistanttoolscode AssistantToolsCode
@@ -131,6 +153,24 @@ func (u *CreateRunRequestToolsItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearch = &lossless1
+			return nil
+		}
+		var lossless2 AssistantToolsFunction
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AssistantToolsFunction = &lossless2
+			return nil
 		}
 	}
 	var assistanttoolscode AssistantToolsCode
@@ -385,6 +425,19 @@ func (u *CreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrat
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 CreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant1 = &lossless1
+			return nil
+		}
+	}
 	var createthreadrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0 CreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0
 	if err := json.Unmarshal(data, &createthreadrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0); err == nil && isNonEmptyCreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyCreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0(createthreadrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0) {
 		u.CreateThreadRequestToolResourcesFileSearchVectorStoresItemChunkingStrategyVariant0 = &createthreadrequesttoolresourcesfilesearchvectorstoresitemchunkingstrategyvariant0
@@ -475,6 +528,24 @@ func (u *CreateThreadAndRunRequestToolsItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearch = &lossless1
+			return nil
+		}
+		var lossless2 AssistantToolsFunction
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AssistantToolsFunction = &lossless2
+			return nil
 		}
 	}
 	var assistanttoolscode AssistantToolsCode

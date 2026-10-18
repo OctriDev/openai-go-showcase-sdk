@@ -116,6 +116,19 @@ func (u *NamespaceToolParamToolsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 FunctionToolParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.FunctionToolParam = &lossless0
+			return nil
+		}
+		var lossless1 CustomToolParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CustomToolParam = &lossless1
+			return nil
+		}
+	}
 	var functiontoolparam FunctionToolParam
 	if err := json.Unmarshal(data, &functiontoolparam); err == nil && isNonEmptyNamespaceToolParamToolsItemFunctionToolParam(functiontoolparam) {
 		u.FunctionToolParam = &functiontoolparam

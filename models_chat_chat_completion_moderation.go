@@ -204,6 +204,19 @@ func (u *ChatCompletionModerationInput) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionModerationResults
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionModerationResults = &lossless0
+			return nil
+		}
+		var lossless1 ChatCompletionModerationError
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ChatCompletionModerationError = &lossless1
+			return nil
+		}
+	}
 	var chatcompletionmoderationresults ChatCompletionModerationResults
 	if err := json.Unmarshal(data, &chatcompletionmoderationresults); err == nil && isNonEmptyChatCompletionModerationInputChatCompletionModerationResults(chatcompletionmoderationresults) {
 		u.ChatCompletionModerationResults = &chatcompletionmoderationresults
@@ -289,6 +302,19 @@ func (u *ChatCompletionModerationOutput) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionModerationResults
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionModerationResults = &lossless0
+			return nil
+		}
+		var lossless1 ChatCompletionModerationError
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ChatCompletionModerationError = &lossless1
+			return nil
 		}
 	}
 	var chatcompletionmoderationresults ChatCompletionModerationResults

@@ -628,6 +628,28 @@ func (sdk *VectorStoresNamespace) List(ctx context.Context, params ListVectorSto
 	return ListVectorStores(ctx, sdk.config, params, opts...)
 }
 
+// ListPaginated lists vector stores, which are collections of processed files that you can use with the `file_search` tool. Use the cursor parameters to move forward or backward through the results, and set `order` to control sorting by creation time.
+//
+// Returns a list of vector stores.
+//
+// Parameters:
+//
+//	limit: A limit on the number of objects to be returned. Limit can range
+//	between 1 and 100, and the default is 20.
+//	order: Sort order by the `created_at` timestamp of the objects. `asc` for
+//	ascending order and `desc` for descending order.
+//	after: A cursor for use in pagination. `after` is an object ID that defines
+//	your place in the list. For instance, if you make a list request and receive
+//	100 objects, ending with obj_foo, your subsequent call can include
+//	after=obj_foo in order to fetch the next page of the list.
+//	before: A cursor for use in pagination. `before` is an object ID that
+//	defines your place in the list. For instance, if you make a list request and
+//	receive 100 objects, starting with obj_foo, your subsequent call can include
+//	before=obj_foo in order to fetch the previous page of the list.
+func (sdk *VectorStoresNamespace) ListPaginated(ctx context.Context, params ListVectorStoresParams, yield func(*VectorStoreObject) bool, opts ...RequestOption) error {
+	return ListVectorStoresPaginated(ctx, sdk.config, params, yield, opts...)
+}
+
 // Create creates a vector store to collect processed files for use with the `file_search` tool. Supply `file_ids` to add files at creation, and optionally set a name, description, expiration policy, chunking strategy, or metadata.
 //
 // Create a vector store.

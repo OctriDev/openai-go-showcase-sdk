@@ -9,6 +9,42 @@ import (
 	"fmt"
 )
 
+func (value *LiveDecisionInputTextParam) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"input_text"}); err != nil {
+		return err
+	}
+	type LiveDecisionInputTextParamAlias LiveDecisionInputTextParam
+	var decoded LiveDecisionInputTextParamAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = LiveDecisionInputTextParam(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "text"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "text"}); err != nil {
+		return err
+	}
+	if err := ValidateLength("text", value.Text, LengthOpts{Max: Ptr[int](10485760)}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewLiveDecisionInputTextParam returns a validated LiveDecisionInputTextParam built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewLiveDecisionInputTextParam(fields LiveDecisionInputTextParam) (*LiveDecisionInputTextParam, error) {
+	return ConstructModel(fields)
+}
+
+// LiveDecisionInputTextParamTypeEnum The type of the input item. Always `input_text`.
+type LiveDecisionInputTextParamTypeEnum string
+
 const (
 	LiveDecisionInputTextParamTypeEnumInputText LiveDecisionInputTextParamTypeEnum = "input_text"
 )
@@ -660,26 +696,3 @@ type LiveDecisionItemDeletedTypeEnum string
 const (
 	LiveDecisionItemDeletedTypeEnumDecisionItemDeleted LiveDecisionItemDeletedTypeEnum = "decision.item.deleted"
 )
-
-func (value *LiveDecisionItemDeletedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "decision.item.deleted":
-		*value = LiveDecisionItemDeletedTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "LiveDecisionItemDeletedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown LiveDecisionItemDeletedTypeEnum: %v", raw)}
-	}
-}
-
-// LiveDecisionInputItemParamContentItem represents a union type.
-type LiveDecisionInputItemParamContentItem struct {
-	LiveDecisionInputTextParam  *LiveDecisionInputTextParam
-	LiveDecisionInputImageParam *LiveDecisionInputImageParam
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}

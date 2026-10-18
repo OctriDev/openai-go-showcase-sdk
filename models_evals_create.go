@@ -233,6 +233,19 @@ type CreateEvalItem struct {
 func (u *CreateEvalItem) UnmarshalJSON(data []byte) error {
 	*u = CreateEvalItem{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateEvalItemVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateEvalItemVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 EvalItem
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EvalItem = &lossless1
+			return nil
+		}
+	}
 	var createevalitemvariant0 CreateEvalItemVariant0
 	if err := json.Unmarshal(data, &createevalitemvariant0); err == nil && isNonEmptyCreateEvalItemCreateEvalItemVariant0(createevalitemvariant0) {
 		u.CreateEvalItemVariant0 = &createevalitemvariant0
@@ -697,11 +710,4 @@ func (value *CreateEvalRunRequest) UnmarshalJSON(data []byte) error {
 		value.Metadata = &NullableValue[Metadata]{}
 	}
 	return nil
-}
-
-// NewCreateEvalRunRequest returns a validated CreateEvalRunRequest built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewCreateEvalRunRequest(fields CreateEvalRunRequest) (*CreateEvalRunRequest, error) {
-	return ConstructModel(fields)
 }

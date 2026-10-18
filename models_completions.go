@@ -167,6 +167,24 @@ func (u *CreateCompletionRequestPrompt) UnmarshalJSON(data []byte) error {
 		u.String = &s
 		return nil
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 []string
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ListOfString = &lossless0
+			return nil
+		}
+		var lossless1 []int64
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ListOfInt64 = &lossless1
+			return nil
+		}
+		var lossless2 [][]int64
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ListOfListOfInt64 = &lossless2
+			return nil
+		}
+	}
 	var listofstring []string
 	if err := json.Unmarshal(data, &listofstring); err == nil && isNonEmptyCreateCompletionRequestPromptListOfString(listofstring) {
 		u.ListOfString = &listofstring

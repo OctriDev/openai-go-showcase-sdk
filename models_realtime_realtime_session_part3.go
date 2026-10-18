@@ -3,243 +3,7 @@
 
 package sdk
 
-import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-)
-
-func (u *RealtimeSessionCreateResponseMaxOutputTokens) UnmarshalJSON(data []byte) error {
-	*u = RealtimeSessionCreateResponseMaxOutputTokens{}
-	var refusal error
-	var int642 int64
-	if err := json.Unmarshal(data, &int642); err == nil {
-		u.Int64 = &int642
-		return nil
-	}
-	var realtimesessioncreateresponsemaxoutputtokensvariant1enum RealtimeSessionCreateResponseMaxOutputTokensVariant1Enum
-	if err := json.Unmarshal(data, &realtimesessioncreateresponsemaxoutputtokensvariant1enum); err == nil && isNonEmptyRealtimeSessionCreateResponseMaxOutputTokensRealtimeSessionCreateResponseMaxOutputTokensVariant1Enum(realtimesessioncreateresponsemaxoutputtokensvariant1enum) {
-		u.RealtimeSessionCreateResponseMaxOutputTokensVariant1Enum = &realtimesessioncreateresponsemaxoutputtokensvariant1enum
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u RealtimeSessionCreateResponseMaxOutputTokens) MarshalJSON() ([]byte, error) {
-	if u.Int64 != nil {
-		return json.Marshal(u.Int64)
-	}
-	if u.RealtimeSessionCreateResponseMaxOutputTokensVariant1Enum != nil {
-		return json.Marshal(u.RealtimeSessionCreateResponseMaxOutputTokensVariant1Enum)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyRealtimeSessionCreateResponseMaxOutputTokensRealtimeSessionCreateResponseMaxOutputTokensVariant1Enum(v RealtimeSessionCreateResponseMaxOutputTokensVariant1Enum) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalRealtimeSessionCreateResponseMaxOutputTokens converts an untyped value to RealtimeSessionCreateResponseMaxOutputTokens.
-func UnmarshalRealtimeSessionCreateResponseMaxOutputTokens(v any) RealtimeSessionCreateResponseMaxOutputTokens {
-	b, _ := json.Marshal(v)
-	var result RealtimeSessionCreateResponseMaxOutputTokens
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// RealtimeSessionCreateResponseGA A Realtime session configuration object.
-type RealtimeSessionCreateResponseGA struct {
-	// Type The type of session to create. Always `realtime` for the Realtime API.
-	Type RealtimeSessionCreateResponseGATypeEnum `json:"type"`
-	// Id Unique identifier for the session that looks like `sess_1234567890abcdef`.
-	Id string `json:"id"`
-	// Object The object type. Always `realtime.session`.
-	Object RealtimeSessionCreateResponseGAObjectEnum `json:"object"`
-	// ExpiresAt Expiration timestamp for the session, in seconds since epoch.
-	ExpiresAt *int64 `json:"expires_at,omitempty"`
-	// OutputModalities The set of modalities the model can respond with. It defaults to `["audio"]`, indicating
-	// that the model will respond with audio plus a transcript. `["text"]` can be used to make
-	// the model respond with text only. It is not possible to request both `text` and `audio` at the same time.
-	OutputModalities []RealtimeSessionCreateResponseGAOutputModalitiesEnum `json:"output_modalities,omitempty"`
-	// Model The Realtime model used for this session.
-	Model *string `json:"model,omitempty"`
-	// Instructions The default system instructions (i.e. system message) prepended to model calls. This field allows the client to guide the model on desired responses. The model can be instructed on response content and format, (e.g. "be extremely succinct", "act friendly", "here are examples of good responses") and on audio behavior (e.g. "talk quickly", "inject emotion into your voice", "laugh frequently"). The instructions are not guaranteed to be followed by the model, but they provide guidance to the model on the desired behavior.
-	//
-	// Note that the server sets default instructions which will be used if this field is not set and are visible in the `session.created` event at the start of the session.
-	Instructions *string `json:"instructions,omitempty"`
-	// Audio Configuration for input and output audio.
-	Audio *RealtimeSessionCreateResponseGAAudio `json:"audio,omitempty"`
-	// Include Additional fields to include in server outputs.
-	//
-	// `item.input_audio_transcription.logprobs`: Include logprobs for input audio transcription.
-	Include *NullableValue[[]RealtimeSessionCreateResponseGAIncludeEnum] `json:"include,omitempty"`
-	// Tracing Realtime API can write session traces to the [Traces Dashboard](https://platform.openai.com/logs?api=traces). Set to null to disable tracing. Once
-	// tracing is enabled for a session, the configuration cannot be modified.
-	//
-	// `auto` will create a trace for the session with default values for the
-	// workflow name, group id, and metadata.
-	Tracing *NullableValue[RealtimeSessionCreateResponseGATracing] `json:"tracing,omitempty"`
-	// Tools Tools available to the model.
-	Tools []RealtimeSessionCreateResponseGAToolsItem `json:"tools,omitempty"`
-	// ToolChoice How the model chooses tools. Provide one of the string modes or force a specific
-	// function/MCP tool.
-	ToolChoice *RealtimeSessionCreateResponseGAToolChoice `json:"tool_choice,omitempty"`
-	// Reasoning Configuration for reasoning-capable Realtime models such as `gpt-realtime-2`.
-	Reasoning *RealtimeReasoning `json:"reasoning,omitempty"`
-	// MaxOutputTokens Maximum number of output tokens for a single assistant response,
-	// inclusive of tool calls. Provide an integer between 1 and 4096 to
-	// limit output tokens, or `inf` for the maximum available tokens for a
-	// given model. Defaults to `inf`.
-	MaxOutputTokens *RealtimeSessionCreateResponseGAMaxOutputTokens `json:"max_output_tokens,omitempty"`
-	// Truncation When the number of tokens in a conversation exceeds the model's input token limit, the conversation be truncated, meaning messages (starting from the oldest) will not be included in the model's context. A 32k context model with 4,096 max output tokens can only include 28,224 tokens in the context before truncation occurs.
-	//
-	// Clients can configure truncation behavior to truncate with a lower max token limit, which is an effective way to control token usage and cost.
-	//
-	// Truncation will reduce the number of cached tokens on the next turn (busting the cache), since messages are dropped from the beginning of the context. However, clients can also configure truncation to retain messages up to a fraction of the maximum context size, which will reduce the need for future truncations and thus improve the cache rate.
-	//
-	// Truncation can be disabled entirely, which means the server will never truncate but would instead return an error if the conversation exceeds the model's input token limit.
-	Truncation *RealtimeTruncation `json:"truncation,omitempty"`
-	// Prompt Reference to a prompt template and its variables.
-	// [Learn more](https://developers.openai.com/api/docs/guides/text?api-mode=responses#version-prompts-in-code).
-	Prompt *NullableValue[Prompt] `json:"prompt,omitempty"`
-}
-
-func (value *RealtimeSessionCreateResponseGA) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"realtime"}); err != nil {
-		return err
-	}
-	type RealtimeSessionCreateResponseGAAlias RealtimeSessionCreateResponseGA
-	var decoded RealtimeSessionCreateResponseGAAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeSessionCreateResponseGA(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "id", "object"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "id", "object"}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["include"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Include = &NullableValue[[]RealtimeSessionCreateResponseGAIncludeEnum]{}
-	}
-	if raw, ok := rawFields["tracing"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Tracing = &NullableValue[RealtimeSessionCreateResponseGATracing]{}
-	}
-	if raw, ok := rawFields["prompt"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Prompt = &NullableValue[Prompt]{}
-	}
-	return nil
-}
-
-// NewRealtimeSessionCreateResponseGA returns a validated RealtimeSessionCreateResponseGA built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeSessionCreateResponseGA(fields RealtimeSessionCreateResponseGA) (*RealtimeSessionCreateResponseGA, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeSessionCreateResponseGATypeEnum The type of session to create. Always `realtime` for the Realtime API.
-type RealtimeSessionCreateResponseGATypeEnum string
-
-const (
-	RealtimeSessionCreateResponseGATypeEnumRealtime RealtimeSessionCreateResponseGATypeEnum = "realtime"
-)
-
-func (value *RealtimeSessionCreateResponseGATypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "realtime":
-		*value = RealtimeSessionCreateResponseGATypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeSessionCreateResponseGATypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeSessionCreateResponseGATypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeSessionCreateResponseGAObjectEnum The object type. Always `realtime.session`.
-type RealtimeSessionCreateResponseGAObjectEnum string
-
-const (
-	RealtimeSessionCreateResponseGAObjectEnumRealtimeSession RealtimeSessionCreateResponseGAObjectEnum = "realtime.session"
-)
-
-// RealtimeSessionCreateResponseGAOutputModalitiesEnum Required enumerated value serialized in the `output_modalities[]` wire field.
-type RealtimeSessionCreateResponseGAOutputModalitiesEnum string
-
-const (
-	RealtimeSessionCreateResponseGAOutputModalitiesEnumText  RealtimeSessionCreateResponseGAOutputModalitiesEnum = "text"
-	RealtimeSessionCreateResponseGAOutputModalitiesEnumAudio RealtimeSessionCreateResponseGAOutputModalitiesEnum = "audio"
-)
-
-// RealtimeSessionCreateResponseGAAudio Configuration for input and output audio.
-type RealtimeSessionCreateResponseGAAudio struct {
-	// Input Optional object value serialized in the `input` wire field.
-	Input *RealtimeSessionCreateResponseGAAudioInput `json:"input,omitempty"`
-	// Output Optional object value serialized in the `output` wire field.
-	Output *RealtimeSessionCreateResponseGAAudioOutput `json:"output,omitempty"`
-}
-
-// NewRealtimeSessionCreateResponseGAAudio returns a validated RealtimeSessionCreateResponseGAAudio built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeSessionCreateResponseGAAudio(fields RealtimeSessionCreateResponseGAAudio) (*RealtimeSessionCreateResponseGAAudio, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeSessionCreateResponseGAAudioInput Optional object value serialized in the `input` wire field.
-type RealtimeSessionCreateResponseGAAudioInput struct {
-	// Format The format of the input audio.
-	Format *RealtimeAudioFormats `json:"format,omitempty"`
-	// Transcription Configuration for input audio transcription, defaults to off and can be set to `null` to turn off once on. Input audio transcription is not native to the model, since the model consumes audio directly. Transcription runs asynchronously through [the /audio/transcriptions endpoint](https://developers.openai.com/api/reference/resources/audio/subresources/transcriptions/methods/create) and should be treated as guidance of input audio content rather than precisely what the model heard. The client can optionally set the language and prompt for transcription, these offer additional guidance to the transcription service.
-	Transcription *NullableValue[AudioTranscriptionResponse] `json:"transcription,omitempty"`
-	// NoiseReduction Configuration for input audio noise reduction. This can be set to `null` to turn off.
-	// Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
-	// Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
-	NoiseReduction *NullableValue[RealtimeSessionCreateResponseGAAudioInputNoiseReduction] `json:"noise_reduction,omitempty"`
-	// TurnDetection Configuration for turn detection, ether Server VAD or Semantic VAD. This can be set to `null` to turn off, in which case the client must manually trigger model response.
-	//
-	// Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech.
-	//
-	// Semantic VAD is more advanced and uses a turn detection model (in conjunction with VAD) to semantically estimate whether the user has finished speaking, then dynamically sets a timeout based on this probability. For example, if user audio trails off with "uhhm", the model will score a low probability of turn end and wait longer for the user to continue speaking. This can be useful for more natural conversations, but may have a higher latency.
-	//
-	// For `gpt-realtime-whisper` transcription sessions, turn detection must be
-	// set to `null`; VAD is not supported.
-	TurnDetection *NullableValue[RealtimeTurnDetection] `json:"turn_detection,omitempty"`
-}
-
-func (value *RealtimeSessionCreateResponseGAAudioInput) UnmarshalJSON(data []byte) error {
-	type RealtimeSessionCreateResponseGAAudioInputAlias RealtimeSessionCreateResponseGAAudioInput
-	var decoded RealtimeSessionCreateResponseGAAudioInputAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeSessionCreateResponseGAAudioInput(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["transcription"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Transcription = &NullableValue[AudioTranscriptionResponse]{}
-	}
-	if raw, ok := rawFields["noise_reduction"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.NoiseReduction = &NullableValue[RealtimeSessionCreateResponseGAAudioInputNoiseReduction]{}
-	}
-	if raw, ok := rawFields["turn_detection"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.TurnDetection = &NullableValue[RealtimeTurnDetection]{}
-	}
-	return nil
-}
+import "encoding/json"
 
 // NewRealtimeSessionCreateResponseGAAudioInput returns a validated RealtimeSessionCreateResponseGAAudioInput built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
@@ -314,87 +78,6 @@ const (
 	RealtimeSessionCreateResponseGAIncludeEnumItemInputAudioTranscriptionLogprobs RealtimeSessionCreateResponseGAIncludeEnum = "item.input_audio_transcription.logprobs"
 )
 
-// RealtimeSessionCreateResponseGATracingVariant0Enum Enables tracing and sets default values for tracing configuration options. Always `auto`.
-type RealtimeSessionCreateResponseGATracingVariant0Enum string
-
-const (
-	RealtimeSessionCreateResponseGATracingVariant0EnumAuto RealtimeSessionCreateResponseGATracingVariant0Enum = "auto"
-)
-
-// RealtimeSessionCreateResponseGATracingVariant1 Granular configuration for tracing.
-type RealtimeSessionCreateResponseGATracingVariant1 struct {
-	// WorkflowName The name of the workflow to attach to this trace. This is used to
-	// name the trace in the Traces Dashboard.
-	WorkflowName *string `json:"workflow_name,omitempty"`
-	// GroupId The group id to attach to this trace to enable filtering and
-	// grouping in the Traces Dashboard.
-	GroupId *string `json:"group_id,omitempty"`
-	// Metadata The arbitrary metadata to attach to this trace to enable
-	// filtering in the Traces Dashboard.
-	Metadata map[string]any `json:"metadata,omitempty"`
-}
-
-// NewRealtimeSessionCreateResponseGATracingVariant1 returns a validated RealtimeSessionCreateResponseGATracingVariant1 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeSessionCreateResponseGATracingVariant1(fields RealtimeSessionCreateResponseGATracingVariant1) (*RealtimeSessionCreateResponseGATracingVariant1, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeSessionCreateResponseGATracing represents a union type.
-type RealtimeSessionCreateResponseGATracing struct {
-	RealtimeSessionCreateResponseGATracingVariant0Enum *RealtimeSessionCreateResponseGATracingVariant0Enum
-	RealtimeSessionCreateResponseGATracingVariant1     *RealtimeSessionCreateResponseGATracingVariant1
-}
-
-func (u *RealtimeSessionCreateResponseGATracing) UnmarshalJSON(data []byte) error {
-	*u = RealtimeSessionCreateResponseGATracing{}
-	var refusal error
-	var realtimesessioncreateresponsegatracingvariant0enum RealtimeSessionCreateResponseGATracingVariant0Enum
-	if err := json.Unmarshal(data, &realtimesessioncreateresponsegatracingvariant0enum); err == nil && isNonEmptyRealtimeSessionCreateResponseGATracingRealtimeSessionCreateResponseGATracingVariant0Enum(realtimesessioncreateresponsegatracingvariant0enum) {
-		u.RealtimeSessionCreateResponseGATracingVariant0Enum = &realtimesessioncreateresponsegatracingvariant0enum
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var realtimesessioncreateresponsegatracingvariant1 RealtimeSessionCreateResponseGATracingVariant1
-	if err := json.Unmarshal(data, &realtimesessioncreateresponsegatracingvariant1); err == nil && isNonEmptyRealtimeSessionCreateResponseGATracingRealtimeSessionCreateResponseGATracingVariant1(realtimesessioncreateresponsegatracingvariant1) {
-		u.RealtimeSessionCreateResponseGATracingVariant1 = &realtimesessioncreateresponsegatracingvariant1
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u RealtimeSessionCreateResponseGATracing) MarshalJSON() ([]byte, error) {
-	if u.RealtimeSessionCreateResponseGATracingVariant0Enum != nil {
-		return json.Marshal(u.RealtimeSessionCreateResponseGATracingVariant0Enum)
-	}
-	if u.RealtimeSessionCreateResponseGATracingVariant1 != nil {
-		return json.Marshal(u.RealtimeSessionCreateResponseGATracingVariant1)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyRealtimeSessionCreateResponseGATracingRealtimeSessionCreateResponseGATracingVariant0Enum(v RealtimeSessionCreateResponseGATracingVariant0Enum) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyRealtimeSessionCreateResponseGATracingRealtimeSessionCreateResponseGATracingVariant1(v RealtimeSessionCreateResponseGATracingVariant1) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalRealtimeSessionCreateResponseGATracing converts an untyped value to RealtimeSessionCreateResponseGATracing.
-func UnmarshalRealtimeSessionCreateResponseGATracing(v any) RealtimeSessionCreateResponseGATracing {
-	b, _ := json.Marshal(v)
-	var result RealtimeSessionCreateResponseGATracing
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
 // RealtimeSessionCreateResponseGAMaxOutputTokensVariant1Enum Optional enumerated value serialized in the `max_output_tokens` wire field.
 type RealtimeSessionCreateResponseGAMaxOutputTokensVariant1Enum string
 
@@ -449,6 +132,154 @@ func UnmarshalRealtimeSessionCreateResponseGAMaxOutputTokens(v any) RealtimeSess
 	return result
 }
 
+// RealtimeSessionCreateRequestTracingVariant0Enum Default tracing mode for the session.
+type RealtimeSessionCreateRequestTracingVariant0Enum string
+
+const (
+	RealtimeSessionCreateRequestTracingVariant0EnumAuto RealtimeSessionCreateRequestTracingVariant0Enum = "auto"
+)
+
+// RealtimeSessionCreateRequestTracingVariant1 Granular configuration for tracing.
+type RealtimeSessionCreateRequestTracingVariant1 struct {
+	// WorkflowName The name of the workflow to attach to this trace. This is used to
+	// name the trace in the traces dashboard.
+	WorkflowName *string `json:"workflow_name,omitempty"`
+	// GroupId The group id to attach to this trace to enable filtering and
+	// grouping in the traces dashboard.
+	GroupId *string `json:"group_id,omitempty"`
+	// Metadata The arbitrary metadata to attach to this trace to enable
+	// filtering in the traces dashboard.
+	Metadata map[string]any `json:"metadata,omitempty"`
+}
+
+// NewRealtimeSessionCreateRequestTracingVariant1 returns a validated RealtimeSessionCreateRequestTracingVariant1 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeSessionCreateRequestTracingVariant1(fields RealtimeSessionCreateRequestTracingVariant1) (*RealtimeSessionCreateRequestTracingVariant1, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeSessionCreateRequestTracing represents a union type.
+type RealtimeSessionCreateRequestTracing struct {
+	RealtimeSessionCreateRequestTracingVariant0Enum *RealtimeSessionCreateRequestTracingVariant0Enum
+	RealtimeSessionCreateRequestTracingVariant1     *RealtimeSessionCreateRequestTracingVariant1
+}
+
+func (u *RealtimeSessionCreateRequestTracing) UnmarshalJSON(data []byte) error {
+	*u = RealtimeSessionCreateRequestTracing{}
+	var refusal error
+	var realtimesessioncreaterequesttracingvariant0enum RealtimeSessionCreateRequestTracingVariant0Enum
+	if err := json.Unmarshal(data, &realtimesessioncreaterequesttracingvariant0enum); err == nil {
+		u.RealtimeSessionCreateRequestTracingVariant0Enum = &realtimesessioncreaterequesttracingvariant0enum
+		return nil
+	}
+	var realtimesessioncreaterequesttracingvariant1 RealtimeSessionCreateRequestTracingVariant1
+	if err := json.Unmarshal(data, &realtimesessioncreaterequesttracingvariant1); err == nil && isNonEmptyRealtimeSessionCreateRequestTracingRealtimeSessionCreateRequestTracingVariant1(realtimesessioncreaterequesttracingvariant1) {
+		u.RealtimeSessionCreateRequestTracingVariant1 = &realtimesessioncreaterequesttracingvariant1
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u RealtimeSessionCreateRequestTracing) MarshalJSON() ([]byte, error) {
+	if u.RealtimeSessionCreateRequestTracingVariant0Enum != nil {
+		return json.Marshal(u.RealtimeSessionCreateRequestTracingVariant0Enum)
+	}
+	if u.RealtimeSessionCreateRequestTracingVariant1 != nil {
+		return json.Marshal(u.RealtimeSessionCreateRequestTracingVariant1)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyRealtimeSessionCreateRequestTracingRealtimeSessionCreateRequestTracingVariant1(v RealtimeSessionCreateRequestTracingVariant1) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRealtimeSessionCreateRequestTracing converts an untyped value to RealtimeSessionCreateRequestTracing.
+func UnmarshalRealtimeSessionCreateRequestTracing(v any) RealtimeSessionCreateRequestTracing {
+	b, _ := json.Marshal(v)
+	var result RealtimeSessionCreateRequestTracing
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// RealtimeSessionTracingVariant0Enum Default tracing mode for the session.
+type RealtimeSessionTracingVariant0Enum string
+
+const (
+	RealtimeSessionTracingVariant0EnumAuto RealtimeSessionTracingVariant0Enum = "auto"
+)
+
+// RealtimeSessionTracingVariant1 Granular configuration for tracing.
+type RealtimeSessionTracingVariant1 struct {
+	// WorkflowName The name of the workflow to attach to this trace. This is used to
+	// name the trace in the traces dashboard.
+	WorkflowName *string `json:"workflow_name,omitempty"`
+	// GroupId The group id to attach to this trace to enable filtering and
+	// grouping in the traces dashboard.
+	GroupId *string `json:"group_id,omitempty"`
+	// Metadata The arbitrary metadata to attach to this trace to enable
+	// filtering in the traces dashboard.
+	Metadata map[string]any `json:"metadata,omitempty"`
+}
+
+// NewRealtimeSessionTracingVariant1 returns a validated RealtimeSessionTracingVariant1 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeSessionTracingVariant1(fields RealtimeSessionTracingVariant1) (*RealtimeSessionTracingVariant1, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeSessionTracing represents a union type.
+type RealtimeSessionTracing struct {
+	RealtimeSessionTracingVariant0Enum *RealtimeSessionTracingVariant0Enum
+	RealtimeSessionTracingVariant1     *RealtimeSessionTracingVariant1
+}
+
+func (u *RealtimeSessionTracing) UnmarshalJSON(data []byte) error {
+	*u = RealtimeSessionTracing{}
+	var refusal error
+	var realtimesessiontracingvariant0enum RealtimeSessionTracingVariant0Enum
+	if err := json.Unmarshal(data, &realtimesessiontracingvariant0enum); err == nil {
+		u.RealtimeSessionTracingVariant0Enum = &realtimesessiontracingvariant0enum
+		return nil
+	}
+	var realtimesessiontracingvariant1 RealtimeSessionTracingVariant1
+	if err := json.Unmarshal(data, &realtimesessiontracingvariant1); err == nil && isNonEmptyRealtimeSessionTracingRealtimeSessionTracingVariant1(realtimesessiontracingvariant1) {
+		u.RealtimeSessionTracingVariant1 = &realtimesessiontracingvariant1
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u RealtimeSessionTracing) MarshalJSON() ([]byte, error) {
+	if u.RealtimeSessionTracingVariant0Enum != nil {
+		return json.Marshal(u.RealtimeSessionTracingVariant0Enum)
+	}
+	if u.RealtimeSessionTracingVariant1 != nil {
+		return json.Marshal(u.RealtimeSessionTracingVariant1)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyRealtimeSessionTracingRealtimeSessionTracingVariant1(v RealtimeSessionTracingVariant1) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRealtimeSessionTracing converts an untyped value to RealtimeSessionTracing.
+func UnmarshalRealtimeSessionTracing(v any) RealtimeSessionTracing {
+	b, _ := json.Marshal(v)
+	var result RealtimeSessionTracing
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
 // RealtimeSessionCreateRequestGAToolsItem represents a union type.
 type RealtimeSessionCreateRequestGAToolsItem struct {
 	RealtimeFunctionTool *RealtimeFunctionTool
@@ -480,6 +311,19 @@ func (u *RealtimeSessionCreateRequestGAToolsItem) UnmarshalJSON(data []byte) err
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeFunctionTool
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeFunctionTool = &lossless0
+			return nil
+		}
+		var lossless1 MCPTool
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MCPTool = &lossless1
+			return nil
 		}
 	}
 	var realtimefunctiontool RealtimeFunctionTool
@@ -567,6 +411,24 @@ func (u *RealtimeSessionCreateRequestGAToolChoice) UnmarshalJSON(data []byte) er
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ToolChoiceOptions
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ToolChoiceOptions = &lossless0
+			return nil
+		}
+		var lossless1 ToolChoiceFunction
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ToolChoiceFunction = &lossless1
+			return nil
+		}
+		var lossless2 ToolChoiceMCP
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ToolChoiceMCP = &lossless2
+			return nil
+		}
+	}
 	var toolchoiceoptions ToolChoiceOptions
 	if err := json.Unmarshal(data, &toolchoiceoptions); err == nil && isNonEmptyRealtimeSessionCreateRequestGAToolChoiceToolChoiceOptions(toolchoiceoptions) {
 		u.ToolChoiceOptions = &toolchoiceoptions
@@ -630,6 +492,80 @@ func UnmarshalRealtimeSessionCreateRequestGAToolChoice(v any) RealtimeSessionCre
 	return result
 }
 
+// RealtimeSessionCreateResponseGATracingVariant0Enum Enables tracing and sets default values for tracing configuration options. Always `auto`.
+type RealtimeSessionCreateResponseGATracingVariant0Enum string
+
+const (
+	RealtimeSessionCreateResponseGATracingVariant0EnumAuto RealtimeSessionCreateResponseGATracingVariant0Enum = "auto"
+)
+
+// RealtimeSessionCreateResponseGATracingVariant1 Granular configuration for tracing.
+type RealtimeSessionCreateResponseGATracingVariant1 struct {
+	// WorkflowName The name of the workflow to attach to this trace. This is used to
+	// name the trace in the Traces Dashboard.
+	WorkflowName *string `json:"workflow_name,omitempty"`
+	// GroupId The group id to attach to this trace to enable filtering and
+	// grouping in the Traces Dashboard.
+	GroupId *string `json:"group_id,omitempty"`
+	// Metadata The arbitrary metadata to attach to this trace to enable
+	// filtering in the Traces Dashboard.
+	Metadata map[string]any `json:"metadata,omitempty"`
+}
+
+// NewRealtimeSessionCreateResponseGATracingVariant1 returns a validated RealtimeSessionCreateResponseGATracingVariant1 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeSessionCreateResponseGATracingVariant1(fields RealtimeSessionCreateResponseGATracingVariant1) (*RealtimeSessionCreateResponseGATracingVariant1, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeSessionCreateResponseGATracing represents a union type.
+type RealtimeSessionCreateResponseGATracing struct {
+	RealtimeSessionCreateResponseGATracingVariant0Enum *RealtimeSessionCreateResponseGATracingVariant0Enum
+	RealtimeSessionCreateResponseGATracingVariant1     *RealtimeSessionCreateResponseGATracingVariant1
+}
+
+func (u *RealtimeSessionCreateResponseGATracing) UnmarshalJSON(data []byte) error {
+	*u = RealtimeSessionCreateResponseGATracing{}
+	var refusal error
+	var realtimesessioncreateresponsegatracingvariant0enum RealtimeSessionCreateResponseGATracingVariant0Enum
+	if err := json.Unmarshal(data, &realtimesessioncreateresponsegatracingvariant0enum); err == nil {
+		u.RealtimeSessionCreateResponseGATracingVariant0Enum = &realtimesessioncreateresponsegatracingvariant0enum
+		return nil
+	}
+	var realtimesessioncreateresponsegatracingvariant1 RealtimeSessionCreateResponseGATracingVariant1
+	if err := json.Unmarshal(data, &realtimesessioncreateresponsegatracingvariant1); err == nil && isNonEmptyRealtimeSessionCreateResponseGATracingRealtimeSessionCreateResponseGATracingVariant1(realtimesessioncreateresponsegatracingvariant1) {
+		u.RealtimeSessionCreateResponseGATracingVariant1 = &realtimesessioncreateresponsegatracingvariant1
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u RealtimeSessionCreateResponseGATracing) MarshalJSON() ([]byte, error) {
+	if u.RealtimeSessionCreateResponseGATracingVariant0Enum != nil {
+		return json.Marshal(u.RealtimeSessionCreateResponseGATracingVariant0Enum)
+	}
+	if u.RealtimeSessionCreateResponseGATracingVariant1 != nil {
+		return json.Marshal(u.RealtimeSessionCreateResponseGATracingVariant1)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyRealtimeSessionCreateResponseGATracingRealtimeSessionCreateResponseGATracingVariant1(v RealtimeSessionCreateResponseGATracingVariant1) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRealtimeSessionCreateResponseGATracing converts an untyped value to RealtimeSessionCreateResponseGATracing.
+func UnmarshalRealtimeSessionCreateResponseGATracing(v any) RealtimeSessionCreateResponseGATracing {
+	b, _ := json.Marshal(v)
+	var result RealtimeSessionCreateResponseGATracing
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
 // RealtimeSessionCreateResponseGAToolsItem represents a union type.
 type RealtimeSessionCreateResponseGAToolsItem struct {
 	RealtimeFunctionTool *RealtimeFunctionTool
@@ -661,6 +597,19 @@ func (u *RealtimeSessionCreateResponseGAToolsItem) UnmarshalJSON(data []byte) er
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeFunctionTool
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeFunctionTool = &lossless0
+			return nil
+		}
+		var lossless1 MCPTool
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MCPTool = &lossless1
+			return nil
 		}
 	}
 	var realtimefunctiontool RealtimeFunctionTool
@@ -698,4 +647,22 @@ func isNonEmptyRealtimeSessionCreateResponseGAToolsItemRealtimeFunctionTool(v Re
 func isNonEmptyRealtimeSessionCreateResponseGAToolsItemMCPTool(v MCPTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRealtimeSessionCreateResponseGAToolsItem converts an untyped value to RealtimeSessionCreateResponseGAToolsItem.
+func UnmarshalRealtimeSessionCreateResponseGAToolsItem(v any) RealtimeSessionCreateResponseGAToolsItem {
+	b, _ := json.Marshal(v)
+	var result RealtimeSessionCreateResponseGAToolsItem
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// RealtimeSessionCreateResponseGAToolChoice represents a union type.
+type RealtimeSessionCreateResponseGAToolChoice struct {
+	ToolChoiceOptions  *ToolChoiceOptions
+	ToolChoiceFunction *ToolChoiceFunction
+	ToolChoiceMCP      *ToolChoiceMCP
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
 }

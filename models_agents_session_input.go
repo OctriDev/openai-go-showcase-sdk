@@ -326,6 +326,29 @@ func (u *SessionInputParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 SessionInputParamAgentSessionInputComputerUseApprovalRequestResult
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.SessionInputParamAgentSessionInputComputerUseApprovalRequestResult = &lossless0
+			return nil
+		}
+		var lossless1 SessionInputParamAgentSessionInputMessage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SessionInputParamAgentSessionInputMessage = &lossless1
+			return nil
+		}
+		var lossless2 SessionInputParamAgentSessionInputCancel
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.SessionInputParamAgentSessionInputCancel = &lossless2
+			return nil
+		}
+		var lossless3 SessionInputParamAgentSessionInputToolResult
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.SessionInputParamAgentSessionInputToolResult = &lossless3
+			return nil
+		}
+	}
 	var sessioninputparamagentsessioninputcomputeruseapprovalrequestresult SessionInputParamAgentSessionInputComputerUseApprovalRequestResult
 	if err := json.Unmarshal(data, &sessioninputparamagentsessioninputcomputeruseapprovalrequestresult); err == nil && isNonEmptySessionInputParamSessionInputParamAgentSessionInputComputerUseApprovalRequestResult(sessioninputparamagentsessioninputcomputeruseapprovalrequestresult) {
 		u.SessionInputParamAgentSessionInputComputerUseApprovalRequestResult = &sessioninputparamagentsessioninputcomputeruseapprovalrequestresult

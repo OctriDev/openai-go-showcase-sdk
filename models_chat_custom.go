@@ -296,6 +296,19 @@ func (u *CustomToolChatCompletionsCustomFormat) UnmarshalJSON(data []byte) error
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CustomToolChatCompletionsCustomFormatVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CustomToolChatCompletionsCustomFormatVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 CustomToolChatCompletionsCustomFormatVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CustomToolChatCompletionsCustomFormatVariant1 = &lossless1
+			return nil
+		}
+	}
 	var customtoolchatcompletionscustomformatvariant0 CustomToolChatCompletionsCustomFormatVariant0
 	if err := json.Unmarshal(data, &customtoolchatcompletionscustomformatvariant0); err == nil && isNonEmptyCustomToolChatCompletionsCustomFormatCustomToolChatCompletionsCustomFormatVariant0(customtoolchatcompletionscustomformatvariant0) {
 		u.CustomToolChatCompletionsCustomFormatVariant0 = &customtoolchatcompletionscustomformatvariant0

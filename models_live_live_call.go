@@ -44,7 +44,7 @@ func NewLiveCallAcceptRequest(fields LiveCallAcceptRequest) (*LiveCallAcceptRequ
 // LiveCallAcceptSession Startup configuration for accepting an incoming Live SIP call. Follow the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) when writing frontend and backend instructions.
 type LiveCallAcceptSession struct {
 	// Model The Live model to use for the accepted call.
-	Model ModelIdsLive `json:"model"`
+	Model string `json:"model"`
 	// Instructions Optional `string` value serialized in the `instructions` wire field.
 	Instructions *NullableValue[string] `json:"instructions,omitempty"`
 	// Audio Startup audio output configuration. SIP negotiates the media format; audio.format is only accepted for primary WebSockets. Voice cannot change after startup.
@@ -76,6 +76,9 @@ func (value *LiveCallAcceptSession) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if err := ValidateNotNull(rawFields, []string{"model", "type"}); err != nil {
+		return err
+	}
+	if err := ValidateLength("model", value.Model, LengthOpts{Min: Ptr[int](1)}); err != nil {
 		return err
 	}
 	if func() bool { _, ok := rawFields["triggers"]; return ok }() {

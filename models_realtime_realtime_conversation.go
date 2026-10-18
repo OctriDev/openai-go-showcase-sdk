@@ -82,6 +82,54 @@ func (u *RealtimeConversationItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RealtimeConversationItemMessageSystem
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RealtimeConversationItemMessageSystem = &lossless0
+			return nil
+		}
+		var lossless1 RealtimeConversationItemMessageUser
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RealtimeConversationItemMessageUser = &lossless1
+			return nil
+		}
+		var lossless2 RealtimeConversationItemMessageAssistant
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RealtimeConversationItemMessageAssistant = &lossless2
+			return nil
+		}
+		var lossless3 RealtimeConversationItemFunctionCall
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.RealtimeConversationItemFunctionCall = &lossless3
+			return nil
+		}
+		var lossless4 RealtimeConversationItemFunctionCallOutput
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.RealtimeConversationItemFunctionCallOutput = &lossless4
+			return nil
+		}
+		var lossless5 RealtimeMCPApprovalResponse
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.RealtimeMCPApprovalResponse = &lossless5
+			return nil
+		}
+		var lossless6 RealtimeMCPListTools
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.RealtimeMCPListTools = &lossless6
+			return nil
+		}
+		var lossless7 RealtimeMCPToolCall
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.RealtimeMCPToolCall = &lossless7
+			return nil
+		}
+		var lossless8 RealtimeMCPApprovalRequest
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.RealtimeMCPApprovalRequest = &lossless8
+			return nil
+		}
+	}
 	var realtimeconversationitemmessagesystem RealtimeConversationItemMessageSystem
 	if err := json.Unmarshal(data, &realtimeconversationitemmessagesystem); err == nil && isNonEmptyRealtimeConversationItemRealtimeConversationItemMessageSystem(realtimeconversationitemmessagesystem) {
 		u.RealtimeConversationItemMessageSystem = &realtimeconversationitemmessagesystem
@@ -647,47 +695,3 @@ type RealtimeConversationItemMessageUser struct {
 	// Content The content of the message.
 	Content []RealtimeConversationItemMessageUserContent `json:"content"`
 }
-
-func (value *RealtimeConversationItemMessageUser) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"message"}); err != nil {
-		return err
-	}
-	type RealtimeConversationItemMessageUserAlias RealtimeConversationItemMessageUser
-	var decoded RealtimeConversationItemMessageUserAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeConversationItemMessageUser(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "role", "content"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "role", "content"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeConversationItemMessageUser returns a validated RealtimeConversationItemMessageUser built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeConversationItemMessageUser(fields RealtimeConversationItemMessageUser) (*RealtimeConversationItemMessageUser, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeConversationItemMessageUserObjectEnum Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item.
-type RealtimeConversationItemMessageUserObjectEnum string
-
-const (
-	RealtimeConversationItemMessageUserObjectEnumRealtimeItem RealtimeConversationItemMessageUserObjectEnum = "realtime.item"
-)
-
-// RealtimeConversationItemMessageUserTypeEnum The type of the item. Always `message`.
-type RealtimeConversationItemMessageUserTypeEnum string
-
-const (
-	RealtimeConversationItemMessageUserTypeEnumMessage RealtimeConversationItemMessageUserTypeEnum = "message"
-)

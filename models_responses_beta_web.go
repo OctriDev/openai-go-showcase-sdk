@@ -609,6 +609,24 @@ func (u *BetaWebSearchToolCallAction) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaWebSearchActionSearch
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaWebSearchActionSearch = &lossless0
+			return nil
+		}
+		var lossless1 BetaWebSearchActionOpenPage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaWebSearchActionOpenPage = &lossless1
+			return nil
+		}
+		var lossless2 BetaWebSearchActionFind
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaWebSearchActionFind = &lossless2
+			return nil
+		}
+	}
 	var betawebsearchactionsearch BetaWebSearchActionSearch
 	if err := json.Unmarshal(data, &betawebsearchactionsearch); err == nil && isNonEmptyBetaWebSearchToolCallActionBetaWebSearchActionSearch(betawebsearchactionsearch) {
 		u.BetaWebSearchActionSearch = &betawebsearchactionsearch

@@ -3,7 +3,67 @@
 
 package sdk
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
+
+// LiveSessionCreateResponseTransportVariant1 The SIP transport. Trunk credentials and SDP are not returned.
+type LiveSessionCreateResponseTransportVariant1 struct {
+	// Type The transport used for the Live session. Always `sip`.
+	Type LiveSessionCreateResponseTransportVariant1TypeEnum `json:"type"`
+}
+
+func (value *LiveSessionCreateResponseTransportVariant1) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"sip"}); err != nil {
+		return err
+	}
+	type LiveSessionCreateResponseTransportVariant1Alias LiveSessionCreateResponseTransportVariant1
+	var decoded LiveSessionCreateResponseTransportVariant1Alias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = LiveSessionCreateResponseTransportVariant1(decoded)
+	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewLiveSessionCreateResponseTransportVariant1 returns a validated LiveSessionCreateResponseTransportVariant1 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewLiveSessionCreateResponseTransportVariant1(fields LiveSessionCreateResponseTransportVariant1) (*LiveSessionCreateResponseTransportVariant1, error) {
+	return ConstructModel(fields)
+}
+
+// LiveSessionCreateResponseTransportVariant1TypeEnum The transport used for the Live session. Always `sip`.
+type LiveSessionCreateResponseTransportVariant1TypeEnum string
+
+const (
+	LiveSessionCreateResponseTransportVariant1TypeEnumSip LiveSessionCreateResponseTransportVariant1TypeEnum = "sip"
+)
+
+func (value *LiveSessionCreateResponseTransportVariant1TypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "sip":
+		*value = LiveSessionCreateResponseTransportVariant1TypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "LiveSessionCreateResponseTransportVariant1TypeEnum", Code: "enum", Message: fmt.Sprintf("unknown LiveSessionCreateResponseTransportVariant1TypeEnum: %v", raw)}
+	}
+}
 
 // LiveSessionCreateResponseTransport represents a union type.
 type LiveSessionCreateResponseTransport struct {
@@ -42,6 +102,19 @@ func (u *LiveSessionCreateResponseTransport) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveWebRTCTransport
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveWebRTCTransport = &lossless0
+			return nil
+		}
+		var lossless1 LiveSessionCreateResponseTransportVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveSessionCreateResponseTransportVariant1 = &lossless1
+			return nil
 		}
 	}
 	var livewebrtctransport LiveWebRTCTransport
@@ -124,6 +197,19 @@ func (u *LiveSessionCreateRequestTransportRequest) UnmarshalJSON(data []byte) er
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveWebRTCTransport
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveWebRTCTransport = &lossless0
+			return nil
+		}
+		var lossless1 LiveSIPTransportRequest
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveSIPTransportRequest = &lossless1
+			return nil
 		}
 	}
 	var livewebrtctransport LiveWebRTCTransport

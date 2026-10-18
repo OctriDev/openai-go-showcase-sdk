@@ -247,6 +247,144 @@ func (u *LiveServerEvent2) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveSessionStarted
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveSessionStarted = &lossless0
+			return nil
+		}
+		var lossless1 LiveSessionUpdated
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveSessionUpdated = &lossless1
+			return nil
+		}
+		var lossless2 LiveInputAudioMuted
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveInputAudioMuted = &lossless2
+			return nil
+		}
+		var lossless3 LiveInputAudioUnmuted
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.LiveInputAudioUnmuted = &lossless3
+			return nil
+		}
+		var lossless4 LiveOutputAudioFixturePlaying
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.LiveOutputAudioFixturePlaying = &lossless4
+			return nil
+		}
+		var lossless5 LiveOutputAudioFixturePlayed
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.LiveOutputAudioFixturePlayed = &lossless5
+			return nil
+		}
+		var lossless6 LiveInstructionsAppended
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.LiveInstructionsAppended = &lossless6
+			return nil
+		}
+		var lossless7 LiveThinkingAppended
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.LiveThinkingAppended = &lossless7
+			return nil
+		}
+		var lossless8 LiveCommentaryAppended
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.LiveCommentaryAppended = &lossless8
+			return nil
+		}
+		var lossless9 LiveInputAudioAppend
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.LiveInputAudioAppend = &lossless9
+			return nil
+		}
+		var lossless10 LiveOutputAudioDelta
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.LiveOutputAudioDelta = &lossless10
+			return nil
+		}
+		var lossless11 LiveInputTranscriptDelta
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.LiveInputTranscriptDelta = &lossless11
+			return nil
+		}
+		var lossless12 LiveOutputTranscriptDelta
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.LiveOutputTranscriptDelta = &lossless12
+			return nil
+		}
+		var lossless13 LiveDelegationCreated
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.LiveDelegationCreated = &lossless13
+			return nil
+		}
+		var lossless14 LiveDecisionEvent
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.LiveDecisionEvent = &lossless14
+			return nil
+		}
+		var lossless15 LiveDecisionItemCreated
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.LiveDecisionItemCreated = &lossless15
+			return nil
+		}
+		var lossless16 LiveDecisionItemDeleted
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.LiveDecisionItemDeleted = &lossless16
+			return nil
+		}
+		var lossless17 LiveResponseEvent
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.LiveResponseEvent = &lossless17
+			return nil
+		}
+		var lossless18 LiveSessionUsageUpdated
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.LiveSessionUsageUpdated = &lossless18
+			return nil
+		}
+		var lossless19 LiveSessionClosed
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.LiveSessionClosed = &lossless19
+			return nil
+		}
+		var lossless20 LiveErrorEvent
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.LiveErrorEvent = &lossless20
+			return nil
+		}
+		var lossless21 LiveInfoEvent
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.LiveInfoEvent = &lossless21
+			return nil
+		}
+		var lossless22 LiveTransportDTMFReceived
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.LiveTransportDTMFReceived = &lossless22
+			return nil
+		}
+		var lossless23 LiveTransportDTMFSend
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.LiveTransportDTMFSend = &lossless23
+			return nil
+		}
+		var lossless24 LiveTransportRinging
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.LiveTransportRinging = &lossless24
+			return nil
+		}
+		var lossless25 LiveTransportAnswered
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.LiveTransportAnswered = &lossless25
+			return nil
+		}
+		var lossless26 LiveTransportFailed
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.LiveTransportFailed = &lossless26
+			return nil
+		}
+	}
 	var livesessionstarted LiveSessionStarted
 	if err := json.Unmarshal(data, &livesessionstarted); err == nil && isNonEmptyLiveServerEvent2LiveSessionStarted(livesessionstarted) {
 		u.LiveSessionStarted = &livesessionstarted
@@ -595,77 +733,4 @@ func isNonEmptyLiveServerEvent2LiveOutputTranscriptDelta(v LiveOutputTranscriptD
 func isNonEmptyLiveServerEvent2LiveDelegationCreated(v LiveDelegationCreated) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveDecisionEvent(v LiveDecisionEvent) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveDecisionItemCreated(v LiveDecisionItemCreated) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveDecisionItemDeleted(v LiveDecisionItemDeleted) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveResponseEvent(v LiveResponseEvent) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveSessionUsageUpdated(v LiveSessionUsageUpdated) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveSessionClosed(v LiveSessionClosed) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveErrorEvent(v LiveErrorEvent) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveInfoEvent(v LiveInfoEvent) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveTransportDTMFReceived(v LiveTransportDTMFReceived) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveTransportDTMFSend(v LiveTransportDTMFSend) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveTransportRinging(v LiveTransportRinging) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveTransportAnswered(v LiveTransportAnswered) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyLiveServerEvent2LiveTransportFailed(v LiveTransportFailed) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalLiveServerEvent2 converts an untyped value to LiveServerEvent2.
-func UnmarshalLiveServerEvent2(v any) LiveServerEvent2 {
-	b, _ := json.Marshal(v)
-	var result LiveServerEvent2
-	_ = json.Unmarshal(b, &result)
-	return result
 }

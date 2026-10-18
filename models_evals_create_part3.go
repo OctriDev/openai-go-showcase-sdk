@@ -8,6 +8,146 @@ import (
 	"fmt"
 )
 
+// CreateEvalRequestDataSourceConfig represents a union type.
+type CreateEvalRequestDataSourceConfig struct {
+	CreateEvalCustomDataSourceConfig            *CreateEvalCustomDataSourceConfig
+	CreateEvalLogsDataSourceConfig              *CreateEvalLogsDataSourceConfig
+	CreateEvalStoredCompletionsDataSourceConfig *CreateEvalStoredCompletionsDataSourceConfig
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
+func (u *CreateEvalRequestDataSourceConfig) UnmarshalJSON(data []byte) error {
+	*u = CreateEvalRequestDataSourceConfig{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "custom":
+					var createevalcustomdatasourceconfig CreateEvalCustomDataSourceConfig
+					if err := json.Unmarshal(data, &createevalcustomdatasourceconfig); err != nil {
+						return err
+					}
+					u.CreateEvalCustomDataSourceConfig = &createevalcustomdatasourceconfig
+					return nil
+				case "logs":
+					var createevallogsdatasourceconfig CreateEvalLogsDataSourceConfig
+					if err := json.Unmarshal(data, &createevallogsdatasourceconfig); err != nil {
+						return err
+					}
+					u.CreateEvalLogsDataSourceConfig = &createevallogsdatasourceconfig
+					return nil
+				case "stored_completions":
+					var createevalstoredcompletionsdatasourceconfig CreateEvalStoredCompletionsDataSourceConfig
+					if err := json.Unmarshal(data, &createevalstoredcompletionsdatasourceconfig); err != nil {
+						return err
+					}
+					u.CreateEvalStoredCompletionsDataSourceConfig = &createevalstoredcompletionsdatasourceconfig
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateEvalCustomDataSourceConfig
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateEvalCustomDataSourceConfig = &lossless0
+			return nil
+		}
+		var lossless1 CreateEvalLogsDataSourceConfig
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateEvalLogsDataSourceConfig = &lossless1
+			return nil
+		}
+		var lossless2 CreateEvalStoredCompletionsDataSourceConfig
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.CreateEvalStoredCompletionsDataSourceConfig = &lossless2
+			return nil
+		}
+	}
+	var createevalcustomdatasourceconfig CreateEvalCustomDataSourceConfig
+	if err := json.Unmarshal(data, &createevalcustomdatasourceconfig); err == nil && isNonEmptyCreateEvalRequestDataSourceConfigCreateEvalCustomDataSourceConfig(createevalcustomdatasourceconfig) {
+		u.CreateEvalCustomDataSourceConfig = &createevalcustomdatasourceconfig
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var createevallogsdatasourceconfig CreateEvalLogsDataSourceConfig
+	if err := json.Unmarshal(data, &createevallogsdatasourceconfig); err == nil && isNonEmptyCreateEvalRequestDataSourceConfigCreateEvalLogsDataSourceConfig(createevallogsdatasourceconfig) {
+		u.CreateEvalLogsDataSourceConfig = &createevallogsdatasourceconfig
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var createevalstoredcompletionsdatasourceconfig CreateEvalStoredCompletionsDataSourceConfig
+	if err := json.Unmarshal(data, &createevalstoredcompletionsdatasourceconfig); err == nil && isNonEmptyCreateEvalRequestDataSourceConfigCreateEvalStoredCompletionsDataSourceConfig(createevalstoredcompletionsdatasourceconfig) {
+		u.CreateEvalStoredCompletionsDataSourceConfig = &createevalstoredcompletionsdatasourceconfig
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateEvalRequestDataSourceConfig) MarshalJSON() ([]byte, error) {
+	if u.CreateEvalCustomDataSourceConfig != nil {
+		return json.Marshal(u.CreateEvalCustomDataSourceConfig)
+	}
+	if u.CreateEvalLogsDataSourceConfig != nil {
+		return json.Marshal(u.CreateEvalLogsDataSourceConfig)
+	}
+	if u.CreateEvalStoredCompletionsDataSourceConfig != nil {
+		return json.Marshal(u.CreateEvalStoredCompletionsDataSourceConfig)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateEvalRequestDataSourceConfigCreateEvalCustomDataSourceConfig(v CreateEvalCustomDataSourceConfig) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateEvalRequestDataSourceConfigCreateEvalLogsDataSourceConfig(v CreateEvalLogsDataSourceConfig) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateEvalRequestDataSourceConfigCreateEvalStoredCompletionsDataSourceConfig(v CreateEvalStoredCompletionsDataSourceConfig) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateEvalRequestDataSourceConfig converts an untyped value to CreateEvalRequestDataSourceConfig.
+func UnmarshalCreateEvalRequestDataSourceConfig(v any) CreateEvalRequestDataSourceConfig {
+	b, _ := json.Marshal(v)
+	var result CreateEvalRequestDataSourceConfig
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// CreateEvalRequestTestingCriteriaItem represents a union type.
+type CreateEvalRequestTestingCriteriaItem struct {
+	CreateEvalLabelModelGrader *CreateEvalLabelModelGrader
+	EvalGraderStringCheck      *EvalGraderStringCheck
+	EvalGraderTextSimilarity   *EvalGraderTextSimilarity
+	EvalGraderPython           *EvalGraderPython
+	EvalGraderScoreModel       *EvalGraderScoreModel
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
 func (u *CreateEvalRequestTestingCriteriaItem) UnmarshalJSON(data []byte) error {
 	*u = CreateEvalRequestTestingCriteriaItem{}
 	var refusal error
@@ -57,6 +197,34 @@ func (u *CreateEvalRequestTestingCriteriaItem) UnmarshalJSON(data []byte) error 
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateEvalLabelModelGrader
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateEvalLabelModelGrader = &lossless0
+			return nil
+		}
+		var lossless1 EvalGraderStringCheck
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EvalGraderStringCheck = &lossless1
+			return nil
+		}
+		var lossless2 EvalGraderTextSimilarity
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.EvalGraderTextSimilarity = &lossless2
+			return nil
+		}
+		var lossless3 EvalGraderPython
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.EvalGraderPython = &lossless3
+			return nil
+		}
+		var lossless4 EvalGraderScoreModel
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.EvalGraderScoreModel = &lossless4
+			return nil
 		}
 	}
 	var createevallabelmodelgrader CreateEvalLabelModelGrader
@@ -157,7 +325,7 @@ type CreateEvalResponsesRunDataSourceInputMessagesVariant0 struct {
 	// Type The type of input messages. Always `template`.
 	Type CreateEvalResponsesRunDataSourceInputMessagesVariant0TypeEnum `json:"type"`
 	// Template A list of chat messages forming the prompt or context. May include variable references to the `item` namespace, ie {{item.name}}.
-	Template []TemplateItem2 `json:"template"`
+	Template []CreateEvalResponsesRunDataSourceInputMessagesVariant0Template `json:"template"`
 }
 
 func (value *CreateEvalResponsesRunDataSourceInputMessagesVariant0) UnmarshalJSON(data []byte) error {
@@ -209,6 +377,108 @@ func (value *CreateEvalResponsesRunDataSourceInputMessagesVariant0TypeEnum) Unma
 	default:
 		return &SdkValidationError{Field: "CreateEvalResponsesRunDataSourceInputMessagesVariant0TypeEnum", Code: "enum", Message: fmt.Sprintf("unknown CreateEvalResponsesRunDataSourceInputMessagesVariant0TypeEnum: %v", raw)}
 	}
+}
+
+// CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 Required object value serialized in the `template[]` wire field.
+type CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 struct {
+	// Role The role of the message (e.g. "system", "assistant", "user").
+	Role string `json:"role"`
+	// Content The content of the message.
+	Content string `json:"content"`
+}
+
+func (value *CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0) UnmarshalJSON(data []byte) error {
+	type CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0Alias CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0
+	var decoded CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0Alias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"role", "content"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"role", "content"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 returns a validated CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0(fields CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0) (*CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0, error) {
+	return ConstructModel(fields)
+}
+
+// CreateEvalResponsesRunDataSourceInputMessagesVariant0Template represents a union type.
+type CreateEvalResponsesRunDataSourceInputMessagesVariant0Template struct {
+	CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 *CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0
+	EvalItem                                                              *EvalItem
+}
+
+func (u *CreateEvalResponsesRunDataSourceInputMessagesVariant0Template) UnmarshalJSON(data []byte) error {
+	*u = CreateEvalResponsesRunDataSourceInputMessagesVariant0Template{}
+	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 EvalItem
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EvalItem = &lossless1
+			return nil
+		}
+	}
+	var createevalresponsesrundatasourceinputmessagesvariant0templatevariant0 CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0
+	if err := json.Unmarshal(data, &createevalresponsesrundatasourceinputmessagesvariant0templatevariant0); err == nil && isNonEmptyCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0(createevalresponsesrundatasourceinputmessagesvariant0templatevariant0) {
+		u.CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 = &createevalresponsesrundatasourceinputmessagesvariant0templatevariant0
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var evalitem EvalItem
+	if err := json.Unmarshal(data, &evalitem); err == nil && isNonEmptyCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateEvalItem(evalitem) {
+		u.EvalItem = &evalitem
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateEvalResponsesRunDataSourceInputMessagesVariant0Template) MarshalJSON() ([]byte, error) {
+	if u.CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0 != nil {
+		return json.Marshal(u.CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0)
+	}
+	if u.EvalItem != nil {
+		return json.Marshal(u.EvalItem)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0(v CreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateVariant0) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateEvalResponsesRunDataSourceInputMessagesVariant0TemplateEvalItem(v EvalItem) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateEvalResponsesRunDataSourceInputMessagesVariant0Template converts an untyped value to CreateEvalResponsesRunDataSourceInputMessagesVariant0Template.
+func UnmarshalCreateEvalResponsesRunDataSourceInputMessagesVariant0Template(v any) CreateEvalResponsesRunDataSourceInputMessagesVariant0Template {
+	b, _ := json.Marshal(v)
+	var result CreateEvalResponsesRunDataSourceInputMessagesVariant0Template
+	_ = json.Unmarshal(b, &result)
+	return result
 }
 
 // CreateEvalResponsesRunDataSourceInputMessagesVariant1 Optional object value serialized in the `input_messages` wire field.
@@ -303,6 +573,19 @@ func (u *CreateEvalResponsesRunDataSourceInputMessages) UnmarshalJSON(data []byt
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateEvalResponsesRunDataSourceInputMessagesVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateEvalResponsesRunDataSourceInputMessagesVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 CreateEvalResponsesRunDataSourceInputMessagesVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateEvalResponsesRunDataSourceInputMessagesVariant1 = &lossless1
+			return nil
+		}
+	}
 	var createevalresponsesrundatasourceinputmessagesvariant0 CreateEvalResponsesRunDataSourceInputMessagesVariant0
 	if err := json.Unmarshal(data, &createevalresponsesrundatasourceinputmessagesvariant0); err == nil && isNonEmptyCreateEvalResponsesRunDataSourceInputMessagesCreateEvalResponsesRunDataSourceInputMessagesVariant0(createevalresponsesrundatasourceinputmessagesvariant0) {
 		u.CreateEvalResponsesRunDataSourceInputMessagesVariant0 = &createevalresponsesrundatasourceinputmessagesvariant0
@@ -356,214 +639,4 @@ type CreateEvalResponsesRunDataSourceSource struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *CreateEvalResponsesRunDataSourceSource) UnmarshalJSON(data []byte) error {
-	*u = CreateEvalResponsesRunDataSourceSource{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "file_content":
-					var evaljsonlfilecontentsource EvalJsonlFileContentSource
-					if err := json.Unmarshal(data, &evaljsonlfilecontentsource); err != nil {
-						return err
-					}
-					u.EvalJsonlFileContentSource = &evaljsonlfilecontentsource
-					return nil
-				case "file_id":
-					var evaljsonlfileidsource EvalJsonlFileIdSource
-					if err := json.Unmarshal(data, &evaljsonlfileidsource); err != nil {
-						return err
-					}
-					u.EvalJsonlFileIdSource = &evaljsonlfileidsource
-					return nil
-				case "responses":
-					var evalresponsessource EvalResponsesSource
-					if err := json.Unmarshal(data, &evalresponsessource); err != nil {
-						return err
-					}
-					u.EvalResponsesSource = &evalresponsessource
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var evaljsonlfilecontentsource EvalJsonlFileContentSource
-	if err := json.Unmarshal(data, &evaljsonlfilecontentsource); err == nil && isNonEmptyCreateEvalResponsesRunDataSourceSourceEvalJsonlFileContentSource(evaljsonlfilecontentsource) {
-		u.EvalJsonlFileContentSource = &evaljsonlfilecontentsource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var evaljsonlfileidsource EvalJsonlFileIdSource
-	if err := json.Unmarshal(data, &evaljsonlfileidsource); err == nil && isNonEmptyCreateEvalResponsesRunDataSourceSourceEvalJsonlFileIdSource(evaljsonlfileidsource) {
-		u.EvalJsonlFileIdSource = &evaljsonlfileidsource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var evalresponsessource EvalResponsesSource
-	if err := json.Unmarshal(data, &evalresponsessource); err == nil && isNonEmptyCreateEvalResponsesRunDataSourceSourceEvalResponsesSource(evalresponsessource) {
-		u.EvalResponsesSource = &evalresponsessource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u CreateEvalResponsesRunDataSourceSource) MarshalJSON() ([]byte, error) {
-	if u.EvalJsonlFileContentSource != nil {
-		return json.Marshal(u.EvalJsonlFileContentSource)
-	}
-	if u.EvalJsonlFileIdSource != nil {
-		return json.Marshal(u.EvalJsonlFileIdSource)
-	}
-	if u.EvalResponsesSource != nil {
-		return json.Marshal(u.EvalResponsesSource)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyCreateEvalResponsesRunDataSourceSourceEvalJsonlFileContentSource(v EvalJsonlFileContentSource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateEvalResponsesRunDataSourceSourceEvalJsonlFileIdSource(v EvalJsonlFileIdSource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateEvalResponsesRunDataSourceSourceEvalResponsesSource(v EvalResponsesSource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalCreateEvalResponsesRunDataSourceSource converts an untyped value to CreateEvalResponsesRunDataSourceSource.
-func UnmarshalCreateEvalResponsesRunDataSourceSource(v any) CreateEvalResponsesRunDataSourceSource {
-	b, _ := json.Marshal(v)
-	var result CreateEvalResponsesRunDataSourceSource
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// CreateEvalRunRequestDataSource represents a union type.
-type CreateEvalRunRequestDataSource struct {
-	CreateEvalJsonlRunDataSource       *CreateEvalJsonlRunDataSource
-	CreateEvalCompletionsRunDataSource *CreateEvalCompletionsRunDataSource
-	CreateEvalResponsesRunDataSource   *CreateEvalResponsesRunDataSource
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}
-
-func (u *CreateEvalRunRequestDataSource) UnmarshalJSON(data []byte) error {
-	*u = CreateEvalRunRequestDataSource{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "jsonl":
-					var createevaljsonlrundatasource CreateEvalJsonlRunDataSource
-					if err := json.Unmarshal(data, &createevaljsonlrundatasource); err != nil {
-						return err
-					}
-					u.CreateEvalJsonlRunDataSource = &createevaljsonlrundatasource
-					return nil
-				case "completions":
-					var createevalcompletionsrundatasource CreateEvalCompletionsRunDataSource
-					if err := json.Unmarshal(data, &createevalcompletionsrundatasource); err != nil {
-						return err
-					}
-					u.CreateEvalCompletionsRunDataSource = &createevalcompletionsrundatasource
-					return nil
-				case "responses":
-					var createevalresponsesrundatasource CreateEvalResponsesRunDataSource
-					if err := json.Unmarshal(data, &createevalresponsesrundatasource); err != nil {
-						return err
-					}
-					u.CreateEvalResponsesRunDataSource = &createevalresponsesrundatasource
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var createevaljsonlrundatasource CreateEvalJsonlRunDataSource
-	if err := json.Unmarshal(data, &createevaljsonlrundatasource); err == nil && isNonEmptyCreateEvalRunRequestDataSourceCreateEvalJsonlRunDataSource(createevaljsonlrundatasource) {
-		u.CreateEvalJsonlRunDataSource = &createevaljsonlrundatasource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var createevalcompletionsrundatasource CreateEvalCompletionsRunDataSource
-	if err := json.Unmarshal(data, &createevalcompletionsrundatasource); err == nil && isNonEmptyCreateEvalRunRequestDataSourceCreateEvalCompletionsRunDataSource(createevalcompletionsrundatasource) {
-		u.CreateEvalCompletionsRunDataSource = &createevalcompletionsrundatasource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var createevalresponsesrundatasource CreateEvalResponsesRunDataSource
-	if err := json.Unmarshal(data, &createevalresponsesrundatasource); err == nil && isNonEmptyCreateEvalRunRequestDataSourceCreateEvalResponsesRunDataSource(createevalresponsesrundatasource) {
-		u.CreateEvalResponsesRunDataSource = &createevalresponsesrundatasource
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u CreateEvalRunRequestDataSource) MarshalJSON() ([]byte, error) {
-	if u.CreateEvalJsonlRunDataSource != nil {
-		return json.Marshal(u.CreateEvalJsonlRunDataSource)
-	}
-	if u.CreateEvalCompletionsRunDataSource != nil {
-		return json.Marshal(u.CreateEvalCompletionsRunDataSource)
-	}
-	if u.CreateEvalResponsesRunDataSource != nil {
-		return json.Marshal(u.CreateEvalResponsesRunDataSource)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyCreateEvalRunRequestDataSourceCreateEvalJsonlRunDataSource(v CreateEvalJsonlRunDataSource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateEvalRunRequestDataSourceCreateEvalCompletionsRunDataSource(v CreateEvalCompletionsRunDataSource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyCreateEvalRunRequestDataSourceCreateEvalResponsesRunDataSource(v CreateEvalResponsesRunDataSource) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalCreateEvalRunRequestDataSource converts an untyped value to CreateEvalRunRequestDataSource.
-func UnmarshalCreateEvalRunRequestDataSource(v any) CreateEvalRunRequestDataSource {
-	b, _ := json.Marshal(v)
-	var result CreateEvalRunRequestDataSource
-	_ = json.Unmarshal(b, &result)
-	return result
 }

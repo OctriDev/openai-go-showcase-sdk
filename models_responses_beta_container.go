@@ -566,6 +566,19 @@ func (u *BetaContainerAutoParamNetworkPolicy) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaContainerNetworkPolicyDisabledParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaContainerNetworkPolicyDisabledParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaContainerNetworkPolicyAllowlistParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaContainerNetworkPolicyAllowlistParam = &lossless1
+			return nil
+		}
+	}
 	var betacontainernetworkpolicydisabledparam BetaContainerNetworkPolicyDisabledParam
 	if err := json.Unmarshal(data, &betacontainernetworkpolicydisabledparam); err == nil && isNonEmptyBetaContainerAutoParamNetworkPolicyBetaContainerNetworkPolicyDisabledParam(betacontainernetworkpolicydisabledparam) {
 		u.BetaContainerNetworkPolicyDisabledParam = &betacontainernetworkpolicydisabledparam
@@ -653,6 +666,19 @@ func (u *BetaContainerAutoParamSkillsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaSkillReferenceParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaSkillReferenceParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaInlineSkillParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaInlineSkillParam = &lossless1
+			return nil
+		}
+	}
 	var betaskillreferenceparam BetaSkillReferenceParam
 	if err := json.Unmarshal(data, &betaskillreferenceparam); err == nil && isNonEmptyBetaContainerAutoParamSkillsItemBetaSkillReferenceParam(betaskillreferenceparam) {
 		u.BetaSkillReferenceParam = &betaskillreferenceparam
@@ -686,17 +712,4 @@ func (u BetaContainerAutoParamSkillsItem) MarshalJSON() ([]byte, error) {
 func isNonEmptyBetaContainerAutoParamSkillsItemBetaSkillReferenceParam(v BetaSkillReferenceParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaContainerAutoParamSkillsItemBetaInlineSkillParam(v BetaInlineSkillParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalBetaContainerAutoParamSkillsItem converts an untyped value to BetaContainerAutoParamSkillsItem.
-func UnmarshalBetaContainerAutoParamSkillsItem(v any) BetaContainerAutoParamSkillsItem {
-	b, _ := json.Marshal(v)
-	var result BetaContainerAutoParamSkillsItem
-	_ = json.Unmarshal(b, &result)
-	return result
 }

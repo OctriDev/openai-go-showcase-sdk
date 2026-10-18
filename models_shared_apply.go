@@ -666,6 +666,24 @@ func (u *ApplyPatchOperationParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ApplyPatchCreateFileOperationParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ApplyPatchCreateFileOperationParam = &lossless0
+			return nil
+		}
+		var lossless1 ApplyPatchDeleteFileOperationParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ApplyPatchDeleteFileOperationParam = &lossless1
+			return nil
+		}
+		var lossless2 ApplyPatchUpdateFileOperationParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ApplyPatchUpdateFileOperationParam = &lossless2
+			return nil
+		}
+	}
 	var applypatchcreatefileoperationparam ApplyPatchCreateFileOperationParam
 	if err := json.Unmarshal(data, &applypatchcreatefileoperationparam); err == nil && isNonEmptyApplyPatchOperationParamApplyPatchCreateFileOperationParam(applypatchcreatefileoperationparam) {
 		u.ApplyPatchCreateFileOperationParam = &applypatchcreatefileoperationparam
@@ -688,25 +706,4 @@ func (u *ApplyPatchOperationParam) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
-}
-
-func (u ApplyPatchOperationParam) MarshalJSON() ([]byte, error) {
-	if u.ApplyPatchCreateFileOperationParam != nil {
-		return json.Marshal(u.ApplyPatchCreateFileOperationParam)
-	}
-	if u.ApplyPatchDeleteFileOperationParam != nil {
-		return json.Marshal(u.ApplyPatchDeleteFileOperationParam)
-	}
-	if u.ApplyPatchUpdateFileOperationParam != nil {
-		return json.Marshal(u.ApplyPatchUpdateFileOperationParam)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyApplyPatchOperationParamApplyPatchCreateFileOperationParam(v ApplyPatchCreateFileOperationParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

@@ -471,6 +471,19 @@ func (u *ResponseSteerInputItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 UserMessageItemParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.UserMessageItemParam = &lossless0
+			return nil
+		}
+		var lossless1 FunctionCallOutputItemParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.FunctionCallOutputItemParam = &lossless1
+			return nil
+		}
+	}
 	var usermessageitemparam UserMessageItemParam
 	if err := json.Unmarshal(data, &usermessageitemparam); err == nil && isNonEmptyResponseSteerInputItemUserMessageItemParam(usermessageitemparam) {
 		u.UserMessageItemParam = &usermessageitemparam
@@ -697,17 +710,3 @@ type ResponseSteerRequiredInputVariant0TypeEnum string
 const (
 	ResponseSteerRequiredInputVariant0TypeEnumFunctionCallOutput ResponseSteerRequiredInputVariant0TypeEnum = "function_call_output"
 )
-
-func (value *ResponseSteerRequiredInputVariant0TypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "function_call_output":
-		*value = ResponseSteerRequiredInputVariant0TypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "ResponseSteerRequiredInputVariant0TypeEnum", Code: "enum", Message: fmt.Sprintf("unknown ResponseSteerRequiredInputVariant0TypeEnum: %v", raw)}
-	}
-}

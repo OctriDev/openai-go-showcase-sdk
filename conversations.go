@@ -229,14 +229,14 @@ func GetConversationItem(ctx context.Context, clientConfig ClientConfig, params 
 	itemId := params.ItemId
 	include := params.Include
 
-	resp, err := DoUnionCfg[ConversationItem](ctx, &clientConfig, "GET", fmt.Sprintf("/conversations/%s/items/%s", EncodePathSegment(conversationId), EncodePathSegment(itemId)), &RequestOpts{
+	resp, err := DoCfg[ConversationItem](ctx, &clientConfig, "GET", fmt.Sprintf("/conversations/%s/items/%s", EncodePathSegment(conversationId), EncodePathSegment(itemId)), &RequestOpts{
 		Query: map[string]any{
 			"include": QueryValue{Value: include, Style: "form", Explode: true},
 		},
 		OperationID: "GetConversationItem",
 		Errors:      ErrorDecoders{"404": decodeErrorData[ErrorResponse], "429": decodeErrorData[ErrorResponse]},
 		Options:     opts,
-	}, UnmarshalConversationItem)
+	})
 	if err != nil {
 		return nil, err
 	}

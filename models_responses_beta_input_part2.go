@@ -8,6 +8,35 @@ import (
 	"encoding/json"
 )
 
+const (
+	BetaInputMessageRoleEnumUser      BetaInputMessageRoleEnum = "user"
+	BetaInputMessageRoleEnumSystem    BetaInputMessageRoleEnum = "system"
+	BetaInputMessageRoleEnumDeveloper BetaInputMessageRoleEnum = "developer"
+)
+
+// BetaInputMessageStatusEnum The status of item. One of `in_progress`, `completed`, or
+// `incomplete`. Populated when items are returned via API.
+type BetaInputMessageStatusEnum string
+
+const (
+	BetaInputMessageStatusEnumInProgress BetaInputMessageStatusEnum = "in_progress"
+	BetaInputMessageStatusEnumCompleted  BetaInputMessageStatusEnum = "completed"
+	BetaInputMessageStatusEnumIncomplete BetaInputMessageStatusEnum = "incomplete"
+)
+
+// BetaInputMessageContentList is an array alias.
+type BetaInputMessageContentList = []BetaInputContent
+
+// BetaInputContent represents a union type.
+type BetaInputContent struct {
+	BetaInputTextContent  *BetaInputTextContent
+	BetaInputImageContent *BetaInputImageContent
+	BetaInputFileContent  *BetaInputFileContent
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
+
 func (u *BetaInputContent) UnmarshalJSON(data []byte) error {
 	*u = BetaInputContent{}
 	var refusal error
@@ -43,6 +72,24 @@ func (u *BetaInputContent) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaInputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaInputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 BetaInputImageContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaInputImageContent = &lossless1
+			return nil
+		}
+		var lossless2 BetaInputFileContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaInputFileContent = &lossless2
+			return nil
 		}
 	}
 	var betainputtextcontent BetaInputTextContent

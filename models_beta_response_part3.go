@@ -9,6 +9,41 @@ import (
 	"fmt"
 )
 
+func (value *BetaResponseInjectFailedEventError) UnmarshalJSON(data []byte) error {
+	type BetaResponseInjectFailedEventErrorAlias BetaResponseInjectFailedEventError
+	var decoded BetaResponseInjectFailedEventErrorAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = BetaResponseInjectFailedEventError(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"code", "message"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"code", "message"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewBetaResponseInjectFailedEventError returns a validated BetaResponseInjectFailedEventError built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewBetaResponseInjectFailedEventError(fields BetaResponseInjectFailedEventError) (*BetaResponseInjectFailedEventError, error) {
+	return ConstructModel(fields)
+}
+
+// BetaResponseInjectFailedEventErrorCodeEnum A machine-readable error code.
+type BetaResponseInjectFailedEventErrorCodeEnum string
+
+const (
+	BetaResponseInjectFailedEventErrorCodeEnumResponseAlreadyCompleted BetaResponseInjectFailedEventErrorCodeEnum = "response_already_completed"
+	BetaResponseInjectFailedEventErrorCodeEnumResponseNotFound         BetaResponseInjectFailedEventErrorCodeEnum = "response_not_found"
+)
+
 // BetaResponseInjectCreatedEvent Emitted when all injected input items were validated and committed to the
 // active response.
 type BetaResponseInjectCreatedEvent struct {

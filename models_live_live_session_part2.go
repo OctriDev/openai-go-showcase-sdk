@@ -278,6 +278,24 @@ func (u *LiveSessionCreateParamsDelegation) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveClientDelegationParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveClientDelegationParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveResponsesDelegationParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveResponsesDelegationParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveDecisionsDelegationParam2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveDecisionsDelegationParam2 = &lossless2
+			return nil
+		}
+	}
 	var liveclientdelegationparam LiveClientDelegationParam
 	if err := json.Unmarshal(data, &liveclientdelegationparam); err == nil && isNonEmptyLiveSessionCreateParamsDelegationLiveClientDelegationParam(liveclientdelegationparam) {
 		u.LiveClientDelegationParam = &liveclientdelegationparam
@@ -386,6 +404,24 @@ func (u *LiveSessionUpdateParamsDelegation) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveClientDelegationParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveClientDelegationParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveResponsesDelegationUpdateParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveResponsesDelegationUpdateParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveDecisionsDelegationUpdateParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveDecisionsDelegationUpdateParam = &lossless2
+			return nil
 		}
 	}
 	var liveclientdelegationparam LiveClientDelegationParam
@@ -498,6 +534,24 @@ func (u *LiveSessionResourceParamDelegation) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveClientDelegationParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveClientDelegationParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveResponsesDelegationParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveResponsesDelegationParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveDecisionsDelegationParam2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveDecisionsDelegationParam2 = &lossless2
+			return nil
+		}
+	}
 	var liveclientdelegationparam LiveClientDelegationParam
 	if err := json.Unmarshal(data, &liveclientdelegationparam); err == nil && isNonEmptyLiveSessionResourceParamDelegationLiveClientDelegationParam(liveclientdelegationparam) {
 		u.LiveClientDelegationParam = &liveclientdelegationparam
@@ -600,6 +654,19 @@ func (u *LiveSessionCreateRequestTransport) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveWebRTCTransport
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveWebRTCTransport = &lossless0
+			return nil
+		}
+		var lossless1 LiveSIPTransport
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveSIPTransport = &lossless1
+			return nil
+		}
+	}
 	var livewebrtctransport LiveWebRTCTransport
 	if err := json.Unmarshal(data, &livewebrtctransport); err == nil && isNonEmptyLiveSessionCreateRequestTransportLiveWebRTCTransport(livewebrtctransport) {
 		u.LiveWebRTCTransport = &livewebrtctransport
@@ -646,61 +713,4 @@ func UnmarshalLiveSessionCreateRequestTransport(v any) LiveSessionCreateRequestT
 	var result LiveSessionCreateRequestTransport
 	_ = json.Unmarshal(b, &result)
 	return result
-}
-
-// LiveSessionCreateResponseTransportVariant1 The SIP transport. Trunk credentials and SDP are not returned.
-type LiveSessionCreateResponseTransportVariant1 struct {
-	// Type The transport used for the Live session. Always `sip`.
-	Type LiveSessionCreateResponseTransportVariant1TypeEnum `json:"type"`
-}
-
-func (value *LiveSessionCreateResponseTransportVariant1) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"sip"}); err != nil {
-		return err
-	}
-	type LiveSessionCreateResponseTransportVariant1Alias LiveSessionCreateResponseTransportVariant1
-	var decoded LiveSessionCreateResponseTransportVariant1Alias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = LiveSessionCreateResponseTransportVariant1(decoded)
-	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewLiveSessionCreateResponseTransportVariant1 returns a validated LiveSessionCreateResponseTransportVariant1 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewLiveSessionCreateResponseTransportVariant1(fields LiveSessionCreateResponseTransportVariant1) (*LiveSessionCreateResponseTransportVariant1, error) {
-	return ConstructModel(fields)
-}
-
-// LiveSessionCreateResponseTransportVariant1TypeEnum The transport used for the Live session. Always `sip`.
-type LiveSessionCreateResponseTransportVariant1TypeEnum string
-
-const (
-	LiveSessionCreateResponseTransportVariant1TypeEnumSip LiveSessionCreateResponseTransportVariant1TypeEnum = "sip"
-)
-
-func (value *LiveSessionCreateResponseTransportVariant1TypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "sip":
-		*value = LiveSessionCreateResponseTransportVariant1TypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "LiveSessionCreateResponseTransportVariant1TypeEnum", Code: "enum", Message: fmt.Sprintf("unknown LiveSessionCreateResponseTransportVariant1TypeEnum: %v", raw)}
-	}
 }

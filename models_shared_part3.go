@@ -10,69 +10,6 @@ import (
 )
 
 const (
-	RefusalContentTypeEnumRefusal RefusalContentTypeEnum = "refusal"
-)
-
-func (value *RefusalContentTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "refusal":
-		*value = RefusalContentTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RefusalContentTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RefusalContentTypeEnum: %v", raw)}
-	}
-}
-
-// DoubleClickAction A double click action.
-type DoubleClickAction struct {
-	// Type Specifies the event type. For a double click action, this property is always set to `double_click`.
-	Type DoubleClickActionTypeEnum `json:"type"`
-	// X The x-coordinate where the double click occurred.
-	X int64 `json:"x"`
-	// Y The y-coordinate where the double click occurred.
-	Y int64 `json:"y"`
-	// Keys The keys being held while double-clicking.
-	Keys NullableValue[[]string] `json:"keys"`
-}
-
-func (value *DoubleClickAction) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"double_click"}); err != nil {
-		return err
-	}
-	type DoubleClickActionAlias DoubleClickAction
-	var decoded DoubleClickActionAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = DoubleClickAction(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "x", "y", "keys"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "x", "y"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewDoubleClickAction returns a validated DoubleClickAction built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewDoubleClickAction(fields DoubleClickAction) (*DoubleClickAction, error) {
-	return ConstructModel(fields)
-}
-
-// DoubleClickActionTypeEnum Specifies the event type. For a double click action, this property is always set to `double_click`.
-type DoubleClickActionTypeEnum string
-
-const (
 	DoubleClickActionTypeEnumDoubleClick DoubleClickActionTypeEnum = "double_click"
 )
 
@@ -638,4 +575,143 @@ type Filters struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
+}
+
+func (u *Filters) UnmarshalJSON(data []byte) error {
+	*u = Filters{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "eq":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "ne":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "gt":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "gte":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "lt":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "lte":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "in":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "nin":
+					var comparisonfilter ComparisonFilter
+					if err := json.Unmarshal(data, &comparisonfilter); err != nil {
+						return err
+					}
+					u.ComparisonFilter = &comparisonfilter
+					return nil
+				case "and":
+					var compoundfilter CompoundFilter
+					if err := json.Unmarshal(data, &compoundfilter); err != nil {
+						return err
+					}
+					u.CompoundFilter = &compoundfilter
+					return nil
+				case "or":
+					var compoundfilter CompoundFilter
+					if err := json.Unmarshal(data, &compoundfilter); err != nil {
+						return err
+					}
+					u.CompoundFilter = &compoundfilter
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ComparisonFilter
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ComparisonFilter = &lossless0
+			return nil
+		}
+		var lossless1 CompoundFilter
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CompoundFilter = &lossless1
+			return nil
+		}
+	}
+	var comparisonfilter ComparisonFilter
+	if err := json.Unmarshal(data, &comparisonfilter); err == nil && isNonEmptyFiltersComparisonFilter(comparisonfilter) {
+		u.ComparisonFilter = &comparisonfilter
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var compoundfilter CompoundFilter
+	if err := json.Unmarshal(data, &compoundfilter); err == nil && isNonEmptyFiltersCompoundFilter(compoundfilter) {
+		u.CompoundFilter = &compoundfilter
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u Filters) MarshalJSON() ([]byte, error) {
+	if u.ComparisonFilter != nil {
+		return json.Marshal(u.ComparisonFilter)
+	}
+	if u.CompoundFilter != nil {
+		return json.Marshal(u.CompoundFilter)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyFiltersComparisonFilter(v ComparisonFilter) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyFiltersCompoundFilter(v CompoundFilter) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
 }

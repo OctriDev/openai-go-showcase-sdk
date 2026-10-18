@@ -9,6 +9,20 @@ import (
 	"fmt"
 )
 
+// NewBetaFunctionShellCall returns a validated BetaFunctionShellCall built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewBetaFunctionShellCall(fields BetaFunctionShellCall) (*BetaFunctionShellCall, error) {
+	return ConstructModel(fields)
+}
+
+// BetaFunctionShellCallTypeEnum The type of the item. Always `shell_call`.
+type BetaFunctionShellCallTypeEnum string
+
+const (
+	BetaFunctionShellCallTypeEnumShellCall BetaFunctionShellCallTypeEnum = "shell_call"
+)
+
 func (value *BetaFunctionShellCallTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
@@ -456,6 +470,24 @@ func (u *BetaFunctionCallOutputItemParamOutputItem) UnmarshalJSON(data []byte) e
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaInputTextContentParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaInputTextContentParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaInputImageContentParamAutoParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaInputImageContentParamAutoParam = &lossless1
+			return nil
+		}
+		var lossless2 BetaInputFileContentParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaInputFileContentParam = &lossless2
+			return nil
+		}
+	}
 	var betainputtextcontentparam BetaInputTextContentParam
 	if err := json.Unmarshal(data, &betainputtextcontentparam); err == nil && isNonEmptyBetaFunctionCallOutputItemParamOutputItemBetaInputTextContentParam(betainputtextcontentparam) {
 		u.BetaInputTextContentParam = &betainputtextcontentparam
@@ -566,6 +598,24 @@ func (u *BetaFunctionShellToolParamEnvironment) UnmarshalJSON(data []byte) error
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaContainerAutoParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaContainerAutoParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaLocalEnvironmentParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaLocalEnvironmentParam = &lossless1
+			return nil
+		}
+		var lossless2 BetaContainerReferenceParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaContainerReferenceParam = &lossless2
+			return nil
+		}
+	}
 	var betacontainerautoparam BetaContainerAutoParam
 	if err := json.Unmarshal(data, &betacontainerautoparam); err == nil && isNonEmptyBetaFunctionShellToolParamEnvironmentBetaContainerAutoParam(betacontainerautoparam) {
 		u.BetaContainerAutoParam = &betacontainerautoparam
@@ -636,74 +686,4 @@ type BetaFunctionShellCallItemParamEnvironment struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *BetaFunctionShellCallItemParamEnvironment) UnmarshalJSON(data []byte) error {
-	*u = BetaFunctionShellCallItemParamEnvironment{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "local":
-					var betalocalenvironmentparam BetaLocalEnvironmentParam
-					if err := json.Unmarshal(data, &betalocalenvironmentparam); err != nil {
-						return err
-					}
-					u.BetaLocalEnvironmentParam = &betalocalenvironmentparam
-					return nil
-				case "container_reference":
-					var betacontainerreferenceparam BetaContainerReferenceParam
-					if err := json.Unmarshal(data, &betacontainerreferenceparam); err != nil {
-						return err
-					}
-					u.BetaContainerReferenceParam = &betacontainerreferenceparam
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var betalocalenvironmentparam BetaLocalEnvironmentParam
-	if err := json.Unmarshal(data, &betalocalenvironmentparam); err == nil && isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaLocalEnvironmentParam(betalocalenvironmentparam) {
-		u.BetaLocalEnvironmentParam = &betalocalenvironmentparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var betacontainerreferenceparam BetaContainerReferenceParam
-	if err := json.Unmarshal(data, &betacontainerreferenceparam); err == nil && isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaContainerReferenceParam(betacontainerreferenceparam) {
-		u.BetaContainerReferenceParam = &betacontainerreferenceparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u BetaFunctionShellCallItemParamEnvironment) MarshalJSON() ([]byte, error) {
-	if u.BetaLocalEnvironmentParam != nil {
-		return json.Marshal(u.BetaLocalEnvironmentParam)
-	}
-	if u.BetaContainerReferenceParam != nil {
-		return json.Marshal(u.BetaContainerReferenceParam)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaLocalEnvironmentParam(v BetaLocalEnvironmentParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaFunctionShellCallItemParamEnvironmentBetaContainerReferenceParam(v BetaContainerReferenceParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

@@ -9,6 +9,12 @@ import (
 	"fmt"
 )
 
+// EnvironmentParamNone Runs the agent without an execution environment.
+type EnvironmentParamNone struct {
+	// Type The type of the object. Always `none`.
+	Type EnvironmentParamNoneTypeEnum `json:"type"`
+}
+
 func (value *EnvironmentParamNone) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
@@ -290,6 +296,24 @@ func (u *EnvironmentParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 EnvironmentParamNone
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.EnvironmentParamNone = &lossless0
+			return nil
+		}
+		var lossless1 EnvironmentParamOpenaiHosted
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EnvironmentParamOpenaiHosted = &lossless1
+			return nil
+		}
+		var lossless2 EnvironmentParamSelfHosted
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.EnvironmentParamSelfHosted = &lossless2
+			return nil
 		}
 	}
 	var environmentparamnone EnvironmentParamNone

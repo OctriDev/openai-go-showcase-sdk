@@ -375,6 +375,19 @@ func (u *PersistedMcpTransportResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 PersistedMcpTransportResourceHttp
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.PersistedMcpTransportResourceHttp = &lossless0
+			return nil
+		}
+		var lossless1 PersistedMcpTransportResourceStdio
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.PersistedMcpTransportResourceStdio = &lossless1
+			return nil
+		}
+	}
 	var persistedmcptransportresourcehttp PersistedMcpTransportResourceHttp
 	if err := json.Unmarshal(data, &persistedmcptransportresourcehttp); err == nil && isNonEmptyPersistedMcpTransportResourcePersistedMcpTransportResourceHttp(persistedmcptransportresourcehttp) {
 		u.PersistedMcpTransportResourceHttp = &persistedmcptransportresourcehttp

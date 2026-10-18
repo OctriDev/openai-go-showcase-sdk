@@ -372,6 +372,24 @@ func (u *ThreadResourceStatus) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ActiveStatus
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ActiveStatus = &lossless0
+			return nil
+		}
+		var lossless1 LockedStatus
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LockedStatus = &lossless1
+			return nil
+		}
+		var lossless2 ClosedStatus
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ClosedStatus = &lossless2
+			return nil
+		}
+	}
 	var activestatus ActiveStatus
 	if err := json.Unmarshal(data, &activestatus); err == nil && isNonEmptyThreadResourceStatusActiveStatus(activestatus) {
 		u.ActiveStatus = &activestatus

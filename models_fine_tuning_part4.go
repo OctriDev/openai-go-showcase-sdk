@@ -20,6 +20,34 @@ type GraderMultiGraders_bd2577ce struct {
 func (u *GraderMultiGraders_bd2577ce) UnmarshalJSON(data []byte) error {
 	*u = GraderMultiGraders_bd2577ce{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 GraderStringCheck
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.GraderStringCheck = &lossless0
+			return nil
+		}
+		var lossless1 GraderTextSimilarity
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.GraderTextSimilarity = &lossless1
+			return nil
+		}
+		var lossless2 GraderPython
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.GraderPython = &lossless2
+			return nil
+		}
+		var lossless3 GraderScoreModel
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.GraderScoreModel = &lossless3
+			return nil
+		}
+		var lossless4 GraderLabelModel
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.GraderLabelModel = &lossless4
+			return nil
+		}
+	}
 	var graderstringcheck GraderStringCheck
 	if err := json.Unmarshal(data, &graderstringcheck); err == nil && isNonEmptyGraderMultiGraders_bd2577ceGraderStringCheck(graderstringcheck) {
 		u.GraderStringCheck = &graderstringcheck
@@ -591,115 +619,4 @@ type FineTuneReinforcementMethodGrader struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *FineTuneReinforcementMethodGrader) UnmarshalJSON(data []byte) error {
-	*u = FineTuneReinforcementMethodGrader{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "string_check":
-					var graderstringcheck GraderStringCheck
-					if err := json.Unmarshal(data, &graderstringcheck); err != nil {
-						return err
-					}
-					u.GraderStringCheck = &graderstringcheck
-					return nil
-				case "text_similarity":
-					var gradertextsimilarity GraderTextSimilarity
-					if err := json.Unmarshal(data, &gradertextsimilarity); err != nil {
-						return err
-					}
-					u.GraderTextSimilarity = &gradertextsimilarity
-					return nil
-				case "python":
-					var graderpython GraderPython
-					if err := json.Unmarshal(data, &graderpython); err != nil {
-						return err
-					}
-					u.GraderPython = &graderpython
-					return nil
-				case "score_model":
-					var graderscoremodel GraderScoreModel
-					if err := json.Unmarshal(data, &graderscoremodel); err != nil {
-						return err
-					}
-					u.GraderScoreModel = &graderscoremodel
-					return nil
-				case "multi":
-					var gradermulti GraderMulti
-					if err := json.Unmarshal(data, &gradermulti); err != nil {
-						return err
-					}
-					u.GraderMulti = &gradermulti
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var graderstringcheck GraderStringCheck
-	if err := json.Unmarshal(data, &graderstringcheck); err == nil && isNonEmptyFineTuneReinforcementMethodGraderGraderStringCheck(graderstringcheck) {
-		u.GraderStringCheck = &graderstringcheck
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var gradertextsimilarity GraderTextSimilarity
-	if err := json.Unmarshal(data, &gradertextsimilarity); err == nil && isNonEmptyFineTuneReinforcementMethodGraderGraderTextSimilarity(gradertextsimilarity) {
-		u.GraderTextSimilarity = &gradertextsimilarity
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var graderpython GraderPython
-	if err := json.Unmarshal(data, &graderpython); err == nil && isNonEmptyFineTuneReinforcementMethodGraderGraderPython(graderpython) {
-		u.GraderPython = &graderpython
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var graderscoremodel GraderScoreModel
-	if err := json.Unmarshal(data, &graderscoremodel); err == nil && isNonEmptyFineTuneReinforcementMethodGraderGraderScoreModel(graderscoremodel) {
-		u.GraderScoreModel = &graderscoremodel
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var gradermulti GraderMulti
-	if err := json.Unmarshal(data, &gradermulti); err == nil && isNonEmptyFineTuneReinforcementMethodGraderGraderMulti(gradermulti) {
-		u.GraderMulti = &gradermulti
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u FineTuneReinforcementMethodGrader) MarshalJSON() ([]byte, error) {
-	if u.GraderStringCheck != nil {
-		return json.Marshal(u.GraderStringCheck)
-	}
-	if u.GraderTextSimilarity != nil {
-		return json.Marshal(u.GraderTextSimilarity)
-	}
-	if u.GraderPython != nil {
-		return json.Marshal(u.GraderPython)
-	}
-	if u.GraderScoreModel != nil {
-		return json.Marshal(u.GraderScoreModel)
-	}
-	if u.GraderMulti != nil {
-		return json.Marshal(u.GraderMulti)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
 }

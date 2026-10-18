@@ -11,7 +11,7 @@ import (
 type CreateSpeechParams struct {
 	Model          string
 	Input          string
-	Voice          any
+	Voice          CreateSpeechRequestVoice
 	Instructions   *string
 	ResponseFormat *string
 	Speed          *float64
@@ -115,7 +115,7 @@ func CreateSpeech(ctx context.Context, clientConfig ClientConfig, params CreateS
 //	`4.0`. `1.0` is the default.
 //	streamFormat: The format to stream the audio in. Supported formats are `sse`
 //	and `audio`. `sse` is not supported for `tts-1` or `tts-1-hd`.
-func CreateSpeechStream(ctx context.Context, clientConfig ClientConfig, model string, input string, voice any, instructions *string, responseFormat *string, speed *float64, streamFormat *string, opts ...RequestOption) (<-chan CreateSpeechResponseStreamEvent, <-chan error) {
+func CreateSpeechStream(ctx context.Context, clientConfig ClientConfig, model string, input string, voice CreateSpeechRequestVoice, instructions *string, responseFormat *string, speed *float64, streamFormat *string, opts ...RequestOption) (<-chan CreateSpeechResponseStreamEvent, <-chan error) {
 	return StreamTypedCfgWithFormat[CreateSpeechResponseStreamEvent](ctx, &clientConfig, "POST", "/audio/speech", &RequestOpts{
 		Body: map[string]any{
 			"model":           model,
@@ -144,7 +144,7 @@ type CreateTranscriptionParams struct {
 	Include                *[]TranscriptionInclude
 	TimestampGranularities *[]string
 	Stream                 *NullableValue[bool]
-	ChunkingStrategy       *any
+	ChunkingStrategy       *NullableValue[CreateTranscriptionRequestChunkingStrategy]
 	KnownSpeakerNames      *[]string
 	KnownSpeakerReferences *[]string
 }
@@ -216,7 +216,7 @@ type CreateTranscriptionParams struct {
 //	URLs)) that contain known speaker references matching
 //	`known_speaker_names[]`. Each sample must be between 2 and 10 seconds, and
 //	can use any of the same input audio formats supported by `file`.
-func CreateTranscription(ctx context.Context, clientConfig ClientConfig, params CreateTranscriptionParams, opts ...RequestOption) (any, error) {
+func CreateTranscription(ctx context.Context, clientConfig ClientConfig, params CreateTranscriptionParams, opts ...RequestOption) (*CreateTranscriptionResponse, error) {
 	file := params.File
 	model := params.Model
 	language := params.Language
@@ -250,7 +250,7 @@ func CreateTranscription(ctx context.Context, clientConfig ClientConfig, params 
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "POST", "/audio/transcriptions", &RequestOpts{
+	resp, err := DoCfg[CreateTranscriptionResponse](ctx, &clientConfig, "POST", "/audio/transcriptions", &RequestOpts{
 		Body: map[string]any{
 			"file":                     file,
 			"model":                    model,
@@ -275,7 +275,7 @@ func CreateTranscription(ctx context.Context, clientConfig ClientConfig, params 
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 // CreateTranscriptionStream transcribes an audio file and returns the transcript in a selected format or as a stream of transcript events. Provide the audio `file` and `model`, then use options such as `language`, `prompt`, or `timestamp_granularities` to guide or shape the output. Use multipart form data and include enough file metadata for the audio format to be identified.
@@ -345,7 +345,7 @@ func CreateTranscription(ctx context.Context, clientConfig ClientConfig, params 
 //	URLs)) that contain known speaker references matching
 //	`known_speaker_names[]`. Each sample must be between 2 and 10 seconds, and
 //	can use any of the same input audio formats supported by `file`.
-func CreateTranscriptionStream(ctx context.Context, clientConfig ClientConfig, file UploadFile, model string, stream NullableValue[bool], language *string, languages *[]string, keywords *[]string, prompt *string, responseFormat *AudioResponseFormat, temperature *float64, include *[]TranscriptionInclude, timestampGranularities *[]string, chunkingStrategy *any, knownSpeakerNames *[]string, knownSpeakerReferences *[]string, opts ...RequestOption) (<-chan CreateTranscriptionResponseStreamEvent, <-chan error) {
+func CreateTranscriptionStream(ctx context.Context, clientConfig ClientConfig, file UploadFile, model string, stream NullableValue[bool], language *string, languages *[]string, keywords *[]string, prompt *string, responseFormat *AudioResponseFormat, temperature *float64, include *[]TranscriptionInclude, timestampGranularities *[]string, chunkingStrategy *NullableValue[CreateTranscriptionRequestChunkingStrategy], knownSpeakerNames *[]string, knownSpeakerReferences *[]string, opts ...RequestOption) (<-chan CreateTranscriptionResponseStreamEvent, <-chan error) {
 	return StreamTypedCfgWithFormat[CreateTranscriptionResponseStreamEvent](ctx, &clientConfig, "POST", "/audio/transcriptions", &RequestOpts{
 		Body: map[string]any{
 			"file":                     file,
@@ -401,14 +401,14 @@ type CreateTranslationParams struct {
 //	it more focused and deterministic. If set to 0, the model will use [log
 //	probability](https://en.wikipedia.org/wiki/Log_probability) to automatically
 //	increase the temperature until certain thresholds are hit.
-func CreateTranslation(ctx context.Context, clientConfig ClientConfig, params CreateTranslationParams, opts ...RequestOption) (any, error) {
+func CreateTranslation(ctx context.Context, clientConfig ClientConfig, params CreateTranslationParams, opts ...RequestOption) (*CreateTranslationResponse, error) {
 	file := params.File
 	model := params.Model
 	prompt := params.Prompt
 	responseFormat := params.ResponseFormat
 	temperature := params.Temperature
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "POST", "/audio/translations", &RequestOpts{
+	resp, err := DoCfg[CreateTranslationResponse](ctx, &clientConfig, "POST", "/audio/translations", &RequestOpts{
 		Body: map[string]any{
 			"file":            file,
 			"model":           model,
@@ -424,7 +424,7 @@ func CreateTranslation(ctx context.Context, clientConfig ClientConfig, params Cr
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type CreateVoiceConsentParams struct {

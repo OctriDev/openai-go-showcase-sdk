@@ -5,6 +5,49 @@ package sdk
 
 import "encoding/json"
 
+func (u *CreateVideoExtendMultipartBodyVideo) UnmarshalJSON(data []byte) error {
+	*u = CreateVideoExtendMultipartBodyVideo{}
+	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 VideoReferenceInputParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.VideoReferenceInputParam = &lossless0
+			return nil
+		}
+		var lossless1 []byte
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ListOfByte = &lossless1
+			return nil
+		}
+	}
+	var videoreferenceinputparam VideoReferenceInputParam
+	if err := json.Unmarshal(data, &videoreferenceinputparam); err == nil && isNonEmptyCreateVideoExtendMultipartBodyVideoVideoReferenceInputParam(videoreferenceinputparam) {
+		u.VideoReferenceInputParam = &videoreferenceinputparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var listofbyte []byte
+	if err := json.Unmarshal(data, &listofbyte); err == nil && isNonEmptyCreateVideoExtendMultipartBodyVideoListOfByte(listofbyte) {
+		u.ListOfByte = &listofbyte
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CreateVideoExtendMultipartBodyVideo) MarshalJSON() ([]byte, error) {
+	if u.VideoReferenceInputParam != nil {
+		return json.Marshal(u.VideoReferenceInputParam)
+	}
+	if u.ListOfByte != nil {
+		return json.Marshal(u.ListOfByte)
+	}
+	return []byte("null"), nil
+}
+
 func isNonEmptyCreateVideoExtendMultipartBodyVideoVideoReferenceInputParam(v VideoReferenceInputParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"

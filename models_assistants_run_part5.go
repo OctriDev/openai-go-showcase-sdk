@@ -8,6 +8,27 @@ import (
 	"fmt"
 )
 
+func (value *RunStreamEventVariant7EventEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "thread.run.cancelling":
+		*value = RunStreamEventVariant7EventEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "RunStreamEventVariant7EventEnum", Code: "enum", Message: fmt.Sprintf("unknown RunStreamEventVariant7EventEnum: %v", raw)}
+	}
+}
+
+// RunStreamEventVariant8 Occurs when a [run](https://developers.openai.com/api/docs/assistants/migration) is cancelled.
+type RunStreamEventVariant8 struct {
+	Event RunStreamEventVariant8EventEnum `json:"event"`
+	// Data Represents an execution run on a [thread](https://developers.openai.com/api/docs/assistants/migration).
+	Data RunObject `json:"data"`
+}
+
 func (value *RunStreamEventVariant8) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
@@ -210,6 +231,59 @@ func (u *RunStreamEvent) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 RunStreamEventVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.RunStreamEventVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 RunStreamEventVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RunStreamEventVariant1 = &lossless1
+			return nil
+		}
+		var lossless2 RunStreamEventVariant2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.RunStreamEventVariant2 = &lossless2
+			return nil
+		}
+		var lossless3 RunStreamEventVariant3
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.RunStreamEventVariant3 = &lossless3
+			return nil
+		}
+		var lossless4 RunStreamEventVariant4
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.RunStreamEventVariant4 = &lossless4
+			return nil
+		}
+		var lossless5 RunStreamEventVariant5
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.RunStreamEventVariant5 = &lossless5
+			return nil
+		}
+		var lossless6 RunStreamEventVariant6
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.RunStreamEventVariant6 = &lossless6
+			return nil
+		}
+		var lossless7 RunStreamEventVariant7
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.RunStreamEventVariant7 = &lossless7
+			return nil
+		}
+		var lossless8 RunStreamEventVariant8
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.RunStreamEventVariant8 = &lossless8
+			return nil
+		}
+		var lossless9 RunStreamEventVariant9
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.RunStreamEventVariant9 = &lossless9
+			return nil
 		}
 	}
 	var runstreameventvariant0 RunStreamEventVariant0
@@ -503,6 +577,24 @@ func (u *RunObjectToolsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearch = &lossless1
+			return nil
+		}
+		var lossless2 AssistantToolsFunction
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AssistantToolsFunction = &lossless2
+			return nil
+		}
+	}
 	var assistanttoolscode AssistantToolsCode
 	if err := json.Unmarshal(data, &assistanttoolscode); err == nil && isNonEmptyRunObjectToolsItemAssistantToolsCode(assistanttoolscode) {
 		u.AssistantToolsCode = &assistanttoolscode
@@ -570,94 +662,6 @@ func UnmarshalRunObjectToolsItem(v any) RunObjectToolsItem {
 type RunStepObjectStepDetails struct {
 	RunStepDetailsMessageCreationObject *RunStepDetailsMessageCreationObject
 	RunStepDetailsToolCallsObject       *RunStepDetailsToolCallsObject
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}
-
-func (u *RunStepObjectStepDetails) UnmarshalJSON(data []byte) error {
-	*u = RunStepObjectStepDetails{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "message_creation":
-					var runstepdetailsmessagecreationobject RunStepDetailsMessageCreationObject
-					if err := json.Unmarshal(data, &runstepdetailsmessagecreationobject); err != nil {
-						return err
-					}
-					u.RunStepDetailsMessageCreationObject = &runstepdetailsmessagecreationobject
-					return nil
-				case "tool_calls":
-					var runstepdetailstoolcallsobject RunStepDetailsToolCallsObject
-					if err := json.Unmarshal(data, &runstepdetailstoolcallsobject); err != nil {
-						return err
-					}
-					u.RunStepDetailsToolCallsObject = &runstepdetailstoolcallsobject
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var runstepdetailsmessagecreationobject RunStepDetailsMessageCreationObject
-	if err := json.Unmarshal(data, &runstepdetailsmessagecreationobject); err == nil && isNonEmptyRunStepObjectStepDetailsRunStepDetailsMessageCreationObject(runstepdetailsmessagecreationobject) {
-		u.RunStepDetailsMessageCreationObject = &runstepdetailsmessagecreationobject
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var runstepdetailstoolcallsobject RunStepDetailsToolCallsObject
-	if err := json.Unmarshal(data, &runstepdetailstoolcallsobject); err == nil && isNonEmptyRunStepObjectStepDetailsRunStepDetailsToolCallsObject(runstepdetailstoolcallsobject) {
-		u.RunStepDetailsToolCallsObject = &runstepdetailstoolcallsobject
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u RunStepObjectStepDetails) MarshalJSON() ([]byte, error) {
-	if u.RunStepDetailsMessageCreationObject != nil {
-		return json.Marshal(u.RunStepDetailsMessageCreationObject)
-	}
-	if u.RunStepDetailsToolCallsObject != nil {
-		return json.Marshal(u.RunStepDetailsToolCallsObject)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyRunStepObjectStepDetailsRunStepDetailsMessageCreationObject(v RunStepDetailsMessageCreationObject) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyRunStepObjectStepDetailsRunStepDetailsToolCallsObject(v RunStepDetailsToolCallsObject) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalRunStepObjectStepDetails converts an untyped value to RunStepObjectStepDetails.
-func UnmarshalRunStepObjectStepDetails(v any) RunStepObjectStepDetails {
-	b, _ := json.Marshal(v)
-	var result RunStepObjectStepDetails
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// RunStepDetailsToolCallsObjectToolCallsItem represents a union type.
-type RunStepDetailsToolCallsObjectToolCallsItem struct {
-	RunStepDetailsToolCallsCodeObject       *RunStepDetailsToolCallsCodeObject
-	RunStepDetailsToolCallsFileSearchObject *RunStepDetailsToolCallsFileSearchObject
-	RunStepDetailsToolCallsFunctionObject   *RunStepDetailsToolCallsFunctionObject
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage

@@ -215,6 +215,54 @@ func (u *MessageContentItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 OutputTextContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.OutputTextContent = &lossless1
+			return nil
+		}
+		var lossless2 TextContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.TextContent = &lossless2
+			return nil
+		}
+		var lossless3 SummaryTextContent
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.SummaryTextContent = &lossless3
+			return nil
+		}
+		var lossless4 ReasoningTextContent
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ReasoningTextContent = &lossless4
+			return nil
+		}
+		var lossless5 RefusalContent
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.RefusalContent = &lossless5
+			return nil
+		}
+		var lossless6 InputImageContent
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.InputImageContent = &lossless6
+			return nil
+		}
+		var lossless7 ComputerScreenshotContent
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.ComputerScreenshotContent = &lossless7
+			return nil
+		}
+		var lossless8 InputFileContent
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.InputFileContent = &lossless8
+			return nil
+		}
+	}
 	var inputtextcontent InputTextContent
 	if err := json.Unmarshal(data, &inputtextcontent); err == nil && isNonEmptyMessageContentItemInputTextContent(inputtextcontent) {
 		u.InputTextContent = &inputtextcontent

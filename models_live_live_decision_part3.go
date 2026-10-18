@@ -3,7 +3,33 @@
 
 package sdk
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
+
+func (value *LiveDecisionItemDeletedTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "decision.item.deleted":
+		*value = LiveDecisionItemDeletedTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "LiveDecisionItemDeletedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown LiveDecisionItemDeletedTypeEnum: %v", raw)}
+	}
+}
+
+// LiveDecisionInputItemParamContentItem represents a union type.
+type LiveDecisionInputItemParamContentItem struct {
+	LiveDecisionInputTextParam  *LiveDecisionInputTextParam
+	LiveDecisionInputImageParam *LiveDecisionInputImageParam
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
+}
 
 func (u *LiveDecisionInputItemParamContentItem) UnmarshalJSON(data []byte) error {
 	*u = LiveDecisionInputItemParamContentItem{}
@@ -33,6 +59,19 @@ func (u *LiveDecisionInputItemParamContentItem) UnmarshalJSON(data []byte) error
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveDecisionInputTextParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveDecisionInputTextParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveDecisionInputImageParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveDecisionInputImageParam = &lossless1
+			return nil
 		}
 	}
 	var livedecisioninputtextparam LiveDecisionInputTextParam
@@ -120,6 +159,19 @@ func (u *LiveDecisionStoredInputItemParamContentItem) UnmarshalJSON(data []byte)
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveDecisionInputTextParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveDecisionInputTextParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveDecisionInputImageParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveDecisionInputImageParam = &lossless1
+			return nil
 		}
 	}
 	var livedecisioninputtextparam LiveDecisionInputTextParam

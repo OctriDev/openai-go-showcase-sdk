@@ -182,6 +182,29 @@ func (u *BetaPromptCacheDiagnostics) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaPromptCacheMissDiagnosticsBody
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaPromptCacheMissDiagnosticsBody = &lossless0
+			return nil
+		}
+		var lossless1 BetaPromptCacheHitDiagnosticsBody
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaPromptCacheHitDiagnosticsBody = &lossless1
+			return nil
+		}
+		var lossless2 BetaPromptCacheComparisonResponseNotFoundDiagnosticsBody
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaPromptCacheComparisonResponseNotFoundDiagnosticsBody = &lossless2
+			return nil
+		}
+		var lossless3 BetaPromptCacheUnavailableDiagnosticsBody
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaPromptCacheUnavailableDiagnosticsBody = &lossless3
+			return nil
+		}
+	}
 	var betapromptcachemissdiagnosticsbody BetaPromptCacheMissDiagnosticsBody
 	if err := json.Unmarshal(data, &betapromptcachemissdiagnosticsbody); err == nil && isNonEmptyBetaPromptCacheDiagnosticsBetaPromptCacheMissDiagnosticsBody(betapromptcachemissdiagnosticsbody) {
 		u.BetaPromptCacheMissDiagnosticsBody = &betapromptcachemissdiagnosticsbody

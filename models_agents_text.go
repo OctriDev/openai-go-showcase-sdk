@@ -164,6 +164,19 @@ func (u *TextFormatResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 TextFormatResourceText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.TextFormatResourceText = &lossless0
+			return nil
+		}
+		var lossless1 TextFormatResourceJsonSchema
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.TextFormatResourceJsonSchema = &lossless1
+			return nil
+		}
+	}
 	var textformatresourcetext TextFormatResourceText
 	if err := json.Unmarshal(data, &textformatresourcetext); err == nil && isNonEmptyTextFormatResourceTextFormatResourceText(textformatresourcetext) {
 		u.TextFormatResourceText = &textformatresourcetext
@@ -400,6 +413,19 @@ func (u *TextFormatParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 TextFormatParamText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.TextFormatParamText = &lossless0
+			return nil
+		}
+		var lossless1 TextFormatParamJsonSchema
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.TextFormatParamJsonSchema = &lossless1
+			return nil
 		}
 	}
 	var textformatparamtext TextFormatParamText

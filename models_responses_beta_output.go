@@ -188,6 +188,19 @@ func (u *BetaOutputMessageContent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaOutputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaOutputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 BetaRefusalContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaRefusalContent = &lossless1
+			return nil
+		}
+	}
 	var betaoutputtextcontent BetaOutputTextContent
 	if err := json.Unmarshal(data, &betaoutputtextcontent); err == nil && isNonEmptyBetaOutputMessageContentBetaOutputTextContent(betaoutputtextcontent) {
 		u.BetaOutputTextContent = &betaoutputtextcontent

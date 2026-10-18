@@ -216,6 +216,29 @@ func (u *BetaAnnotation) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaFileCitationBody
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaFileCitationBody = &lossless0
+			return nil
+		}
+		var lossless1 BetaUrlCitationBody
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaUrlCitationBody = &lossless1
+			return nil
+		}
+		var lossless2 BetaContainerFileCitationBody
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaContainerFileCitationBody = &lossless2
+			return nil
+		}
+		var lossless3 BetaFilePath
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaFilePath = &lossless3
+			return nil
+		}
+	}
 	var betafilecitationbody BetaFileCitationBody
 	if err := json.Unmarshal(data, &betafilecitationbody); err == nil && isNonEmptyBetaAnnotationBetaFileCitationBody(betafilecitationbody) {
 		u.BetaFileCitationBody = &betafilecitationbody

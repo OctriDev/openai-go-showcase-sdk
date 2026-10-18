@@ -423,6 +423,29 @@ func (u *DecisionInputContentPartsItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 DecisionInputText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.DecisionInputText = &lossless0
+			return nil
+		}
+		var lossless1 DecisionInputImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.DecisionInputImage = &lossless1
+			return nil
+		}
+		var lossless2 DecisionInputOutputText
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.DecisionInputOutputText = &lossless2
+			return nil
+		}
+		var lossless3 DecisionInputRefusal
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.DecisionInputRefusal = &lossless3
+			return nil
+		}
+	}
 	var decisioninputtext DecisionInputText
 	if err := json.Unmarshal(data, &decisioninputtext); err == nil && isNonEmptyDecisionInputContentPartsItemDecisionInputText(decisioninputtext) {
 		u.DecisionInputText = &decisioninputtext
@@ -540,6 +563,19 @@ func (u *DecisionInputToolOutputContentPartsItem) UnmarshalJSON(data []byte) err
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 DecisionInputText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.DecisionInputText = &lossless0
+			return nil
+		}
+		var lossless1 DecisionInputImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.DecisionInputImage = &lossless1
+			return nil
+		}
+	}
 	var decisioninputtext DecisionInputText
 	if err := json.Unmarshal(data, &decisioninputtext); err == nil && isNonEmptyDecisionInputToolOutputContentPartsItemDecisionInputText(decisioninputtext) {
 		u.DecisionInputText = &decisioninputtext
@@ -598,120 +634,4 @@ type DecisionInputItem struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *DecisionInputItem) UnmarshalJSON(data []byte) error {
-	*u = DecisionInputItem{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "message":
-					var decisioninputmessage DecisionInputMessage
-					if err := json.Unmarshal(data, &decisioninputmessage); err != nil {
-						return err
-					}
-					u.DecisionInputMessage = &decisioninputmessage
-					return nil
-				case "function_call":
-					var decisioninputfunctioncall DecisionInputFunctionCall
-					if err := json.Unmarshal(data, &decisioninputfunctioncall); err != nil {
-						return err
-					}
-					u.DecisionInputFunctionCall = &decisioninputfunctioncall
-					return nil
-				case "function_call_output":
-					var decisioninputfunctioncalloutput DecisionInputFunctionCallOutput
-					if err := json.Unmarshal(data, &decisioninputfunctioncalloutput); err != nil {
-						return err
-					}
-					u.DecisionInputFunctionCallOutput = &decisioninputfunctioncalloutput
-					return nil
-				case "custom_tool_call":
-					var decisioninputcustomtoolcall DecisionInputCustomToolCall
-					if err := json.Unmarshal(data, &decisioninputcustomtoolcall); err != nil {
-						return err
-					}
-					u.DecisionInputCustomToolCall = &decisioninputcustomtoolcall
-					return nil
-				case "custom_tool_call_output":
-					var decisioninputcustomtoolcalloutput DecisionInputCustomToolCallOutput
-					if err := json.Unmarshal(data, &decisioninputcustomtoolcalloutput); err != nil {
-						return err
-					}
-					u.DecisionInputCustomToolCallOutput = &decisioninputcustomtoolcalloutput
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var decisioninputmessage DecisionInputMessage
-	if err := json.Unmarshal(data, &decisioninputmessage); err == nil && isNonEmptyDecisionInputItemDecisionInputMessage(decisioninputmessage) {
-		u.DecisionInputMessage = &decisioninputmessage
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var decisioninputfunctioncall DecisionInputFunctionCall
-	if err := json.Unmarshal(data, &decisioninputfunctioncall); err == nil && isNonEmptyDecisionInputItemDecisionInputFunctionCall(decisioninputfunctioncall) {
-		u.DecisionInputFunctionCall = &decisioninputfunctioncall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var decisioninputfunctioncalloutput DecisionInputFunctionCallOutput
-	if err := json.Unmarshal(data, &decisioninputfunctioncalloutput); err == nil && isNonEmptyDecisionInputItemDecisionInputFunctionCallOutput(decisioninputfunctioncalloutput) {
-		u.DecisionInputFunctionCallOutput = &decisioninputfunctioncalloutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var decisioninputcustomtoolcall DecisionInputCustomToolCall
-	if err := json.Unmarshal(data, &decisioninputcustomtoolcall); err == nil && isNonEmptyDecisionInputItemDecisionInputCustomToolCall(decisioninputcustomtoolcall) {
-		u.DecisionInputCustomToolCall = &decisioninputcustomtoolcall
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var decisioninputcustomtoolcalloutput DecisionInputCustomToolCallOutput
-	if err := json.Unmarshal(data, &decisioninputcustomtoolcalloutput); err == nil && isNonEmptyDecisionInputItemDecisionInputCustomToolCallOutput(decisioninputcustomtoolcalloutput) {
-		u.DecisionInputCustomToolCallOutput = &decisioninputcustomtoolcalloutput
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u DecisionInputItem) MarshalJSON() ([]byte, error) {
-	if u.DecisionInputMessage != nil {
-		return json.Marshal(u.DecisionInputMessage)
-	}
-	if u.DecisionInputFunctionCall != nil {
-		return json.Marshal(u.DecisionInputFunctionCall)
-	}
-	if u.DecisionInputFunctionCallOutput != nil {
-		return json.Marshal(u.DecisionInputFunctionCallOutput)
-	}
-	if u.DecisionInputCustomToolCall != nil {
-		return json.Marshal(u.DecisionInputCustomToolCall)
-	}
-	if u.DecisionInputCustomToolCallOutput != nil {
-		return json.Marshal(u.DecisionInputCustomToolCallOutput)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyDecisionInputItemDecisionInputMessage(v DecisionInputMessage) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

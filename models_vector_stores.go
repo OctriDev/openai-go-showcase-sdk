@@ -105,6 +105,19 @@ func (u *ChunkingStrategyRequestParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AutoChunkingStrategyRequestParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AutoChunkingStrategyRequestParam = &lossless0
+			return nil
+		}
+		var lossless1 StaticChunkingStrategyRequestParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.StaticChunkingStrategyRequestParam = &lossless1
+			return nil
+		}
+	}
 	var autochunkingstrategyrequestparam AutoChunkingStrategyRequestParam
 	if err := json.Unmarshal(data, &autochunkingstrategyrequestparam); err == nil && isNonEmptyChunkingStrategyRequestParamAutoChunkingStrategyRequestParam(autochunkingstrategyrequestparam) {
 		u.AutoChunkingStrategyRequestParam = &autochunkingstrategyrequestparam
@@ -153,8 +166,55 @@ func UnmarshalChunkingStrategyRequestParam(v any) ChunkingStrategyRequestParam {
 	return result
 }
 
-// CreateVectorStoreFileBatchRequest is a union type
-type CreateVectorStoreFileBatchRequest = any
+// CreateVectorStoreFileBatchRequest Typed representation of the `CreateVectorStoreFileBatchRequest` API schema.
+type CreateVectorStoreFileBatchRequest struct {
+	// FileIds A list of [File](https://developers.openai.com/api/reference/resources/files) IDs that the vector store should use. Useful for tools like `file_search` that can access files. If `attributes` or `chunking_strategy` are provided, they will be applied to all files in the batch. The maximum batch size is 2000 files. This endpoint is recommended for multi-file ingestion and helps reduce per-vector-store write request pressure. Mutually exclusive with `files`.
+	FileIds []string `json:"file_ids,omitempty"`
+	// Files A list of objects that each include a `file_id` plus optional `attributes` or `chunking_strategy`. Use this when you need to override metadata for specific files. The global `attributes` or `chunking_strategy` will be ignored and must be specified for each file. The maximum batch size is 2000 files. This endpoint is recommended for multi-file ingestion and helps reduce per-vector-store write request pressure. Mutually exclusive with `file_ids`.
+	Files []CreateVectorStoreFileRequest `json:"files,omitempty"`
+	// ChunkingStrategy The chunking strategy used to chunk the file(s). If not set, will use the `auto` strategy.
+	ChunkingStrategy *ChunkingStrategyRequestParam `json:"chunking_strategy,omitempty"`
+	// Attributes Set of 16 key-value pairs that can be attached to an object. This can be
+	// useful for storing additional information about the object in a structured
+	// format, and querying for objects via API or the dashboard. Keys are strings
+	// with a maximum length of 64 characters. Values are strings with a maximum
+	// length of 512 characters, booleans, or numbers.
+	Attributes *NullableValue[VectorStoreFileAttributes] `json:"attributes,omitempty"`
+}
+
+func (value *CreateVectorStoreFileBatchRequest) UnmarshalJSON(data []byte) error {
+	type CreateVectorStoreFileBatchRequestAlias CreateVectorStoreFileBatchRequest
+	var decoded CreateVectorStoreFileBatchRequestAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateVectorStoreFileBatchRequest(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if func() bool { _, ok := rawFields["file_ids"]; return ok }() {
+		if err := ValidateItems("file_ids", value.FileIds, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](2000)}); err != nil {
+			return err
+		}
+	}
+	if func() bool { _, ok := rawFields["files"]; return ok }() {
+		if err := ValidateItems("files", value.Files, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](2000)}); err != nil {
+			return err
+		}
+	}
+	if raw, ok := rawFields["attributes"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Attributes = &NullableValue[VectorStoreFileAttributes]{}
+	}
+	return nil
+}
+
+// NewCreateVectorStoreFileBatchRequest returns a validated CreateVectorStoreFileBatchRequest built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateVectorStoreFileBatchRequest(fields CreateVectorStoreFileBatchRequest) (*CreateVectorStoreFileBatchRequest, error) {
+	return ConstructModel(fields)
+}
 
 // CreateVectorStoreFileRequest Typed representation of the `CreateVectorStoreFileRequest` API schema.
 type CreateVectorStoreFileRequest struct {
@@ -643,63 +703,4 @@ type UpdateVectorStoreFileAttributesRequest struct {
 	// with a maximum length of 64 characters. Values are strings with a maximum
 	// length of 512 characters, booleans, or numbers.
 	Attributes NullableValue[VectorStoreFileAttributes] `json:"attributes"`
-}
-
-func (value *UpdateVectorStoreFileAttributesRequest) UnmarshalJSON(data []byte) error {
-	type UpdateVectorStoreFileAttributesRequestAlias UpdateVectorStoreFileAttributesRequest
-	var decoded UpdateVectorStoreFileAttributesRequestAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = UpdateVectorStoreFileAttributesRequest(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"attributes"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewUpdateVectorStoreFileAttributesRequest returns a validated UpdateVectorStoreFileAttributesRequest built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewUpdateVectorStoreFileAttributesRequest(fields UpdateVectorStoreFileAttributesRequest) (*UpdateVectorStoreFileAttributesRequest, error) {
-	return ConstructModel(fields)
-}
-
-// UpdateVectorStoreRequest Typed representation of the `UpdateVectorStoreRequest` API schema.
-type UpdateVectorStoreRequest struct {
-	// Name The name of the vector store.
-	Name *NullableValue[string] `json:"name,omitempty"`
-	// ExpiresAfter Optional API value serialized in the `expires_after` wire field.
-	ExpiresAfter *VectorStoreExpirationAfter `json:"expires_after,omitempty"`
-	// Metadata Set of 16 key-value pairs that can be attached to an object. This can be
-	// useful for storing additional information about the object in a structured
-	// format, and querying for objects via API or the dashboard.
-	//
-	// Keys are strings with a maximum length of 64 characters. Values are strings
-	// with a maximum length of 512 characters.
-	Metadata *NullableValue[Metadata] `json:"metadata,omitempty"`
-}
-
-func (value *UpdateVectorStoreRequest) UnmarshalJSON(data []byte) error {
-	type UpdateVectorStoreRequestAlias UpdateVectorStoreRequest
-	var decoded UpdateVectorStoreRequestAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = UpdateVectorStoreRequest(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["name"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Name = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["metadata"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Metadata = &NullableValue[Metadata]{}
-	}
-	return nil
 }

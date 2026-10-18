@@ -9,20 +9,496 @@ import (
 	"fmt"
 )
 
-func (value *RealtimeServerEventConversationItemDone) UnmarshalJSON(data []byte) error {
+func (u RealtimeServerEvent) MarshalJSON() ([]byte, error) {
+	if u.RealtimeServerEventConversationCreated != nil {
+		return json.Marshal(u.RealtimeServerEventConversationCreated)
+	}
+	if u.RealtimeServerEventConversationItemCreated != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemCreated)
+	}
+	if u.RealtimeServerEventConversationItemDeleted != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemDeleted)
+	}
+	if u.RealtimeServerEventConversationItemInputAudioTranscriptionCompleted != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemInputAudioTranscriptionCompleted)
+	}
+	if u.RealtimeServerEventConversationItemInputAudioTranscriptionDelta != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemInputAudioTranscriptionDelta)
+	}
+	if u.RealtimeServerEventConversationItemInputAudioTranscriptionFailed != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemInputAudioTranscriptionFailed)
+	}
+	if u.RealtimeServerEventConversationItemRetrieved != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemRetrieved)
+	}
+	if u.RealtimeServerEventConversationItemTruncated != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemTruncated)
+	}
+	if u.RealtimeServerEventError != nil {
+		return json.Marshal(u.RealtimeServerEventError)
+	}
+	if u.RealtimeServerEventInputAudioBufferCleared != nil {
+		return json.Marshal(u.RealtimeServerEventInputAudioBufferCleared)
+	}
+	if u.RealtimeServerEventInputAudioBufferCommitted != nil {
+		return json.Marshal(u.RealtimeServerEventInputAudioBufferCommitted)
+	}
+	if u.RealtimeServerEventInputAudioBufferDtmfEventReceived != nil {
+		return json.Marshal(u.RealtimeServerEventInputAudioBufferDtmfEventReceived)
+	}
+	if u.RealtimeServerEventInputAudioBufferSpeechStarted != nil {
+		return json.Marshal(u.RealtimeServerEventInputAudioBufferSpeechStarted)
+	}
+	if u.RealtimeServerEventInputAudioBufferSpeechStopped != nil {
+		return json.Marshal(u.RealtimeServerEventInputAudioBufferSpeechStopped)
+	}
+	if u.RealtimeServerEventRateLimitsUpdated != nil {
+		return json.Marshal(u.RealtimeServerEventRateLimitsUpdated)
+	}
+	if u.RealtimeServerEventResponseAudioDelta != nil {
+		return json.Marshal(u.RealtimeServerEventResponseAudioDelta)
+	}
+	if u.RealtimeServerEventResponseAudioDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseAudioDone)
+	}
+	if u.RealtimeServerEventResponseAudioTranscriptDelta != nil {
+		return json.Marshal(u.RealtimeServerEventResponseAudioTranscriptDelta)
+	}
+	if u.RealtimeServerEventResponseAudioTranscriptDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseAudioTranscriptDone)
+	}
+	if u.RealtimeServerEventResponseContentPartAdded != nil {
+		return json.Marshal(u.RealtimeServerEventResponseContentPartAdded)
+	}
+	if u.RealtimeServerEventResponseContentPartDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseContentPartDone)
+	}
+	if u.RealtimeServerEventResponseCreated != nil {
+		return json.Marshal(u.RealtimeServerEventResponseCreated)
+	}
+	if u.RealtimeServerEventResponseDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseDone)
+	}
+	if u.RealtimeServerEventResponseFunctionCallArgumentsDelta != nil {
+		return json.Marshal(u.RealtimeServerEventResponseFunctionCallArgumentsDelta)
+	}
+	if u.RealtimeServerEventResponseFunctionCallArgumentsDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseFunctionCallArgumentsDone)
+	}
+	if u.RealtimeServerEventResponseOutputItemAdded != nil {
+		return json.Marshal(u.RealtimeServerEventResponseOutputItemAdded)
+	}
+	if u.RealtimeServerEventResponseOutputItemDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseOutputItemDone)
+	}
+	if u.RealtimeServerEventResponseTextDelta != nil {
+		return json.Marshal(u.RealtimeServerEventResponseTextDelta)
+	}
+	if u.RealtimeServerEventResponseTextDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseTextDone)
+	}
+	if u.RealtimeServerEventSessionCreated != nil {
+		return json.Marshal(u.RealtimeServerEventSessionCreated)
+	}
+	if u.RealtimeServerEventSessionUpdated != nil {
+		return json.Marshal(u.RealtimeServerEventSessionUpdated)
+	}
+	if u.RealtimeServerEventOutputAudioBufferStarted != nil {
+		return json.Marshal(u.RealtimeServerEventOutputAudioBufferStarted)
+	}
+	if u.RealtimeServerEventOutputAudioBufferStopped != nil {
+		return json.Marshal(u.RealtimeServerEventOutputAudioBufferStopped)
+	}
+	if u.RealtimeServerEventOutputAudioBufferCleared != nil {
+		return json.Marshal(u.RealtimeServerEventOutputAudioBufferCleared)
+	}
+	if u.RealtimeServerEventConversationItemAdded != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemAdded)
+	}
+	if u.RealtimeServerEventConversationItemDone != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemDone)
+	}
+	if u.RealtimeServerEventInputAudioBufferTimeoutTriggered != nil {
+		return json.Marshal(u.RealtimeServerEventInputAudioBufferTimeoutTriggered)
+	}
+	if u.RealtimeServerEventConversationItemInputAudioTranscriptionSegment != nil {
+		return json.Marshal(u.RealtimeServerEventConversationItemInputAudioTranscriptionSegment)
+	}
+	if u.RealtimeServerEventMCPListToolsInProgress != nil {
+		return json.Marshal(u.RealtimeServerEventMCPListToolsInProgress)
+	}
+	if u.RealtimeServerEventMCPListToolsCompleted != nil {
+		return json.Marshal(u.RealtimeServerEventMCPListToolsCompleted)
+	}
+	if u.RealtimeServerEventMCPListToolsFailed != nil {
+		return json.Marshal(u.RealtimeServerEventMCPListToolsFailed)
+	}
+	if u.RealtimeServerEventResponseMCPCallArgumentsDelta != nil {
+		return json.Marshal(u.RealtimeServerEventResponseMCPCallArgumentsDelta)
+	}
+	if u.RealtimeServerEventResponseMCPCallArgumentsDone != nil {
+		return json.Marshal(u.RealtimeServerEventResponseMCPCallArgumentsDone)
+	}
+	if u.RealtimeServerEventResponseMCPCallInProgress != nil {
+		return json.Marshal(u.RealtimeServerEventResponseMCPCallInProgress)
+	}
+	if u.RealtimeServerEventResponseMCPCallCompleted != nil {
+		return json.Marshal(u.RealtimeServerEventResponseMCPCallCompleted)
+	}
+	if u.RealtimeServerEventResponseMCPCallFailed != nil {
+		return json.Marshal(u.RealtimeServerEventResponseMCPCallFailed)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationCreated(v RealtimeServerEventConversationCreated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemCreated(v RealtimeServerEventConversationItemCreated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemDeleted(v RealtimeServerEventConversationItemDeleted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemInputAudioTranscriptionCompleted(v RealtimeServerEventConversationItemInputAudioTranscriptionCompleted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemInputAudioTranscriptionDelta(v RealtimeServerEventConversationItemInputAudioTranscriptionDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemInputAudioTranscriptionFailed(v RealtimeServerEventConversationItemInputAudioTranscriptionFailed) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemRetrieved(v RealtimeServerEventConversationItemRetrieved) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemTruncated(v RealtimeServerEventConversationItemTruncated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventError(v RealtimeServerEventError) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventInputAudioBufferCleared(v RealtimeServerEventInputAudioBufferCleared) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventInputAudioBufferCommitted(v RealtimeServerEventInputAudioBufferCommitted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventInputAudioBufferDtmfEventReceived(v RealtimeServerEventInputAudioBufferDtmfEventReceived) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventInputAudioBufferSpeechStarted(v RealtimeServerEventInputAudioBufferSpeechStarted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventInputAudioBufferSpeechStopped(v RealtimeServerEventInputAudioBufferSpeechStopped) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventRateLimitsUpdated(v RealtimeServerEventRateLimitsUpdated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseAudioDelta(v RealtimeServerEventResponseAudioDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseAudioDone(v RealtimeServerEventResponseAudioDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseAudioTranscriptDelta(v RealtimeServerEventResponseAudioTranscriptDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseAudioTranscriptDone(v RealtimeServerEventResponseAudioTranscriptDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseContentPartAdded(v RealtimeServerEventResponseContentPartAdded) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseContentPartDone(v RealtimeServerEventResponseContentPartDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseCreated(v RealtimeServerEventResponseCreated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseDone(v RealtimeServerEventResponseDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseFunctionCallArgumentsDelta(v RealtimeServerEventResponseFunctionCallArgumentsDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseFunctionCallArgumentsDone(v RealtimeServerEventResponseFunctionCallArgumentsDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseOutputItemAdded(v RealtimeServerEventResponseOutputItemAdded) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseOutputItemDone(v RealtimeServerEventResponseOutputItemDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseTextDelta(v RealtimeServerEventResponseTextDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseTextDone(v RealtimeServerEventResponseTextDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventSessionCreated(v RealtimeServerEventSessionCreated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventSessionUpdated(v RealtimeServerEventSessionUpdated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventOutputAudioBufferStarted(v RealtimeServerEventOutputAudioBufferStarted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventOutputAudioBufferStopped(v RealtimeServerEventOutputAudioBufferStopped) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventOutputAudioBufferCleared(v RealtimeServerEventOutputAudioBufferCleared) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemAdded(v RealtimeServerEventConversationItemAdded) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemDone(v RealtimeServerEventConversationItemDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventInputAudioBufferTimeoutTriggered(v RealtimeServerEventInputAudioBufferTimeoutTriggered) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventConversationItemInputAudioTranscriptionSegment(v RealtimeServerEventConversationItemInputAudioTranscriptionSegment) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventMCPListToolsInProgress(v RealtimeServerEventMCPListToolsInProgress) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventMCPListToolsCompleted(v RealtimeServerEventMCPListToolsCompleted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventMCPListToolsFailed(v RealtimeServerEventMCPListToolsFailed) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseMCPCallArgumentsDelta(v RealtimeServerEventResponseMCPCallArgumentsDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseMCPCallArgumentsDone(v RealtimeServerEventResponseMCPCallArgumentsDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseMCPCallInProgress(v RealtimeServerEventResponseMCPCallInProgress) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseMCPCallCompleted(v RealtimeServerEventResponseMCPCallCompleted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeServerEventRealtimeServerEventResponseMCPCallFailed(v RealtimeServerEventResponseMCPCallFailed) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRealtimeServerEvent converts an untyped value to RealtimeServerEvent.
+func UnmarshalRealtimeServerEvent(v any) RealtimeServerEvent {
+	b, _ := json.Marshal(v)
+	var result RealtimeServerEvent
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// RealtimeServerEventConversationCreated Returned when a conversation is created. Emitted right after session creation.
+type RealtimeServerEventConversationCreated struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `conversation.created`.
+	Type RealtimeServerEventConversationCreatedTypeEnum `json:"type"`
+	// Conversation The conversation resource.
+	Conversation RealtimeServerEventConversationCreatedConversation `json:"conversation"`
+}
+
+func (value *RealtimeServerEventConversationCreated) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.done"}); err != nil {
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.created"}); err != nil {
 		return err
 	}
-	type RealtimeServerEventConversationItemDoneAlias RealtimeServerEventConversationItemDone
-	var decoded RealtimeServerEventConversationItemDoneAlias
+	type RealtimeServerEventConversationCreatedAlias RealtimeServerEventConversationCreated
+	var decoded RealtimeServerEventConversationCreatedAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = RealtimeServerEventConversationItemDone(decoded)
+	*value = RealtimeServerEventConversationCreated(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "conversation"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "conversation"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeServerEventConversationCreated returns a validated RealtimeServerEventConversationCreated built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventConversationCreated(fields RealtimeServerEventConversationCreated) (*RealtimeServerEventConversationCreated, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventConversationCreatedTypeEnum The event type, must be `conversation.created`.
+type RealtimeServerEventConversationCreatedTypeEnum string
+
+const (
+	RealtimeServerEventConversationCreatedTypeEnumConversationCreated RealtimeServerEventConversationCreatedTypeEnum = "conversation.created"
+)
+
+func (value *RealtimeServerEventConversationCreatedTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "conversation.created":
+		*value = RealtimeServerEventConversationCreatedTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventConversationCreatedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationCreatedTypeEnum: %v", raw)}
+	}
+}
+
+// RealtimeServerEventConversationCreatedConversation The conversation resource.
+type RealtimeServerEventConversationCreatedConversation struct {
+	// Id The unique ID of the conversation.
+	Id *string `json:"id,omitempty"`
+	// Object The object type, must be `realtime.conversation`.
+	Object *string `json:"object,omitempty"`
+}
+
+// NewRealtimeServerEventConversationCreatedConversation returns a validated RealtimeServerEventConversationCreatedConversation built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventConversationCreatedConversation(fields RealtimeServerEventConversationCreatedConversation) (*RealtimeServerEventConversationCreatedConversation, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventConversationItemAdded Sent by the server when an Item is added to the default Conversation. This can happen in several cases:
+// - When the client sends a `conversation.item.create` event.
+// - When the input audio buffer is committed. In this case the item will be a user message containing the audio from the buffer.
+// - When the model is generating a Response. In this case the `conversation.item.added` event will be sent when the model starts generating a specific Item, and thus it will not yet have any content (and `status` will be `in_progress`).
+//
+// The event will include the full content of the Item (except when model is generating a Response) except for audio data, which can be retrieved separately with a `conversation.item.retrieve` event if necessary.
+type RealtimeServerEventConversationItemAdded struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `conversation.item.added`.
+	Type RealtimeServerEventConversationItemAddedTypeEnum `json:"type"`
+	// PreviousItemId Optional `string` value serialized in the `previous_item_id` wire field.
+	PreviousItemId *NullableValue[string] `json:"previous_item_id,omitempty"`
+	// Item A single item within a Realtime conversation.
+	Item RealtimeConversationItem `json:"item"`
+}
+
+func (value *RealtimeServerEventConversationItemAdded) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.added"}); err != nil {
+		return err
+	}
+	type RealtimeServerEventConversationItemAddedAlias RealtimeServerEventConversationItemAdded
+	var decoded RealtimeServerEventConversationItemAddedAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeServerEventConversationItemAdded(decoded)
 	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item"}); err != nil {
 		return err
 	}
@@ -35,665 +511,181 @@ func (value *RealtimeServerEventConversationItemDone) UnmarshalJSON(data []byte)
 	return nil
 }
 
-// NewRealtimeServerEventConversationItemDone returns a validated RealtimeServerEventConversationItemDone built from named fields.
+// NewRealtimeServerEventConversationItemAdded returns a validated RealtimeServerEventConversationItemAdded built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemDone(fields RealtimeServerEventConversationItemDone) (*RealtimeServerEventConversationItemDone, error) {
+func NewRealtimeServerEventConversationItemAdded(fields RealtimeServerEventConversationItemAdded) (*RealtimeServerEventConversationItemAdded, error) {
 	return ConstructModel(fields)
 }
 
-// RealtimeServerEventConversationItemDoneTypeEnum The event type, must be `conversation.item.done`.
-type RealtimeServerEventConversationItemDoneTypeEnum string
+// RealtimeServerEventConversationItemAddedTypeEnum The event type, must be `conversation.item.added`.
+type RealtimeServerEventConversationItemAddedTypeEnum string
 
 const (
-	RealtimeServerEventConversationItemDoneTypeEnumConversationItemDone RealtimeServerEventConversationItemDoneTypeEnum = "conversation.item.done"
+	RealtimeServerEventConversationItemAddedTypeEnumConversationItemAdded RealtimeServerEventConversationItemAddedTypeEnum = "conversation.item.added"
 )
 
-func (value *RealtimeServerEventConversationItemDoneTypeEnum) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventConversationItemAddedTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
 	switch raw {
-	case "conversation.item.done":
-		*value = RealtimeServerEventConversationItemDoneTypeEnum(raw)
+	case "conversation.item.added":
+		*value = RealtimeServerEventConversationItemAddedTypeEnum(raw)
 		return nil
 	default:
-		return &SdkValidationError{Field: "RealtimeServerEventConversationItemDoneTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemDoneTypeEnum: %v", raw)}
+		return &SdkValidationError{Field: "RealtimeServerEventConversationItemAddedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemAddedTypeEnum: %v", raw)}
 	}
 }
 
-// RealtimeServerEventConversationItemInputAudioTranscriptionCompleted This event is the output of audio transcription for user audio written to the
-// user audio buffer. Transcription begins when the input audio buffer is
-// committed by the client or server (when VAD is enabled). Transcription runs
-// asynchronously with Response creation, so this event may come before or after
-// the Response events.
-//
-// Realtime API models accept audio natively, and thus input transcription is a
-// separate process run on a separate ASR (Automatic Speech Recognition) model.
-// The transcript may diverge somewhat from the model's interpretation, and
-// should be treated as a rough guide.
-type RealtimeServerEventConversationItemInputAudioTranscriptionCompleted struct {
+// RealtimeServerEventConversationItemCreated Returned when a conversation item is created. There are several scenarios that produce this event:
+//   - The server is generating a Response, which if successful will produce
+//     either one or two Items, which will be of type `message`
+//     (role `assistant`) or type `function_call`.
+//   - The input audio buffer has been committed, either by the client or the
+//     server (in `server_vad` mode). The server will take the content of the
+//     input audio buffer and add it to a new user message Item.
+//   - The client has sent a `conversation.item.create` event to add a new Item
+//     to the Conversation.
+type RealtimeServerEventConversationItemCreated struct {
 	// EventId The unique ID of the server event.
 	EventId string `json:"event_id"`
-	// Type The event type, must be
-	// `conversation.item.input_audio_transcription.completed`.
-	Type RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum `json:"type"`
-	// ItemId The ID of the item containing the audio that is being transcribed.
-	ItemId string `json:"item_id"`
-	// ContentIndex The index of the content part containing the audio.
-	ContentIndex int64 `json:"content_index"`
-	// Transcript The transcribed text.
-	Transcript string `json:"transcript"`
-	// Languages The languages detected in the audio. Returned by `gpt-transcribe`. An empty array indicates that no language could be reliably detected.
-	Languages []TranscriptionLanguage `json:"languages,omitempty"`
-	// Logprobs The log probabilities of the transcription.
-	Logprobs *NullableValue[[]LogProbProperties] `json:"logprobs,omitempty"`
-	// Usage Usage statistics for the transcription, this is billed according to the ASR model's pricing rather than the realtime model's pricing.
-	Usage RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage `json:"usage"`
-}
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionCompleted) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.input_audio_transcription.completed"}); err != nil {
-		return err
-	}
-	type RealtimeServerEventConversationItemInputAudioTranscriptionCompletedAlias RealtimeServerEventConversationItemInputAudioTranscriptionCompleted
-	var decoded RealtimeServerEventConversationItemInputAudioTranscriptionCompletedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventConversationItemInputAudioTranscriptionCompleted(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item_id", "content_index", "transcript", "usage"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "item_id", "content_index", "transcript", "usage"}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["logprobs"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Logprobs = &NullableValue[[]LogProbProperties]{}
-	}
-	return nil
-}
-
-// NewRealtimeServerEventConversationItemInputAudioTranscriptionCompleted returns a validated RealtimeServerEventConversationItemInputAudioTranscriptionCompleted built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemInputAudioTranscriptionCompleted(fields RealtimeServerEventConversationItemInputAudioTranscriptionCompleted) (*RealtimeServerEventConversationItemInputAudioTranscriptionCompleted, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum The event type, must be
-// `conversation.item.input_audio_transcription.completed`.
-type RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum string
-
-const (
-	RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnumConversationItemInputAudioTranscriptionCompleted RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum = "conversation.item.input_audio_transcription.completed"
-)
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "conversation.item.input_audio_transcription.completed":
-		*value = RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemInputAudioTranscriptionCompletedTypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionDelta Returned when the text value of an input audio transcription content part is updated with incremental transcription results.
-type RealtimeServerEventConversationItemInputAudioTranscriptionDelta struct {
-	// EventId The unique ID of the server event.
-	EventId string `json:"event_id"`
-	// Type The event type, must be `conversation.item.input_audio_transcription.delta`.
-	Type RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum `json:"type"`
-	// ItemId The ID of the item containing the audio that is being transcribed.
-	ItemId string `json:"item_id"`
-	// ContentIndex The index of the content part in the item's content array.
-	ContentIndex *int64 `json:"content_index,omitempty"`
-	// Delta The text delta.
-	Delta *string `json:"delta,omitempty"`
-	// Logprobs The log probabilities of the transcription. These can be enabled by configurating the session with `"include": ["item.input_audio_transcription.logprobs"]`. Each entry in the array corresponds a log probability of which token would be selected for this chunk of transcription. This can help to identify if it was possible there were multiple valid options for a given chunk of transcription.
-	Logprobs *NullableValue[[]LogProbProperties] `json:"logprobs,omitempty"`
-}
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionDelta) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.input_audio_transcription.delta"}); err != nil {
-		return err
-	}
-	type RealtimeServerEventConversationItemInputAudioTranscriptionDeltaAlias RealtimeServerEventConversationItemInputAudioTranscriptionDelta
-	var decoded RealtimeServerEventConversationItemInputAudioTranscriptionDeltaAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventConversationItemInputAudioTranscriptionDelta(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item_id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "item_id"}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["logprobs"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Logprobs = &NullableValue[[]LogProbProperties]{}
-	}
-	return nil
-}
-
-// NewRealtimeServerEventConversationItemInputAudioTranscriptionDelta returns a validated RealtimeServerEventConversationItemInputAudioTranscriptionDelta built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemInputAudioTranscriptionDelta(fields RealtimeServerEventConversationItemInputAudioTranscriptionDelta) (*RealtimeServerEventConversationItemInputAudioTranscriptionDelta, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum The event type, must be `conversation.item.input_audio_transcription.delta`.
-type RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum string
-
-const (
-	RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnumConversationItemInputAudioTranscriptionDelta RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum = "conversation.item.input_audio_transcription.delta"
-)
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "conversation.item.input_audio_transcription.delta":
-		*value = RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemInputAudioTranscriptionDeltaTypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionFailed Returned when input audio transcription is configured, and a transcription
-// request for a user message failed. These events are separate from other
-// `error` events so that the client can identify the related Item.
-type RealtimeServerEventConversationItemInputAudioTranscriptionFailed struct {
-	// EventId The unique ID of the server event.
-	EventId string `json:"event_id"`
-	// Type The event type, must be
-	// `conversation.item.input_audio_transcription.failed`.
-	Type RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum `json:"type"`
-	// ItemId The ID of the user message item.
-	ItemId string `json:"item_id"`
-	// ContentIndex The index of the content part containing the audio.
-	ContentIndex int64 `json:"content_index"`
-	// Error Details of the transcription error.
-	Error RealtimeServerEventConversationItemInputAudioTranscriptionFailedError `json:"error"`
-}
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionFailed) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.input_audio_transcription.failed"}); err != nil {
-		return err
-	}
-	type RealtimeServerEventConversationItemInputAudioTranscriptionFailedAlias RealtimeServerEventConversationItemInputAudioTranscriptionFailed
-	var decoded RealtimeServerEventConversationItemInputAudioTranscriptionFailedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventConversationItemInputAudioTranscriptionFailed(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item_id", "content_index", "error"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "item_id", "content_index", "error"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeServerEventConversationItemInputAudioTranscriptionFailed returns a validated RealtimeServerEventConversationItemInputAudioTranscriptionFailed built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemInputAudioTranscriptionFailed(fields RealtimeServerEventConversationItemInputAudioTranscriptionFailed) (*RealtimeServerEventConversationItemInputAudioTranscriptionFailed, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum The event type, must be
-// `conversation.item.input_audio_transcription.failed`.
-type RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum string
-
-const (
-	RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnumConversationItemInputAudioTranscriptionFailed RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum = "conversation.item.input_audio_transcription.failed"
-)
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "conversation.item.input_audio_transcription.failed":
-		*value = RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemInputAudioTranscriptionFailedTypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionFailedError Details of the transcription error.
-type RealtimeServerEventConversationItemInputAudioTranscriptionFailedError struct {
-	// Type The type of error.
-	Type *string `json:"type,omitempty"`
-	// Code Error code, if any.
-	Code *string `json:"code,omitempty"`
-	// Message A human-readable error message.
-	Message *string `json:"message,omitempty"`
-	// Param Parameter related to the error, if any.
-	Param *string `json:"param,omitempty"`
-}
-
-// NewRealtimeServerEventConversationItemInputAudioTranscriptionFailedError returns a validated RealtimeServerEventConversationItemInputAudioTranscriptionFailedError built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemInputAudioTranscriptionFailedError(fields RealtimeServerEventConversationItemInputAudioTranscriptionFailedError) (*RealtimeServerEventConversationItemInputAudioTranscriptionFailedError, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionSegment Returned when an input audio transcription segment is identified for an item.
-type RealtimeServerEventConversationItemInputAudioTranscriptionSegment struct {
-	// EventId The unique ID of the server event.
-	EventId string `json:"event_id"`
-	// Type The event type, must be `conversation.item.input_audio_transcription.segment`.
-	Type RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum `json:"type"`
-	// ItemId The ID of the item containing the input audio content.
-	ItemId string `json:"item_id"`
-	// ContentIndex The index of the input audio content part within the item.
-	ContentIndex int64 `json:"content_index"`
-	// Text The text for this segment.
-	Text string `json:"text"`
-	// Id The segment identifier.
-	Id string `json:"id"`
-	// Speaker The detected speaker label for this segment.
-	Speaker string `json:"speaker"`
-	// Start Start time of the segment in seconds.
-	Start float64 `json:"start"`
-	// End End time of the segment in seconds.
-	End float64 `json:"end"`
-}
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionSegment) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.input_audio_transcription.segment"}); err != nil {
-		return err
-	}
-	type RealtimeServerEventConversationItemInputAudioTranscriptionSegmentAlias RealtimeServerEventConversationItemInputAudioTranscriptionSegment
-	var decoded RealtimeServerEventConversationItemInputAudioTranscriptionSegmentAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventConversationItemInputAudioTranscriptionSegment(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item_id", "content_index", "text", "id", "speaker", "start", "end"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "item_id", "content_index", "text", "id", "speaker", "start", "end"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeServerEventConversationItemInputAudioTranscriptionSegment returns a validated RealtimeServerEventConversationItemInputAudioTranscriptionSegment built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemInputAudioTranscriptionSegment(fields RealtimeServerEventConversationItemInputAudioTranscriptionSegment) (*RealtimeServerEventConversationItemInputAudioTranscriptionSegment, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum The event type, must be `conversation.item.input_audio_transcription.segment`.
-type RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum string
-
-const (
-	RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnumConversationItemInputAudioTranscriptionSegment RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum = "conversation.item.input_audio_transcription.segment"
-)
-
-func (value *RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "conversation.item.input_audio_transcription.segment":
-		*value = RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemInputAudioTranscriptionSegmentTypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeServerEventConversationItemRetrieved Returned when a conversation item is retrieved with `conversation.item.retrieve`. This is provided as a way to fetch the server's representation of an item, for example to get access to the post-processed audio data after noise cancellation and VAD. It includes the full content of the Item, including audio data.
-type RealtimeServerEventConversationItemRetrieved struct {
-	// EventId The unique ID of the server event.
-	EventId string `json:"event_id"`
-	// Type The event type, must be `conversation.item.retrieved`.
-	Type RealtimeServerEventConversationItemRetrievedTypeEnum `json:"type"`
+	// Type The event type, must be `conversation.item.created`.
+	Type RealtimeServerEventConversationItemCreatedTypeEnum `json:"type"`
+	// PreviousItemId Optional `string` value serialized in the `previous_item_id` wire field.
+	PreviousItemId *NullableValue[string] `json:"previous_item_id,omitempty"`
 	// Item A single item within a Realtime conversation.
 	Item RealtimeConversationItem `json:"item"`
 }
 
-func (value *RealtimeServerEventConversationItemRetrieved) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventConversationItemCreated) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.retrieved"}); err != nil {
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.created"}); err != nil {
 		return err
 	}
-	type RealtimeServerEventConversationItemRetrievedAlias RealtimeServerEventConversationItemRetrieved
-	var decoded RealtimeServerEventConversationItemRetrievedAlias
+	type RealtimeServerEventConversationItemCreatedAlias RealtimeServerEventConversationItemCreated
+	var decoded RealtimeServerEventConversationItemCreatedAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = RealtimeServerEventConversationItemRetrieved(decoded)
+	*value = RealtimeServerEventConversationItemCreated(decoded)
 	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item"}); err != nil {
 		return err
 	}
 	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "item"}); err != nil {
 		return err
 	}
+	if raw, ok := rawFields["previous_item_id"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.PreviousItemId = &NullableValue[string]{}
+	}
 	return nil
 }
 
-// NewRealtimeServerEventConversationItemRetrieved returns a validated RealtimeServerEventConversationItemRetrieved built from named fields.
+// NewRealtimeServerEventConversationItemCreated returns a validated RealtimeServerEventConversationItemCreated built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemRetrieved(fields RealtimeServerEventConversationItemRetrieved) (*RealtimeServerEventConversationItemRetrieved, error) {
+func NewRealtimeServerEventConversationItemCreated(fields RealtimeServerEventConversationItemCreated) (*RealtimeServerEventConversationItemCreated, error) {
 	return ConstructModel(fields)
 }
 
-// RealtimeServerEventConversationItemRetrievedTypeEnum The event type, must be `conversation.item.retrieved`.
-type RealtimeServerEventConversationItemRetrievedTypeEnum string
+// RealtimeServerEventConversationItemCreatedTypeEnum The event type, must be `conversation.item.created`.
+type RealtimeServerEventConversationItemCreatedTypeEnum string
 
 const (
-	RealtimeServerEventConversationItemRetrievedTypeEnumConversationItemRetrieved RealtimeServerEventConversationItemRetrievedTypeEnum = "conversation.item.retrieved"
+	RealtimeServerEventConversationItemCreatedTypeEnumConversationItemCreated RealtimeServerEventConversationItemCreatedTypeEnum = "conversation.item.created"
 )
 
-func (value *RealtimeServerEventConversationItemRetrievedTypeEnum) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventConversationItemCreatedTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
 	switch raw {
-	case "conversation.item.retrieved":
-		*value = RealtimeServerEventConversationItemRetrievedTypeEnum(raw)
+	case "conversation.item.created":
+		*value = RealtimeServerEventConversationItemCreatedTypeEnum(raw)
 		return nil
 	default:
-		return &SdkValidationError{Field: "RealtimeServerEventConversationItemRetrievedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemRetrievedTypeEnum: %v", raw)}
+		return &SdkValidationError{Field: "RealtimeServerEventConversationItemCreatedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemCreatedTypeEnum: %v", raw)}
 	}
 }
 
-// RealtimeServerEventConversationItemTruncated Returned when an earlier assistant audio message item is truncated by the
-// client with a `conversation.item.truncate` event. This event is used to
-// synchronize the server's understanding of the audio with the client's playback.
-//
-// This action will truncate the audio and remove the server-side text transcript
-// to ensure there is no text in the context that hasn't been heard by the user.
-type RealtimeServerEventConversationItemTruncated struct {
+// RealtimeServerEventConversationItemDeleted Returned when an item in the conversation is deleted by the client with a
+// `conversation.item.delete` event. This event is used to synchronize the
+// server's understanding of the conversation history with the client's view.
+type RealtimeServerEventConversationItemDeleted struct {
 	// EventId The unique ID of the server event.
 	EventId string `json:"event_id"`
-	// Type The event type, must be `conversation.item.truncated`.
-	Type RealtimeServerEventConversationItemTruncatedTypeEnum `json:"type"`
-	// ItemId The ID of the assistant message item that was truncated.
+	// Type The event type, must be `conversation.item.deleted`.
+	Type RealtimeServerEventConversationItemDeletedTypeEnum `json:"type"`
+	// ItemId The ID of the item that was deleted.
 	ItemId string `json:"item_id"`
-	// ContentIndex The index of the content part that was truncated.
-	ContentIndex int64 `json:"content_index"`
-	// AudioEndMs The duration up to which the audio was truncated, in milliseconds.
-	AudioEndMs int64 `json:"audio_end_ms"`
 }
 
-func (value *RealtimeServerEventConversationItemTruncated) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventConversationItemDeleted) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.truncated"}); err != nil {
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"conversation.item.deleted"}); err != nil {
 		return err
 	}
-	type RealtimeServerEventConversationItemTruncatedAlias RealtimeServerEventConversationItemTruncated
-	var decoded RealtimeServerEventConversationItemTruncatedAlias
+	type RealtimeServerEventConversationItemDeletedAlias RealtimeServerEventConversationItemDeleted
+	var decoded RealtimeServerEventConversationItemDeletedAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = RealtimeServerEventConversationItemTruncated(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item_id", "content_index", "audio_end_ms"}); err != nil {
+	*value = RealtimeServerEventConversationItemDeleted(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "item_id"}); err != nil {
 		return err
 	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "item_id", "content_index", "audio_end_ms"}); err != nil {
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "item_id"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-// NewRealtimeServerEventConversationItemTruncated returns a validated RealtimeServerEventConversationItemTruncated built from named fields.
+// NewRealtimeServerEventConversationItemDeleted returns a validated RealtimeServerEventConversationItemDeleted built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewRealtimeServerEventConversationItemTruncated(fields RealtimeServerEventConversationItemTruncated) (*RealtimeServerEventConversationItemTruncated, error) {
+func NewRealtimeServerEventConversationItemDeleted(fields RealtimeServerEventConversationItemDeleted) (*RealtimeServerEventConversationItemDeleted, error) {
 	return ConstructModel(fields)
 }
 
-// RealtimeServerEventConversationItemTruncatedTypeEnum The event type, must be `conversation.item.truncated`.
-type RealtimeServerEventConversationItemTruncatedTypeEnum string
+// RealtimeServerEventConversationItemDeletedTypeEnum The event type, must be `conversation.item.deleted`.
+type RealtimeServerEventConversationItemDeletedTypeEnum string
 
 const (
-	RealtimeServerEventConversationItemTruncatedTypeEnumConversationItemTruncated RealtimeServerEventConversationItemTruncatedTypeEnum = "conversation.item.truncated"
+	RealtimeServerEventConversationItemDeletedTypeEnumConversationItemDeleted RealtimeServerEventConversationItemDeletedTypeEnum = "conversation.item.deleted"
 )
 
-func (value *RealtimeServerEventConversationItemTruncatedTypeEnum) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventConversationItemDeletedTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
 	switch raw {
-	case "conversation.item.truncated":
-		*value = RealtimeServerEventConversationItemTruncatedTypeEnum(raw)
+	case "conversation.item.deleted":
+		*value = RealtimeServerEventConversationItemDeletedTypeEnum(raw)
 		return nil
 	default:
-		return &SdkValidationError{Field: "RealtimeServerEventConversationItemTruncatedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemTruncatedTypeEnum: %v", raw)}
+		return &SdkValidationError{Field: "RealtimeServerEventConversationItemDeletedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventConversationItemDeletedTypeEnum: %v", raw)}
 	}
 }
 
-// RealtimeServerEventError Returned when an error occurs, which could be a client problem or a server
-// problem. Most errors are recoverable and the session will stay open, we
-// recommend to implementors to monitor and log error messages by default.
-type RealtimeServerEventError struct {
+// RealtimeServerEventConversationItemDone Returned when a conversation item is finalized.
+//
+// The event will include the full content of the Item except for audio data, which can be retrieved separately with a `conversation.item.retrieve` event if needed.
+type RealtimeServerEventConversationItemDone struct {
 	// EventId The unique ID of the server event.
 	EventId string `json:"event_id"`
-	// Type The event type, must be `error`.
-	Type RealtimeServerEventErrorTypeEnum `json:"type"`
-	// Error Details of the error.
-	Error RealtimeServerEventErrorError `json:"error"`
-}
-
-func (value *RealtimeServerEventError) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"error"}); err != nil {
-		return err
-	}
-	type RealtimeServerEventErrorAlias RealtimeServerEventError
-	var decoded RealtimeServerEventErrorAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventError(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "error"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "error"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeServerEventError returns a validated RealtimeServerEventError built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventError(fields RealtimeServerEventError) (*RealtimeServerEventError, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventErrorTypeEnum The event type, must be `error`.
-type RealtimeServerEventErrorTypeEnum string
-
-const (
-	RealtimeServerEventErrorTypeEnumError RealtimeServerEventErrorTypeEnum = "error"
-)
-
-func (value *RealtimeServerEventErrorTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "error":
-		*value = RealtimeServerEventErrorTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeServerEventErrorTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventErrorTypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeServerEventErrorError Details of the error.
-type RealtimeServerEventErrorError struct {
-	// Type The type of error (e.g., "invalid_request_error", "server_error").
-	Type string `json:"type"`
-	// Code Optional `string` value serialized in the `code` wire field.
-	Code *NullableValue[string] `json:"code,omitempty"`
-	// Message A human-readable error message.
-	Message string `json:"message"`
-	// Param Optional `string` value serialized in the `param` wire field.
-	Param *NullableValue[string] `json:"param,omitempty"`
-	// EventId Optional `string` value serialized in the `event_id` wire field.
-	EventId *NullableValue[string] `json:"event_id,omitempty"`
-}
-
-func (value *RealtimeServerEventErrorError) UnmarshalJSON(data []byte) error {
-	type RealtimeServerEventErrorErrorAlias RealtimeServerEventErrorError
-	var decoded RealtimeServerEventErrorErrorAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventErrorError(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"type", "message"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "message"}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["code"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Code = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["param"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Param = &NullableValue[string]{}
-	}
-	if raw, ok := rawFields["event_id"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.EventId = &NullableValue[string]{}
-	}
-	return nil
-}
-
-// NewRealtimeServerEventErrorError returns a validated RealtimeServerEventErrorError built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventErrorError(fields RealtimeServerEventErrorError) (*RealtimeServerEventErrorError, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventInputAudioBufferCleared Returned when the input audio buffer is cleared by the client with a
-// `input_audio_buffer.clear` event.
-type RealtimeServerEventInputAudioBufferCleared struct {
-	// EventId The unique ID of the server event.
-	EventId string `json:"event_id"`
-	// Type The event type, must be `input_audio_buffer.cleared`.
-	Type RealtimeServerEventInputAudioBufferClearedTypeEnum `json:"type"`
-}
-
-func (value *RealtimeServerEventInputAudioBufferCleared) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"input_audio_buffer.cleared"}); err != nil {
-		return err
-	}
-	type RealtimeServerEventInputAudioBufferClearedAlias RealtimeServerEventInputAudioBufferCleared
-	var decoded RealtimeServerEventInputAudioBufferClearedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventInputAudioBufferCleared(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeServerEventInputAudioBufferCleared returns a validated RealtimeServerEventInputAudioBufferCleared built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventInputAudioBufferCleared(fields RealtimeServerEventInputAudioBufferCleared) (*RealtimeServerEventInputAudioBufferCleared, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventInputAudioBufferClearedTypeEnum The event type, must be `input_audio_buffer.cleared`.
-type RealtimeServerEventInputAudioBufferClearedTypeEnum string
-
-const (
-	RealtimeServerEventInputAudioBufferClearedTypeEnumInputAudioBufferCleared RealtimeServerEventInputAudioBufferClearedTypeEnum = "input_audio_buffer.cleared"
-)
-
-func (value *RealtimeServerEventInputAudioBufferClearedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "input_audio_buffer.cleared":
-		*value = RealtimeServerEventInputAudioBufferClearedTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "RealtimeServerEventInputAudioBufferClearedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventInputAudioBufferClearedTypeEnum: %v", raw)}
-	}
-}
-
-// RealtimeServerEventInputAudioBufferCommitted Returned when an input audio buffer is committed, either by the client or
-// automatically in server VAD mode. The `item_id` property is the ID of the user
-// message item that will be created, thus a `conversation.item.created` event
-// will also be sent to the client.
-type RealtimeServerEventInputAudioBufferCommitted struct {
-	// EventId The unique ID of the server event.
-	EventId string `json:"event_id"`
-	// Type The event type, must be `input_audio_buffer.committed`.
-	Type RealtimeServerEventInputAudioBufferCommittedTypeEnum `json:"type"`
+	// Type The event type, must be `conversation.item.done`.
+	Type RealtimeServerEventConversationItemDoneTypeEnum `json:"type"`
 	// PreviousItemId Optional `string` value serialized in the `previous_item_id` wire field.
 	PreviousItemId *NullableValue[string] `json:"previous_item_id,omitempty"`
-	// ItemId The ID of the user message item that will be created.
-	ItemId string `json:"item_id"`
+	// Item A single item within a Realtime conversation.
+	Item RealtimeConversationItem `json:"item"`
 }

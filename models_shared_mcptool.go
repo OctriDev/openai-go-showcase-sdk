@@ -173,6 +173,19 @@ type MCPToolAllowedTools struct {
 func (u *MCPToolAllowedTools) UnmarshalJSON(data []byte) error {
 	*u = MCPToolAllowedTools{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 []string
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ListOfString = &lossless0
+			return nil
+		}
+		var lossless1 MCPToolFilter
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MCPToolFilter = &lossless1
+			return nil
+		}
+	}
 	var listofstring []string
 	if err := json.Unmarshal(data, &listofstring); err == nil && isNonEmptyMCPToolAllowedToolsListOfString(listofstring) {
 		u.ListOfString = &listofstring
@@ -214,80 +227,6 @@ func isNonEmptyMCPToolAllowedToolsMCPToolFilter(v MCPToolFilter) bool {
 func UnmarshalMCPToolAllowedTools(v any) MCPToolAllowedTools {
 	b, _ := json.Marshal(v)
 	var result MCPToolAllowedTools
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// MCPToolRequireApprovalVariant0 Specify which of the MCP server's tools require approval. Can be
-// `always`, `never`, or a filter object associated with tools
-// that require approval.
-type MCPToolRequireApprovalVariant0 struct {
-	// Always A filter object to specify which tools are allowed.
-	Always *MCPToolFilter `json:"always,omitempty"`
-	// Never A filter object to specify which tools are allowed.
-	Never *MCPToolFilter `json:"never,omitempty"`
-}
-
-// NewMCPToolRequireApprovalVariant0 returns a validated MCPToolRequireApprovalVariant0 built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewMCPToolRequireApprovalVariant0(fields MCPToolRequireApprovalVariant0) (*MCPToolRequireApprovalVariant0, error) {
-	return ConstructModel(fields)
-}
-
-// MCPToolRequireApprovalVariant1Enum Specify a single approval policy for all tools. One of `always` or
-// `never`. When set to `always`, all tools will require approval. When
-// set to `never`, all tools will not require approval.
-type MCPToolRequireApprovalVariant1Enum string
-
-const (
-	MCPToolRequireApprovalVariant1EnumAlways MCPToolRequireApprovalVariant1Enum = "always"
-	MCPToolRequireApprovalVariant1EnumNever  MCPToolRequireApprovalVariant1Enum = "never"
-)
-
-// MCPToolRequireApproval represents a union type.
-type MCPToolRequireApproval struct {
-	MCPToolRequireApprovalVariant0     *MCPToolRequireApprovalVariant0
-	MCPToolRequireApprovalVariant1Enum *MCPToolRequireApprovalVariant1Enum
-}
-
-func (u *MCPToolRequireApproval) UnmarshalJSON(data []byte) error {
-	*u = MCPToolRequireApproval{}
-	var refusal error
-	var mcptoolrequireapprovalvariant0 MCPToolRequireApprovalVariant0
-	if err := json.Unmarshal(data, &mcptoolrequireapprovalvariant0); err == nil && isNonEmptyMCPToolRequireApprovalMCPToolRequireApprovalVariant0(mcptoolrequireapprovalvariant0) {
-		u.MCPToolRequireApprovalVariant0 = &mcptoolrequireapprovalvariant0
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var mcptoolrequireapprovalvariant1enum MCPToolRequireApprovalVariant1Enum
-	if err := json.Unmarshal(data, &mcptoolrequireapprovalvariant1enum); err == nil {
-		u.MCPToolRequireApprovalVariant1Enum = &mcptoolrequireapprovalvariant1enum
-		return nil
-	}
-	return refusal
-}
-
-func (u MCPToolRequireApproval) MarshalJSON() ([]byte, error) {
-	if u.MCPToolRequireApprovalVariant0 != nil {
-		return json.Marshal(u.MCPToolRequireApprovalVariant0)
-	}
-	if u.MCPToolRequireApprovalVariant1Enum != nil {
-		return json.Marshal(u.MCPToolRequireApprovalVariant1Enum)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyMCPToolRequireApprovalMCPToolRequireApprovalVariant0(v MCPToolRequireApprovalVariant0) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalMCPToolRequireApproval converts an untyped value to MCPToolRequireApproval.
-func UnmarshalMCPToolRequireApproval(v any) MCPToolRequireApproval {
-	b, _ := json.Marshal(v)
-	var result MCPToolRequireApproval
 	_ = json.Unmarshal(b, &result)
 	return result
 }
@@ -419,6 +358,24 @@ func (u *MCPToolCallError) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MCPProtocolError
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MCPProtocolError = &lossless0
+			return nil
+		}
+		var lossless1 MCPToolExecutionError
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MCPToolExecutionError = &lossless1
+			return nil
+		}
+		var lossless2 HTTPError
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.HTTPError = &lossless2
+			return nil
 		}
 	}
 	var mcpprotocolerror MCPProtocolError
@@ -570,3 +527,77 @@ const (
 	MCPToolCallStatusCalling    MCPToolCallStatus = "calling"
 	MCPToolCallStatusFailed     MCPToolCallStatus = "failed"
 )
+
+// MCPToolRequireApprovalVariant1Enum Specify a single approval policy for all tools. One of `always` or
+// `never`. When set to `always`, all tools will require approval. When
+// set to `never`, all tools will not require approval.
+type MCPToolRequireApprovalVariant1Enum string
+
+const (
+	MCPToolRequireApprovalVariant1EnumAlways MCPToolRequireApprovalVariant1Enum = "always"
+	MCPToolRequireApprovalVariant1EnumNever  MCPToolRequireApprovalVariant1Enum = "never"
+)
+
+// MCPToolRequireApprovalVariant0 Specify which of the MCP server's tools require approval. Can be
+// `always`, `never`, or a filter object associated with tools
+// that require approval.
+type MCPToolRequireApprovalVariant0 struct {
+	// Always A filter object to specify which tools are allowed.
+	Always *MCPToolFilter `json:"always,omitempty"`
+	// Never A filter object to specify which tools are allowed.
+	Never *MCPToolFilter `json:"never,omitempty"`
+}
+
+// NewMCPToolRequireApprovalVariant0 returns a validated MCPToolRequireApprovalVariant0 built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewMCPToolRequireApprovalVariant0(fields MCPToolRequireApprovalVariant0) (*MCPToolRequireApprovalVariant0, error) {
+	return ConstructModel(fields)
+}
+
+// MCPToolRequireApproval represents a union type.
+type MCPToolRequireApproval struct {
+	MCPToolRequireApprovalVariant0     *MCPToolRequireApprovalVariant0
+	MCPToolRequireApprovalVariant1Enum *MCPToolRequireApprovalVariant1Enum
+}
+
+func (u *MCPToolRequireApproval) UnmarshalJSON(data []byte) error {
+	*u = MCPToolRequireApproval{}
+	var refusal error
+	var mcptoolrequireapprovalvariant0 MCPToolRequireApprovalVariant0
+	if err := json.Unmarshal(data, &mcptoolrequireapprovalvariant0); err == nil && isNonEmptyMCPToolRequireApprovalMCPToolRequireApprovalVariant0(mcptoolrequireapprovalvariant0) {
+		u.MCPToolRequireApprovalVariant0 = &mcptoolrequireapprovalvariant0
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var mcptoolrequireapprovalvariant1enum MCPToolRequireApprovalVariant1Enum
+	if err := json.Unmarshal(data, &mcptoolrequireapprovalvariant1enum); err == nil {
+		u.MCPToolRequireApprovalVariant1Enum = &mcptoolrequireapprovalvariant1enum
+		return nil
+	}
+	return refusal
+}
+
+func (u MCPToolRequireApproval) MarshalJSON() ([]byte, error) {
+	if u.MCPToolRequireApprovalVariant0 != nil {
+		return json.Marshal(u.MCPToolRequireApprovalVariant0)
+	}
+	if u.MCPToolRequireApprovalVariant1Enum != nil {
+		return json.Marshal(u.MCPToolRequireApprovalVariant1Enum)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyMCPToolRequireApprovalMCPToolRequireApprovalVariant0(v MCPToolRequireApprovalVariant0) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalMCPToolRequireApproval converts an untyped value to MCPToolRequireApproval.
+func UnmarshalMCPToolRequireApproval(v any) MCPToolRequireApproval {
+	b, _ := json.Marshal(v)
+	var result MCPToolRequireApproval
+	_ = json.Unmarshal(b, &result)
+	return result
+}

@@ -160,6 +160,24 @@ func (u *InputContent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 InputImageContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.InputImageContent = &lossless1
+			return nil
+		}
+		var lossless2 InputFileContent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.InputFileContent = &lossless2
+			return nil
+		}
+	}
 	var inputtextcontent InputTextContent
 	if err := json.Unmarshal(data, &inputtextcontent); err == nil && isNonEmptyInputContentInputTextContent(inputtextcontent) {
 		u.InputTextContent = &inputtextcontent
@@ -272,6 +290,39 @@ func (u *InputItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 EasyInputMessage
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.EasyInputMessage = &lossless0
+			return nil
+		}
+		var lossless1 Item
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.Item = &lossless1
+			return nil
+		}
+		var lossless2 CompactionTriggerItemParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.CompactionTriggerItemParam = &lossless2
+			return nil
+		}
+		var lossless3 ItemReferenceParam
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ItemReferenceParam = &lossless3
+			return nil
+		}
+		var lossless4 ProgramItemParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ProgramItemParam = &lossless4
+			return nil
+		}
+		var lossless5 ProgramOutputItemParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ProgramOutputItemParam = &lossless5
+			return nil
 		}
 	}
 	var easyinputmessage EasyInputMessage
@@ -658,39 +709,3 @@ func NewInputFileContent(fields InputFileContent) (*InputFileContent, error) {
 
 // InputFileContentTypeEnum The type of the input item. Always `input_file`.
 type InputFileContentTypeEnum string
-
-const (
-	InputFileContentTypeEnumInputFile InputFileContentTypeEnum = "input_file"
-)
-
-func (value *InputFileContentTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "input_file":
-		*value = InputFileContentTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "InputFileContentTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown InputFileContentTypeEnum: %v", raw)}
-	}
-}
-
-// InputFidelity Control how much effort the model will exert to match the style and features, especially facial features, of input images. Supports `high` and `low` on `gpt-image-1` and `gpt-image-1.5`; `gpt-image-1-mini` supports only `low`. For `gpt-image-2`, omit this parameter. Defaults to `low` on supported models.
-type InputFidelity string
-
-const (
-	InputFidelityHigh InputFidelity = "high"
-	InputFidelityLow  InputFidelity = "low"
-)
-
-// InputTextContentParam A text input to the model.
-type InputTextContentParam struct {
-	// Type The type of the input item. Always `input_text`.
-	Type InputTextContentParamTypeEnum `json:"type"`
-	// Text The text input to the model.
-	Text string `json:"text"`
-	// PromptCacheBreakpoint Optional API value serialized in the `prompt_cache_breakpoint` wire field.
-	PromptCacheBreakpoint *NullableValue[PromptCacheBreakpointParam] `json:"prompt_cache_breakpoint,omitempty"`
-}

@@ -5,6 +5,182 @@ package sdk
 
 import "encoding/json"
 
+func (u *AgentToolConfigParam) UnmarshalJSON(data []byte) error {
+	*u = AgentToolConfigParam{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "function":
+					var agenttoolconfigparamfunction AgentToolConfigParamFunction
+					if err := json.Unmarshal(data, &agenttoolconfigparamfunction); err != nil {
+						return err
+					}
+					u.AgentToolConfigParamFunction = &agenttoolconfigparamfunction
+					return nil
+				case "tool_search":
+					var agenttoolconfigparamtoolsearch AgentToolConfigParamToolSearch
+					if err := json.Unmarshal(data, &agenttoolconfigparamtoolsearch); err != nil {
+						return err
+					}
+					u.AgentToolConfigParamToolSearch = &agenttoolconfigparamtoolsearch
+					return nil
+				case "programmatic_tool_calling":
+					var agenttoolconfigparamprogrammatictoolcalling AgentToolConfigParamProgrammaticToolCalling
+					if err := json.Unmarshal(data, &agenttoolconfigparamprogrammatictoolcalling); err != nil {
+						return err
+					}
+					u.AgentToolConfigParamProgrammaticToolCalling = &agenttoolconfigparamprogrammatictoolcalling
+					return nil
+				case "mcp":
+					var agenttoolconfigparammcp AgentToolConfigParamMcp
+					if err := json.Unmarshal(data, &agenttoolconfigparammcp); err != nil {
+						return err
+					}
+					u.AgentToolConfigParamMcp = &agenttoolconfigparammcp
+					return nil
+				case "web_search":
+					var agenttoolconfigparamwebsearch AgentToolConfigParamWebSearch
+					if err := json.Unmarshal(data, &agenttoolconfigparamwebsearch); err != nil {
+						return err
+					}
+					u.AgentToolConfigParamWebSearch = &agenttoolconfigparamwebsearch
+					return nil
+				case "computer_use":
+					var agenttoolconfigparamcomputeruse AgentToolConfigParamComputerUse
+					if err := json.Unmarshal(data, &agenttoolconfigparamcomputeruse); err != nil {
+						return err
+					}
+					u.AgentToolConfigParamComputerUse = &agenttoolconfigparamcomputeruse
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AgentToolConfigParamFunction
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AgentToolConfigParamFunction = &lossless0
+			return nil
+		}
+		var lossless1 AgentToolConfigParamToolSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AgentToolConfigParamToolSearch = &lossless1
+			return nil
+		}
+		var lossless2 AgentToolConfigParamProgrammaticToolCalling
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.AgentToolConfigParamProgrammaticToolCalling = &lossless2
+			return nil
+		}
+		var lossless3 AgentToolConfigParamMcp
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.AgentToolConfigParamMcp = &lossless3
+			return nil
+		}
+		var lossless4 AgentToolConfigParamWebSearch
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.AgentToolConfigParamWebSearch = &lossless4
+			return nil
+		}
+		var lossless5 AgentToolConfigParamComputerUse
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.AgentToolConfigParamComputerUse = &lossless5
+			return nil
+		}
+	}
+	var agenttoolconfigparamfunction AgentToolConfigParamFunction
+	if err := json.Unmarshal(data, &agenttoolconfigparamfunction); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamFunction(agenttoolconfigparamfunction) {
+		u.AgentToolConfigParamFunction = &agenttoolconfigparamfunction
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var agenttoolconfigparamtoolsearch AgentToolConfigParamToolSearch
+	if err := json.Unmarshal(data, &agenttoolconfigparamtoolsearch); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamToolSearch(agenttoolconfigparamtoolsearch) {
+		u.AgentToolConfigParamToolSearch = &agenttoolconfigparamtoolsearch
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var agenttoolconfigparamprogrammatictoolcalling AgentToolConfigParamProgrammaticToolCalling
+	if err := json.Unmarshal(data, &agenttoolconfigparamprogrammatictoolcalling); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamProgrammaticToolCalling(agenttoolconfigparamprogrammatictoolcalling) {
+		u.AgentToolConfigParamProgrammaticToolCalling = &agenttoolconfigparamprogrammatictoolcalling
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var agenttoolconfigparammcp AgentToolConfigParamMcp
+	if err := json.Unmarshal(data, &agenttoolconfigparammcp); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamMcp(agenttoolconfigparammcp) {
+		u.AgentToolConfigParamMcp = &agenttoolconfigparammcp
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var agenttoolconfigparamwebsearch AgentToolConfigParamWebSearch
+	if err := json.Unmarshal(data, &agenttoolconfigparamwebsearch); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamWebSearch(agenttoolconfigparamwebsearch) {
+		u.AgentToolConfigParamWebSearch = &agenttoolconfigparamwebsearch
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var agenttoolconfigparamcomputeruse AgentToolConfigParamComputerUse
+	if err := json.Unmarshal(data, &agenttoolconfigparamcomputeruse); err == nil && isNonEmptyAgentToolConfigParamAgentToolConfigParamComputerUse(agenttoolconfigparamcomputeruse) {
+		u.AgentToolConfigParamComputerUse = &agenttoolconfigparamcomputeruse
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u AgentToolConfigParam) MarshalJSON() ([]byte, error) {
+	if u.AgentToolConfigParamFunction != nil {
+		return json.Marshal(u.AgentToolConfigParamFunction)
+	}
+	if u.AgentToolConfigParamToolSearch != nil {
+		return json.Marshal(u.AgentToolConfigParamToolSearch)
+	}
+	if u.AgentToolConfigParamProgrammaticToolCalling != nil {
+		return json.Marshal(u.AgentToolConfigParamProgrammaticToolCalling)
+	}
+	if u.AgentToolConfigParamMcp != nil {
+		return json.Marshal(u.AgentToolConfigParamMcp)
+	}
+	if u.AgentToolConfigParamWebSearch != nil {
+		return json.Marshal(u.AgentToolConfigParamWebSearch)
+	}
+	if u.AgentToolConfigParamComputerUse != nil {
+		return json.Marshal(u.AgentToolConfigParamComputerUse)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyAgentToolConfigParamAgentToolConfigParamFunction(v AgentToolConfigParamFunction) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyAgentToolConfigParamAgentToolConfigParamToolSearch(v AgentToolConfigParamToolSearch) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyAgentToolConfigParamAgentToolConfigParamProgrammaticToolCalling(v AgentToolConfigParamProgrammaticToolCalling) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
 func isNonEmptyAgentToolConfigParamAgentToolConfigParamMcp(v AgentToolConfigParamMcp) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
@@ -161,6 +337,79 @@ func (u *AgentOutputItemResource) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantMessageItemResource
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantMessageItemResource = &lossless0
+			return nil
+		}
+		var lossless1 ReasoningItemResource
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ReasoningItemResource = &lossless1
+			return nil
+		}
+		var lossless2 FunctionCallItemResource
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.FunctionCallItemResource = &lossless2
+			return nil
+		}
+		var lossless3 McpCallItemResource
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.McpCallItemResource = &lossless3
+			return nil
+		}
+		var lossless4 ComputerUseCallItemResource
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ComputerUseCallItemResource = &lossless4
+			return nil
+		}
+		var lossless5 BrowserAuthenticationRequestItemResource
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BrowserAuthenticationRequestItemResource = &lossless5
+			return nil
+		}
+		var lossless6 WebSearchCallItemResource
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.WebSearchCallItemResource = &lossless6
+			return nil
+		}
+		var lossless7 CommandExecutionItemResource
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.CommandExecutionItemResource = &lossless7
+			return nil
+		}
+		var lossless8 CreateSubagentCallItemResource
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.CreateSubagentCallItemResource = &lossless8
+			return nil
+		}
+		var lossless9 SendSubagentInputCallItemResource
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.SendSubagentInputCallItemResource = &lossless9
+			return nil
+		}
+		var lossless10 ResumeSubagentCallItemResource
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.ResumeSubagentCallItemResource = &lossless10
+			return nil
+		}
+		var lossless11 WaitForSubagentsCallItemResource
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.WaitForSubagentsCallItemResource = &lossless11
+			return nil
+		}
+		var lossless12 InterruptSubagentCallItemResource
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.InterruptSubagentCallItemResource = &lossless12
+			return nil
+		}
+		var lossless13 CloseSubagentCallItemResource
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.CloseSubagentCallItemResource = &lossless13
+			return nil
 		}
 	}
 	var assistantmessageitemresource AssistantMessageItemResource

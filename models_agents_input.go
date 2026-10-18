@@ -171,6 +171,19 @@ func (u *InputContentResource) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputContentResourceInputText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputContentResourceInputText = &lossless0
+			return nil
+		}
+		var lossless1 InputContentResourceInputImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.InputContentResourceInputImage = &lossless1
+			return nil
+		}
+	}
 	var inputcontentresourceinputtext InputContentResourceInputText
 	if err := json.Unmarshal(data, &inputcontentresourceinputtext); err == nil && isNonEmptyInputContentResourceInputContentResourceInputText(inputcontentresourceinputtext) {
 		u.InputContentResourceInputText = &inputcontentresourceinputtext
@@ -413,6 +426,19 @@ func (u *InputContentParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 InputContentParamInputText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.InputContentParamInputText = &lossless0
+			return nil
+		}
+		var lossless1 InputContentParamInputImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.InputContentParamInputImage = &lossless1
+			return nil
 		}
 	}
 	var inputcontentparaminputtext InputContentParamInputText

@@ -41,86 +41,6 @@ const (
 // ParallelToolCalls is an alias for bool.
 type ParallelToolCalls = bool
 
-// PermissionErrorResponse Typed representation of the `PermissionErrorResponse` API schema.
-type PermissionErrorResponse struct {
-	// Error Details about the permission error.
-	Error PermissionErrorResponseError `json:"error"`
-}
-
-func (value *PermissionErrorResponse) UnmarshalJSON(data []byte) error {
-	type PermissionErrorResponseAlias PermissionErrorResponse
-	var decoded PermissionErrorResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = PermissionErrorResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"error"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"error"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewPermissionErrorResponse returns a validated PermissionErrorResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewPermissionErrorResponse(fields PermissionErrorResponse) (*PermissionErrorResponse, error) {
-	return ConstructModel(fields)
-}
-
-// PermissionErrorResponseError represents a union type.
-type PermissionErrorResponseError struct {
-	Error3 *Error3
-	String *string
-}
-
-func (u *PermissionErrorResponseError) UnmarshalJSON(data []byte) error {
-	*u = PermissionErrorResponseError{}
-	var refusal error
-	var s string
-	if err := json.Unmarshal(data, &s); err == nil {
-		u.String = &s
-		return nil
-	}
-	var error3 Error3
-	if err := json.Unmarshal(data, &error3); err == nil && isNonEmptyPermissionErrorResponseErrorError3(error3) {
-		u.Error3 = &error3
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u PermissionErrorResponseError) MarshalJSON() ([]byte, error) {
-	if u.Error3 != nil {
-		return json.Marshal(u.Error3)
-	}
-	if u.String != nil {
-		return json.Marshal(u.String)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyPermissionErrorResponseErrorError3(v Error3) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalPermissionErrorResponseError converts an untyped value to PermissionErrorResponseError.
-func UnmarshalPermissionErrorResponseError(v any) PermissionErrorResponseError {
-	b, _ := json.Marshal(v)
-	var result PermissionErrorResponseError
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
 // PublicAssignOrganizationGroupRoleBody Request payload for assigning a role to a group or user.
 type PublicAssignOrganizationGroupRoleBody struct {
 	// RoleId Identifier of the role to assign.
@@ -443,6 +363,29 @@ func (u *Annotation) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 FileCitationBody
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.FileCitationBody = &lossless0
+			return nil
+		}
+		var lossless1 UrlCitationBody
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.UrlCitationBody = &lossless1
+			return nil
+		}
+		var lossless2 ContainerFileCitationBody
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ContainerFileCitationBody = &lossless2
+			return nil
+		}
+		var lossless3 FilePath
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.FilePath = &lossless3
+			return nil
+		}
+	}
 	var filecitationbody FileCitationBody
 	if err := json.Unmarshal(data, &filecitationbody); err == nil && isNonEmptyAnnotationFileCitationBody(filecitationbody) {
 		u.FileCitationBody = &filecitationbody
@@ -696,3 +639,66 @@ func NewRefusalContent(fields RefusalContent) (*RefusalContent, error) {
 
 // RefusalContentTypeEnum The type of the refusal. Always `refusal`.
 type RefusalContentTypeEnum string
+
+const (
+	RefusalContentTypeEnumRefusal RefusalContentTypeEnum = "refusal"
+)
+
+func (value *RefusalContentTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "refusal":
+		*value = RefusalContentTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "RefusalContentTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RefusalContentTypeEnum: %v", raw)}
+	}
+}
+
+// DoubleClickAction A double click action.
+type DoubleClickAction struct {
+	// Type Specifies the event type. For a double click action, this property is always set to `double_click`.
+	Type DoubleClickActionTypeEnum `json:"type"`
+	// X The x-coordinate where the double click occurred.
+	X int64 `json:"x"`
+	// Y The y-coordinate where the double click occurred.
+	Y int64 `json:"y"`
+	// Keys The keys being held while double-clicking.
+	Keys NullableValue[[]string] `json:"keys"`
+}
+
+func (value *DoubleClickAction) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"double_click"}); err != nil {
+		return err
+	}
+	type DoubleClickActionAlias DoubleClickAction
+	var decoded DoubleClickActionAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = DoubleClickAction(decoded)
+	if err := ValidateRequired(rawFields, []string{"type", "x", "y", "keys"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"type", "x", "y"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewDoubleClickAction returns a validated DoubleClickAction built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewDoubleClickAction(fields DoubleClickAction) (*DoubleClickAction, error) {
+	return ConstructModel(fields)
+}
+
+// DoubleClickActionTypeEnum Specifies the event type. For a double click action, this property is always set to `double_click`.
+type DoubleClickActionTypeEnum string

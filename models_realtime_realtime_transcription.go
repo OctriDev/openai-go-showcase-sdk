@@ -16,7 +16,7 @@ type RealtimeTranscriptionSessionCreateRequest struct {
 	// InputAudioNoiseReduction Configuration for input audio noise reduction. This can be set to `null` to turn off.
 	// Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
 	// Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
-	InputAudioNoiseReduction any `json:"input_audio_noise_reduction,omitempty"`
+	InputAudioNoiseReduction *RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction `json:"input_audio_noise_reduction,omitempty"`
 	// InputAudioFormat The format of input audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`.
 	// For `pcm16`, input audio must be 16-bit PCM at a 24kHz sample rate,
 	// single channel (mono), and little-endian byte order.
@@ -65,6 +65,21 @@ type RealtimeTranscriptionSessionCreateRequestTurnDetectionTypeEnum string
 const (
 	RealtimeTranscriptionSessionCreateRequestTurnDetectionTypeEnumServerVad RealtimeTranscriptionSessionCreateRequestTurnDetectionTypeEnum = "server_vad"
 )
+
+// RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction Configuration for input audio noise reduction. This can be set to `null` to turn off.
+// Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
+// Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+type RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction struct {
+	// Type Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
+	Type *NoiseReductionType `json:"type,omitempty"`
+}
+
+// NewRealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction returns a validated RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction(fields RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction) (*RealtimeTranscriptionSessionCreateRequestInputAudioNoiseReduction, error) {
+	return ConstructModel(fields)
+}
 
 // RealtimeTranscriptionSessionCreateRequestInputAudioFormatEnum The format of input audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`.
 // For `pcm16`, input audio must be 16-bit PCM at a 24kHz sample rate,
@@ -169,7 +184,7 @@ type RealtimeTranscriptionSessionCreateRequestGAAudioInput struct {
 	// NoiseReduction Configuration for input audio noise reduction. This can be set to `null` to turn off.
 	// Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
 	// Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
-	NoiseReduction any `json:"noise_reduction,omitempty"`
+	NoiseReduction *RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction `json:"noise_reduction,omitempty"`
 	// TurnDetection Configuration for turn detection, ether Server VAD or Semantic VAD. This can be set to `null` to turn off, in which case the client must manually trigger model response.
 	//
 	// Server VAD means that the model will detect the start and end of speech based on audio volume and respond at the end of user speech.
@@ -202,6 +217,21 @@ func (value *RealtimeTranscriptionSessionCreateRequestGAAudioInput) UnmarshalJSO
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
 func NewRealtimeTranscriptionSessionCreateRequestGAAudioInput(fields RealtimeTranscriptionSessionCreateRequestGAAudioInput) (*RealtimeTranscriptionSessionCreateRequestGAAudioInput, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction Configuration for input audio noise reduction. This can be set to `null` to turn off.
+// Noise reduction filters audio added to the input audio buffer before it is sent to VAD and the model.
+// Filtering the audio can improve VAD and turn detection accuracy (reducing false positives) and model performance by improving perception of the input audio.
+type RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction struct {
+	// Type Type of noise reduction. `near_field` is for close-talking microphones such as headphones, `far_field` is for far-field microphones such as laptop or conference room microphones.
+	Type *NoiseReductionType `json:"type,omitempty"`
+}
+
+// NewRealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction returns a validated RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction(fields RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction) (*RealtimeTranscriptionSessionCreateRequestGAAudioInputNoiseReduction, error) {
 	return ConstructModel(fields)
 }
 

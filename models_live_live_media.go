@@ -24,7 +24,7 @@ func NewLiveMediaSessionAudioParam(fields LiveMediaSessionAudioParam) (*LiveMedi
 // LiveMediaSessionCreateParams Startup configuration for a Live media session. Follow the [Live prompting guide](https://developers.openai.com/api/docs/guides/live-prompting) when writing frontend instructions and the backend prompt under delegation.responses.instructions.
 type LiveMediaSessionCreateParams struct {
 	// Model The Live model. Required in the session configuration for every transport; do not pass it as a URL query parameter.
-	Model ModelIdsLive `json:"model"`
+	Model string `json:"model"`
 	// Instructions Optional `string` value serialized in the `instructions` wire field.
 	Instructions *NullableValue[string] `json:"instructions,omitempty"`
 	// Audio Startup audio configuration. WebRTC and SIP negotiate their audio format on the media transport.
@@ -56,6 +56,9 @@ func (value *LiveMediaSessionCreateParams) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	if err := ValidateNotNull(rawFields, []string{"model"}); err != nil {
+		return err
+	}
+	if err := ValidateLength("model", value.Model, LengthOpts{Min: Ptr[int](1)}); err != nil {
 		return err
 	}
 	if func() bool { _, ok := rawFields["triggers"]; return ok }() {

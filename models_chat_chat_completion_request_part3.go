@@ -8,6 +8,55 @@ import (
 	"fmt"
 )
 
+// UnmarshalChatCompletionRequestToolMessageContentPart converts an untyped value to ChatCompletionRequestToolMessageContentPart.
+func UnmarshalChatCompletionRequestToolMessageContentPart(v any) ChatCompletionRequestToolMessageContentPart {
+	b, _ := json.Marshal(v)
+	var result ChatCompletionRequestToolMessageContentPart
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// ChatCompletionRequestUserMessage Messages sent by an end user, containing prompts or additional context
+// information.
+type ChatCompletionRequestUserMessage struct {
+	// Content The contents of the user message.
+	Content ChatCompletionRequestUserMessageContent `json:"content"`
+	// Role The role of the messages author, in this case `user`.
+	Role ChatCompletionRequestUserMessageRoleEnum `json:"role"`
+	// Name An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+	Name *string `json:"name,omitempty"`
+}
+
+func (value *ChatCompletionRequestUserMessage) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("role", rawFields["role"], []string{"user"}); err != nil {
+		return err
+	}
+	type ChatCompletionRequestUserMessageAlias ChatCompletionRequestUserMessage
+	var decoded ChatCompletionRequestUserMessageAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ChatCompletionRequestUserMessage(decoded)
+	if err := ValidateRequired(rawFields, []string{"content", "role"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"content", "role"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewChatCompletionRequestUserMessage returns a validated ChatCompletionRequestUserMessage built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewChatCompletionRequestUserMessage(fields ChatCompletionRequestUserMessage) (*ChatCompletionRequestUserMessage, error) {
+	return ConstructModel(fields)
+}
+
 // ChatCompletionRequestUserMessageContent represents a union type.
 type ChatCompletionRequestUserMessageContent struct {
 	String                                            *string
@@ -129,6 +178,29 @@ func (u *ChatCompletionRequestUserMessageContentPart) UnmarshalJSON(data []byte)
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ChatCompletionRequestMessageContentPartText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ChatCompletionRequestMessageContentPartText = &lossless0
+			return nil
+		}
+		var lossless1 ChatCompletionRequestMessageContentPartImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ChatCompletionRequestMessageContentPartImage = &lossless1
+			return nil
+		}
+		var lossless2 ChatCompletionRequestMessageContentPartAudio
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ChatCompletionRequestMessageContentPartAudio = &lossless2
+			return nil
+		}
+		var lossless3 ChatCompletionRequestMessageContentPartFile
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ChatCompletionRequestMessageContentPartFile = &lossless3
+			return nil
 		}
 	}
 	var chatcompletionrequestmessagecontentparttext ChatCompletionRequestMessageContentPartText

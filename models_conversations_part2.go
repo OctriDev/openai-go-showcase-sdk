@@ -8,6 +8,124 @@ import (
 	"encoding/json"
 )
 
+func isNonEmptyConversationItemComputerToolCallOutputResource(v ComputerToolCallOutputResource) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemToolSearchCall(v ToolSearchCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemToolSearchOutput(v ToolSearchOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemAdditionalTools(v AdditionalTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemResponseConfigurationUpdate(v ResponseConfigurationUpdate) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemReasoningItem(v ReasoningItem) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemProgram(v Program) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemProgramOutput(v ProgramOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemCompactionBody(v CompactionBody) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemCodeInterpreterToolCall(v CodeInterpreterToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemLocalShellToolCall(v LocalShellToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemLocalShellToolCallOutput(v LocalShellToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemFunctionShellCall(v FunctionShellCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemFunctionShellCallOutput(v FunctionShellCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemApplyPatchToolCall(v ApplyPatchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemApplyPatchToolCallOutput(v ApplyPatchToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemMCPListTools(v MCPListTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemMCPApprovalRequest(v MCPApprovalRequest) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemMCPApprovalResponseResource(v MCPApprovalResponseResource) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemMCPToolCall(v MCPToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemCustomToolCall(v CustomToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyConversationItemCustomToolCallOutput(v CustomToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalConversationItem converts an untyped value to ConversationItem.
+func UnmarshalConversationItem(v any) ConversationItem {
+	b, _ := json.Marshal(v)
+	var result ConversationItem
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
 // ConversationItemList A list of Conversation items.
 type ConversationItemList struct {
 	// Object The type of object returned, must be `list`.

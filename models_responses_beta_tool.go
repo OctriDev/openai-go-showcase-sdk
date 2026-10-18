@@ -146,6 +146,49 @@ func (u *BetaToolChoiceParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaToolChoiceAllowed
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaToolChoiceAllowed = &lossless0
+			return nil
+		}
+		var lossless1 BetaToolChoiceTypes
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaToolChoiceTypes = &lossless1
+			return nil
+		}
+		var lossless2 BetaToolChoiceFunction
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaToolChoiceFunction = &lossless2
+			return nil
+		}
+		var lossless3 BetaToolChoiceMCP
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaToolChoiceMCP = &lossless3
+			return nil
+		}
+		var lossless4 BetaToolChoiceCustom
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.BetaToolChoiceCustom = &lossless4
+			return nil
+		}
+		var lossless5 BetaSpecificProgrammaticToolCallingParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BetaSpecificProgrammaticToolCallingParam = &lossless5
+			return nil
+		}
+		var lossless6 BetaSpecificApplyPatchParam
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.BetaSpecificApplyPatchParam = &lossless6
+			return nil
+		}
+		var lossless7 BetaSpecificFunctionShellParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.BetaSpecificFunctionShellParam = &lossless7
+			return nil
+		}
+	}
 	var betatoolchoiceoptions BetaToolChoiceOptions
 	if err := json.Unmarshal(data, &betatoolchoiceoptions); err == nil {
 		u.BetaToolChoiceOptions = &betatoolchoiceoptions
@@ -662,26 +705,3 @@ const (
 	BetaToolChoiceOptionsAuto     BetaToolChoiceOptions = "auto"
 	BetaToolChoiceOptionsRequired BetaToolChoiceOptions = "required"
 )
-
-// BetaTool represents a union type.
-type BetaTool struct {
-	BetaFunctionTool                 *BetaFunctionTool
-	BetaFileSearchTool               *BetaFileSearchTool
-	BetaComputerTool                 *BetaComputerTool
-	BetaComputerUsePreviewTool       *BetaComputerUsePreviewTool
-	BetaWebSearchTool                *BetaWebSearchTool
-	BetaMCPTool                      *BetaMCPTool
-	BetaCodeInterpreterTool          *BetaCodeInterpreterTool
-	BetaProgrammaticToolCallingParam *BetaProgrammaticToolCallingParam
-	BetaImageGenTool                 *BetaImageGenTool
-	BetaLocalShellToolParam          *BetaLocalShellToolParam
-	BetaFunctionShellToolParam       *BetaFunctionShellToolParam
-	BetaCustomToolParam              *BetaCustomToolParam
-	BetaNamespaceToolParam           *BetaNamespaceToolParam
-	BetaToolSearchToolParam          *BetaToolSearchToolParam
-	BetaWebSearchPreviewTool         *BetaWebSearchPreviewTool
-	BetaApplyPatchToolParam          *BetaApplyPatchToolParam
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}

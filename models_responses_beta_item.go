@@ -315,6 +315,164 @@ func (u *BetaItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaInputMessage
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaInputMessage = &lossless0
+			return nil
+		}
+		var lossless1 BetaOutputMessage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaOutputMessage = &lossless1
+			return nil
+		}
+		var lossless2 BetaFileSearchToolCall
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaFileSearchToolCall = &lossless2
+			return nil
+		}
+		var lossless3 BetaComputerToolCall
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.BetaComputerToolCall = &lossless3
+			return nil
+		}
+		var lossless4 BetaComputerCallOutputItemParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.BetaComputerCallOutputItemParam = &lossless4
+			return nil
+		}
+		var lossless5 BetaWebSearchToolCall
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.BetaWebSearchToolCall = &lossless5
+			return nil
+		}
+		var lossless6 BetaFunctionToolCall
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.BetaFunctionToolCall = &lossless6
+			return nil
+		}
+		var lossless7 BetaFunctionCallOutputItemParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.BetaFunctionCallOutputItemParam = &lossless7
+			return nil
+		}
+		var lossless8 BetaAgentMessageItemParam
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.BetaAgentMessageItemParam = &lossless8
+			return nil
+		}
+		var lossless9 BetaMultiAgentCallItemParam
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.BetaMultiAgentCallItemParam = &lossless9
+			return nil
+		}
+		var lossless10 BetaMultiAgentCallOutputItemParam
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.BetaMultiAgentCallOutputItemParam = &lossless10
+			return nil
+		}
+		var lossless11 BetaToolSearchCallItemParam
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.BetaToolSearchCallItemParam = &lossless11
+			return nil
+		}
+		var lossless12 BetaToolSearchOutputItemParam
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.BetaToolSearchOutputItemParam = &lossless12
+			return nil
+		}
+		var lossless13 BetaAdditionalToolsItemParam
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.BetaAdditionalToolsItemParam = &lossless13
+			return nil
+		}
+		var lossless14 BetaResponseConfigurationUpdateItemParam
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.BetaResponseConfigurationUpdateItemParam = &lossless14
+			return nil
+		}
+		var lossless15 BetaReasoningItem
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.BetaReasoningItem = &lossless15
+			return nil
+		}
+		var lossless16 BetaCompactionSummaryItemParam
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.BetaCompactionSummaryItemParam = &lossless16
+			return nil
+		}
+		var lossless17 BetaImageGenToolCall
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.BetaImageGenToolCall = &lossless17
+			return nil
+		}
+		var lossless18 BetaCodeInterpreterToolCall
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.BetaCodeInterpreterToolCall = &lossless18
+			return nil
+		}
+		var lossless19 BetaLocalShellToolCall
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.BetaLocalShellToolCall = &lossless19
+			return nil
+		}
+		var lossless20 BetaLocalShellToolCallOutput
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.BetaLocalShellToolCallOutput = &lossless20
+			return nil
+		}
+		var lossless21 BetaFunctionShellCallItemParam
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.BetaFunctionShellCallItemParam = &lossless21
+			return nil
+		}
+		var lossless22 BetaFunctionShellCallOutputItemParam
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.BetaFunctionShellCallOutputItemParam = &lossless22
+			return nil
+		}
+		var lossless23 BetaApplyPatchToolCallItemParam
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.BetaApplyPatchToolCallItemParam = &lossless23
+			return nil
+		}
+		var lossless24 BetaApplyPatchToolCallOutputItemParam
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.BetaApplyPatchToolCallOutputItemParam = &lossless24
+			return nil
+		}
+		var lossless25 BetaMCPListTools
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.BetaMCPListTools = &lossless25
+			return nil
+		}
+		var lossless26 BetaMCPApprovalRequest
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.BetaMCPApprovalRequest = &lossless26
+			return nil
+		}
+		var lossless27 BetaMCPApprovalResponse
+		if json.Unmarshal(data, &lossless27) == nil && keepsEveryKey(raw, lossless27) {
+			u.BetaMCPApprovalResponse = &lossless27
+			return nil
+		}
+		var lossless28 BetaMCPToolCall
+		if json.Unmarshal(data, &lossless28) == nil && keepsEveryKey(raw, lossless28) {
+			u.BetaMCPToolCall = &lossless28
+			return nil
+		}
+		var lossless29 BetaCustomToolCallOutput
+		if json.Unmarshal(data, &lossless29) == nil && keepsEveryKey(raw, lossless29) {
+			u.BetaCustomToolCallOutput = &lossless29
+			return nil
+		}
+		var lossless30 BetaCustomToolCall
+		if json.Unmarshal(data, &lossless30) == nil && keepsEveryKey(raw, lossless30) {
+			u.BetaCustomToolCall = &lossless30
+			return nil
+		}
+	}
 	var betainputmessage BetaInputMessage
 	if err := json.Unmarshal(data, &betainputmessage); err == nil && isNonEmptyBetaItemBetaInputMessage(betainputmessage) {
 		u.BetaInputMessage = &betainputmessage
@@ -533,199 +691,4 @@ func (u *BetaItem) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
-}
-
-func (u BetaItem) MarshalJSON() ([]byte, error) {
-	if u.BetaInputMessage != nil {
-		return json.Marshal(u.BetaInputMessage)
-	}
-	if u.BetaOutputMessage != nil {
-		return json.Marshal(u.BetaOutputMessage)
-	}
-	if u.BetaFileSearchToolCall != nil {
-		return json.Marshal(u.BetaFileSearchToolCall)
-	}
-	if u.BetaComputerToolCall != nil {
-		return json.Marshal(u.BetaComputerToolCall)
-	}
-	if u.BetaComputerCallOutputItemParam != nil {
-		return json.Marshal(u.BetaComputerCallOutputItemParam)
-	}
-	if u.BetaWebSearchToolCall != nil {
-		return json.Marshal(u.BetaWebSearchToolCall)
-	}
-	if u.BetaFunctionToolCall != nil {
-		return json.Marshal(u.BetaFunctionToolCall)
-	}
-	if u.BetaFunctionCallOutputItemParam != nil {
-		return json.Marshal(u.BetaFunctionCallOutputItemParam)
-	}
-	if u.BetaAgentMessageItemParam != nil {
-		return json.Marshal(u.BetaAgentMessageItemParam)
-	}
-	if u.BetaMultiAgentCallItemParam != nil {
-		return json.Marshal(u.BetaMultiAgentCallItemParam)
-	}
-	if u.BetaMultiAgentCallOutputItemParam != nil {
-		return json.Marshal(u.BetaMultiAgentCallOutputItemParam)
-	}
-	if u.BetaToolSearchCallItemParam != nil {
-		return json.Marshal(u.BetaToolSearchCallItemParam)
-	}
-	if u.BetaToolSearchOutputItemParam != nil {
-		return json.Marshal(u.BetaToolSearchOutputItemParam)
-	}
-	if u.BetaAdditionalToolsItemParam != nil {
-		return json.Marshal(u.BetaAdditionalToolsItemParam)
-	}
-	if u.BetaResponseConfigurationUpdateItemParam != nil {
-		return json.Marshal(u.BetaResponseConfigurationUpdateItemParam)
-	}
-	if u.BetaReasoningItem != nil {
-		return json.Marshal(u.BetaReasoningItem)
-	}
-	if u.BetaCompactionSummaryItemParam != nil {
-		return json.Marshal(u.BetaCompactionSummaryItemParam)
-	}
-	if u.BetaImageGenToolCall != nil {
-		return json.Marshal(u.BetaImageGenToolCall)
-	}
-	if u.BetaCodeInterpreterToolCall != nil {
-		return json.Marshal(u.BetaCodeInterpreterToolCall)
-	}
-	if u.BetaLocalShellToolCall != nil {
-		return json.Marshal(u.BetaLocalShellToolCall)
-	}
-	if u.BetaLocalShellToolCallOutput != nil {
-		return json.Marshal(u.BetaLocalShellToolCallOutput)
-	}
-	if u.BetaFunctionShellCallItemParam != nil {
-		return json.Marshal(u.BetaFunctionShellCallItemParam)
-	}
-	if u.BetaFunctionShellCallOutputItemParam != nil {
-		return json.Marshal(u.BetaFunctionShellCallOutputItemParam)
-	}
-	if u.BetaApplyPatchToolCallItemParam != nil {
-		return json.Marshal(u.BetaApplyPatchToolCallItemParam)
-	}
-	if u.BetaApplyPatchToolCallOutputItemParam != nil {
-		return json.Marshal(u.BetaApplyPatchToolCallOutputItemParam)
-	}
-	if u.BetaMCPListTools != nil {
-		return json.Marshal(u.BetaMCPListTools)
-	}
-	if u.BetaMCPApprovalRequest != nil {
-		return json.Marshal(u.BetaMCPApprovalRequest)
-	}
-	if u.BetaMCPApprovalResponse != nil {
-		return json.Marshal(u.BetaMCPApprovalResponse)
-	}
-	if u.BetaMCPToolCall != nil {
-		return json.Marshal(u.BetaMCPToolCall)
-	}
-	if u.BetaCustomToolCallOutput != nil {
-		return json.Marshal(u.BetaCustomToolCallOutput)
-	}
-	if u.BetaCustomToolCall != nil {
-		return json.Marshal(u.BetaCustomToolCall)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyBetaItemBetaInputMessage(v BetaInputMessage) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaOutputMessage(v BetaOutputMessage) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaFileSearchToolCall(v BetaFileSearchToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaComputerToolCall(v BetaComputerToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaComputerCallOutputItemParam(v BetaComputerCallOutputItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaWebSearchToolCall(v BetaWebSearchToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaFunctionToolCall(v BetaFunctionToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaFunctionCallOutputItemParam(v BetaFunctionCallOutputItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaAgentMessageItemParam(v BetaAgentMessageItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaMultiAgentCallItemParam(v BetaMultiAgentCallItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaMultiAgentCallOutputItemParam(v BetaMultiAgentCallOutputItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaToolSearchCallItemParam(v BetaToolSearchCallItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaToolSearchOutputItemParam(v BetaToolSearchOutputItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaAdditionalToolsItemParam(v BetaAdditionalToolsItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaResponseConfigurationUpdateItemParam(v BetaResponseConfigurationUpdateItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaReasoningItem(v BetaReasoningItem) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaCompactionSummaryItemParam(v BetaCompactionSummaryItemParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaImageGenToolCall(v BetaImageGenToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyBetaItemBetaCodeInterpreterToolCall(v BetaCodeInterpreterToolCall) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

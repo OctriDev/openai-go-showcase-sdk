@@ -8,6 +8,13 @@ import (
 	"fmt"
 )
 
+// BetaApplyPatchToolCallTypeEnum The type of the item. Always `apply_patch_call`.
+type BetaApplyPatchToolCallTypeEnum string
+
+const (
+	BetaApplyPatchToolCallTypeEnumApplyPatchCall BetaApplyPatchToolCallTypeEnum = "apply_patch_call"
+)
+
 func (value *BetaApplyPatchToolCallTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
@@ -256,6 +263,24 @@ func (u *BetaApplyPatchToolCallOperation) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaApplyPatchCreateFileOperation
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaApplyPatchCreateFileOperation = &lossless0
+			return nil
+		}
+		var lossless1 BetaApplyPatchDeleteFileOperation
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaApplyPatchDeleteFileOperation = &lossless1
+			return nil
+		}
+		var lossless2 BetaApplyPatchUpdateFileOperation
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaApplyPatchUpdateFileOperation = &lossless2
+			return nil
 		}
 	}
 	var betaapplypatchcreatefileoperation BetaApplyPatchCreateFileOperation

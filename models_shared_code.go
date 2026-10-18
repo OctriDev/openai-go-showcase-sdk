@@ -75,53 +75,6 @@ func (value *CodeInterpreterToolTypeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// CodeInterpreterToolContainer represents a union type.
-type CodeInterpreterToolContainer struct {
-	String                       *string
-	AutoCodeInterpreterToolParam *AutoCodeInterpreterToolParam
-}
-
-func (u *CodeInterpreterToolContainer) UnmarshalJSON(data []byte) error {
-	*u = CodeInterpreterToolContainer{}
-	var refusal error
-	var s string
-	if err := json.Unmarshal(data, &s); err == nil {
-		u.String = &s
-		return nil
-	}
-	var autocodeinterpretertoolparam AutoCodeInterpreterToolParam
-	if err := json.Unmarshal(data, &autocodeinterpretertoolparam); err == nil && isNonEmptyCodeInterpreterToolContainerAutoCodeInterpreterToolParam(autocodeinterpretertoolparam) {
-		u.AutoCodeInterpreterToolParam = &autocodeinterpretertoolparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u CodeInterpreterToolContainer) MarshalJSON() ([]byte, error) {
-	if u.String != nil {
-		return json.Marshal(u.String)
-	}
-	if u.AutoCodeInterpreterToolParam != nil {
-		return json.Marshal(u.AutoCodeInterpreterToolParam)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyCodeInterpreterToolContainerAutoCodeInterpreterToolParam(v AutoCodeInterpreterToolParam) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalCodeInterpreterToolContainer converts an untyped value to CodeInterpreterToolContainer.
-func UnmarshalCodeInterpreterToolContainer(v any) CodeInterpreterToolContainer {
-	b, _ := json.Marshal(v)
-	var result CodeInterpreterToolContainer
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
 // CodeInterpreterToolCall A tool call to run code.
 type CodeInterpreterToolCall struct {
 	// Type The type of the code interpreter tool call. Always `code_interpreter_call`.
@@ -322,6 +275,53 @@ func (value *CodeInterpreterOutputImageTypeEnum) UnmarshalJSON(data []byte) erro
 	}
 }
 
+// CodeInterpreterToolContainer represents a union type.
+type CodeInterpreterToolContainer struct {
+	String                       *string
+	AutoCodeInterpreterToolParam *AutoCodeInterpreterToolParam
+}
+
+func (u *CodeInterpreterToolContainer) UnmarshalJSON(data []byte) error {
+	*u = CodeInterpreterToolContainer{}
+	var refusal error
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		u.String = &s
+		return nil
+	}
+	var autocodeinterpretertoolparam AutoCodeInterpreterToolParam
+	if err := json.Unmarshal(data, &autocodeinterpretertoolparam); err == nil && isNonEmptyCodeInterpreterToolContainerAutoCodeInterpreterToolParam(autocodeinterpretertoolparam) {
+		u.AutoCodeInterpreterToolParam = &autocodeinterpretertoolparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u CodeInterpreterToolContainer) MarshalJSON() ([]byte, error) {
+	if u.String != nil {
+		return json.Marshal(u.String)
+	}
+	if u.AutoCodeInterpreterToolParam != nil {
+		return json.Marshal(u.AutoCodeInterpreterToolParam)
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyCodeInterpreterToolContainerAutoCodeInterpreterToolParam(v AutoCodeInterpreterToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCodeInterpreterToolContainer converts an untyped value to CodeInterpreterToolContainer.
+func UnmarshalCodeInterpreterToolContainer(v any) CodeInterpreterToolContainer {
+	b, _ := json.Marshal(v)
+	var result CodeInterpreterToolContainer
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
 // CodeInterpreterToolCallOutputsItem represents a union type.
 type CodeInterpreterToolCallOutputsItem struct {
 	CodeInterpreterOutputLogs  *CodeInterpreterOutputLogs
@@ -359,6 +359,19 @@ func (u *CodeInterpreterToolCallOutputsItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CodeInterpreterOutputLogs
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CodeInterpreterOutputLogs = &lossless0
+			return nil
+		}
+		var lossless1 CodeInterpreterOutputImage
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CodeInterpreterOutputImage = &lossless1
+			return nil
 		}
 	}
 	var codeinterpreteroutputlogs CodeInterpreterOutputLogs

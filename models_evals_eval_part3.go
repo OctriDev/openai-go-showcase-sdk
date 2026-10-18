@@ -267,6 +267,24 @@ func (u *EvalDataSourceConfig) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 EvalCustomDataSourceConfig
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.EvalCustomDataSourceConfig = &lossless0
+			return nil
+		}
+		var lossless1 EvalLogsDataSourceConfig
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EvalLogsDataSourceConfig = &lossless1
+			return nil
+		}
+		var lossless2 EvalStoredCompletionsDataSourceConfig
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.EvalStoredCompletionsDataSourceConfig = &lossless2
+			return nil
+		}
+	}
 	var evalcustomdatasourceconfig EvalCustomDataSourceConfig
 	if err := json.Unmarshal(data, &evalcustomdatasourceconfig); err == nil && isNonEmptyEvalDataSourceConfigEvalCustomDataSourceConfig(evalcustomdatasourceconfig) {
 		u.EvalCustomDataSourceConfig = &evalcustomdatasourceconfig
@@ -391,6 +409,34 @@ func (u *EvalTestingCriteriaItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 EvalGraderLabelModel
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.EvalGraderLabelModel = &lossless0
+			return nil
+		}
+		var lossless1 EvalGraderStringCheck
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.EvalGraderStringCheck = &lossless1
+			return nil
+		}
+		var lossless2 EvalGraderTextSimilarity
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.EvalGraderTextSimilarity = &lossless2
+			return nil
+		}
+		var lossless3 EvalGraderPython
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.EvalGraderPython = &lossless3
+			return nil
+		}
+		var lossless4 EvalGraderScoreModel
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.EvalGraderScoreModel = &lossless4
+			return nil
 		}
 	}
 	var evalgraderlabelmodel EvalGraderLabelModel
@@ -531,6 +577,24 @@ func (u *EvalRunDataSource) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 CreateEvalJsonlRunDataSource
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.CreateEvalJsonlRunDataSource = &lossless0
+			return nil
+		}
+		var lossless1 CreateEvalCompletionsRunDataSource
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.CreateEvalCompletionsRunDataSource = &lossless1
+			return nil
+		}
+		var lossless2 CreateEvalResponsesRunDataSource
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.CreateEvalResponsesRunDataSource = &lossless2
+			return nil
 		}
 	}
 	var createevaljsonlrundatasource CreateEvalJsonlRunDataSource

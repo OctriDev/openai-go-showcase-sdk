@@ -573,6 +573,19 @@ type LiveDataChannelConfigParamAllowedServerEvents struct {
 func (u *LiveDataChannelConfigParamAllowedServerEvents) UnmarshalJSON(data []byte) error {
 	*u = LiveDataChannelConfigParamAllowedServerEvents{}
 	var refusal error
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveDataChannelConfigParamAllowedServerEventsVariant0Enum
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveDataChannelConfigParamAllowedServerEventsVariant0Enum = &lossless0
+			return nil
+		}
+		var lossless1 []LiveAllowedServerEventParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ListOfLiveAllowedServerEventParam = &lossless1
+			return nil
+		}
+	}
 	var livedatachannelconfigparamallowedservereventsvariant0enum LiveDataChannelConfigParamAllowedServerEventsVariant0Enum
 	if err := json.Unmarshal(data, &livedatachannelconfigparamallowedservereventsvariant0enum); err == nil && isNonEmptyLiveDataChannelConfigParamAllowedServerEventsLiveDataChannelConfigParamAllowedServerEventsVariant0Enum(livedatachannelconfigparamallowedservereventsvariant0enum) {
 		u.LiveDataChannelConfigParamAllowedServerEventsVariant0Enum = &livedatachannelconfigparamallowedservereventsvariant0enum
@@ -626,81 +639,4 @@ type LiveAudioFormat struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *LiveAudioFormat) UnmarshalJSON(data []byte) error {
-	*u = LiveAudioFormat{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "audio/pcm":
-					var livesessionaudioformatpcmparam LiveSessionAudioFormatPCMParam
-					if err := json.Unmarshal(data, &livesessionaudioformatpcmparam); err != nil {
-						return err
-					}
-					u.LiveSessionAudioFormatPCMParam = &livesessionaudioformatpcmparam
-					return nil
-				case "audio/pcmu":
-					var livesessionaudioformatpcmuparam LiveSessionAudioFormatPCMUParam
-					if err := json.Unmarshal(data, &livesessionaudioformatpcmuparam); err != nil {
-						return err
-					}
-					u.LiveSessionAudioFormatPCMUParam = &livesessionaudioformatpcmuparam
-					return nil
-				case "audio/pcma":
-					var livesessionaudioformatpcmaparam LiveSessionAudioFormatPCMAParam
-					if err := json.Unmarshal(data, &livesessionaudioformatpcmaparam); err != nil {
-						return err
-					}
-					u.LiveSessionAudioFormatPCMAParam = &livesessionaudioformatpcmaparam
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var livesessionaudioformatpcmparam LiveSessionAudioFormatPCMParam
-	if err := json.Unmarshal(data, &livesessionaudioformatpcmparam); err == nil && isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMParam(livesessionaudioformatpcmparam) {
-		u.LiveSessionAudioFormatPCMParam = &livesessionaudioformatpcmparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livesessionaudioformatpcmuparam LiveSessionAudioFormatPCMUParam
-	if err := json.Unmarshal(data, &livesessionaudioformatpcmuparam); err == nil && isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMUParam(livesessionaudioformatpcmuparam) {
-		u.LiveSessionAudioFormatPCMUParam = &livesessionaudioformatpcmuparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var livesessionaudioformatpcmaparam LiveSessionAudioFormatPCMAParam
-	if err := json.Unmarshal(data, &livesessionaudioformatpcmaparam); err == nil && isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMAParam(livesessionaudioformatpcmaparam) {
-		u.LiveSessionAudioFormatPCMAParam = &livesessionaudioformatpcmaparam
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u LiveAudioFormat) MarshalJSON() ([]byte, error) {
-	if u.LiveSessionAudioFormatPCMParam != nil {
-		return json.Marshal(u.LiveSessionAudioFormatPCMParam)
-	}
-	if u.LiveSessionAudioFormatPCMUParam != nil {
-		return json.Marshal(u.LiveSessionAudioFormatPCMUParam)
-	}
-	if u.LiveSessionAudioFormatPCMAParam != nil {
-		return json.Marshal(u.LiveSessionAudioFormatPCMAParam)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
 }

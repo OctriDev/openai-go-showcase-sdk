@@ -320,6 +320,34 @@ func (u *MessageStreamEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageStreamEventVariant0
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageStreamEventVariant0 = &lossless0
+			return nil
+		}
+		var lossless1 MessageStreamEventVariant1
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MessageStreamEventVariant1 = &lossless1
+			return nil
+		}
+		var lossless2 MessageStreamEventVariant2
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.MessageStreamEventVariant2 = &lossless2
+			return nil
+		}
+		var lossless3 MessageStreamEventVariant3
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.MessageStreamEventVariant3 = &lossless3
+			return nil
+		}
+		var lossless4 MessageStreamEventVariant4
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.MessageStreamEventVariant4 = &lossless4
+			return nil
+		}
+	}
 	var messagestreameventvariant0 MessageStreamEventVariant0
 	if err := json.Unmarshal(data, &messagestreameventvariant0); err == nil && isNonEmptyMessageStreamEventMessageStreamEventVariant0(messagestreameventvariant0) {
 		u.MessageStreamEventVariant0 = &messagestreameventvariant0
@@ -465,6 +493,29 @@ func (u *MessageObjectContentItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageContentImageFileObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageContentImageFileObject = &lossless0
+			return nil
+		}
+		var lossless1 MessageContentImageUrlObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MessageContentImageUrlObject = &lossless1
+			return nil
+		}
+		var lossless2 MessageContentTextObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.MessageContentTextObject = &lossless2
+			return nil
+		}
+		var lossless3 MessageContentRefusalObject
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.MessageContentRefusalObject = &lossless3
+			return nil
+		}
+	}
 	var messagecontentimagefileobject MessageContentImageFileObject
 	if err := json.Unmarshal(data, &messagecontentimagefileobject); err == nil && isNonEmptyMessageObjectContentItemMessageContentImageFileObject(messagecontentimagefileobject) {
 		u.MessageContentImageFileObject = &messagecontentimagefileobject
@@ -582,6 +633,19 @@ func (u *MessageContentTextObjectTextAnnotationsItem) UnmarshalJSON(data []byte)
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageContentTextAnnotationsFileCitationObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageContentTextAnnotationsFileCitationObject = &lossless0
+			return nil
+		}
+		var lossless1 MessageContentTextAnnotationsFilePathObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MessageContentTextAnnotationsFilePathObject = &lossless1
+			return nil
+		}
+	}
 	var messagecontenttextannotationsfilecitationobject MessageContentTextAnnotationsFileCitationObject
 	if err := json.Unmarshal(data, &messagecontenttextannotationsfilecitationobject); err == nil && isNonEmptyMessageContentTextObjectTextAnnotationsItemMessageContentTextAnnotationsFileCitationObject(messagecontenttextannotationsfilecitationobject) {
 		u.MessageContentTextAnnotationsFileCitationObject = &messagecontenttextannotationsfilecitationobject
@@ -637,74 +701,4 @@ type MessageObjectAttachmentsItemToolsItem struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *MessageObjectAttachmentsItemToolsItem) UnmarshalJSON(data []byte) error {
-	*u = MessageObjectAttachmentsItemToolsItem{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "code_interpreter":
-					var assistanttoolscode AssistantToolsCode
-					if err := json.Unmarshal(data, &assistanttoolscode); err != nil {
-						return err
-					}
-					u.AssistantToolsCode = &assistanttoolscode
-					return nil
-				case "file_search":
-					var assistanttoolsfilesearchtypeonly AssistantToolsFileSearchTypeOnly
-					if err := json.Unmarshal(data, &assistanttoolsfilesearchtypeonly); err != nil {
-						return err
-					}
-					u.AssistantToolsFileSearchTypeOnly = &assistanttoolsfilesearchtypeonly
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var assistanttoolscode AssistantToolsCode
-	if err := json.Unmarshal(data, &assistanttoolscode); err == nil && isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsCode(assistanttoolscode) {
-		u.AssistantToolsCode = &assistanttoolscode
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var assistanttoolsfilesearchtypeonly AssistantToolsFileSearchTypeOnly
-	if err := json.Unmarshal(data, &assistanttoolsfilesearchtypeonly); err == nil && isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsFileSearchTypeOnly(assistanttoolsfilesearchtypeonly) {
-		u.AssistantToolsFileSearchTypeOnly = &assistanttoolsfilesearchtypeonly
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u MessageObjectAttachmentsItemToolsItem) MarshalJSON() ([]byte, error) {
-	if u.AssistantToolsCode != nil {
-		return json.Marshal(u.AssistantToolsCode)
-	}
-	if u.AssistantToolsFileSearchTypeOnly != nil {
-		return json.Marshal(u.AssistantToolsFileSearchTypeOnly)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsCode(v AssistantToolsCode) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsFileSearchTypeOnly(v AssistantToolsFileSearchTypeOnly) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

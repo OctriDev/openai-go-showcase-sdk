@@ -434,6 +434,304 @@ func (u *ResponseStreamEvent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ResponseAudioDeltaEvent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ResponseAudioDeltaEvent = &lossless0
+			return nil
+		}
+		var lossless1 ResponseAudioDoneEvent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.ResponseAudioDoneEvent = &lossless1
+			return nil
+		}
+		var lossless2 ResponseAudioTranscriptDeltaEvent
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ResponseAudioTranscriptDeltaEvent = &lossless2
+			return nil
+		}
+		var lossless3 ResponseAudioTranscriptDoneEvent
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ResponseAudioTranscriptDoneEvent = &lossless3
+			return nil
+		}
+		var lossless4 ResponseCodeInterpreterCallCodeDeltaEvent
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.ResponseCodeInterpreterCallCodeDeltaEvent = &lossless4
+			return nil
+		}
+		var lossless5 ResponseCodeInterpreterCallCodeDoneEvent
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.ResponseCodeInterpreterCallCodeDoneEvent = &lossless5
+			return nil
+		}
+		var lossless6 ResponseCodeInterpreterCallCompletedEvent
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.ResponseCodeInterpreterCallCompletedEvent = &lossless6
+			return nil
+		}
+		var lossless7 ResponseCodeInterpreterCallInProgressEvent
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.ResponseCodeInterpreterCallInProgressEvent = &lossless7
+			return nil
+		}
+		var lossless8 ResponseCodeInterpreterCallInterpretingEvent
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.ResponseCodeInterpreterCallInterpretingEvent = &lossless8
+			return nil
+		}
+		var lossless9 ResponseCompactionCompactingStreamingEvent
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.ResponseCompactionCompactingStreamingEvent = &lossless9
+			return nil
+		}
+		var lossless10 ResponseCompletedEvent
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.ResponseCompletedEvent = &lossless10
+			return nil
+		}
+		var lossless11 ResponseContentPartAddedEvent
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.ResponseContentPartAddedEvent = &lossless11
+			return nil
+		}
+		var lossless12 ResponseContentPartDoneEvent
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.ResponseContentPartDoneEvent = &lossless12
+			return nil
+		}
+		var lossless13 ResponseCreatedEvent
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.ResponseCreatedEvent = &lossless13
+			return nil
+		}
+		var lossless14 ResponseErrorEvent
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.ResponseErrorEvent = &lossless14
+			return nil
+		}
+		var lossless15 ResponseFileSearchCallCompletedEvent
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.ResponseFileSearchCallCompletedEvent = &lossless15
+			return nil
+		}
+		var lossless16 ResponseFileSearchCallInProgressEvent
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.ResponseFileSearchCallInProgressEvent = &lossless16
+			return nil
+		}
+		var lossless17 ResponseFileSearchCallSearchingEvent
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.ResponseFileSearchCallSearchingEvent = &lossless17
+			return nil
+		}
+		var lossless18 ResponseFunctionCallArgumentsDeltaEvent
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.ResponseFunctionCallArgumentsDeltaEvent = &lossless18
+			return nil
+		}
+		var lossless19 ResponseFunctionCallArgumentsDoneEvent
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.ResponseFunctionCallArgumentsDoneEvent = &lossless19
+			return nil
+		}
+		var lossless20 ResponseShellCallCommandAddedStreamingEvent
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.ResponseShellCallCommandAddedStreamingEvent = &lossless20
+			return nil
+		}
+		var lossless21 ResponseShellCallCommandDeltaStreamingEvent
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.ResponseShellCallCommandDeltaStreamingEvent = &lossless21
+			return nil
+		}
+		var lossless22 ResponseShellCallCommandDoneStreamingEvent
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.ResponseShellCallCommandDoneStreamingEvent = &lossless22
+			return nil
+		}
+		var lossless23 ResponseShellCallOutputContentDeltaStreamingEvent
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.ResponseShellCallOutputContentDeltaStreamingEvent = &lossless23
+			return nil
+		}
+		var lossless24 ResponseShellCallOutputContentDoneStreamingEvent
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.ResponseShellCallOutputContentDoneStreamingEvent = &lossless24
+			return nil
+		}
+		var lossless25 ResponseInProgressEvent
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.ResponseInProgressEvent = &lossless25
+			return nil
+		}
+		var lossless26 ResponseFailedEvent
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.ResponseFailedEvent = &lossless26
+			return nil
+		}
+		var lossless27 ResponseIncompleteEvent
+		if json.Unmarshal(data, &lossless27) == nil && keepsEveryKey(raw, lossless27) {
+			u.ResponseIncompleteEvent = &lossless27
+			return nil
+		}
+		var lossless28 ResponseOutputItemAddedEvent
+		if json.Unmarshal(data, &lossless28) == nil && keepsEveryKey(raw, lossless28) {
+			u.ResponseOutputItemAddedEvent = &lossless28
+			return nil
+		}
+		var lossless29 ResponseOutputItemDoneEvent
+		if json.Unmarshal(data, &lossless29) == nil && keepsEveryKey(raw, lossless29) {
+			u.ResponseOutputItemDoneEvent = &lossless29
+			return nil
+		}
+		var lossless30 ResponseReasoningSummaryPartAddedEvent
+		if json.Unmarshal(data, &lossless30) == nil && keepsEveryKey(raw, lossless30) {
+			u.ResponseReasoningSummaryPartAddedEvent = &lossless30
+			return nil
+		}
+		var lossless31 ResponseReasoningSummaryPartDoneEvent
+		if json.Unmarshal(data, &lossless31) == nil && keepsEveryKey(raw, lossless31) {
+			u.ResponseReasoningSummaryPartDoneEvent = &lossless31
+			return nil
+		}
+		var lossless32 ResponseReasoningSummaryTextDeltaEvent
+		if json.Unmarshal(data, &lossless32) == nil && keepsEveryKey(raw, lossless32) {
+			u.ResponseReasoningSummaryTextDeltaEvent = &lossless32
+			return nil
+		}
+		var lossless33 ResponseReasoningSummaryTextDoneEvent
+		if json.Unmarshal(data, &lossless33) == nil && keepsEveryKey(raw, lossless33) {
+			u.ResponseReasoningSummaryTextDoneEvent = &lossless33
+			return nil
+		}
+		var lossless34 ResponseReasoningTextDeltaEvent
+		if json.Unmarshal(data, &lossless34) == nil && keepsEveryKey(raw, lossless34) {
+			u.ResponseReasoningTextDeltaEvent = &lossless34
+			return nil
+		}
+		var lossless35 ResponseReasoningTextDoneEvent
+		if json.Unmarshal(data, &lossless35) == nil && keepsEveryKey(raw, lossless35) {
+			u.ResponseReasoningTextDoneEvent = &lossless35
+			return nil
+		}
+		var lossless36 ResponseRefusalDeltaEvent
+		if json.Unmarshal(data, &lossless36) == nil && keepsEveryKey(raw, lossless36) {
+			u.ResponseRefusalDeltaEvent = &lossless36
+			return nil
+		}
+		var lossless37 ResponseRefusalDoneEvent
+		if json.Unmarshal(data, &lossless37) == nil && keepsEveryKey(raw, lossless37) {
+			u.ResponseRefusalDoneEvent = &lossless37
+			return nil
+		}
+		var lossless38 ResponseTextDeltaEvent
+		if json.Unmarshal(data, &lossless38) == nil && keepsEveryKey(raw, lossless38) {
+			u.ResponseTextDeltaEvent = &lossless38
+			return nil
+		}
+		var lossless39 ResponseTextDoneEvent
+		if json.Unmarshal(data, &lossless39) == nil && keepsEveryKey(raw, lossless39) {
+			u.ResponseTextDoneEvent = &lossless39
+			return nil
+		}
+		var lossless40 ResponseWebSearchCallCompletedEvent
+		if json.Unmarshal(data, &lossless40) == nil && keepsEveryKey(raw, lossless40) {
+			u.ResponseWebSearchCallCompletedEvent = &lossless40
+			return nil
+		}
+		var lossless41 ResponseWebSearchCallInProgressEvent
+		if json.Unmarshal(data, &lossless41) == nil && keepsEveryKey(raw, lossless41) {
+			u.ResponseWebSearchCallInProgressEvent = &lossless41
+			return nil
+		}
+		var lossless42 ResponseWebSearchCallSearchingEvent
+		if json.Unmarshal(data, &lossless42) == nil && keepsEveryKey(raw, lossless42) {
+			u.ResponseWebSearchCallSearchingEvent = &lossless42
+			return nil
+		}
+		var lossless43 ResponseImageGenCallCompletedEvent
+		if json.Unmarshal(data, &lossless43) == nil && keepsEveryKey(raw, lossless43) {
+			u.ResponseImageGenCallCompletedEvent = &lossless43
+			return nil
+		}
+		var lossless44 ResponseImageGenCallGeneratingEvent
+		if json.Unmarshal(data, &lossless44) == nil && keepsEveryKey(raw, lossless44) {
+			u.ResponseImageGenCallGeneratingEvent = &lossless44
+			return nil
+		}
+		var lossless45 ResponseImageGenCallInProgressEvent
+		if json.Unmarshal(data, &lossless45) == nil && keepsEveryKey(raw, lossless45) {
+			u.ResponseImageGenCallInProgressEvent = &lossless45
+			return nil
+		}
+		var lossless46 ResponseImageGenCallPartialImageEvent
+		if json.Unmarshal(data, &lossless46) == nil && keepsEveryKey(raw, lossless46) {
+			u.ResponseImageGenCallPartialImageEvent = &lossless46
+			return nil
+		}
+		var lossless47 ResponseMCPCallArgumentsDeltaEvent
+		if json.Unmarshal(data, &lossless47) == nil && keepsEveryKey(raw, lossless47) {
+			u.ResponseMCPCallArgumentsDeltaEvent = &lossless47
+			return nil
+		}
+		var lossless48 ResponseMCPCallArgumentsDoneEvent
+		if json.Unmarshal(data, &lossless48) == nil && keepsEveryKey(raw, lossless48) {
+			u.ResponseMCPCallArgumentsDoneEvent = &lossless48
+			return nil
+		}
+		var lossless49 ResponseMCPCallCompletedEvent
+		if json.Unmarshal(data, &lossless49) == nil && keepsEveryKey(raw, lossless49) {
+			u.ResponseMCPCallCompletedEvent = &lossless49
+			return nil
+		}
+		var lossless50 ResponseMCPCallFailedEvent
+		if json.Unmarshal(data, &lossless50) == nil && keepsEveryKey(raw, lossless50) {
+			u.ResponseMCPCallFailedEvent = &lossless50
+			return nil
+		}
+		var lossless51 ResponseMCPCallInProgressEvent
+		if json.Unmarshal(data, &lossless51) == nil && keepsEveryKey(raw, lossless51) {
+			u.ResponseMCPCallInProgressEvent = &lossless51
+			return nil
+		}
+		var lossless52 ResponseMCPListToolsCompletedEvent
+		if json.Unmarshal(data, &lossless52) == nil && keepsEveryKey(raw, lossless52) {
+			u.ResponseMCPListToolsCompletedEvent = &lossless52
+			return nil
+		}
+		var lossless53 ResponseMCPListToolsFailedEvent
+		if json.Unmarshal(data, &lossless53) == nil && keepsEveryKey(raw, lossless53) {
+			u.ResponseMCPListToolsFailedEvent = &lossless53
+			return nil
+		}
+		var lossless54 ResponseMCPListToolsInProgressEvent
+		if json.Unmarshal(data, &lossless54) == nil && keepsEveryKey(raw, lossless54) {
+			u.ResponseMCPListToolsInProgressEvent = &lossless54
+			return nil
+		}
+		var lossless55 ResponseOutputTextAnnotationAddedEvent
+		if json.Unmarshal(data, &lossless55) == nil && keepsEveryKey(raw, lossless55) {
+			u.ResponseOutputTextAnnotationAddedEvent = &lossless55
+			return nil
+		}
+		var lossless56 ResponseQueuedEvent
+		if json.Unmarshal(data, &lossless56) == nil && keepsEveryKey(raw, lossless56) {
+			u.ResponseQueuedEvent = &lossless56
+			return nil
+		}
+		var lossless57 ResponseCustomToolCallInputDeltaEvent
+		if json.Unmarshal(data, &lossless57) == nil && keepsEveryKey(raw, lossless57) {
+			u.ResponseCustomToolCallInputDeltaEvent = &lossless57
+			return nil
+		}
+		var lossless58 ResponseCustomToolCallInputDoneEvent
+		if json.Unmarshal(data, &lossless58) == nil && keepsEveryKey(raw, lossless58) {
+			u.ResponseCustomToolCallInputDoneEvent = &lossless58
+			return nil
+		}
+	}
 	var responseaudiodeltaevent ResponseAudioDeltaEvent
 	if err := json.Unmarshal(data, &responseaudiodeltaevent); err == nil && isNonEmptyResponseStreamEventResponseAudioDeltaEvent(responseaudiodeltaevent) {
 		u.ResponseAudioDeltaEvent = &responseaudiodeltaevent

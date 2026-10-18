@@ -291,6 +291,24 @@ func (u *BetaApplyPatchOperationParam) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 BetaApplyPatchCreateFileOperationParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.BetaApplyPatchCreateFileOperationParam = &lossless0
+			return nil
+		}
+		var lossless1 BetaApplyPatchDeleteFileOperationParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.BetaApplyPatchDeleteFileOperationParam = &lossless1
+			return nil
+		}
+		var lossless2 BetaApplyPatchUpdateFileOperationParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.BetaApplyPatchUpdateFileOperationParam = &lossless2
+			return nil
+		}
+	}
 	var betaapplypatchcreatefileoperationparam BetaApplyPatchCreateFileOperationParam
 	if err := json.Unmarshal(data, &betaapplypatchcreatefileoperationparam); err == nil && isNonEmptyBetaApplyPatchOperationParamBetaApplyPatchCreateFileOperationParam(betaapplypatchcreatefileoperationparam) {
 		u.BetaApplyPatchCreateFileOperationParam = &betaapplypatchcreatefileoperationparam
@@ -695,10 +713,3 @@ func (value *BetaApplyPatchToolCall) UnmarshalJSON(data []byte) error {
 func NewBetaApplyPatchToolCall(fields BetaApplyPatchToolCall) (*BetaApplyPatchToolCall, error) {
 	return ConstructModel(fields)
 }
-
-// BetaApplyPatchToolCallTypeEnum The type of the item. Always `apply_patch_call`.
-type BetaApplyPatchToolCallTypeEnum string
-
-const (
-	BetaApplyPatchToolCallTypeEnumApplyPatchCall BetaApplyPatchToolCallTypeEnum = "apply_patch_call"
-)

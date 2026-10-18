@@ -8,6 +8,107 @@ import (
 	"fmt"
 )
 
+func (u *HostedTemplateSkillResource) UnmarshalJSON(data []byte) error {
+	*u = HostedTemplateSkillResource{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "skill_reference":
+					var hostedtemplateskillresourceskillreference HostedTemplateSkillResourceSkillReference
+					if err := json.Unmarshal(data, &hostedtemplateskillresourceskillreference); err != nil {
+						return err
+					}
+					u.HostedTemplateSkillResourceSkillReference = &hostedtemplateskillresourceskillreference
+					return nil
+				case "inline":
+					var hostedtemplateskillresourceinline HostedTemplateSkillResourceInline
+					if err := json.Unmarshal(data, &hostedtemplateskillresourceinline); err != nil {
+						return err
+					}
+					u.HostedTemplateSkillResourceInline = &hostedtemplateskillresourceinline
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 HostedTemplateSkillResourceSkillReference
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.HostedTemplateSkillResourceSkillReference = &lossless0
+			return nil
+		}
+		var lossless1 HostedTemplateSkillResourceInline
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.HostedTemplateSkillResourceInline = &lossless1
+			return nil
+		}
+	}
+	var hostedtemplateskillresourceskillreference HostedTemplateSkillResourceSkillReference
+	if err := json.Unmarshal(data, &hostedtemplateskillresourceskillreference); err == nil && isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceSkillReference(hostedtemplateskillresourceskillreference) {
+		u.HostedTemplateSkillResourceSkillReference = &hostedtemplateskillresourceskillreference
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var hostedtemplateskillresourceinline HostedTemplateSkillResourceInline
+	if err := json.Unmarshal(data, &hostedtemplateskillresourceinline); err == nil && isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceInline(hostedtemplateskillresourceinline) {
+		u.HostedTemplateSkillResourceInline = &hostedtemplateskillresourceinline
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u HostedTemplateSkillResource) MarshalJSON() ([]byte, error) {
+	if u.HostedTemplateSkillResourceSkillReference != nil {
+		return json.Marshal(u.HostedTemplateSkillResourceSkillReference)
+	}
+	if u.HostedTemplateSkillResourceInline != nil {
+		return json.Marshal(u.HostedTemplateSkillResourceInline)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceSkillReference(v HostedTemplateSkillResourceSkillReference) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyHostedTemplateSkillResourceHostedTemplateSkillResourceInline(v HostedTemplateSkillResourceInline) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalHostedTemplateSkillResource converts an untyped value to HostedTemplateSkillResource.
+func UnmarshalHostedTemplateSkillResource(v any) HostedTemplateSkillResource {
+	b, _ := json.Marshal(v)
+	var result HostedTemplateSkillResource
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// HostedTemplateFileResourceFileId A project-scoped Files API reference resolved separately for each session.
+type HostedTemplateFileResourceFileId struct {
+	// Type The type of the object. Always `file_id`.
+	Type HostedTemplateFileResourceFileIdTypeEnum `json:"type"`
+	// FileId The ID of the uploaded file.
+	FileId string `json:"file_id"`
+	// Path The file's absolute path inside the environment.
+	Path string `json:"path"`
+}
+
 func (value *HostedTemplateFileResourceFileId) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
@@ -169,6 +270,19 @@ func (u *HostedTemplateFileResource) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 HostedTemplateFileResourceFileId
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.HostedTemplateFileResourceFileId = &lossless0
+			return nil
+		}
+		var lossless1 HostedTemplateFileResourceInline
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.HostedTemplateFileResourceInline = &lossless1
+			return nil
 		}
 	}
 	var hostedtemplatefileresourcefileid HostedTemplateFileResourceFileId

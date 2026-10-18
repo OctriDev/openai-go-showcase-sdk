@@ -99,6 +99,16 @@ func UnmarshalPredictionContentContent(v any) PredictionContentContent {
 	return result
 }
 
+type ResponseModalitiesEnum string
+
+const (
+	ResponseModalitiesEnumText  ResponseModalitiesEnum = "text"
+	ResponseModalitiesEnumAudio ResponseModalitiesEnum = "audio"
+)
+
+// ResponseModalities is an array alias.
+type ResponseModalities = []ResponseModalitiesEnum
+
 // ServiceTierVariant0Enum Specifies the processing type used for serving the request.
 //
 //   - If set to 'auto', then the request will be processed with the service tier configured in the Project settings. Unless otherwise configured, the Project will use 'default'.
@@ -149,93 +159,6 @@ func (u ServiceTier) MarshalJSON() ([]byte, error) {
 func UnmarshalServiceTier(v any) ServiceTier {
 	b, _ := json.Marshal(v)
 	var result ServiceTier
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// ToolsItem represents a union type.
-type ToolsItem struct {
-	ChatCompletionTool        *ChatCompletionTool
-	CustomToolChatCompletions *CustomToolChatCompletions
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}
-
-func (u *ToolsItem) UnmarshalJSON(data []byte) error {
-	*u = ToolsItem{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "function":
-					var chatcompletiontool ChatCompletionTool
-					if err := json.Unmarshal(data, &chatcompletiontool); err != nil {
-						return err
-					}
-					u.ChatCompletionTool = &chatcompletiontool
-					return nil
-				case "custom":
-					var customtoolchatcompletions CustomToolChatCompletions
-					if err := json.Unmarshal(data, &customtoolchatcompletions); err != nil {
-						return err
-					}
-					u.CustomToolChatCompletions = &customtoolchatcompletions
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var chatcompletiontool ChatCompletionTool
-	if err := json.Unmarshal(data, &chatcompletiontool); err == nil && isNonEmptyToolsItemChatCompletionTool(chatcompletiontool) {
-		u.ChatCompletionTool = &chatcompletiontool
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var customtoolchatcompletions CustomToolChatCompletions
-	if err := json.Unmarshal(data, &customtoolchatcompletions); err == nil && isNonEmptyToolsItemCustomToolChatCompletions(customtoolchatcompletions) {
-		u.CustomToolChatCompletions = &customtoolchatcompletions
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u ToolsItem) MarshalJSON() ([]byte, error) {
-	if u.ChatCompletionTool != nil {
-		return json.Marshal(u.ChatCompletionTool)
-	}
-	if u.CustomToolChatCompletions != nil {
-		return json.Marshal(u.CustomToolChatCompletions)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyToolsItemChatCompletionTool(v ChatCompletionTool) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyToolsItemCustomToolChatCompletions(v CustomToolChatCompletions) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalToolsItem converts an untyped value to ToolsItem.
-func UnmarshalToolsItem(v any) ToolsItem {
-	b, _ := json.Marshal(v)
-	var result ToolsItem
 	_ = json.Unmarshal(b, &result)
 	return result
 }

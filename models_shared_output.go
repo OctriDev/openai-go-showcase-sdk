@@ -136,6 +136,19 @@ func (u *OutputMessageContent) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 OutputTextContent
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.OutputTextContent = &lossless0
+			return nil
+		}
+		var lossless1 RefusalContent
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.RefusalContent = &lossless1
+			return nil
+		}
+	}
 	var outputtextcontent OutputTextContent
 	if err := json.Unmarshal(data, &outputtextcontent); err == nil && isNonEmptyOutputMessageContentOutputTextContent(outputtextcontent) {
 		u.OutputTextContent = &outputtextcontent

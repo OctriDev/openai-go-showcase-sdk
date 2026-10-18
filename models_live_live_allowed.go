@@ -220,6 +220,69 @@ func (u *LiveAllowedToolsChoiceParamToolsItem) UnmarshalJSON(data []byte) error 
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveFunctionToolChoiceParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveFunctionToolChoiceParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveMCPToolChoiceParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveMCPToolChoiceParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveSpecificFileSearchParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveSpecificFileSearchParam = &lossless2
+			return nil
+		}
+		var lossless3 LiveSpecificWebSearchParam
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.LiveSpecificWebSearchParam = &lossless3
+			return nil
+		}
+		var lossless4 LiveSpecificWebSearchPreviewParam
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.LiveSpecificWebSearchPreviewParam = &lossless4
+			return nil
+		}
+		var lossless5 LiveSpecificImageGenParam
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.LiveSpecificImageGenParam = &lossless5
+			return nil
+		}
+		var lossless6 LiveSpecificComputerParam
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.LiveSpecificComputerParam = &lossless6
+			return nil
+		}
+		var lossless7 LiveSpecificCodeInterpreterParam
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.LiveSpecificCodeInterpreterParam = &lossless7
+			return nil
+		}
+		var lossless8 LiveSpecificProgrammaticToolCallingParam
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.LiveSpecificProgrammaticToolCallingParam = &lossless8
+			return nil
+		}
+		var lossless9 LiveSpecificFunctionShellParam
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.LiveSpecificFunctionShellParam = &lossless9
+			return nil
+		}
+		var lossless10 LiveSpecificCustomToolParam
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.LiveSpecificCustomToolParam = &lossless10
+			return nil
+		}
+		var lossless11 LiveSpecificApplyPatchParam
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.LiveSpecificApplyPatchParam = &lossless11
+			return nil
+		}
+	}
 	var livefunctiontoolchoiceparam LiveFunctionToolChoiceParam
 	if err := json.Unmarshal(data, &livefunctiontoolchoiceparam); err == nil && isNonEmptyLiveAllowedToolsChoiceParamToolsItemLiveFunctionToolChoiceParam(livefunctiontoolchoiceparam) {
 		u.LiveFunctionToolChoiceParam = &livefunctiontoolchoiceparam

@@ -9,6 +9,34 @@ import (
 	"fmt"
 )
 
+func (value *PersistedAgentToolConfigParamMcpTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "mcp":
+		*value = PersistedAgentToolConfigParamMcpTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "PersistedAgentToolConfigParamMcpTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown PersistedAgentToolConfigParamMcpTypeEnum: %v", raw)}
+	}
+}
+
+// PersistedAgentToolConfigParamWebSearch Web search.
+type PersistedAgentToolConfigParamWebSearch struct {
+	// Type The type of the object. Always `web_search`.
+	Type PersistedAgentToolConfigParamWebSearchTypeEnum `json:"type"`
+	// Mode The source used for web search results. Defaults to `live`.
+	Mode *NullableValue[WebSearchModeParam] `json:"mode,omitempty"`
+	// ContextSize The amount of search context made available to the model. Defaults to `medium`.
+	ContextSize *NullableValue[WebSearchContextSizeParam] `json:"context_size,omitempty"`
+	// AllowedDomains Domains the search may include.
+	AllowedDomains *NullableValue[[]string] `json:"allowed_domains,omitempty"`
+	// Location Approximate location used to localize search results.
+	Location *NullableValue[WebSearchLocationParam] `json:"location,omitempty"`
+}
+
 func (value *PersistedAgentToolConfigParamWebSearch) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
@@ -200,6 +228,39 @@ func (u *PersistedAgentToolConfigParam) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 PersistedAgentToolConfigParamFunction
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.PersistedAgentToolConfigParamFunction = &lossless0
+			return nil
+		}
+		var lossless1 PersistedAgentToolConfigParamToolSearch
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.PersistedAgentToolConfigParamToolSearch = &lossless1
+			return nil
+		}
+		var lossless2 PersistedAgentToolConfigParamProgrammaticToolCalling
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.PersistedAgentToolConfigParamProgrammaticToolCalling = &lossless2
+			return nil
+		}
+		var lossless3 PersistedAgentToolConfigParamMcp
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.PersistedAgentToolConfigParamMcp = &lossless3
+			return nil
+		}
+		var lossless4 PersistedAgentToolConfigParamWebSearch
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.PersistedAgentToolConfigParamWebSearch = &lossless4
+			return nil
+		}
+		var lossless5 PersistedAgentToolConfigParamComputerUse
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.PersistedAgentToolConfigParamComputerUse = &lossless5
+			return nil
 		}
 	}
 	var persistedagenttoolconfigparamfunction PersistedAgentToolConfigParamFunction

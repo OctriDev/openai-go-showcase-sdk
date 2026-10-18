@@ -87,6 +87,32 @@ func (sdk *VectorStoresNamespace) ListFilesInBatch(ctx context.Context, params L
 	return ListFilesInVectorStoreBatch(ctx, sdk.config, params, opts...)
 }
 
+// ListFilesInBatchPaginated lists the files in a vector store file batch. Use `filter` to limit results by processing status and the cursor parameters to navigate through the batch's files.
+//
+// Returns a list of vector store files in a batch.
+//
+// Parameters:
+//
+//	vectorStoreId: The ID of the vector store that the files belong to.
+//	batchId: The ID of the file batch that the files belong to.
+//	limit: A limit on the number of objects to be returned. Limit can range
+//	between 1 and 100, and the default is 20.
+//	order: Sort order by the `created_at` timestamp of the objects. `asc` for
+//	ascending order and `desc` for descending order.
+//	after: A cursor for use in pagination. `after` is an object ID that defines
+//	your place in the list. For instance, if you make a list request and receive
+//	100 objects, ending with obj_foo, your subsequent call can include
+//	after=obj_foo in order to fetch the next page of the list.
+//	before: A cursor for use in pagination. `before` is an object ID that
+//	defines your place in the list. For instance, if you make a list request and
+//	receive 100 objects, starting with obj_foo, your subsequent call can include
+//	before=obj_foo in order to fetch the previous page of the list.
+//	filter: Filter by file status. One of `in_progress`, `completed`, `failed`,
+//	`cancelled`.
+func (sdk *VectorStoresNamespace) ListFilesInBatchPaginated(ctx context.Context, params ListFilesInVectorStoreBatchParams, yield func(*VectorStoreFileObject) bool, opts ...RequestOption) error {
+	return ListFilesInVectorStoreBatchPaginated(ctx, sdk.config, params, yield, opts...)
+}
+
 // ListFiles lists files attached to a vector store, with pagination and an optional status filter. Use `after` or `before` to navigate the list, and `filter` to select files by processing status.
 //
 // Returns a list of vector store files.
@@ -110,6 +136,31 @@ func (sdk *VectorStoresNamespace) ListFilesInBatch(ctx context.Context, params L
 //	`cancelled`.
 func (sdk *VectorStoresNamespace) ListFiles(ctx context.Context, params ListVectorStoreFilesParams, opts ...RequestOption) (*ListVectorStoreFilesResponse, error) {
 	return ListVectorStoreFiles(ctx, sdk.config, params, opts...)
+}
+
+// ListFilesPaginated lists files attached to a vector store, with pagination and an optional status filter. Use `after` or `before` to navigate the list, and `filter` to select files by processing status.
+//
+// Returns a list of vector store files.
+//
+// Parameters:
+//
+//	vectorStoreId: The ID of the vector store that the files belong to.
+//	limit: A limit on the number of objects to be returned. Limit can range
+//	between 1 and 100, and the default is 20.
+//	order: Sort order by the `created_at` timestamp of the objects. `asc` for
+//	ascending order and `desc` for descending order.
+//	after: A cursor for use in pagination. `after` is an object ID that defines
+//	your place in the list. For instance, if you make a list request and receive
+//	100 objects, ending with obj_foo, your subsequent call can include
+//	after=obj_foo in order to fetch the next page of the list.
+//	before: A cursor for use in pagination. `before` is an object ID that
+//	defines your place in the list. For instance, if you make a list request and
+//	receive 100 objects, starting with obj_foo, your subsequent call can include
+//	before=obj_foo in order to fetch the previous page of the list.
+//	filter: Filter by file status. One of `in_progress`, `completed`, `failed`,
+//	`cancelled`.
+func (sdk *VectorStoresNamespace) ListFilesPaginated(ctx context.Context, params ListVectorStoreFilesParams, yield func(*VectorStoreFileObject) bool, opts ...RequestOption) error {
+	return ListVectorStoreFilesPaginated(ctx, sdk.config, params, yield, opts...)
 }
 
 // CreateFile creates an attachment between a file and a vector store. Supply the file's `file_id` and optionally configure `chunking_strategy` or attach `attributes`; use file batches for multi-file ingestion. The response includes the attached file's processing status.
@@ -640,56 +691,4 @@ func (sdk *SkillsNamespace) GetContent(ctx context.Context, params GetSkillConte
 //	default_: Whether to set this version as the default.
 func (sdk *SkillsNamespace) CreateVersion(ctx context.Context, params CreateSkillVersionParams, opts ...RequestOption) (*SkillVersionResource, error) {
 	return CreateSkillVersion(ctx, sdk.config, params, opts...)
-}
-
-// ListVersions lists versions for a skill. Use `after` to continue from a skill version ID, `limit` to control the number of results, and `order` to sort by version number.
-//
-// List skill versions for a skill.
-//
-// Parameters:
-//
-//	skillId: The identifier of the skill.
-//	limit: Number of versions to retrieve.
-//	order: Sort order of results by version number.
-//	after: The skill version ID to start after.
-func (sdk *SkillsNamespace) ListVersions(ctx context.Context, params ListSkillVersionsParams, opts ...RequestOption) (*SkillVersionListResource, error) {
-	return ListSkillVersions(ctx, sdk.config, params, opts...)
-}
-
-// ListVersionsPaginated lists versions for a skill. Use `after` to continue from a skill version ID, `limit` to control the number of results, and `order` to sort by version number.
-//
-// List skill versions for a skill.
-//
-// Parameters:
-//
-//	skillId: The identifier of the skill.
-//	limit: Number of versions to retrieve.
-//	order: Sort order of results by version number.
-//	after: The skill version ID to start after.
-func (sdk *SkillsNamespace) ListVersionsPaginated(ctx context.Context, params ListSkillVersionsParams, yield func(*SkillVersionResource) bool, opts ...RequestOption) error {
-	return ListSkillVersionsPaginated(ctx, sdk.config, params, yield, opts...)
-}
-
-// GetVersion retrieves a specific version of a skill. Provide `skill_id` to identify the skill and `version` to select the version to retrieve.
-//
-// Get a specific skill version.
-//
-// Parameters:
-//
-//	skillId: The identifier of the skill.
-//	version: The version number to retrieve.
-func (sdk *SkillsNamespace) GetVersion(ctx context.Context, params GetSkillVersionParams, opts ...RequestOption) (*SkillVersionResource, error) {
-	return GetSkillVersion(ctx, sdk.config, params, opts...)
-}
-
-// DeleteVersion deletes a version of a skill. Use `skill_id` and `version` to select the version to remove. You cannot delete the default version while other versions remain.
-//
-// Delete a skill version.
-//
-// Parameters:
-//
-//	skillId: The identifier of the skill.
-//	version: The skill version number.
-func (sdk *SkillsNamespace) DeleteVersion(ctx context.Context, params DeleteSkillVersionParams, opts ...RequestOption) (*DeletedSkillVersionResource, error) {
-	return DeleteSkillVersion(ctx, sdk.config, params, opts...)
 }

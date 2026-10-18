@@ -384,6 +384,39 @@ func (u *ThreadItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 UserMessageItem
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.UserMessageItem = &lossless0
+			return nil
+		}
+		var lossless1 AssistantMessageItem
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantMessageItem = &lossless1
+			return nil
+		}
+		var lossless2 WidgetMessageItem
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.WidgetMessageItem = &lossless2
+			return nil
+		}
+		var lossless3 ClientToolCallItem
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.ClientToolCallItem = &lossless3
+			return nil
+		}
+		var lossless4 TaskItem
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.TaskItem = &lossless4
+			return nil
+		}
+		var lossless5 TaskGroupItem
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.TaskGroupItem = &lossless5
+			return nil
+		}
+	}
 	var usermessageitem UserMessageItem
 	if err := json.Unmarshal(data, &usermessageitem); err == nil && isNonEmptyThreadItemUserMessageItem(usermessageitem) {
 		u.UserMessageItem = &usermessageitem
@@ -579,6 +612,19 @@ func (u *UserMessageItemContentItem) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 UserMessageInputText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.UserMessageInputText = &lossless0
+			return nil
+		}
+		var lossless1 UserMessageQuotedText
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.UserMessageQuotedText = &lossless1
+			return nil
+		}
+	}
 	var usermessageinputtext UserMessageInputText
 	if err := json.Unmarshal(data, &usermessageinputtext); err == nil && isNonEmptyUserMessageItemContentItemUserMessageInputText(usermessageinputtext) {
 		u.UserMessageInputText = &usermessageinputtext
@@ -634,74 +680,4 @@ type ResponseOutputTextAnnotationsItem struct {
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
-}
-
-func (u *ResponseOutputTextAnnotationsItem) UnmarshalJSON(data []byte) error {
-	*u = ResponseOutputTextAnnotationsItem{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "file":
-					var fileannotation FileAnnotation
-					if err := json.Unmarshal(data, &fileannotation); err != nil {
-						return err
-					}
-					u.FileAnnotation = &fileannotation
-					return nil
-				case "url":
-					var urlannotation UrlAnnotation
-					if err := json.Unmarshal(data, &urlannotation); err != nil {
-						return err
-					}
-					u.UrlAnnotation = &urlannotation
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
-	}
-	var fileannotation FileAnnotation
-	if err := json.Unmarshal(data, &fileannotation); err == nil && isNonEmptyResponseOutputTextAnnotationsItemFileAnnotation(fileannotation) {
-		u.FileAnnotation = &fileannotation
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	var urlannotation UrlAnnotation
-	if err := json.Unmarshal(data, &urlannotation); err == nil && isNonEmptyResponseOutputTextAnnotationsItemUrlAnnotation(urlannotation) {
-		u.UrlAnnotation = &urlannotation
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u ResponseOutputTextAnnotationsItem) MarshalJSON() ([]byte, error) {
-	if u.FileAnnotation != nil {
-		return json.Marshal(u.FileAnnotation)
-	}
-	if u.UrlAnnotation != nil {
-		return json.Marshal(u.UrlAnnotation)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyResponseOutputTextAnnotationsItemFileAnnotation(v FileAnnotation) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyResponseOutputTextAnnotationsItemUrlAnnotation(v UrlAnnotation) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }

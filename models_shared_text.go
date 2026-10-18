@@ -56,6 +56,24 @@ func (u *TextResponseFormatConfiguration) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ResponseFormatText
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ResponseFormatText = &lossless0
+			return nil
+		}
+		var lossless1 TextResponseFormatJsonSchema
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.TextResponseFormatJsonSchema = &lossless1
+			return nil
+		}
+		var lossless2 ResponseFormatJsonObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.ResponseFormatJsonObject = &lossless2
+			return nil
+		}
+	}
 	var responseformattext ResponseFormatText
 	if err := json.Unmarshal(data, &responseformattext); err == nil && isNonEmptyTextResponseFormatConfigurationResponseFormatText(responseformattext) {
 		u.ResponseFormatText = &responseformattext

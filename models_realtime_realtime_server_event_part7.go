@@ -4,492 +4,709 @@
 package sdk
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 )
 
-func (value *RealtimeServerEventResponseTextDone) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.output_text.done"}); err != nil {
-		return err
-	}
-	type RealtimeServerEventResponseTextDoneAlias RealtimeServerEventResponseTextDone
-	var decoded RealtimeServerEventResponseTextDoneAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventResponseTextDone(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "content_index", "text"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "content_index", "text"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewRealtimeServerEventResponseTextDone returns a validated RealtimeServerEventResponseTextDone built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewRealtimeServerEventResponseTextDone(fields RealtimeServerEventResponseTextDone) (*RealtimeServerEventResponseTextDone, error) {
-	return ConstructModel(fields)
-}
-
-// RealtimeServerEventResponseTextDoneTypeEnum The event type, must be `response.output_text.done`.
-type RealtimeServerEventResponseTextDoneTypeEnum string
-
-const (
-	RealtimeServerEventResponseTextDoneTypeEnumResponseOutputTextDone RealtimeServerEventResponseTextDoneTypeEnum = "response.output_text.done"
-)
-
-func (value *RealtimeServerEventResponseTextDoneTypeEnum) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventResponseDoneTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
 	switch raw {
-	case "response.output_text.done":
-		*value = RealtimeServerEventResponseTextDoneTypeEnum(raw)
+	case "response.done":
+		*value = RealtimeServerEventResponseDoneTypeEnum(raw)
 		return nil
 	default:
-		return &SdkValidationError{Field: "RealtimeServerEventResponseTextDoneTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseTextDoneTypeEnum: %v", raw)}
+		return &SdkValidationError{Field: "RealtimeServerEventResponseDoneTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseDoneTypeEnum: %v", raw)}
 	}
 }
 
-// RealtimeServerEventSessionCreated Returned when a Session is created. Emitted automatically when a new
-// connection is established as the first server event. This event will contain
-// the default Session configuration.
-type RealtimeServerEventSessionCreated struct {
+// RealtimeServerEventResponseFunctionCallArgumentsDelta Returned when the model-generated function call arguments are updated.
+type RealtimeServerEventResponseFunctionCallArgumentsDelta struct {
 	// EventId The unique ID of the server event.
 	EventId string `json:"event_id"`
-	// Type The event type, must be `session.created`.
-	Type RealtimeServerEventSessionCreatedTypeEnum `json:"type"`
-	// Session The session configuration.
-	Session RealtimeServerEventSessionCreatedSession `json:"session"`
+	// Type The event type, must be `response.function_call_arguments.delta`.
+	Type RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum `json:"type"`
+	// ResponseId The ID of the response.
+	ResponseId string `json:"response_id"`
+	// ItemId The ID of the function call item.
+	ItemId string `json:"item_id"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// CallId The ID of the function call.
+	CallId string `json:"call_id"`
+	// Delta The arguments delta as a JSON string.
+	Delta string `json:"delta"`
 }
 
-func (value *RealtimeServerEventSessionCreated) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventResponseFunctionCallArgumentsDelta) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"session.created"}); err != nil {
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.function_call_arguments.delta"}); err != nil {
 		return err
 	}
-	type RealtimeServerEventSessionCreatedAlias RealtimeServerEventSessionCreated
-	var decoded RealtimeServerEventSessionCreatedAlias
+	type RealtimeServerEventResponseFunctionCallArgumentsDeltaAlias RealtimeServerEventResponseFunctionCallArgumentsDelta
+	var decoded RealtimeServerEventResponseFunctionCallArgumentsDeltaAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = RealtimeServerEventSessionCreated(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "session"}); err != nil {
+	*value = RealtimeServerEventResponseFunctionCallArgumentsDelta(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "call_id", "delta"}); err != nil {
 		return err
 	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "session"}); err != nil {
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "call_id", "delta"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-// NewRealtimeServerEventSessionCreated returns a validated RealtimeServerEventSessionCreated built from named fields.
+// NewRealtimeServerEventResponseFunctionCallArgumentsDelta returns a validated RealtimeServerEventResponseFunctionCallArgumentsDelta built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewRealtimeServerEventSessionCreated(fields RealtimeServerEventSessionCreated) (*RealtimeServerEventSessionCreated, error) {
+func NewRealtimeServerEventResponseFunctionCallArgumentsDelta(fields RealtimeServerEventResponseFunctionCallArgumentsDelta) (*RealtimeServerEventResponseFunctionCallArgumentsDelta, error) {
 	return ConstructModel(fields)
 }
 
-// RealtimeServerEventSessionCreatedTypeEnum The event type, must be `session.created`.
-type RealtimeServerEventSessionCreatedTypeEnum string
+// RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum The event type, must be `response.function_call_arguments.delta`.
+type RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum string
 
 const (
-	RealtimeServerEventSessionCreatedTypeEnumSessionCreated RealtimeServerEventSessionCreatedTypeEnum = "session.created"
+	RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnumResponseFunctionCallArgumentsDelta RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum = "response.function_call_arguments.delta"
 )
 
-func (value *RealtimeServerEventSessionCreatedTypeEnum) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
 	switch raw {
-	case "session.created":
-		*value = RealtimeServerEventSessionCreatedTypeEnum(raw)
+	case "response.function_call_arguments.delta":
+		*value = RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum(raw)
 		return nil
 	default:
-		return &SdkValidationError{Field: "RealtimeServerEventSessionCreatedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventSessionCreatedTypeEnum: %v", raw)}
+		return &SdkValidationError{Field: "RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseFunctionCallArgumentsDeltaTypeEnum: %v", raw)}
 	}
 }
 
-// RealtimeServerEventSessionUpdated Returned when a session is updated with a `session.update` event, unless
-// there is an error.
-type RealtimeServerEventSessionUpdated struct {
+// RealtimeServerEventResponseFunctionCallArgumentsDone Returned when the model-generated function call arguments are done streaming.
+// Also emitted when a Response is interrupted, incomplete, or cancelled.
+type RealtimeServerEventResponseFunctionCallArgumentsDone struct {
 	// EventId The unique ID of the server event.
 	EventId string `json:"event_id"`
-	// Type The event type, must be `session.updated`.
-	Type RealtimeServerEventSessionUpdatedTypeEnum `json:"type"`
-	// Session The session configuration.
-	Session RealtimeServerEventSessionUpdatedSession `json:"session"`
+	// Type The event type, must be `response.function_call_arguments.done`.
+	Type RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum `json:"type"`
+	// ResponseId The ID of the response.
+	ResponseId string `json:"response_id"`
+	// ItemId The ID of the function call item.
+	ItemId string `json:"item_id"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// CallId The ID of the function call.
+	CallId string `json:"call_id"`
+	// Name The name of the function that was called.
+	Name string `json:"name"`
+	// Arguments The final arguments as a JSON string.
+	Arguments string `json:"arguments"`
 }
 
-func (value *RealtimeServerEventSessionUpdated) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventResponseFunctionCallArgumentsDone) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"session.updated"}); err != nil {
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.function_call_arguments.done"}); err != nil {
 		return err
 	}
-	type RealtimeServerEventSessionUpdatedAlias RealtimeServerEventSessionUpdated
-	var decoded RealtimeServerEventSessionUpdatedAlias
+	type RealtimeServerEventResponseFunctionCallArgumentsDoneAlias RealtimeServerEventResponseFunctionCallArgumentsDone
+	var decoded RealtimeServerEventResponseFunctionCallArgumentsDoneAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = RealtimeServerEventSessionUpdated(decoded)
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "session"}); err != nil {
+	*value = RealtimeServerEventResponseFunctionCallArgumentsDone(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "call_id", "name", "arguments"}); err != nil {
 		return err
 	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "session"}); err != nil {
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "call_id", "name", "arguments"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-// NewRealtimeServerEventSessionUpdated returns a validated RealtimeServerEventSessionUpdated built from named fields.
+// NewRealtimeServerEventResponseFunctionCallArgumentsDone returns a validated RealtimeServerEventResponseFunctionCallArgumentsDone built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewRealtimeServerEventSessionUpdated(fields RealtimeServerEventSessionUpdated) (*RealtimeServerEventSessionUpdated, error) {
+func NewRealtimeServerEventResponseFunctionCallArgumentsDone(fields RealtimeServerEventResponseFunctionCallArgumentsDone) (*RealtimeServerEventResponseFunctionCallArgumentsDone, error) {
 	return ConstructModel(fields)
 }
 
-// RealtimeServerEventSessionUpdatedTypeEnum The event type, must be `session.updated`.
-type RealtimeServerEventSessionUpdatedTypeEnum string
+// RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum The event type, must be `response.function_call_arguments.done`.
+type RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum string
 
 const (
-	RealtimeServerEventSessionUpdatedTypeEnumSessionUpdated RealtimeServerEventSessionUpdatedTypeEnum = "session.updated"
+	RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnumResponseFunctionCallArgumentsDone RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum = "response.function_call_arguments.done"
 )
 
-func (value *RealtimeServerEventSessionUpdatedTypeEnum) UnmarshalJSON(data []byte) error {
+func (value *RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
 	switch raw {
-	case "session.updated":
-		*value = RealtimeServerEventSessionUpdatedTypeEnum(raw)
+	case "response.function_call_arguments.done":
+		*value = RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum(raw)
 		return nil
 	default:
-		return &SdkValidationError{Field: "RealtimeServerEventSessionUpdatedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventSessionUpdatedTypeEnum: %v", raw)}
+		return &SdkValidationError{Field: "RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseFunctionCallArgumentsDoneTypeEnum: %v", raw)}
 	}
 }
 
-// RealtimeServerEventTranscriptionSessionUpdated Returned when a transcription session is updated with a `transcription_session.update` event, unless
-// there is an error.
-type RealtimeServerEventTranscriptionSessionUpdated struct {
+// RealtimeServerEventResponseMCPCallArgumentsDelta Returned when MCP tool call arguments are updated during response generation.
+type RealtimeServerEventResponseMCPCallArgumentsDelta struct {
 	// EventId The unique ID of the server event.
 	EventId string `json:"event_id"`
-	// Type The event type, must be `transcription_session.updated`.
-	Type RealtimeServerEventTranscriptionSessionUpdatedTypeEnum `json:"type"`
-	// Session A new Realtime transcription session configuration.
-	//
-	// When a session is created on the server via REST API, the session object
-	// also contains an ephemeral key. Default TTL for keys is 10 minutes. This
-	// property is not present when a session is updated via the WebSocket API.
-	Session RealtimeTranscriptionSessionCreateResponse `json:"session"`
+	// Type The event type, must be `response.mcp_call_arguments.delta`.
+	Type RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum `json:"type"`
+	// ResponseId The ID of the response.
+	ResponseId string `json:"response_id"`
+	// ItemId The ID of the MCP tool call item.
+	ItemId string `json:"item_id"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// Delta The JSON-encoded arguments delta.
+	Delta string `json:"delta"`
+	// Obfuscation Optional `string` value serialized in the `obfuscation` wire field.
+	Obfuscation *NullableValue[string] `json:"obfuscation,omitempty"`
 }
 
-func (value *RealtimeServerEventTranscriptionSessionUpdated) UnmarshalJSON(data []byte) error {
-	type RealtimeServerEventTranscriptionSessionUpdatedAlias RealtimeServerEventTranscriptionSessionUpdated
-	var decoded RealtimeServerEventTranscriptionSessionUpdatedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = RealtimeServerEventTranscriptionSessionUpdated(decoded)
+func (value *RealtimeServerEventResponseMCPCallArgumentsDelta) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
-	if err := ValidateRequired(rawFields, []string{"event_id", "type", "session"}); err != nil {
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.mcp_call_arguments.delta"}); err != nil {
 		return err
 	}
-	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "session"}); err != nil {
+	type RealtimeServerEventResponseMCPCallArgumentsDeltaAlias RealtimeServerEventResponseMCPCallArgumentsDelta
+	var decoded RealtimeServerEventResponseMCPCallArgumentsDeltaAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeServerEventResponseMCPCallArgumentsDelta(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "delta"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "delta"}); err != nil {
+		return err
+	}
+	if raw, ok := rawFields["obfuscation"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
+		value.Obfuscation = &NullableValue[string]{}
+	}
+	return nil
+}
+
+// NewRealtimeServerEventResponseMCPCallArgumentsDelta returns a validated RealtimeServerEventResponseMCPCallArgumentsDelta built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventResponseMCPCallArgumentsDelta(fields RealtimeServerEventResponseMCPCallArgumentsDelta) (*RealtimeServerEventResponseMCPCallArgumentsDelta, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum The event type, must be `response.mcp_call_arguments.delta`.
+type RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum string
+
+const (
+	RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnumResponseMcpCallArgumentsDelta RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum = "response.mcp_call_arguments.delta"
+)
+
+func (value *RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "response.mcp_call_arguments.delta":
+		*value = RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseMCPCallArgumentsDeltaTypeEnum: %v", raw)}
+	}
+}
+
+// RealtimeServerEventResponseMCPCallArgumentsDone Returned when MCP tool call arguments are finalized during response generation.
+type RealtimeServerEventResponseMCPCallArgumentsDone struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.mcp_call_arguments.done`.
+	Type RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum `json:"type"`
+	// ResponseId The ID of the response.
+	ResponseId string `json:"response_id"`
+	// ItemId The ID of the MCP tool call item.
+	ItemId string `json:"item_id"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// Arguments The final JSON-encoded arguments string.
+	Arguments string `json:"arguments"`
+}
+
+func (value *RealtimeServerEventResponseMCPCallArgumentsDone) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.mcp_call_arguments.done"}); err != nil {
+		return err
+	}
+	type RealtimeServerEventResponseMCPCallArgumentsDoneAlias RealtimeServerEventResponseMCPCallArgumentsDone
+	var decoded RealtimeServerEventResponseMCPCallArgumentsDoneAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeServerEventResponseMCPCallArgumentsDone(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "arguments"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "arguments"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-// NewRealtimeServerEventTranscriptionSessionUpdated returns a validated RealtimeServerEventTranscriptionSessionUpdated built from named fields.
+// NewRealtimeServerEventResponseMCPCallArgumentsDone returns a validated RealtimeServerEventResponseMCPCallArgumentsDone built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewRealtimeServerEventTranscriptionSessionUpdated(fields RealtimeServerEventTranscriptionSessionUpdated) (*RealtimeServerEventTranscriptionSessionUpdated, error) {
+func NewRealtimeServerEventResponseMCPCallArgumentsDone(fields RealtimeServerEventResponseMCPCallArgumentsDone) (*RealtimeServerEventResponseMCPCallArgumentsDone, error) {
 	return ConstructModel(fields)
 }
 
-// RealtimeServerEventTranscriptionSessionUpdatedTypeEnum The event type, must be `transcription_session.updated`.
-type RealtimeServerEventTranscriptionSessionUpdatedTypeEnum string
+// RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum The event type, must be `response.mcp_call_arguments.done`.
+type RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum string
 
 const (
-	RealtimeServerEventTranscriptionSessionUpdatedTypeEnumTranscriptionSessionUpdated RealtimeServerEventTranscriptionSessionUpdatedTypeEnum = "transcription_session.updated"
+	RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnumResponseMcpCallArgumentsDone RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum = "response.mcp_call_arguments.done"
 )
 
-// RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage represents a union type.
-type RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage struct {
-	TranscriptTextUsageTokens   *TranscriptTextUsageTokens
-	TranscriptTextUsageDuration *TranscriptTextUsageDuration
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}
-
-func (u *RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage) UnmarshalJSON(data []byte) error {
-	*u = RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "tokens":
-					var transcripttextusagetokens TranscriptTextUsageTokens
-					if err := json.Unmarshal(data, &transcripttextusagetokens); err != nil {
-						return err
-					}
-					u.TranscriptTextUsageTokens = &transcripttextusagetokens
-					return nil
-				case "duration":
-					var transcripttextusageduration TranscriptTextUsageDuration
-					if err := json.Unmarshal(data, &transcripttextusageduration); err != nil {
-						return err
-					}
-					u.TranscriptTextUsageDuration = &transcripttextusageduration
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
+func (value *RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
 	}
-	var transcripttextusagetokens TranscriptTextUsageTokens
-	if err := json.Unmarshal(data, &transcripttextusagetokens); err == nil && isNonEmptyRealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsageTranscriptTextUsageTokens(transcripttextusagetokens) {
-		u.TranscriptTextUsageTokens = &transcripttextusagetokens
+	switch raw {
+	case "response.mcp_call_arguments.done":
+		*value = RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum(raw)
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseMCPCallArgumentsDoneTypeEnum: %v", raw)}
 	}
-	var transcripttextusageduration TranscriptTextUsageDuration
-	if err := json.Unmarshal(data, &transcripttextusageduration); err == nil && isNonEmptyRealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsageTranscriptTextUsageDuration(transcripttextusageduration) {
-		u.TranscriptTextUsageDuration = &transcripttextusageduration
+}
+
+// RealtimeServerEventResponseMCPCallCompleted Returned when an MCP tool call has completed successfully.
+type RealtimeServerEventResponseMCPCallCompleted struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.mcp_call.completed`.
+	Type RealtimeServerEventResponseMCPCallCompletedTypeEnum `json:"type"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// ItemId The ID of the MCP tool call item.
+	ItemId string `json:"item_id"`
+}
+
+func (value *RealtimeServerEventResponseMCPCallCompleted) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.mcp_call.completed"}); err != nil {
+		return err
+	}
+	type RealtimeServerEventResponseMCPCallCompletedAlias RealtimeServerEventResponseMCPCallCompleted
+	var decoded RealtimeServerEventResponseMCPCallCompletedAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeServerEventResponseMCPCallCompleted(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "output_index", "item_id"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "output_index", "item_id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeServerEventResponseMCPCallCompleted returns a validated RealtimeServerEventResponseMCPCallCompleted built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventResponseMCPCallCompleted(fields RealtimeServerEventResponseMCPCallCompleted) (*RealtimeServerEventResponseMCPCallCompleted, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventResponseMCPCallCompletedTypeEnum The event type, must be `response.mcp_call.completed`.
+type RealtimeServerEventResponseMCPCallCompletedTypeEnum string
+
+const (
+	RealtimeServerEventResponseMCPCallCompletedTypeEnumResponseMcpCallCompleted RealtimeServerEventResponseMCPCallCompletedTypeEnum = "response.mcp_call.completed"
+)
+
+func (value *RealtimeServerEventResponseMCPCallCompletedTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "response.mcp_call.completed":
+		*value = RealtimeServerEventResponseMCPCallCompletedTypeEnum(raw)
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseMCPCallCompletedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseMCPCallCompletedTypeEnum: %v", raw)}
 	}
-	return refusal
 }
 
-func (u RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage) MarshalJSON() ([]byte, error) {
-	if u.TranscriptTextUsageTokens != nil {
-		return json.Marshal(u.TranscriptTextUsageTokens)
+// RealtimeServerEventResponseMCPCallFailed Returned when an MCP tool call has failed.
+type RealtimeServerEventResponseMCPCallFailed struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.mcp_call.failed`.
+	Type RealtimeServerEventResponseMCPCallFailedTypeEnum `json:"type"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// ItemId The ID of the MCP tool call item.
+	ItemId string `json:"item_id"`
+}
+
+func (value *RealtimeServerEventResponseMCPCallFailed) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
 	}
-	if u.TranscriptTextUsageDuration != nil {
-		return json.Marshal(u.TranscriptTextUsageDuration)
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.mcp_call.failed"}); err != nil {
+		return err
 	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
+	type RealtimeServerEventResponseMCPCallFailedAlias RealtimeServerEventResponseMCPCallFailed
+	var decoded RealtimeServerEventResponseMCPCallFailedAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
 	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyRealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsageTranscriptTextUsageTokens(v TranscriptTextUsageTokens) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyRealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsageTranscriptTextUsageDuration(v TranscriptTextUsageDuration) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalRealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage converts an untyped value to RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage.
-func UnmarshalRealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage(v any) RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage {
-	b, _ := json.Marshal(v)
-	var result RealtimeServerEventConversationItemInputAudioTranscriptionCompletedUsage
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// RealtimeServerEventSessionCreatedSession represents a union type.
-type RealtimeServerEventSessionCreatedSession struct {
-	RealtimeSessionCreateResponseGA              *RealtimeSessionCreateResponseGA
-	RealtimeTranscriptionSessionCreateResponseGA *RealtimeTranscriptionSessionCreateResponseGA
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}
-
-func (u *RealtimeServerEventSessionCreatedSession) UnmarshalJSON(data []byte) error {
-	*u = RealtimeServerEventSessionCreatedSession{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "realtime":
-					var realtimesessioncreateresponsega RealtimeSessionCreateResponseGA
-					if err := json.Unmarshal(data, &realtimesessioncreateresponsega); err != nil {
-						return err
-					}
-					u.RealtimeSessionCreateResponseGA = &realtimesessioncreateresponsega
-					return nil
-				case "transcription":
-					var realtimetranscriptionsessioncreateresponsega RealtimeTranscriptionSessionCreateResponseGA
-					if err := json.Unmarshal(data, &realtimetranscriptionsessioncreateresponsega); err != nil {
-						return err
-					}
-					u.RealtimeTranscriptionSessionCreateResponseGA = &realtimetranscriptionsessioncreateresponsega
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
+	*value = RealtimeServerEventResponseMCPCallFailed(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "output_index", "item_id"}); err != nil {
+		return err
 	}
-	var realtimesessioncreateresponsega RealtimeSessionCreateResponseGA
-	if err := json.Unmarshal(data, &realtimesessioncreateresponsega); err == nil && isNonEmptyRealtimeServerEventSessionCreatedSessionRealtimeSessionCreateResponseGA(realtimesessioncreateresponsega) {
-		u.RealtimeSessionCreateResponseGA = &realtimesessioncreateresponsega
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "output_index", "item_id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeServerEventResponseMCPCallFailed returns a validated RealtimeServerEventResponseMCPCallFailed built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventResponseMCPCallFailed(fields RealtimeServerEventResponseMCPCallFailed) (*RealtimeServerEventResponseMCPCallFailed, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventResponseMCPCallFailedTypeEnum The event type, must be `response.mcp_call.failed`.
+type RealtimeServerEventResponseMCPCallFailedTypeEnum string
+
+const (
+	RealtimeServerEventResponseMCPCallFailedTypeEnumResponseMcpCallFailed RealtimeServerEventResponseMCPCallFailedTypeEnum = "response.mcp_call.failed"
+)
+
+func (value *RealtimeServerEventResponseMCPCallFailedTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "response.mcp_call.failed":
+		*value = RealtimeServerEventResponseMCPCallFailedTypeEnum(raw)
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseMCPCallFailedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseMCPCallFailedTypeEnum: %v", raw)}
 	}
-	var realtimetranscriptionsessioncreateresponsega RealtimeTranscriptionSessionCreateResponseGA
-	if err := json.Unmarshal(data, &realtimetranscriptionsessioncreateresponsega); err == nil && isNonEmptyRealtimeServerEventSessionCreatedSessionRealtimeTranscriptionSessionCreateResponseGA(realtimetranscriptionsessioncreateresponsega) {
-		u.RealtimeTranscriptionSessionCreateResponseGA = &realtimetranscriptionsessioncreateresponsega
+}
+
+// RealtimeServerEventResponseMCPCallInProgress Returned when an MCP tool call has started and is in progress.
+type RealtimeServerEventResponseMCPCallInProgress struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.mcp_call.in_progress`.
+	Type RealtimeServerEventResponseMCPCallInProgressTypeEnum `json:"type"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// ItemId The ID of the MCP tool call item.
+	ItemId string `json:"item_id"`
+}
+
+func (value *RealtimeServerEventResponseMCPCallInProgress) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.mcp_call.in_progress"}); err != nil {
+		return err
+	}
+	type RealtimeServerEventResponseMCPCallInProgressAlias RealtimeServerEventResponseMCPCallInProgress
+	var decoded RealtimeServerEventResponseMCPCallInProgressAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeServerEventResponseMCPCallInProgress(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "output_index", "item_id"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "output_index", "item_id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeServerEventResponseMCPCallInProgress returns a validated RealtimeServerEventResponseMCPCallInProgress built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventResponseMCPCallInProgress(fields RealtimeServerEventResponseMCPCallInProgress) (*RealtimeServerEventResponseMCPCallInProgress, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventResponseMCPCallInProgressTypeEnum The event type, must be `response.mcp_call.in_progress`.
+type RealtimeServerEventResponseMCPCallInProgressTypeEnum string
+
+const (
+	RealtimeServerEventResponseMCPCallInProgressTypeEnumResponseMcpCallInProgress RealtimeServerEventResponseMCPCallInProgressTypeEnum = "response.mcp_call.in_progress"
+)
+
+func (value *RealtimeServerEventResponseMCPCallInProgressTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "response.mcp_call.in_progress":
+		*value = RealtimeServerEventResponseMCPCallInProgressTypeEnum(raw)
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseMCPCallInProgressTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseMCPCallInProgressTypeEnum: %v", raw)}
 	}
-	return refusal
 }
 
-func (u RealtimeServerEventSessionCreatedSession) MarshalJSON() ([]byte, error) {
-	if u.RealtimeSessionCreateResponseGA != nil {
-		return json.Marshal(u.RealtimeSessionCreateResponseGA)
+// RealtimeServerEventResponseOutputItemAdded Returned when a new Item is created during Response generation.
+type RealtimeServerEventResponseOutputItemAdded struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.output_item.added`.
+	Type RealtimeServerEventResponseOutputItemAddedTypeEnum `json:"type"`
+	// ResponseId The ID of the Response to which the item belongs.
+	ResponseId string `json:"response_id"`
+	// OutputIndex The index of the output item in the Response.
+	OutputIndex int64 `json:"output_index"`
+	// Item A single item within a Realtime conversation.
+	Item RealtimeConversationItem `json:"item"`
+}
+
+func (value *RealtimeServerEventResponseOutputItemAdded) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
 	}
-	if u.RealtimeTranscriptionSessionCreateResponseGA != nil {
-		return json.Marshal(u.RealtimeTranscriptionSessionCreateResponseGA)
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.output_item.added"}); err != nil {
+		return err
 	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
+	type RealtimeServerEventResponseOutputItemAddedAlias RealtimeServerEventResponseOutputItemAdded
+	var decoded RealtimeServerEventResponseOutputItemAddedAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
 	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyRealtimeServerEventSessionCreatedSessionRealtimeSessionCreateResponseGA(v RealtimeSessionCreateResponseGA) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-func isNonEmptyRealtimeServerEventSessionCreatedSessionRealtimeTranscriptionSessionCreateResponseGA(v RealtimeTranscriptionSessionCreateResponseGA) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalRealtimeServerEventSessionCreatedSession converts an untyped value to RealtimeServerEventSessionCreatedSession.
-func UnmarshalRealtimeServerEventSessionCreatedSession(v any) RealtimeServerEventSessionCreatedSession {
-	b, _ := json.Marshal(v)
-	var result RealtimeServerEventSessionCreatedSession
-	_ = json.Unmarshal(b, &result)
-	return result
-}
-
-// RealtimeServerEventSessionUpdatedSession represents a union type.
-type RealtimeServerEventSessionUpdatedSession struct {
-	RealtimeSessionCreateResponseGA              *RealtimeSessionCreateResponseGA
-	RealtimeTranscriptionSessionCreateResponseGA *RealtimeTranscriptionSessionCreateResponseGA
-
-	// Unknown holds a member whose type names no branch this SDK knows, as received.
-	Unknown json.RawMessage
-}
-
-func (u *RealtimeServerEventSessionUpdatedSession) UnmarshalJSON(data []byte) error {
-	*u = RealtimeServerEventSessionUpdatedSession{}
-	var refusal error
-	var object map[string]json.RawMessage
-	if err := json.Unmarshal(data, &object); err == nil {
-		if rawDiscriminator, ok := object["type"]; ok {
-			var discriminatorValue string
-			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
-				switch discriminatorValue {
-				case "realtime":
-					var realtimesessioncreateresponsega RealtimeSessionCreateResponseGA
-					if err := json.Unmarshal(data, &realtimesessioncreateresponsega); err != nil {
-						return err
-					}
-					u.RealtimeSessionCreateResponseGA = &realtimesessioncreateresponsega
-					return nil
-				case "transcription":
-					var realtimetranscriptionsessioncreateresponsega RealtimeTranscriptionSessionCreateResponseGA
-					if err := json.Unmarshal(data, &realtimetranscriptionsessioncreateresponsega); err != nil {
-						return err
-					}
-					u.RealtimeTranscriptionSessionCreateResponseGA = &realtimetranscriptionsessioncreateresponsega
-					return nil
-				default:
-					u.Unknown = append(json.RawMessage(nil), data...)
-					return nil
-				}
-			}
-		}
+	*value = RealtimeServerEventResponseOutputItemAdded(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "output_index", "item"}); err != nil {
+		return err
 	}
-	var realtimesessioncreateresponsega RealtimeSessionCreateResponseGA
-	if err := json.Unmarshal(data, &realtimesessioncreateresponsega); err == nil && isNonEmptyRealtimeServerEventSessionUpdatedSessionRealtimeSessionCreateResponseGA(realtimesessioncreateresponsega) {
-		u.RealtimeSessionCreateResponseGA = &realtimesessioncreateresponsega
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "output_index", "item"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeServerEventResponseOutputItemAdded returns a validated RealtimeServerEventResponseOutputItemAdded built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventResponseOutputItemAdded(fields RealtimeServerEventResponseOutputItemAdded) (*RealtimeServerEventResponseOutputItemAdded, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventResponseOutputItemAddedTypeEnum The event type, must be `response.output_item.added`.
+type RealtimeServerEventResponseOutputItemAddedTypeEnum string
+
+const (
+	RealtimeServerEventResponseOutputItemAddedTypeEnumResponseOutputItemAdded RealtimeServerEventResponseOutputItemAddedTypeEnum = "response.output_item.added"
+)
+
+func (value *RealtimeServerEventResponseOutputItemAddedTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "response.output_item.added":
+		*value = RealtimeServerEventResponseOutputItemAddedTypeEnum(raw)
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseOutputItemAddedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseOutputItemAddedTypeEnum: %v", raw)}
 	}
-	var realtimetranscriptionsessioncreateresponsega RealtimeTranscriptionSessionCreateResponseGA
-	if err := json.Unmarshal(data, &realtimetranscriptionsessioncreateresponsega); err == nil && isNonEmptyRealtimeServerEventSessionUpdatedSessionRealtimeTranscriptionSessionCreateResponseGA(realtimetranscriptionsessioncreateresponsega) {
-		u.RealtimeTranscriptionSessionCreateResponseGA = &realtimetranscriptionsessioncreateresponsega
+}
+
+// RealtimeServerEventResponseOutputItemDone Returned when an Item is done streaming. Also emitted when a Response is
+// interrupted, incomplete, or cancelled.
+type RealtimeServerEventResponseOutputItemDone struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.output_item.done`.
+	Type RealtimeServerEventResponseOutputItemDoneTypeEnum `json:"type"`
+	// ResponseId The ID of the Response to which the item belongs.
+	ResponseId string `json:"response_id"`
+	// OutputIndex The index of the output item in the Response.
+	OutputIndex int64 `json:"output_index"`
+	// Item A single item within a Realtime conversation.
+	Item RealtimeConversationItem `json:"item"`
+}
+
+func (value *RealtimeServerEventResponseOutputItemDone) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.output_item.done"}); err != nil {
+		return err
+	}
+	type RealtimeServerEventResponseOutputItemDoneAlias RealtimeServerEventResponseOutputItemDone
+	var decoded RealtimeServerEventResponseOutputItemDoneAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeServerEventResponseOutputItemDone(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "output_index", "item"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "output_index", "item"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRealtimeServerEventResponseOutputItemDone returns a validated RealtimeServerEventResponseOutputItemDone built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventResponseOutputItemDone(fields RealtimeServerEventResponseOutputItemDone) (*RealtimeServerEventResponseOutputItemDone, error) {
+	return ConstructModel(fields)
+}
+
+// RealtimeServerEventResponseOutputItemDoneTypeEnum The event type, must be `response.output_item.done`.
+type RealtimeServerEventResponseOutputItemDoneTypeEnum string
+
+const (
+	RealtimeServerEventResponseOutputItemDoneTypeEnumResponseOutputItemDone RealtimeServerEventResponseOutputItemDoneTypeEnum = "response.output_item.done"
+)
+
+func (value *RealtimeServerEventResponseOutputItemDoneTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "response.output_item.done":
+		*value = RealtimeServerEventResponseOutputItemDoneTypeEnum(raw)
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseOutputItemDoneTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseOutputItemDoneTypeEnum: %v", raw)}
 	}
-	return refusal
 }
 
-func (u RealtimeServerEventSessionUpdatedSession) MarshalJSON() ([]byte, error) {
-	if u.RealtimeSessionCreateResponseGA != nil {
-		return json.Marshal(u.RealtimeSessionCreateResponseGA)
-	}
-	if u.RealtimeTranscriptionSessionCreateResponseGA != nil {
-		return json.Marshal(u.RealtimeTranscriptionSessionCreateResponseGA)
-	}
-	if u.Unknown != nil {
-		return u.Unknown, nil
-	}
-	return []byte("null"), nil
+// RealtimeServerEventResponseTextDelta Returned when the text value of an "output_text" content part is updated.
+type RealtimeServerEventResponseTextDelta struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.output_text.delta`.
+	Type RealtimeServerEventResponseTextDeltaTypeEnum `json:"type"`
+	// ResponseId The ID of the response.
+	ResponseId string `json:"response_id"`
+	// ItemId The ID of the item.
+	ItemId string `json:"item_id"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// ContentIndex The index of the content part in the item's content array.
+	ContentIndex int64 `json:"content_index"`
+	// Delta The text delta.
+	Delta string `json:"delta"`
 }
 
-func isNonEmptyRealtimeServerEventSessionUpdatedSessionRealtimeSessionCreateResponseGA(v RealtimeSessionCreateResponseGA) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
+func (value *RealtimeServerEventResponseTextDelta) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"response.output_text.delta"}); err != nil {
+		return err
+	}
+	type RealtimeServerEventResponseTextDeltaAlias RealtimeServerEventResponseTextDelta
+	var decoded RealtimeServerEventResponseTextDeltaAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RealtimeServerEventResponseTextDelta(decoded)
+	if err := ValidateRequired(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "content_index", "delta"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"event_id", "type", "response_id", "item_id", "output_index", "content_index", "delta"}); err != nil {
+		return err
+	}
+	return nil
 }
 
-func isNonEmptyRealtimeServerEventSessionUpdatedSessionRealtimeTranscriptionSessionCreateResponseGA(v RealtimeTranscriptionSessionCreateResponseGA) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
+// NewRealtimeServerEventResponseTextDelta returns a validated RealtimeServerEventResponseTextDelta built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRealtimeServerEventResponseTextDelta(fields RealtimeServerEventResponseTextDelta) (*RealtimeServerEventResponseTextDelta, error) {
+	return ConstructModel(fields)
 }
 
-// UnmarshalRealtimeServerEventSessionUpdatedSession converts an untyped value to RealtimeServerEventSessionUpdatedSession.
-func UnmarshalRealtimeServerEventSessionUpdatedSession(v any) RealtimeServerEventSessionUpdatedSession {
-	b, _ := json.Marshal(v)
-	var result RealtimeServerEventSessionUpdatedSession
-	_ = json.Unmarshal(b, &result)
-	return result
+// RealtimeServerEventResponseTextDeltaTypeEnum The event type, must be `response.output_text.delta`.
+type RealtimeServerEventResponseTextDeltaTypeEnum string
+
+const (
+	RealtimeServerEventResponseTextDeltaTypeEnumResponseOutputTextDelta RealtimeServerEventResponseTextDeltaTypeEnum = "response.output_text.delta"
+)
+
+func (value *RealtimeServerEventResponseTextDeltaTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "response.output_text.delta":
+		*value = RealtimeServerEventResponseTextDeltaTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "RealtimeServerEventResponseTextDeltaTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown RealtimeServerEventResponseTextDeltaTypeEnum: %v", raw)}
+	}
+}
+
+// RealtimeServerEventResponseTextDone Returned when the text value of an "output_text" content part is done streaming. Also
+// emitted when a Response is interrupted, incomplete, or cancelled.
+type RealtimeServerEventResponseTextDone struct {
+	// EventId The unique ID of the server event.
+	EventId string `json:"event_id"`
+	// Type The event type, must be `response.output_text.done`.
+	Type RealtimeServerEventResponseTextDoneTypeEnum `json:"type"`
+	// ResponseId The ID of the response.
+	ResponseId string `json:"response_id"`
+	// ItemId The ID of the item.
+	ItemId string `json:"item_id"`
+	// OutputIndex The index of the output item in the response.
+	OutputIndex int64 `json:"output_index"`
+	// ContentIndex The index of the content part in the item's content array.
+	ContentIndex int64 `json:"content_index"`
+	// Text The final text content.
+	Text string `json:"text"`
 }

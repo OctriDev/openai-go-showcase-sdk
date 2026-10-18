@@ -5,6 +5,89 @@ package sdk
 
 import "encoding/json"
 
+func (u *MessageObjectAttachmentsItemToolsItem) UnmarshalJSON(data []byte) error {
+	*u = MessageObjectAttachmentsItemToolsItem{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "code_interpreter":
+					var assistanttoolscode AssistantToolsCode
+					if err := json.Unmarshal(data, &assistanttoolscode); err != nil {
+						return err
+					}
+					u.AssistantToolsCode = &assistanttoolscode
+					return nil
+				case "file_search":
+					var assistanttoolsfilesearchtypeonly AssistantToolsFileSearchTypeOnly
+					if err := json.Unmarshal(data, &assistanttoolsfilesearchtypeonly); err != nil {
+						return err
+					}
+					u.AssistantToolsFileSearchTypeOnly = &assistanttoolsfilesearchtypeonly
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 AssistantToolsCode
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.AssistantToolsCode = &lossless0
+			return nil
+		}
+		var lossless1 AssistantToolsFileSearchTypeOnly
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.AssistantToolsFileSearchTypeOnly = &lossless1
+			return nil
+		}
+	}
+	var assistanttoolscode AssistantToolsCode
+	if err := json.Unmarshal(data, &assistanttoolscode); err == nil && isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsCode(assistanttoolscode) {
+		u.AssistantToolsCode = &assistanttoolscode
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var assistanttoolsfilesearchtypeonly AssistantToolsFileSearchTypeOnly
+	if err := json.Unmarshal(data, &assistanttoolsfilesearchtypeonly); err == nil && isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsFileSearchTypeOnly(assistanttoolsfilesearchtypeonly) {
+		u.AssistantToolsFileSearchTypeOnly = &assistanttoolsfilesearchtypeonly
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u MessageObjectAttachmentsItemToolsItem) MarshalJSON() ([]byte, error) {
+	if u.AssistantToolsCode != nil {
+		return json.Marshal(u.AssistantToolsCode)
+	}
+	if u.AssistantToolsFileSearchTypeOnly != nil {
+		return json.Marshal(u.AssistantToolsFileSearchTypeOnly)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsCode(v AssistantToolsCode) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyMessageObjectAttachmentsItemToolsItemAssistantToolsFileSearchTypeOnly(v AssistantToolsFileSearchTypeOnly) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
 // UnmarshalMessageObjectAttachmentsItemToolsItem converts an untyped value to MessageObjectAttachmentsItemToolsItem.
 func UnmarshalMessageObjectAttachmentsItemToolsItem(v any) MessageObjectAttachmentsItemToolsItem {
 	b, _ := json.Marshal(v)
@@ -66,6 +149,29 @@ func (u *MessageDeltaObjectDeltaContentItem) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageDeltaContentImageFileObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageDeltaContentImageFileObject = &lossless0
+			return nil
+		}
+		var lossless1 MessageDeltaContentTextObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MessageDeltaContentTextObject = &lossless1
+			return nil
+		}
+		var lossless2 MessageDeltaContentRefusalObject
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.MessageDeltaContentRefusalObject = &lossless2
+			return nil
+		}
+		var lossless3 MessageDeltaContentImageUrlObject
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.MessageDeltaContentImageUrlObject = &lossless3
+			return nil
 		}
 	}
 	var messagedeltacontentimagefileobject MessageDeltaContentImageFileObject
@@ -183,6 +289,19 @@ func (u *MessageDeltaContentTextObjectTextAnnotationsItem) UnmarshalJSON(data []
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 MessageDeltaContentTextAnnotationsFileCitationObject
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.MessageDeltaContentTextAnnotationsFileCitationObject = &lossless0
+			return nil
+		}
+		var lossless1 MessageDeltaContentTextAnnotationsFilePathObject
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.MessageDeltaContentTextAnnotationsFilePathObject = &lossless1
+			return nil
 		}
 	}
 	var messagedeltacontenttextannotationsfilecitationobject MessageDeltaContentTextAnnotationsFileCitationObject
