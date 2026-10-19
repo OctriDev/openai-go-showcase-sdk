@@ -175,7 +175,7 @@ func RetrieveVectorStoreFileContent(ctx context.Context, clientConfig ClientConf
 
 type SearchVectorStoreParams struct {
 	VectorStoreId  string
-	Query          any
+	Query          []string
 	RewriteQuery   *bool
 	MaxNumResults  *int64
 	Filters        *VectorStoreSearchRequestFilters
