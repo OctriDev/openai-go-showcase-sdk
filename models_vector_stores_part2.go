@@ -519,7 +519,7 @@ const (
 // VectorStoreSearchRequest Typed representation of the `VectorStoreSearchRequest` API schema.
 type VectorStoreSearchRequest struct {
 	// Query A query string for a search
-	Query VectorStoreSearchRequestQuery `json:"query"`
+	Query []string `json:"query"`
 	// RewriteQuery Whether to rewrite the natural language query for vector search.
 	RewriteQuery *bool `json:"rewrite_query,omitempty"`
 	// MaxNumResults The maximum number of results to return. This number should be between 1 and 50 inclusive.
@@ -560,53 +560,6 @@ func (value *VectorStoreSearchRequest) UnmarshalJSON(data []byte) error {
 // reported as *SdkValidationError.
 func NewVectorStoreSearchRequest(fields VectorStoreSearchRequest) (*VectorStoreSearchRequest, error) {
 	return ConstructModel(fields)
-}
-
-// VectorStoreSearchRequestQuery represents a union type.
-type VectorStoreSearchRequestQuery struct {
-	String       *string
-	ListOfString *[]string
-}
-
-func (u *VectorStoreSearchRequestQuery) UnmarshalJSON(data []byte) error {
-	*u = VectorStoreSearchRequestQuery{}
-	var refusal error
-	var s string
-	if err := json.Unmarshal(data, &s); err == nil {
-		u.String = &s
-		return nil
-	}
-	var listofstring []string
-	if err := json.Unmarshal(data, &listofstring); err == nil && isNonEmptyVectorStoreSearchRequestQueryListOfString(listofstring) {
-		u.ListOfString = &listofstring
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u VectorStoreSearchRequestQuery) MarshalJSON() ([]byte, error) {
-	if u.String != nil {
-		return json.Marshal(u.String)
-	}
-	if u.ListOfString != nil {
-		return json.Marshal(u.ListOfString)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyVectorStoreSearchRequestQueryListOfString(v []string) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalVectorStoreSearchRequestQuery converts an untyped value to VectorStoreSearchRequestQuery.
-func UnmarshalVectorStoreSearchRequestQuery(v any) VectorStoreSearchRequestQuery {
-	b, _ := json.Marshal(v)
-	var result VectorStoreSearchRequestQuery
-	_ = json.Unmarshal(b, &result)
-	return result
 }
 
 // VectorStoreSearchRequestRankingOptions Ranking options for search.
@@ -689,3 +642,55 @@ func NewVectorStoreSearchResultContentObject(fields VectorStoreSearchResultConte
 
 // VectorStoreSearchResultContentObjectTypeEnum The type of content.
 type VectorStoreSearchResultContentObjectTypeEnum string
+
+const (
+	VectorStoreSearchResultContentObjectTypeEnumText VectorStoreSearchResultContentObjectTypeEnum = "text"
+)
+
+// VectorStoreSearchResultItem Typed representation of the `VectorStoreSearchResultItem` API schema.
+type VectorStoreSearchResultItem struct {
+	// FileId The ID of the vector store file.
+	FileId string `json:"file_id"`
+	// Filename The name of the vector store file.
+	Filename string `json:"filename"`
+	// Score The similarity score for the result.
+	Score float64 `json:"score"`
+	// Attributes Set of 16 key-value pairs that can be attached to an object. This can be
+	// useful for storing additional information about the object in a structured
+	// format, and querying for objects via API or the dashboard. Keys are strings
+	// with a maximum length of 64 characters. Values are strings with a maximum
+	// length of 512 characters, booleans, or numbers.
+	Attributes NullableValue[VectorStoreFileAttributes] `json:"attributes"`
+	// Content Content chunks from the file.
+	Content []VectorStoreSearchResultContentObject `json:"content"`
+}
+
+func (value *VectorStoreSearchResultItem) UnmarshalJSON(data []byte) error {
+	type VectorStoreSearchResultItemAlias VectorStoreSearchResultItem
+	var decoded VectorStoreSearchResultItemAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = VectorStoreSearchResultItem(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"file_id", "filename", "score", "attributes", "content"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"file_id", "filename", "score", "content"}); err != nil {
+		return err
+	}
+	if err := ValidateRange("score", value.Score, RangeOpts{Min: Ptr[float64](0), Max: Ptr[float64](1)}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewVectorStoreSearchResultItem returns a validated VectorStoreSearchResultItem built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewVectorStoreSearchResultItem(fields VectorStoreSearchResultItem) (*VectorStoreSearchResultItem, error) {
+	return ConstructModel(fields)
+}
