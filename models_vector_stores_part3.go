@@ -5,58 +5,6 @@ package sdk
 
 import "encoding/json"
 
-const (
-	VectorStoreSearchResultContentObjectTypeEnumText VectorStoreSearchResultContentObjectTypeEnum = "text"
-)
-
-// VectorStoreSearchResultItem Typed representation of the `VectorStoreSearchResultItem` API schema.
-type VectorStoreSearchResultItem struct {
-	// FileId The ID of the vector store file.
-	FileId string `json:"file_id"`
-	// Filename The name of the vector store file.
-	Filename string `json:"filename"`
-	// Score The similarity score for the result.
-	Score float64 `json:"score"`
-	// Attributes Set of 16 key-value pairs that can be attached to an object. This can be
-	// useful for storing additional information about the object in a structured
-	// format, and querying for objects via API or the dashboard. Keys are strings
-	// with a maximum length of 64 characters. Values are strings with a maximum
-	// length of 512 characters, booleans, or numbers.
-	Attributes NullableValue[VectorStoreFileAttributes] `json:"attributes"`
-	// Content Content chunks from the file.
-	Content []VectorStoreSearchResultContentObject `json:"content"`
-}
-
-func (value *VectorStoreSearchResultItem) UnmarshalJSON(data []byte) error {
-	type VectorStoreSearchResultItemAlias VectorStoreSearchResultItem
-	var decoded VectorStoreSearchResultItemAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = VectorStoreSearchResultItem(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"file_id", "filename", "score", "attributes", "content"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"file_id", "filename", "score", "content"}); err != nil {
-		return err
-	}
-	if err := ValidateRange("score", value.Score, RangeOpts{Min: Ptr[float64](0), Max: Ptr[float64](1)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewVectorStoreSearchResultItem returns a validated VectorStoreSearchResultItem built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewVectorStoreSearchResultItem(fields VectorStoreSearchResultItem) (*VectorStoreSearchResultItem, error) {
-	return ConstructModel(fields)
-}
-
 // VectorStoreSearchResultsPage Typed representation of the `VectorStoreSearchResultsPage` API schema.
 type VectorStoreSearchResultsPage struct {
 	// Object The object type, which is always `vector_store.search_results.page`

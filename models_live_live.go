@@ -491,9 +491,28 @@ func (value *LiveApplyPatchToolInputParamTypeEnum) UnmarshalJSON(data []byte) er
 // LiveDataChannelConfigParam Control which Live events an untrusted WebRTC frontend can send and receive over its data channel. These restrictions do not apply to trusted sideband connections.
 type LiveDataChannelConfigParam struct {
 	// AllowedClientEvents Client event types that the frontend data channel may send. Use 'all' to allow every client event; an empty array allows none. Omission preserves the existing allow-all behavior.
-	AllowedClientEvents *LiveDataChannelConfigParamAllowedClientEvents `json:"allowed_client_events,omitempty"`
+	AllowedClientEvents []string `json:"allowed_client_events,omitempty"`
 	// AllowedServerEvents Server events that may be sent to the frontend data channel. Use 'all' to allow every server event; an empty array allows none. Omission preserves the existing allow-all behavior. Responses events use an object with type 'response.event' and a response_event selector.
 	AllowedServerEvents *LiveDataChannelConfigParamAllowedServerEvents `json:"allowed_server_events,omitempty"`
+}
+
+func (value *LiveDataChannelConfigParam) UnmarshalJSON(data []byte) error {
+	type LiveDataChannelConfigParamAlias LiveDataChannelConfigParam
+	var decoded LiveDataChannelConfigParamAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = LiveDataChannelConfigParam(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if func() bool { _, ok := rawFields["allowed_client_events"]; return ok }() {
+		if err := ValidateItems("allowed_client_events", value.AllowedClientEvents, LengthOpts{Max: Ptr[int](256)}); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // NewLiveDataChannelConfigParam returns a validated LiveDataChannelConfigParam built from named fields.
@@ -501,60 +520,6 @@ type LiveDataChannelConfigParam struct {
 // reported as *SdkValidationError.
 func NewLiveDataChannelConfigParam(fields LiveDataChannelConfigParam) (*LiveDataChannelConfigParam, error) {
 	return ConstructModel(fields)
-}
-
-// LiveDataChannelConfigParamAllowedClientEventsVariant0Enum Optional enumerated value serialized in the `allowed_client_events` wire field.
-type LiveDataChannelConfigParamAllowedClientEventsVariant0Enum string
-
-const (
-	LiveDataChannelConfigParamAllowedClientEventsVariant0EnumAll LiveDataChannelConfigParamAllowedClientEventsVariant0Enum = "all"
-)
-
-// LiveDataChannelConfigParamAllowedClientEvents represents a union type.
-type LiveDataChannelConfigParamAllowedClientEvents struct {
-	LiveDataChannelConfigParamAllowedClientEventsVariant0Enum *LiveDataChannelConfigParamAllowedClientEventsVariant0Enum
-	ListOfString                                              *[]string
-}
-
-func (u *LiveDataChannelConfigParamAllowedClientEvents) UnmarshalJSON(data []byte) error {
-	*u = LiveDataChannelConfigParamAllowedClientEvents{}
-	var refusal error
-	var livedatachannelconfigparamallowedclienteventsvariant0enum LiveDataChannelConfigParamAllowedClientEventsVariant0Enum
-	if err := json.Unmarshal(data, &livedatachannelconfigparamallowedclienteventsvariant0enum); err == nil {
-		u.LiveDataChannelConfigParamAllowedClientEventsVariant0Enum = &livedatachannelconfigparamallowedclienteventsvariant0enum
-		return nil
-	}
-	var listofstring []string
-	if err := json.Unmarshal(data, &listofstring); err == nil && isNonEmptyLiveDataChannelConfigParamAllowedClientEventsListOfString(listofstring) {
-		u.ListOfString = &listofstring
-		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
-	}
-	return refusal
-}
-
-func (u LiveDataChannelConfigParamAllowedClientEvents) MarshalJSON() ([]byte, error) {
-	if u.LiveDataChannelConfigParamAllowedClientEventsVariant0Enum != nil {
-		return json.Marshal(u.LiveDataChannelConfigParamAllowedClientEventsVariant0Enum)
-	}
-	if u.ListOfString != nil {
-		return json.Marshal(u.ListOfString)
-	}
-	return []byte("null"), nil
-}
-
-func isNonEmptyLiveDataChannelConfigParamAllowedClientEventsListOfString(v []string) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
-}
-
-// UnmarshalLiveDataChannelConfigParamAllowedClientEvents converts an untyped value to LiveDataChannelConfigParamAllowedClientEvents.
-func UnmarshalLiveDataChannelConfigParamAllowedClientEvents(v any) LiveDataChannelConfigParamAllowedClientEvents {
-	b, _ := json.Marshal(v)
-	var result LiveDataChannelConfigParamAllowedClientEvents
-	_ = json.Unmarshal(b, &result)
-	return result
 }
 
 // LiveDataChannelConfigParamAllowedServerEventsVariant0Enum Optional enumerated value serialized in the `allowed_server_events` wire field.
@@ -573,25 +538,10 @@ type LiveDataChannelConfigParamAllowedServerEvents struct {
 func (u *LiveDataChannelConfigParamAllowedServerEvents) UnmarshalJSON(data []byte) error {
 	*u = LiveDataChannelConfigParamAllowedServerEvents{}
 	var refusal error
-	var raw map[string]json.RawMessage
-	if json.Unmarshal(data, &raw) == nil {
-		var lossless0 LiveDataChannelConfigParamAllowedServerEventsVariant0Enum
-		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
-			u.LiveDataChannelConfigParamAllowedServerEventsVariant0Enum = &lossless0
-			return nil
-		}
-		var lossless1 []LiveAllowedServerEventParam
-		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
-			u.ListOfLiveAllowedServerEventParam = &lossless1
-			return nil
-		}
-	}
 	var livedatachannelconfigparamallowedservereventsvariant0enum LiveDataChannelConfigParamAllowedServerEventsVariant0Enum
-	if err := json.Unmarshal(data, &livedatachannelconfigparamallowedservereventsvariant0enum); err == nil && isNonEmptyLiveDataChannelConfigParamAllowedServerEventsLiveDataChannelConfigParamAllowedServerEventsVariant0Enum(livedatachannelconfigparamallowedservereventsvariant0enum) {
+	if err := json.Unmarshal(data, &livedatachannelconfigparamallowedservereventsvariant0enum); err == nil {
 		u.LiveDataChannelConfigParamAllowedServerEventsVariant0Enum = &livedatachannelconfigparamallowedservereventsvariant0enum
 		return nil
-	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
-		refusal = err
 	}
 	var listofliveallowedservereventparam []LiveAllowedServerEventParam
 	if err := json.Unmarshal(data, &listofliveallowedservereventparam); err == nil && isNonEmptyLiveDataChannelConfigParamAllowedServerEventsListOfLiveAllowedServerEventParam(listofliveallowedservereventparam) {
@@ -611,11 +561,6 @@ func (u LiveDataChannelConfigParamAllowedServerEvents) MarshalJSON() ([]byte, er
 		return json.Marshal(u.ListOfLiveAllowedServerEventParam)
 	}
 	return []byte("null"), nil
-}
-
-func isNonEmptyLiveDataChannelConfigParamAllowedServerEventsLiveDataChannelConfigParamAllowedServerEventsVariant0Enum(v LiveDataChannelConfigParamAllowedServerEventsVariant0Enum) bool {
-	b, _ := json.Marshal(v)
-	return string(b) != "{}" && string(b) != "null"
 }
 
 func isNonEmptyLiveDataChannelConfigParamAllowedServerEventsListOfLiveAllowedServerEventParam(v []LiveAllowedServerEventParam) bool {
@@ -640,3 +585,124 @@ type LiveAudioFormat struct {
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
 }
+
+func (u *LiveAudioFormat) UnmarshalJSON(data []byte) error {
+	*u = LiveAudioFormat{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "audio/pcm":
+					var livesessionaudioformatpcmparam LiveSessionAudioFormatPCMParam
+					if err := json.Unmarshal(data, &livesessionaudioformatpcmparam); err != nil {
+						return err
+					}
+					u.LiveSessionAudioFormatPCMParam = &livesessionaudioformatpcmparam
+					return nil
+				case "audio/pcmu":
+					var livesessionaudioformatpcmuparam LiveSessionAudioFormatPCMUParam
+					if err := json.Unmarshal(data, &livesessionaudioformatpcmuparam); err != nil {
+						return err
+					}
+					u.LiveSessionAudioFormatPCMUParam = &livesessionaudioformatpcmuparam
+					return nil
+				case "audio/pcma":
+					var livesessionaudioformatpcmaparam LiveSessionAudioFormatPCMAParam
+					if err := json.Unmarshal(data, &livesessionaudioformatpcmaparam); err != nil {
+						return err
+					}
+					u.LiveSessionAudioFormatPCMAParam = &livesessionaudioformatpcmaparam
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 LiveSessionAudioFormatPCMParam
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.LiveSessionAudioFormatPCMParam = &lossless0
+			return nil
+		}
+		var lossless1 LiveSessionAudioFormatPCMUParam
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.LiveSessionAudioFormatPCMUParam = &lossless1
+			return nil
+		}
+		var lossless2 LiveSessionAudioFormatPCMAParam
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.LiveSessionAudioFormatPCMAParam = &lossless2
+			return nil
+		}
+	}
+	var livesessionaudioformatpcmparam LiveSessionAudioFormatPCMParam
+	if err := json.Unmarshal(data, &livesessionaudioformatpcmparam); err == nil && isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMParam(livesessionaudioformatpcmparam) {
+		u.LiveSessionAudioFormatPCMParam = &livesessionaudioformatpcmparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var livesessionaudioformatpcmuparam LiveSessionAudioFormatPCMUParam
+	if err := json.Unmarshal(data, &livesessionaudioformatpcmuparam); err == nil && isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMUParam(livesessionaudioformatpcmuparam) {
+		u.LiveSessionAudioFormatPCMUParam = &livesessionaudioformatpcmuparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var livesessionaudioformatpcmaparam LiveSessionAudioFormatPCMAParam
+	if err := json.Unmarshal(data, &livesessionaudioformatpcmaparam); err == nil && isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMAParam(livesessionaudioformatpcmaparam) {
+		u.LiveSessionAudioFormatPCMAParam = &livesessionaudioformatpcmaparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
+}
+
+func (u LiveAudioFormat) MarshalJSON() ([]byte, error) {
+	if u.LiveSessionAudioFormatPCMParam != nil {
+		return json.Marshal(u.LiveSessionAudioFormatPCMParam)
+	}
+	if u.LiveSessionAudioFormatPCMUParam != nil {
+		return json.Marshal(u.LiveSessionAudioFormatPCMUParam)
+	}
+	if u.LiveSessionAudioFormatPCMAParam != nil {
+		return json.Marshal(u.LiveSessionAudioFormatPCMAParam)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMParam(v LiveSessionAudioFormatPCMParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMUParam(v LiveSessionAudioFormatPCMUParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyLiveAudioFormatLiveSessionAudioFormatPCMAParam(v LiveSessionAudioFormatPCMAParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalLiveAudioFormat converts an untyped value to LiveAudioFormat.
+func UnmarshalLiveAudioFormat(v any) LiveAudioFormat {
+	b, _ := json.Marshal(v)
+	var result LiveAudioFormat
+	_ = json.Unmarshal(b, &result)
+	return result
+}
+
+// LiveDetailEnum Typed representation of the `LiveDetailEnum` API schema.
+type LiveDetailEnum string
