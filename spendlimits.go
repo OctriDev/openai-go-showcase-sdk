@@ -130,14 +130,14 @@ func DeleteSpendLimitsProject(ctx context.Context, clientConfig ClientConfig, pa
 	return &resp.Data, nil
 }
 
-type UpdateSpendLimitsProjectParams struct {
+type UpdateProjectSpendLimitParams struct {
 	ProjectId       string
 	ThresholdAmount int64
 	Currency        string
 	Interval        string
 }
 
-// UpdateSpendLimitsProject creates or replaces a project's hard spend limit. Supply `threshold_amount`, `currency`, and `interval` to set the spending threshold and the period used to evaluate it. The response includes the resulting limit and its enforcement state.
+// UpdateProjectSpendLimit creates or replaces a project's hard spend limit. Supply `threshold_amount`, `currency`, and `interval` to set the spending threshold and the period used to evaluate it. The response includes the resulting limit and its enforcement state.
 //
 // Create or replace a project's hard spend limit.
 //
@@ -149,7 +149,7 @@ type UpdateSpendLimitsProjectParams struct {
 //	supported.
 //	interval: The time interval for evaluating spend against the threshold.
 //	Currently, only `month` is supported.
-func UpdateSpendLimitsProject(ctx context.Context, clientConfig ClientConfig, params UpdateSpendLimitsProjectParams, opts ...RequestOption) (*ProjectSpendLimitResource, error) {
+func UpdateProjectSpendLimit(ctx context.Context, clientConfig ClientConfig, params UpdateProjectSpendLimitParams, opts ...RequestOption) (*ProjectSpendLimitResource, error) {
 	projectId := params.ProjectId
 	thresholdAmount := params.ThresholdAmount
 	currency := params.Currency
@@ -165,7 +165,7 @@ func UpdateSpendLimitsProject(ctx context.Context, clientConfig ClientConfig, pa
 			"currency":         currency,
 			"interval":         interval,
 		},
-		OperationID: "UpdateSpendLimitsProject",
+		OperationID: "UpdateProjectSpendLimit",
 		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse], "403": decodeErrorData[PermissionErrorResponse], "404": decodeErrorData[ErrorResponse]},
 		Options:     opts,
 	})

@@ -37168,6 +37168,96 @@
       }
     },
     {
+      "id": "updateProjectSpendLimit:UpdateProjectSpendLimit",
+      "operationId": "updateProjectSpendLimit",
+      "methodName": "UpdateProjectSpendLimit",
+      "namespace": [
+        "spendLimits"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "ProjectId": "proj_123",
+        "ThresholdAmount": 1,
+        "Currency": "USD",
+        "Interval": "month"
+      },
+      "wireNames": {
+        "ProjectId": "project_id",
+        "ThresholdAmount": "threshold_amount",
+        "Currency": "currency",
+        "Interval": "interval"
+      },
+      "argumentOrder": [
+        "ProjectId",
+        "ThresholdAmount",
+        "Currency",
+        "Interval"
+      ],
+      "response": {
+        "kind": "json",
+        "expected": {
+          "object": "project.spend_limit",
+          "threshold_amount": 1,
+          "currency": "USD",
+          "interval": "month",
+          "enforcement": {
+            "status": "active"
+          }
+        },
+        "byteLength": 0
+      }
+    },
+    {
+      "id": "updateProjectSpendLimit:UpdateProjectSpendLimit:400",
+      "operationId": "updateProjectSpendLimit",
+      "methodName": "UpdateProjectSpendLimit",
+      "namespace": [
+        "spendLimits"
+      ],
+      "mode": "normal",
+      "owner": null,
+      "arguments": {
+        "ProjectId": "proj_123",
+        "ThresholdAmount": 1,
+        "Currency": "USD",
+        "Interval": "month"
+      },
+      "wireNames": {
+        "ProjectId": "project_id",
+        "ThresholdAmount": "threshold_amount",
+        "Currency": "currency",
+        "Interval": "interval"
+      },
+      "argumentOrder": [
+        "ProjectId",
+        "ThresholdAmount",
+        "Currency",
+        "Interval"
+      ],
+      "response": {
+        "kind": "error",
+        "status": 400,
+        "expected": {
+          "error": {
+            "code": "code",
+            "message": "example text",
+            "param": "param",
+            "type": "type",
+            "misalignment": {
+              "review_target": "a",
+              "error_type": "error_type",
+              "detailed_explanation": "detailed_explanation",
+              "steer": {
+                "message": "example text"
+              }
+            }
+          }
+        },
+        "byteLength": 0
+      }
+    },
+    {
       "id": "updateRole:UpdateRole",
       "operationId": "updateRole",
       "methodName": "UpdateRole",
@@ -37501,96 +37591,6 @@
         "Interval": "interval"
       },
       "argumentOrder": [
-        "ThresholdAmount",
-        "Currency",
-        "Interval"
-      ],
-      "response": {
-        "kind": "error",
-        "status": 400,
-        "expected": {
-          "error": {
-            "code": "code",
-            "message": "example text",
-            "param": "param",
-            "type": "type",
-            "misalignment": {
-              "review_target": "a",
-              "error_type": "error_type",
-              "detailed_explanation": "detailed_explanation",
-              "steer": {
-                "message": "example text"
-              }
-            }
-          }
-        },
-        "byteLength": 0
-      }
-    },
-    {
-      "id": "updateSpendLimitsProject:UpdateSpendLimitsProject",
-      "operationId": "updateSpendLimitsProject",
-      "methodName": "UpdateSpendLimitsProject",
-      "namespace": [
-        "spendLimits"
-      ],
-      "mode": "normal",
-      "owner": null,
-      "arguments": {
-        "ProjectId": "proj_123",
-        "ThresholdAmount": 1,
-        "Currency": "USD",
-        "Interval": "month"
-      },
-      "wireNames": {
-        "ProjectId": "project_id",
-        "ThresholdAmount": "threshold_amount",
-        "Currency": "currency",
-        "Interval": "interval"
-      },
-      "argumentOrder": [
-        "ProjectId",
-        "ThresholdAmount",
-        "Currency",
-        "Interval"
-      ],
-      "response": {
-        "kind": "json",
-        "expected": {
-          "object": "project.spend_limit",
-          "threshold_amount": 1,
-          "currency": "USD",
-          "interval": "month",
-          "enforcement": {
-            "status": "active"
-          }
-        },
-        "byteLength": 0
-      }
-    },
-    {
-      "id": "updateSpendLimitsProject:UpdateSpendLimitsProject:400",
-      "operationId": "updateSpendLimitsProject",
-      "methodName": "UpdateSpendLimitsProject",
-      "namespace": [
-        "spendLimits"
-      ],
-      "mode": "normal",
-      "owner": null,
-      "arguments": {
-        "ProjectId": "proj_123",
-        "ThresholdAmount": 1,
-        "Currency": "USD",
-        "Interval": "month"
-      },
-      "wireNames": {
-        "ProjectId": "project_id",
-        "ThresholdAmount": "threshold_amount",
-        "Currency": "currency",
-        "Interval": "interval"
-      },
-      "argumentOrder": [
-        "ProjectId",
         "ThresholdAmount",
         "Currency",
         "Interval"

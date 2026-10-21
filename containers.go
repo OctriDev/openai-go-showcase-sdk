@@ -9,84 +9,6 @@ import (
 	"fmt"
 )
 
-type DeleteContainerResponse struct {
-	Object  DeleteContainerResponseObjectEnum `json:"object"`
-	Deleted bool                              `json:"deleted"`
-	Id      string                            `json:"id"`
-}
-
-func (value *DeleteContainerResponse) UnmarshalJSON(data []byte) error {
-	type DeleteContainerResponseAlias DeleteContainerResponse
-	var decoded DeleteContainerResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = DeleteContainerResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"object", "deleted", "id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"object", "deleted", "id"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewDeleteContainerResponse returns a validated DeleteContainerResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewDeleteContainerResponse(fields DeleteContainerResponse) (*DeleteContainerResponse, error) {
-	return ConstructModel(fields)
-}
-
-type DeleteContainerResponseObjectEnum string
-
-const (
-	DeleteContainerResponseObjectEnumContainerDeleted DeleteContainerResponseObjectEnum = "container.deleted"
-)
-
-type DeleteContainerFileResponse struct {
-	Object  DeleteContainerFileResponseObjectEnum `json:"object"`
-	Deleted bool                                  `json:"deleted"`
-	Id      string                                `json:"id"`
-}
-
-func (value *DeleteContainerFileResponse) UnmarshalJSON(data []byte) error {
-	type DeleteContainerFileResponseAlias DeleteContainerFileResponse
-	var decoded DeleteContainerFileResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = DeleteContainerFileResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"object", "deleted", "id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"object", "deleted", "id"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewDeleteContainerFileResponse returns a validated DeleteContainerFileResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewDeleteContainerFileResponse(fields DeleteContainerFileResponse) (*DeleteContainerFileResponse, error) {
-	return ConstructModel(fields)
-}
-
-type DeleteContainerFileResponseObjectEnum string
-
-const (
-	DeleteContainerFileResponseObjectEnumContainerFileDeleted DeleteContainerFileResponseObjectEnum = "container.file.deleted"
-)
-
 type ListContainersParams struct {
 	Limit *int64
 	Order *string
@@ -530,3 +452,81 @@ func RetrieveContainerFileContent(ctx context.Context, clientConfig ClientConfig
 	}
 	return resp.Data, nil
 }
+
+type DeleteContainerResponse struct {
+	Object  DeleteContainerResponseObjectEnum `json:"object"`
+	Deleted bool                              `json:"deleted"`
+	Id      string                            `json:"id"`
+}
+
+func (value *DeleteContainerResponse) UnmarshalJSON(data []byte) error {
+	type DeleteContainerResponseAlias DeleteContainerResponse
+	var decoded DeleteContainerResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = DeleteContainerResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"object", "deleted", "id"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"object", "deleted", "id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewDeleteContainerResponse returns a validated DeleteContainerResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewDeleteContainerResponse(fields DeleteContainerResponse) (*DeleteContainerResponse, error) {
+	return ConstructModel(fields)
+}
+
+type DeleteContainerResponseObjectEnum string
+
+const (
+	DeleteContainerResponseObjectEnumContainerDeleted DeleteContainerResponseObjectEnum = "container.deleted"
+)
+
+type DeleteContainerFileResponse struct {
+	Object  DeleteContainerFileResponseObjectEnum `json:"object"`
+	Deleted bool                                  `json:"deleted"`
+	Id      string                                `json:"id"`
+}
+
+func (value *DeleteContainerFileResponse) UnmarshalJSON(data []byte) error {
+	type DeleteContainerFileResponseAlias DeleteContainerFileResponse
+	var decoded DeleteContainerFileResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = DeleteContainerFileResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"object", "deleted", "id"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"object", "deleted", "id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewDeleteContainerFileResponse returns a validated DeleteContainerFileResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewDeleteContainerFileResponse(fields DeleteContainerFileResponse) (*DeleteContainerFileResponse, error) {
+	return ConstructModel(fields)
+}
+
+type DeleteContainerFileResponseObjectEnum string
+
+const (
+	DeleteContainerFileResponseObjectEnumContainerFileDeleted DeleteContainerFileResponseObjectEnum = "container.file.deleted"
+)

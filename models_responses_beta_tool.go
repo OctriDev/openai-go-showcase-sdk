@@ -3,30 +3,33 @@
 
 package sdk
 
-import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-)
+import "encoding/json"
 
-// BetaToolChoiceParam represents a union type.
-type BetaToolChoiceParam struct {
-	BetaToolChoiceOptions                    *BetaToolChoiceOptions
-	BetaToolChoiceAllowed                    *BetaToolChoiceAllowed
-	BetaToolChoiceTypes                      *BetaToolChoiceTypes
-	BetaToolChoiceFunction                   *BetaToolChoiceFunction
-	BetaToolChoiceMCP                        *BetaToolChoiceMCP
-	BetaToolChoiceCustom                     *BetaToolChoiceCustom
-	BetaSpecificProgrammaticToolCallingParam *BetaSpecificProgrammaticToolCallingParam
-	BetaSpecificApplyPatchParam              *BetaSpecificApplyPatchParam
-	BetaSpecificFunctionShellParam           *BetaSpecificFunctionShellParam
+// BetaTool represents a union type.
+type BetaTool struct {
+	BetaFunctionTool                 *BetaFunctionTool
+	BetaFileSearchTool               *BetaFileSearchTool
+	BetaComputerTool                 *BetaComputerTool
+	BetaComputerUsePreviewTool       *BetaComputerUsePreviewTool
+	BetaWebSearchTool                *BetaWebSearchTool
+	BetaMCPTool                      *BetaMCPTool
+	BetaCodeInterpreterTool          *BetaCodeInterpreterTool
+	BetaProgrammaticToolCallingParam *BetaProgrammaticToolCallingParam
+	BetaImageGenTool                 *BetaImageGenTool
+	BetaLocalShellToolParam          *BetaLocalShellToolParam
+	BetaFunctionShellToolParam       *BetaFunctionShellToolParam
+	BetaCustomToolParam              *BetaCustomToolParam
+	BetaNamespaceToolParam           *BetaNamespaceToolParam
+	BetaToolSearchToolParam          *BetaToolSearchToolParam
+	BetaWebSearchPreviewTool         *BetaWebSearchPreviewTool
+	BetaApplyPatchToolParam          *BetaApplyPatchToolParam
 
 	// Unknown holds a member whose type names no branch this SDK knows, as received.
 	Unknown json.RawMessage
 }
 
-func (u *BetaToolChoiceParam) UnmarshalJSON(data []byte) error {
-	*u = BetaToolChoiceParam{}
+func (u *BetaTool) UnmarshalJSON(data []byte) error {
+	*u = BetaTool{}
 	var refusal error
 	var object map[string]json.RawMessage
 	if err := json.Unmarshal(data, &object); err == nil {
@@ -34,110 +37,131 @@ func (u *BetaToolChoiceParam) UnmarshalJSON(data []byte) error {
 			var discriminatorValue string
 			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
 				switch discriminatorValue {
-				case "allowed_tools":
-					var betatoolchoiceallowed BetaToolChoiceAllowed
-					if err := json.Unmarshal(data, &betatoolchoiceallowed); err != nil {
+				case "function":
+					var betafunctiontool BetaFunctionTool
+					if err := json.Unmarshal(data, &betafunctiontool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceAllowed = &betatoolchoiceallowed
+					u.BetaFunctionTool = &betafunctiontool
 					return nil
 				case "file_search":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
+					var betafilesearchtool BetaFileSearchTool
+					if err := json.Unmarshal(data, &betafilesearchtool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
-					return nil
-				case "web_search_preview":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
-						return err
-					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
+					u.BetaFileSearchTool = &betafilesearchtool
 					return nil
 				case "computer":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
+					var betacomputertool BetaComputerTool
+					if err := json.Unmarshal(data, &betacomputertool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
+					u.BetaComputerTool = &betacomputertool
 					return nil
 				case "computer_use_preview":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
+					var betacomputerusepreviewtool BetaComputerUsePreviewTool
+					if err := json.Unmarshal(data, &betacomputerusepreviewtool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
+					u.BetaComputerUsePreviewTool = &betacomputerusepreviewtool
 					return nil
-				case "computer_use":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
+				case "web_search":
+					var betawebsearchtool BetaWebSearchTool
+					if err := json.Unmarshal(data, &betawebsearchtool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
+					u.BetaWebSearchTool = &betawebsearchtool
 					return nil
-				case "web_search_preview_2025_03_11":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
+				case "web_search_2025_08_26":
+					var betawebsearchtool BetaWebSearchTool
+					if err := json.Unmarshal(data, &betawebsearchtool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
-					return nil
-				case "image_generation":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
-						return err
-					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
-					return nil
-				case "code_interpreter":
-					var betatoolchoicetypes BetaToolChoiceTypes
-					if err := json.Unmarshal(data, &betatoolchoicetypes); err != nil {
-						return err
-					}
-					u.BetaToolChoiceTypes = &betatoolchoicetypes
-					return nil
-				case "function":
-					var betatoolchoicefunction BetaToolChoiceFunction
-					if err := json.Unmarshal(data, &betatoolchoicefunction); err != nil {
-						return err
-					}
-					u.BetaToolChoiceFunction = &betatoolchoicefunction
+					u.BetaWebSearchTool = &betawebsearchtool
 					return nil
 				case "mcp":
-					var betatoolchoicemcp BetaToolChoiceMCP
-					if err := json.Unmarshal(data, &betatoolchoicemcp); err != nil {
+					var betamcptool BetaMCPTool
+					if err := json.Unmarshal(data, &betamcptool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceMCP = &betatoolchoicemcp
+					u.BetaMCPTool = &betamcptool
 					return nil
-				case "custom":
-					var betatoolchoicecustom BetaToolChoiceCustom
-					if err := json.Unmarshal(data, &betatoolchoicecustom); err != nil {
+				case "code_interpreter":
+					var betacodeinterpretertool BetaCodeInterpreterTool
+					if err := json.Unmarshal(data, &betacodeinterpretertool); err != nil {
 						return err
 					}
-					u.BetaToolChoiceCustom = &betatoolchoicecustom
+					u.BetaCodeInterpreterTool = &betacodeinterpretertool
 					return nil
 				case "programmatic_tool_calling":
-					var betaspecificprogrammatictoolcallingparam BetaSpecificProgrammaticToolCallingParam
-					if err := json.Unmarshal(data, &betaspecificprogrammatictoolcallingparam); err != nil {
+					var betaprogrammatictoolcallingparam BetaProgrammaticToolCallingParam
+					if err := json.Unmarshal(data, &betaprogrammatictoolcallingparam); err != nil {
 						return err
 					}
-					u.BetaSpecificProgrammaticToolCallingParam = &betaspecificprogrammatictoolcallingparam
+					u.BetaProgrammaticToolCallingParam = &betaprogrammatictoolcallingparam
 					return nil
-				case "apply_patch":
-					var betaspecificapplypatchparam BetaSpecificApplyPatchParam
-					if err := json.Unmarshal(data, &betaspecificapplypatchparam); err != nil {
+				case "image_generation":
+					var betaimagegentool BetaImageGenTool
+					if err := json.Unmarshal(data, &betaimagegentool); err != nil {
 						return err
 					}
-					u.BetaSpecificApplyPatchParam = &betaspecificapplypatchparam
+					u.BetaImageGenTool = &betaimagegentool
+					return nil
+				case "local_shell":
+					var betalocalshelltoolparam BetaLocalShellToolParam
+					if err := json.Unmarshal(data, &betalocalshelltoolparam); err != nil {
+						return err
+					}
+					u.BetaLocalShellToolParam = &betalocalshelltoolparam
 					return nil
 				case "shell":
-					var betaspecificfunctionshellparam BetaSpecificFunctionShellParam
-					if err := json.Unmarshal(data, &betaspecificfunctionshellparam); err != nil {
+					var betafunctionshelltoolparam BetaFunctionShellToolParam
+					if err := json.Unmarshal(data, &betafunctionshelltoolparam); err != nil {
 						return err
 					}
-					u.BetaSpecificFunctionShellParam = &betaspecificfunctionshellparam
+					u.BetaFunctionShellToolParam = &betafunctionshelltoolparam
+					return nil
+				case "custom":
+					var betacustomtoolparam BetaCustomToolParam
+					if err := json.Unmarshal(data, &betacustomtoolparam); err != nil {
+						return err
+					}
+					u.BetaCustomToolParam = &betacustomtoolparam
+					return nil
+				case "namespace":
+					var betanamespacetoolparam BetaNamespaceToolParam
+					if err := json.Unmarshal(data, &betanamespacetoolparam); err != nil {
+						return err
+					}
+					u.BetaNamespaceToolParam = &betanamespacetoolparam
+					return nil
+				case "tool_search":
+					var betatoolsearchtoolparam BetaToolSearchToolParam
+					if err := json.Unmarshal(data, &betatoolsearchtoolparam); err != nil {
+						return err
+					}
+					u.BetaToolSearchToolParam = &betatoolsearchtoolparam
+					return nil
+				case "web_search_preview":
+					var betawebsearchpreviewtool BetaWebSearchPreviewTool
+					if err := json.Unmarshal(data, &betawebsearchpreviewtool); err != nil {
+						return err
+					}
+					u.BetaWebSearchPreviewTool = &betawebsearchpreviewtool
+					return nil
+				case "web_search_preview_2025_03_11":
+					var betawebsearchpreviewtool BetaWebSearchPreviewTool
+					if err := json.Unmarshal(data, &betawebsearchpreviewtool); err != nil {
+						return err
+					}
+					u.BetaWebSearchPreviewTool = &betawebsearchpreviewtool
+					return nil
+				case "apply_patch":
+					var betaapplypatchtoolparam BetaApplyPatchToolParam
+					if err := json.Unmarshal(data, &betaapplypatchtoolparam); err != nil {
+						return err
+					}
+					u.BetaApplyPatchToolParam = &betaapplypatchtoolparam
 					return nil
 				default:
 					u.Unknown = append(json.RawMessage(nil), data...)
@@ -148,104 +172,195 @@ func (u *BetaToolChoiceParam) UnmarshalJSON(data []byte) error {
 	}
 	var raw map[string]json.RawMessage
 	if json.Unmarshal(data, &raw) == nil {
-		var lossless0 BetaToolChoiceAllowed
+		var lossless0 BetaFunctionTool
 		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
-			u.BetaToolChoiceAllowed = &lossless0
+			u.BetaFunctionTool = &lossless0
 			return nil
 		}
-		var lossless1 BetaToolChoiceTypes
+		var lossless1 BetaFileSearchTool
 		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
-			u.BetaToolChoiceTypes = &lossless1
+			u.BetaFileSearchTool = &lossless1
 			return nil
 		}
-		var lossless2 BetaToolChoiceFunction
+		var lossless2 BetaComputerTool
 		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
-			u.BetaToolChoiceFunction = &lossless2
+			u.BetaComputerTool = &lossless2
 			return nil
 		}
-		var lossless3 BetaToolChoiceMCP
+		var lossless3 BetaComputerUsePreviewTool
 		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
-			u.BetaToolChoiceMCP = &lossless3
+			u.BetaComputerUsePreviewTool = &lossless3
 			return nil
 		}
-		var lossless4 BetaToolChoiceCustom
+		var lossless4 BetaWebSearchTool
 		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
-			u.BetaToolChoiceCustom = &lossless4
+			u.BetaWebSearchTool = &lossless4
 			return nil
 		}
-		var lossless5 BetaSpecificProgrammaticToolCallingParam
+		var lossless5 BetaMCPTool
 		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
-			u.BetaSpecificProgrammaticToolCallingParam = &lossless5
+			u.BetaMCPTool = &lossless5
 			return nil
 		}
-		var lossless6 BetaSpecificApplyPatchParam
+		var lossless6 BetaCodeInterpreterTool
 		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
-			u.BetaSpecificApplyPatchParam = &lossless6
+			u.BetaCodeInterpreterTool = &lossless6
 			return nil
 		}
-		var lossless7 BetaSpecificFunctionShellParam
+		var lossless7 BetaProgrammaticToolCallingParam
 		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
-			u.BetaSpecificFunctionShellParam = &lossless7
+			u.BetaProgrammaticToolCallingParam = &lossless7
+			return nil
+		}
+		var lossless8 BetaImageGenTool
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.BetaImageGenTool = &lossless8
+			return nil
+		}
+		var lossless9 BetaLocalShellToolParam
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.BetaLocalShellToolParam = &lossless9
+			return nil
+		}
+		var lossless10 BetaFunctionShellToolParam
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.BetaFunctionShellToolParam = &lossless10
+			return nil
+		}
+		var lossless11 BetaCustomToolParam
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.BetaCustomToolParam = &lossless11
+			return nil
+		}
+		var lossless12 BetaNamespaceToolParam
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.BetaNamespaceToolParam = &lossless12
+			return nil
+		}
+		var lossless13 BetaToolSearchToolParam
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.BetaToolSearchToolParam = &lossless13
+			return nil
+		}
+		var lossless14 BetaWebSearchPreviewTool
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.BetaWebSearchPreviewTool = &lossless14
+			return nil
+		}
+		var lossless15 BetaApplyPatchToolParam
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.BetaApplyPatchToolParam = &lossless15
 			return nil
 		}
 	}
-	var betatoolchoiceoptions BetaToolChoiceOptions
-	if err := json.Unmarshal(data, &betatoolchoiceoptions); err == nil {
-		u.BetaToolChoiceOptions = &betatoolchoiceoptions
-		return nil
-	}
-	var betatoolchoiceallowed BetaToolChoiceAllowed
-	if err := json.Unmarshal(data, &betatoolchoiceallowed); err == nil && isNonEmptyBetaToolChoiceParamBetaToolChoiceAllowed(betatoolchoiceallowed) {
-		u.BetaToolChoiceAllowed = &betatoolchoiceallowed
+	var betafunctiontool BetaFunctionTool
+	if err := json.Unmarshal(data, &betafunctiontool); err == nil && isNonEmptyBetaToolBetaFunctionTool(betafunctiontool) {
+		u.BetaFunctionTool = &betafunctiontool
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var betatoolchoicetypes BetaToolChoiceTypes
-	if err := json.Unmarshal(data, &betatoolchoicetypes); err == nil && isNonEmptyBetaToolChoiceParamBetaToolChoiceTypes(betatoolchoicetypes) {
-		u.BetaToolChoiceTypes = &betatoolchoicetypes
+	var betafilesearchtool BetaFileSearchTool
+	if err := json.Unmarshal(data, &betafilesearchtool); err == nil && isNonEmptyBetaToolBetaFileSearchTool(betafilesearchtool) {
+		u.BetaFileSearchTool = &betafilesearchtool
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var betatoolchoicefunction BetaToolChoiceFunction
-	if err := json.Unmarshal(data, &betatoolchoicefunction); err == nil && isNonEmptyBetaToolChoiceParamBetaToolChoiceFunction(betatoolchoicefunction) {
-		u.BetaToolChoiceFunction = &betatoolchoicefunction
+	var betacomputertool BetaComputerTool
+	if err := json.Unmarshal(data, &betacomputertool); err == nil && isNonEmptyBetaToolBetaComputerTool(betacomputertool) {
+		u.BetaComputerTool = &betacomputertool
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var betatoolchoicemcp BetaToolChoiceMCP
-	if err := json.Unmarshal(data, &betatoolchoicemcp); err == nil && isNonEmptyBetaToolChoiceParamBetaToolChoiceMCP(betatoolchoicemcp) {
-		u.BetaToolChoiceMCP = &betatoolchoicemcp
+	var betacomputerusepreviewtool BetaComputerUsePreviewTool
+	if err := json.Unmarshal(data, &betacomputerusepreviewtool); err == nil && isNonEmptyBetaToolBetaComputerUsePreviewTool(betacomputerusepreviewtool) {
+		u.BetaComputerUsePreviewTool = &betacomputerusepreviewtool
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var betatoolchoicecustom BetaToolChoiceCustom
-	if err := json.Unmarshal(data, &betatoolchoicecustom); err == nil && isNonEmptyBetaToolChoiceParamBetaToolChoiceCustom(betatoolchoicecustom) {
-		u.BetaToolChoiceCustom = &betatoolchoicecustom
+	var betawebsearchtool BetaWebSearchTool
+	if err := json.Unmarshal(data, &betawebsearchtool); err == nil && isNonEmptyBetaToolBetaWebSearchTool(betawebsearchtool) {
+		u.BetaWebSearchTool = &betawebsearchtool
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var betaspecificprogrammatictoolcallingparam BetaSpecificProgrammaticToolCallingParam
-	if err := json.Unmarshal(data, &betaspecificprogrammatictoolcallingparam); err == nil && isNonEmptyBetaToolChoiceParamBetaSpecificProgrammaticToolCallingParam(betaspecificprogrammatictoolcallingparam) {
-		u.BetaSpecificProgrammaticToolCallingParam = &betaspecificprogrammatictoolcallingparam
+	var betamcptool BetaMCPTool
+	if err := json.Unmarshal(data, &betamcptool); err == nil && isNonEmptyBetaToolBetaMCPTool(betamcptool) {
+		u.BetaMCPTool = &betamcptool
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var betaspecificapplypatchparam BetaSpecificApplyPatchParam
-	if err := json.Unmarshal(data, &betaspecificapplypatchparam); err == nil && isNonEmptyBetaToolChoiceParamBetaSpecificApplyPatchParam(betaspecificapplypatchparam) {
-		u.BetaSpecificApplyPatchParam = &betaspecificapplypatchparam
+	var betacodeinterpretertool BetaCodeInterpreterTool
+	if err := json.Unmarshal(data, &betacodeinterpretertool); err == nil && isNonEmptyBetaToolBetaCodeInterpreterTool(betacodeinterpretertool) {
+		u.BetaCodeInterpreterTool = &betacodeinterpretertool
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
 	}
-	var betaspecificfunctionshellparam BetaSpecificFunctionShellParam
-	if err := json.Unmarshal(data, &betaspecificfunctionshellparam); err == nil && isNonEmptyBetaToolChoiceParamBetaSpecificFunctionShellParam(betaspecificfunctionshellparam) {
-		u.BetaSpecificFunctionShellParam = &betaspecificfunctionshellparam
+	var betaprogrammatictoolcallingparam BetaProgrammaticToolCallingParam
+	if err := json.Unmarshal(data, &betaprogrammatictoolcallingparam); err == nil && isNonEmptyBetaToolBetaProgrammaticToolCallingParam(betaprogrammatictoolcallingparam) {
+		u.BetaProgrammaticToolCallingParam = &betaprogrammatictoolcallingparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betaimagegentool BetaImageGenTool
+	if err := json.Unmarshal(data, &betaimagegentool); err == nil && isNonEmptyBetaToolBetaImageGenTool(betaimagegentool) {
+		u.BetaImageGenTool = &betaimagegentool
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betalocalshelltoolparam BetaLocalShellToolParam
+	if err := json.Unmarshal(data, &betalocalshelltoolparam); err == nil && isNonEmptyBetaToolBetaLocalShellToolParam(betalocalshelltoolparam) {
+		u.BetaLocalShellToolParam = &betalocalshelltoolparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betafunctionshelltoolparam BetaFunctionShellToolParam
+	if err := json.Unmarshal(data, &betafunctionshelltoolparam); err == nil && isNonEmptyBetaToolBetaFunctionShellToolParam(betafunctionshelltoolparam) {
+		u.BetaFunctionShellToolParam = &betafunctionshelltoolparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betacustomtoolparam BetaCustomToolParam
+	if err := json.Unmarshal(data, &betacustomtoolparam); err == nil && isNonEmptyBetaToolBetaCustomToolParam(betacustomtoolparam) {
+		u.BetaCustomToolParam = &betacustomtoolparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betanamespacetoolparam BetaNamespaceToolParam
+	if err := json.Unmarshal(data, &betanamespacetoolparam); err == nil && isNonEmptyBetaToolBetaNamespaceToolParam(betanamespacetoolparam) {
+		u.BetaNamespaceToolParam = &betanamespacetoolparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betatoolsearchtoolparam BetaToolSearchToolParam
+	if err := json.Unmarshal(data, &betatoolsearchtoolparam); err == nil && isNonEmptyBetaToolBetaToolSearchToolParam(betatoolsearchtoolparam) {
+		u.BetaToolSearchToolParam = &betatoolsearchtoolparam
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betawebsearchpreviewtool BetaWebSearchPreviewTool
+	if err := json.Unmarshal(data, &betawebsearchpreviewtool); err == nil && isNonEmptyBetaToolBetaWebSearchPreviewTool(betawebsearchpreviewtool) {
+		u.BetaWebSearchPreviewTool = &betawebsearchpreviewtool
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var betaapplypatchtoolparam BetaApplyPatchToolParam
+	if err := json.Unmarshal(data, &betaapplypatchtoolparam); err == nil && isNonEmptyBetaToolBetaApplyPatchToolParam(betaapplypatchtoolparam) {
+		u.BetaApplyPatchToolParam = &betaapplypatchtoolparam
 		return nil
 	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
 		refusal = err
@@ -253,33 +368,54 @@ func (u *BetaToolChoiceParam) UnmarshalJSON(data []byte) error {
 	return refusal
 }
 
-func (u BetaToolChoiceParam) MarshalJSON() ([]byte, error) {
-	if u.BetaToolChoiceOptions != nil {
-		return json.Marshal(u.BetaToolChoiceOptions)
+func (u BetaTool) MarshalJSON() ([]byte, error) {
+	if u.BetaFunctionTool != nil {
+		return json.Marshal(u.BetaFunctionTool)
 	}
-	if u.BetaToolChoiceAllowed != nil {
-		return json.Marshal(u.BetaToolChoiceAllowed)
+	if u.BetaFileSearchTool != nil {
+		return json.Marshal(u.BetaFileSearchTool)
 	}
-	if u.BetaToolChoiceTypes != nil {
-		return json.Marshal(u.BetaToolChoiceTypes)
+	if u.BetaComputerTool != nil {
+		return json.Marshal(u.BetaComputerTool)
 	}
-	if u.BetaToolChoiceFunction != nil {
-		return json.Marshal(u.BetaToolChoiceFunction)
+	if u.BetaComputerUsePreviewTool != nil {
+		return json.Marshal(u.BetaComputerUsePreviewTool)
 	}
-	if u.BetaToolChoiceMCP != nil {
-		return json.Marshal(u.BetaToolChoiceMCP)
+	if u.BetaWebSearchTool != nil {
+		return json.Marshal(u.BetaWebSearchTool)
 	}
-	if u.BetaToolChoiceCustom != nil {
-		return json.Marshal(u.BetaToolChoiceCustom)
+	if u.BetaMCPTool != nil {
+		return json.Marshal(u.BetaMCPTool)
 	}
-	if u.BetaSpecificProgrammaticToolCallingParam != nil {
-		return json.Marshal(u.BetaSpecificProgrammaticToolCallingParam)
+	if u.BetaCodeInterpreterTool != nil {
+		return json.Marshal(u.BetaCodeInterpreterTool)
 	}
-	if u.BetaSpecificApplyPatchParam != nil {
-		return json.Marshal(u.BetaSpecificApplyPatchParam)
+	if u.BetaProgrammaticToolCallingParam != nil {
+		return json.Marshal(u.BetaProgrammaticToolCallingParam)
 	}
-	if u.BetaSpecificFunctionShellParam != nil {
-		return json.Marshal(u.BetaSpecificFunctionShellParam)
+	if u.BetaImageGenTool != nil {
+		return json.Marshal(u.BetaImageGenTool)
+	}
+	if u.BetaLocalShellToolParam != nil {
+		return json.Marshal(u.BetaLocalShellToolParam)
+	}
+	if u.BetaFunctionShellToolParam != nil {
+		return json.Marshal(u.BetaFunctionShellToolParam)
+	}
+	if u.BetaCustomToolParam != nil {
+		return json.Marshal(u.BetaCustomToolParam)
+	}
+	if u.BetaNamespaceToolParam != nil {
+		return json.Marshal(u.BetaNamespaceToolParam)
+	}
+	if u.BetaToolSearchToolParam != nil {
+		return json.Marshal(u.BetaToolSearchToolParam)
+	}
+	if u.BetaWebSearchPreviewTool != nil {
+		return json.Marshal(u.BetaWebSearchPreviewTool)
+	}
+	if u.BetaApplyPatchToolParam != nil {
+		return json.Marshal(u.BetaApplyPatchToolParam)
 	}
 	if u.Unknown != nil {
 		return u.Unknown, nil
@@ -287,421 +423,90 @@ func (u BetaToolChoiceParam) MarshalJSON() ([]byte, error) {
 	return []byte("null"), nil
 }
 
-func isNonEmptyBetaToolChoiceParamBetaToolChoiceAllowed(v BetaToolChoiceAllowed) bool {
+func isNonEmptyBetaToolBetaFunctionTool(v BetaFunctionTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaToolChoiceParamBetaToolChoiceTypes(v BetaToolChoiceTypes) bool {
+func isNonEmptyBetaToolBetaFileSearchTool(v BetaFileSearchTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaToolChoiceParamBetaToolChoiceFunction(v BetaToolChoiceFunction) bool {
+func isNonEmptyBetaToolBetaComputerTool(v BetaComputerTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaToolChoiceParamBetaToolChoiceMCP(v BetaToolChoiceMCP) bool {
+func isNonEmptyBetaToolBetaComputerUsePreviewTool(v BetaComputerUsePreviewTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaToolChoiceParamBetaToolChoiceCustom(v BetaToolChoiceCustom) bool {
+func isNonEmptyBetaToolBetaWebSearchTool(v BetaWebSearchTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaToolChoiceParamBetaSpecificProgrammaticToolCallingParam(v BetaSpecificProgrammaticToolCallingParam) bool {
+func isNonEmptyBetaToolBetaMCPTool(v BetaMCPTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaToolChoiceParamBetaSpecificApplyPatchParam(v BetaSpecificApplyPatchParam) bool {
+func isNonEmptyBetaToolBetaCodeInterpreterTool(v BetaCodeInterpreterTool) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-func isNonEmptyBetaToolChoiceParamBetaSpecificFunctionShellParam(v BetaSpecificFunctionShellParam) bool {
+func isNonEmptyBetaToolBetaProgrammaticToolCallingParam(v BetaProgrammaticToolCallingParam) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
 
-// UnmarshalBetaToolChoiceParam converts an untyped value to BetaToolChoiceParam.
-func UnmarshalBetaToolChoiceParam(v any) BetaToolChoiceParam {
+func isNonEmptyBetaToolBetaImageGenTool(v BetaImageGenTool) bool {
 	b, _ := json.Marshal(v)
-	var result BetaToolChoiceParam
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolBetaLocalShellToolParam(v BetaLocalShellToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolBetaFunctionShellToolParam(v BetaFunctionShellToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolBetaCustomToolParam(v BetaCustomToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolBetaNamespaceToolParam(v BetaNamespaceToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolBetaToolSearchToolParam(v BetaToolSearchToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolBetaWebSearchPreviewTool(v BetaWebSearchPreviewTool) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaToolBetaApplyPatchToolParam(v BetaApplyPatchToolParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaTool converts an untyped value to BetaTool.
+func UnmarshalBetaTool(v any) BetaTool {
+	b, _ := json.Marshal(v)
+	var result BetaTool
 	_ = json.Unmarshal(b, &result)
 	return result
 }
-
-// BetaToolChoiceCustom Use this option to force the model to call a specific custom tool.
-type BetaToolChoiceCustom struct {
-	// Type For custom tool calling, the type is always `custom`.
-	Type BetaToolChoiceCustomTypeEnum `json:"type"`
-	// Name The name of the custom tool to call.
-	Name string `json:"name"`
-}
-
-func (value *BetaToolChoiceCustom) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"custom"}); err != nil {
-		return err
-	}
-	type BetaToolChoiceCustomAlias BetaToolChoiceCustom
-	var decoded BetaToolChoiceCustomAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaToolChoiceCustom(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "name"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "name"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewBetaToolChoiceCustom returns a validated BetaToolChoiceCustom built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolChoiceCustom(fields BetaToolChoiceCustom) (*BetaToolChoiceCustom, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolChoiceCustomTypeEnum For custom tool calling, the type is always `custom`.
-type BetaToolChoiceCustomTypeEnum string
-
-const (
-	BetaToolChoiceCustomTypeEnumCustom BetaToolChoiceCustomTypeEnum = "custom"
-)
-
-func (value *BetaToolChoiceCustomTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "custom":
-		*value = BetaToolChoiceCustomTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolChoiceCustomTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolChoiceCustomTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolChoiceMCP Use this option to force the model to call a specific tool on a remote MCP server.
-type BetaToolChoiceMCP struct {
-	// Type For MCP tools, the type is always `mcp`.
-	Type BetaToolChoiceMCPTypeEnum `json:"type"`
-	// ServerLabel The label of the MCP server to use.
-	ServerLabel string `json:"server_label"`
-	// Name Optional `string` value serialized in the `name` wire field.
-	Name *NullableValue[string] `json:"name,omitempty"`
-}
-
-func (value *BetaToolChoiceMCP) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"mcp"}); err != nil {
-		return err
-	}
-	type BetaToolChoiceMCPAlias BetaToolChoiceMCP
-	var decoded BetaToolChoiceMCPAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaToolChoiceMCP(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "server_label"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "server_label"}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["name"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Name = &NullableValue[string]{}
-	}
-	return nil
-}
-
-// NewBetaToolChoiceMCP returns a validated BetaToolChoiceMCP built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolChoiceMCP(fields BetaToolChoiceMCP) (*BetaToolChoiceMCP, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolChoiceMCPTypeEnum For MCP tools, the type is always `mcp`.
-type BetaToolChoiceMCPTypeEnum string
-
-const (
-	BetaToolChoiceMCPTypeEnumMcp BetaToolChoiceMCPTypeEnum = "mcp"
-)
-
-func (value *BetaToolChoiceMCPTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "mcp":
-		*value = BetaToolChoiceMCPTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolChoiceMCPTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolChoiceMCPTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolChoiceFunction Use this option to force the model to call a specific function.
-type BetaToolChoiceFunction struct {
-	// Type For function calling, the type is always `function`.
-	Type BetaToolChoiceFunctionTypeEnum `json:"type"`
-	// Name The name of the function to call.
-	Name string `json:"name"`
-}
-
-func (value *BetaToolChoiceFunction) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"function"}); err != nil {
-		return err
-	}
-	type BetaToolChoiceFunctionAlias BetaToolChoiceFunction
-	var decoded BetaToolChoiceFunctionAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaToolChoiceFunction(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "name"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "name"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewBetaToolChoiceFunction returns a validated BetaToolChoiceFunction built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolChoiceFunction(fields BetaToolChoiceFunction) (*BetaToolChoiceFunction, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolChoiceFunctionTypeEnum For function calling, the type is always `function`.
-type BetaToolChoiceFunctionTypeEnum string
-
-const (
-	BetaToolChoiceFunctionTypeEnumFunction BetaToolChoiceFunctionTypeEnum = "function"
-)
-
-func (value *BetaToolChoiceFunctionTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "function":
-		*value = BetaToolChoiceFunctionTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolChoiceFunctionTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolChoiceFunctionTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolChoiceTypes Indicates that the model should use a built-in tool to generate a response.
-// [Learn more about built-in tools](https://developers.openai.com/api/docs/guides/tools).
-type BetaToolChoiceTypes struct {
-	// Type The type of hosted tool the model should to use. Learn more about
-	// [built-in tools](https://developers.openai.com/api/docs/guides/tools).
-	//
-	// Allowed values are:
-	// - `file_search`
-	// - `web_search_preview`
-	// - `computer`
-	// - `computer_use_preview`
-	// - `computer_use`
-	// - `code_interpreter`
-	// - `image_generation`
-	Type BetaToolChoiceTypesTypeEnum `json:"type"`
-}
-
-func (value *BetaToolChoiceTypes) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"file_search", "web_search_preview", "computer", "computer_use_preview", "computer_use", "web_search_preview_2025_03_11", "image_generation", "code_interpreter"}); err != nil {
-		return err
-	}
-	type BetaToolChoiceTypesAlias BetaToolChoiceTypes
-	var decoded BetaToolChoiceTypesAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaToolChoiceTypes(decoded)
-	if err := ValidateRequired(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewBetaToolChoiceTypes returns a validated BetaToolChoiceTypes built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolChoiceTypes(fields BetaToolChoiceTypes) (*BetaToolChoiceTypes, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolChoiceTypesTypeEnum The type of hosted tool the model should to use. Learn more about
-// [built-in tools](https://developers.openai.com/api/docs/guides/tools).
-//
-// Allowed values are:
-// - `file_search`
-// - `web_search_preview`
-// - `computer`
-// - `computer_use_preview`
-// - `computer_use`
-// - `code_interpreter`
-// - `image_generation`
-type BetaToolChoiceTypesTypeEnum string
-
-const (
-	BetaToolChoiceTypesTypeEnumFileSearch               BetaToolChoiceTypesTypeEnum = "file_search"
-	BetaToolChoiceTypesTypeEnumWebSearchPreview         BetaToolChoiceTypesTypeEnum = "web_search_preview"
-	BetaToolChoiceTypesTypeEnumComputer                 BetaToolChoiceTypesTypeEnum = "computer"
-	BetaToolChoiceTypesTypeEnumComputerUsePreview       BetaToolChoiceTypesTypeEnum = "computer_use_preview"
-	BetaToolChoiceTypesTypeEnumComputerUse              BetaToolChoiceTypesTypeEnum = "computer_use"
-	BetaToolChoiceTypesTypeEnumWebSearchPreview20250311 BetaToolChoiceTypesTypeEnum = "web_search_preview_2025_03_11"
-	BetaToolChoiceTypesTypeEnumImageGeneration          BetaToolChoiceTypesTypeEnum = "image_generation"
-	BetaToolChoiceTypesTypeEnumCodeInterpreter          BetaToolChoiceTypesTypeEnum = "code_interpreter"
-)
-
-func (value *BetaToolChoiceTypesTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "file_search", "web_search_preview", "computer", "computer_use_preview", "computer_use", "web_search_preview_2025_03_11", "image_generation", "code_interpreter":
-		*value = BetaToolChoiceTypesTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolChoiceTypesTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolChoiceTypesTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolChoiceAllowed Constrains the tools available to the model to a pre-defined set.
-type BetaToolChoiceAllowed struct {
-	// Type Allowed tool configuration type. Always `allowed_tools`.
-	Type BetaToolChoiceAllowedTypeEnum `json:"type"`
-	// Mode Constrains the tools available to the model to a pre-defined set.
-	//
-	// `auto` allows the model to pick from among the allowed tools and generate a
-	// message.
-	//
-	// `required` requires the model to call one or more of the allowed tools.
-	Mode BetaToolChoiceAllowedModeEnum `json:"mode"`
-	// Tools A list of tool definitions that the model should be allowed to call.
-	//
-	// For the Responses API, the list of tool definitions might look like:
-	// ```json
-	// [
-	//   { "type": "function", "name": "get_weather" },
-	//   { "type": "mcp", "server_label": "deepwiki" },
-	//   { "type": "image_generation" }
-	// ]
-	// ```
-	Tools []map[string]any `json:"tools"`
-}
-
-func (value *BetaToolChoiceAllowed) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"allowed_tools"}); err != nil {
-		return err
-	}
-	type BetaToolChoiceAllowedAlias BetaToolChoiceAllowed
-	var decoded BetaToolChoiceAllowedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaToolChoiceAllowed(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "mode", "tools"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "mode", "tools"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewBetaToolChoiceAllowed returns a validated BetaToolChoiceAllowed built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaToolChoiceAllowed(fields BetaToolChoiceAllowed) (*BetaToolChoiceAllowed, error) {
-	return ConstructModel(fields)
-}
-
-// BetaToolChoiceAllowedTypeEnum Allowed tool configuration type. Always `allowed_tools`.
-type BetaToolChoiceAllowedTypeEnum string
-
-const (
-	BetaToolChoiceAllowedTypeEnumAllowedTools BetaToolChoiceAllowedTypeEnum = "allowed_tools"
-)
-
-func (value *BetaToolChoiceAllowedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "allowed_tools":
-		*value = BetaToolChoiceAllowedTypeEnum(raw)
-		return nil
-	default:
-		return &SdkValidationError{Field: "BetaToolChoiceAllowedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown BetaToolChoiceAllowedTypeEnum: %v", raw)}
-	}
-}
-
-// BetaToolChoiceAllowedModeEnum Constrains the tools available to the model to a pre-defined set.
-//
-// `auto` allows the model to pick from among the allowed tools and generate a
-// message.
-//
-// `required` requires the model to call one or more of the allowed tools.
-type BetaToolChoiceAllowedModeEnum string
-
-const (
-	BetaToolChoiceAllowedModeEnumAuto     BetaToolChoiceAllowedModeEnum = "auto"
-	BetaToolChoiceAllowedModeEnumRequired BetaToolChoiceAllowedModeEnum = "required"
-)
-
-// BetaToolChoiceOptions Controls which (if any) tool is called by the model.
-//
-// `none` means the model will not call any tool and instead generates a message.
-//
-// `auto` means the model can pick between generating a message or calling one or
-// more tools.
-//
-// `required` means the model must call one or more tools.
-type BetaToolChoiceOptions string
-
-const (
-	BetaToolChoiceOptionsNone     BetaToolChoiceOptions = "none"
-	BetaToolChoiceOptionsAuto     BetaToolChoiceOptions = "auto"
-	BetaToolChoiceOptionsRequired BetaToolChoiceOptions = "required"
-)

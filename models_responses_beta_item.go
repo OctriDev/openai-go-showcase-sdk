@@ -3,60 +3,7 @@
 
 package sdk
 
-import (
-	"bytes"
-	"encoding/json"
-)
-
-// BetaItemReferenceParam An internal identifier for an item to reference.
-type BetaItemReferenceParam struct {
-	// Agent Optional API value serialized in the `agent` wire field.
-	Agent *NullableValue[BetaAgentTagParam] `json:"agent,omitempty"`
-	// Type Optional API value serialized in the `type` wire field.
-	Type *NullableValue[BetaItemReferenceParamTypeVariant0Enum] `json:"type,omitempty"`
-	// Id The ID of the item to reference.
-	Id string `json:"id"`
-}
-
-func (value *BetaItemReferenceParam) UnmarshalJSON(data []byte) error {
-	type BetaItemReferenceParamAlias BetaItemReferenceParam
-	var decoded BetaItemReferenceParamAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = BetaItemReferenceParam(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"id"}); err != nil {
-		return err
-	}
-	if raw, ok := rawFields["agent"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Agent = &NullableValue[BetaAgentTagParam]{}
-	}
-	if raw, ok := rawFields["type"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.Type = &NullableValue[BetaItemReferenceParamTypeVariant0Enum]{}
-	}
-	return nil
-}
-
-// NewBetaItemReferenceParam returns a validated BetaItemReferenceParam built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewBetaItemReferenceParam(fields BetaItemReferenceParam) (*BetaItemReferenceParam, error) {
-	return ConstructModel(fields)
-}
-
-// BetaItemReferenceParamTypeVariant0Enum The type of item to reference. Always `item_reference`.
-type BetaItemReferenceParamTypeVariant0Enum string
-
-const (
-	BetaItemReferenceParamTypeVariant0EnumItemReference BetaItemReferenceParamTypeVariant0Enum = "item_reference"
-)
+import "encoding/json"
 
 // BetaItem represents a union type.
 type BetaItem struct {
@@ -691,4 +638,267 @@ func (u *BetaItem) UnmarshalJSON(data []byte) error {
 		refusal = err
 	}
 	return refusal
+}
+
+func (u BetaItem) MarshalJSON() ([]byte, error) {
+	if u.BetaInputMessage != nil {
+		return json.Marshal(u.BetaInputMessage)
+	}
+	if u.BetaOutputMessage != nil {
+		return json.Marshal(u.BetaOutputMessage)
+	}
+	if u.BetaFileSearchToolCall != nil {
+		return json.Marshal(u.BetaFileSearchToolCall)
+	}
+	if u.BetaComputerToolCall != nil {
+		return json.Marshal(u.BetaComputerToolCall)
+	}
+	if u.BetaComputerCallOutputItemParam != nil {
+		return json.Marshal(u.BetaComputerCallOutputItemParam)
+	}
+	if u.BetaWebSearchToolCall != nil {
+		return json.Marshal(u.BetaWebSearchToolCall)
+	}
+	if u.BetaFunctionToolCall != nil {
+		return json.Marshal(u.BetaFunctionToolCall)
+	}
+	if u.BetaFunctionCallOutputItemParam != nil {
+		return json.Marshal(u.BetaFunctionCallOutputItemParam)
+	}
+	if u.BetaAgentMessageItemParam != nil {
+		return json.Marshal(u.BetaAgentMessageItemParam)
+	}
+	if u.BetaMultiAgentCallItemParam != nil {
+		return json.Marshal(u.BetaMultiAgentCallItemParam)
+	}
+	if u.BetaMultiAgentCallOutputItemParam != nil {
+		return json.Marshal(u.BetaMultiAgentCallOutputItemParam)
+	}
+	if u.BetaToolSearchCallItemParam != nil {
+		return json.Marshal(u.BetaToolSearchCallItemParam)
+	}
+	if u.BetaToolSearchOutputItemParam != nil {
+		return json.Marshal(u.BetaToolSearchOutputItemParam)
+	}
+	if u.BetaAdditionalToolsItemParam != nil {
+		return json.Marshal(u.BetaAdditionalToolsItemParam)
+	}
+	if u.BetaResponseConfigurationUpdateItemParam != nil {
+		return json.Marshal(u.BetaResponseConfigurationUpdateItemParam)
+	}
+	if u.BetaReasoningItem != nil {
+		return json.Marshal(u.BetaReasoningItem)
+	}
+	if u.BetaCompactionSummaryItemParam != nil {
+		return json.Marshal(u.BetaCompactionSummaryItemParam)
+	}
+	if u.BetaImageGenToolCall != nil {
+		return json.Marshal(u.BetaImageGenToolCall)
+	}
+	if u.BetaCodeInterpreterToolCall != nil {
+		return json.Marshal(u.BetaCodeInterpreterToolCall)
+	}
+	if u.BetaLocalShellToolCall != nil {
+		return json.Marshal(u.BetaLocalShellToolCall)
+	}
+	if u.BetaLocalShellToolCallOutput != nil {
+		return json.Marshal(u.BetaLocalShellToolCallOutput)
+	}
+	if u.BetaFunctionShellCallItemParam != nil {
+		return json.Marshal(u.BetaFunctionShellCallItemParam)
+	}
+	if u.BetaFunctionShellCallOutputItemParam != nil {
+		return json.Marshal(u.BetaFunctionShellCallOutputItemParam)
+	}
+	if u.BetaApplyPatchToolCallItemParam != nil {
+		return json.Marshal(u.BetaApplyPatchToolCallItemParam)
+	}
+	if u.BetaApplyPatchToolCallOutputItemParam != nil {
+		return json.Marshal(u.BetaApplyPatchToolCallOutputItemParam)
+	}
+	if u.BetaMCPListTools != nil {
+		return json.Marshal(u.BetaMCPListTools)
+	}
+	if u.BetaMCPApprovalRequest != nil {
+		return json.Marshal(u.BetaMCPApprovalRequest)
+	}
+	if u.BetaMCPApprovalResponse != nil {
+		return json.Marshal(u.BetaMCPApprovalResponse)
+	}
+	if u.BetaMCPToolCall != nil {
+		return json.Marshal(u.BetaMCPToolCall)
+	}
+	if u.BetaCustomToolCallOutput != nil {
+		return json.Marshal(u.BetaCustomToolCallOutput)
+	}
+	if u.BetaCustomToolCall != nil {
+		return json.Marshal(u.BetaCustomToolCall)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyBetaItemBetaInputMessage(v BetaInputMessage) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaOutputMessage(v BetaOutputMessage) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFileSearchToolCall(v BetaFileSearchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaComputerToolCall(v BetaComputerToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaComputerCallOutputItemParam(v BetaComputerCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaWebSearchToolCall(v BetaWebSearchToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFunctionToolCall(v BetaFunctionToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFunctionCallOutputItemParam(v BetaFunctionCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaAgentMessageItemParam(v BetaAgentMessageItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMultiAgentCallItemParam(v BetaMultiAgentCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMultiAgentCallOutputItemParam(v BetaMultiAgentCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaToolSearchCallItemParam(v BetaToolSearchCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaToolSearchOutputItemParam(v BetaToolSearchOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaAdditionalToolsItemParam(v BetaAdditionalToolsItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaResponseConfigurationUpdateItemParam(v BetaResponseConfigurationUpdateItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaReasoningItem(v BetaReasoningItem) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaCompactionSummaryItemParam(v BetaCompactionSummaryItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaImageGenToolCall(v BetaImageGenToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaCodeInterpreterToolCall(v BetaCodeInterpreterToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaLocalShellToolCall(v BetaLocalShellToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaLocalShellToolCallOutput(v BetaLocalShellToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFunctionShellCallItemParam(v BetaFunctionShellCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaFunctionShellCallOutputItemParam(v BetaFunctionShellCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaApplyPatchToolCallItemParam(v BetaApplyPatchToolCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaApplyPatchToolCallOutputItemParam(v BetaApplyPatchToolCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMCPListTools(v BetaMCPListTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMCPApprovalRequest(v BetaMCPApprovalRequest) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMCPApprovalResponse(v BetaMCPApprovalResponse) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaMCPToolCall(v BetaMCPToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaCustomToolCallOutput(v BetaCustomToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyBetaItemBetaCustomToolCall(v BetaCustomToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaItem converts an untyped value to BetaItem.
+func UnmarshalBetaItem(v any) BetaItem {
+	b, _ := json.Marshal(v)
+	var result BetaItem
+	_ = json.Unmarshal(b, &result)
+	return result
 }

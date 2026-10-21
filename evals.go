@@ -9,52 +9,6 @@ import (
 	"fmt"
 )
 
-type DeleteEvalResponse struct {
-	Object  string `json:"object"`
-	Deleted bool   `json:"deleted"`
-	EvalId  string `json:"eval_id"`
-}
-
-func (value *DeleteEvalResponse) UnmarshalJSON(data []byte) error {
-	type DeleteEvalResponseAlias DeleteEvalResponse
-	var decoded DeleteEvalResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = DeleteEvalResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"object", "deleted", "eval_id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"object", "deleted", "eval_id"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewDeleteEvalResponse returns a validated DeleteEvalResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewDeleteEvalResponse(fields DeleteEvalResponse) (*DeleteEvalResponse, error) {
-	return ConstructModel(fields)
-}
-
-type DeleteEvalRunResponse struct {
-	Object  *string `json:"object,omitempty"`
-	Deleted *bool   `json:"deleted,omitempty"`
-	RunId   *string `json:"run_id,omitempty"`
-}
-
-// NewDeleteEvalRunResponse returns a validated DeleteEvalRunResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewDeleteEvalRunResponse(fields DeleteEvalRunResponse) (*DeleteEvalRunResponse, error) {
-	return ConstructModel(fields)
-}
-
 type ListEvalsParams struct {
 	After   *string
 	Limit   *int64
@@ -713,4 +667,50 @@ func GetEvalRunOutputItem(ctx context.Context, clientConfig ClientConfig, params
 		return nil, err
 	}
 	return &resp.Data, nil
+}
+
+type DeleteEvalResponse struct {
+	Object  string `json:"object"`
+	Deleted bool   `json:"deleted"`
+	EvalId  string `json:"eval_id"`
+}
+
+func (value *DeleteEvalResponse) UnmarshalJSON(data []byte) error {
+	type DeleteEvalResponseAlias DeleteEvalResponse
+	var decoded DeleteEvalResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = DeleteEvalResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"object", "deleted", "eval_id"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"object", "deleted", "eval_id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewDeleteEvalResponse returns a validated DeleteEvalResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewDeleteEvalResponse(fields DeleteEvalResponse) (*DeleteEvalResponse, error) {
+	return ConstructModel(fields)
+}
+
+type DeleteEvalRunResponse struct {
+	Object  *string `json:"object,omitempty"`
+	Deleted *bool   `json:"deleted,omitempty"`
+	RunId   *string `json:"run_id,omitempty"`
+}
+
+// NewDeleteEvalRunResponse returns a validated DeleteEvalRunResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewDeleteEvalRunResponse(fields DeleteEvalRunResponse) (*DeleteEvalRunResponse, error) {
+	return ConstructModel(fields)
 }

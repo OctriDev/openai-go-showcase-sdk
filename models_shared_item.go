@@ -735,3 +735,86 @@ func isNonEmptyItemReasoningItem(v ReasoningItem) bool {
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
+
+func isNonEmptyItemCompactionSummaryItemParam(v CompactionSummaryItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemImageGenToolCall(v ImageGenToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemCodeInterpreterToolCall(v CodeInterpreterToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemLocalShellToolCall(v LocalShellToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemLocalShellToolCallOutput(v LocalShellToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemFunctionShellCallItemParam(v FunctionShellCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemFunctionShellCallOutputItemParam(v FunctionShellCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemApplyPatchToolCallItemParam(v ApplyPatchToolCallItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemApplyPatchToolCallOutputItemParam(v ApplyPatchToolCallOutputItemParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPListTools(v MCPListTools) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPApprovalRequest(v MCPApprovalRequest) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPApprovalResponse(v MCPApprovalResponse) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemMCPToolCall(v MCPToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemCustomToolCallOutput(v CustomToolCallOutput) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyItemCustomToolCall(v CustomToolCall) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalItem converts an untyped value to Item.
+func UnmarshalItem(v any) Item {
+	b, _ := json.Marshal(v)
+	var result Item
+	_ = json.Unmarshal(b, &result)
+	return result
+}
