@@ -736,6 +736,8 @@ func sdkMethodByName(name string) any {
 		return UpdateProjectServiceAccount
 	case "UpdateProjectSpendAlert":
 		return UpdateProjectSpendAlert
+	case "UpdateProjectSpendLimit":
+		return UpdateProjectSpendLimit
 	case "UpdateRole":
 		return UpdateRole
 	case "UpdateRolesProjectRole":
@@ -744,8 +746,6 @@ func sdkMethodByName(name string) any {
 		return UpdateSkillDefaultVersion
 	case "UpdateSpendLimitsOrganization":
 		return UpdateSpendLimitsOrganization
-	case "UpdateSpendLimitsProject":
-		return UpdateSpendLimitsProject
 	case "UpdateVault":
 		return UpdateVault
 	case "UpdateVectorStoreFileAttributes":

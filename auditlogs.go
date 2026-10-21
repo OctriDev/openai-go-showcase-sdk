@@ -5,24 +5,6 @@ package sdk
 
 import "context"
 
-type ListAuditLogsParameter struct {
-	// Gt Return only events whose `effective_at` (Unix seconds) is greater than this value.
-	Gt *int64 `json:"gt,omitempty"`
-	// Gte Return only events whose `effective_at` (Unix seconds) is greater than or equal to this value.
-	Gte *int64 `json:"gte,omitempty"`
-	// Lt Return only events whose `effective_at` (Unix seconds) is less than this value.
-	Lt *int64 `json:"lt,omitempty"`
-	// Lte Return only events whose `effective_at` (Unix seconds) is less than or equal to this value.
-	Lte *int64 `json:"lte,omitempty"`
-}
-
-// NewListAuditLogsParameter returns a validated ListAuditLogsParameter built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewListAuditLogsParameter(fields ListAuditLogsParameter) (*ListAuditLogsParameter, error) {
-	return ConstructModel(fields)
-}
-
 type ListAuditLogsParams struct {
 	EffectiveAt *ListAuditLogsParameter
 	ProjectIds  *[]string
@@ -202,4 +184,22 @@ func ListAuditLogsPages(ctx context.Context, clientConfig ClientConfig, params L
 		}
 		_cursor = _page.LastId.Value
 	}
+}
+
+type ListAuditLogsParameter struct {
+	// Gt Return only events whose `effective_at` (Unix seconds) is greater than this value.
+	Gt *int64 `json:"gt,omitempty"`
+	// Gte Return only events whose `effective_at` (Unix seconds) is greater than or equal to this value.
+	Gte *int64 `json:"gte,omitempty"`
+	// Lt Return only events whose `effective_at` (Unix seconds) is less than this value.
+	Lt *int64 `json:"lt,omitempty"`
+	// Lte Return only events whose `effective_at` (Unix seconds) is less than or equal to this value.
+	Lte *int64 `json:"lte,omitempty"`
+}
+
+// NewListAuditLogsParameter returns a validated ListAuditLogsParameter built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewListAuditLogsParameter(fields ListAuditLogsParameter) (*ListAuditLogsParameter, error) {
+	return ConstructModel(fields)
 }

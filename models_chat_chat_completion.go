@@ -686,3 +686,45 @@ func (u *ChatCompletionToolChoiceOption) UnmarshalJSON(data []byte) error {
 	}
 	return refusal
 }
+
+func (u ChatCompletionToolChoiceOption) MarshalJSON() ([]byte, error) {
+	if u.BetaToolChoiceOptions != nil {
+		return json.Marshal(u.BetaToolChoiceOptions)
+	}
+	if u.ChatCompletionAllowedToolsChoice != nil {
+		return json.Marshal(u.ChatCompletionAllowedToolsChoice)
+	}
+	if u.ChatCompletionNamedToolChoice != nil {
+		return json.Marshal(u.ChatCompletionNamedToolChoice)
+	}
+	if u.ChatCompletionNamedToolChoiceCustom != nil {
+		return json.Marshal(u.ChatCompletionNamedToolChoiceCustom)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyChatCompletionToolChoiceOptionChatCompletionAllowedToolsChoice(v ChatCompletionAllowedToolsChoice) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyChatCompletionToolChoiceOptionChatCompletionNamedToolChoice(v ChatCompletionNamedToolChoice) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyChatCompletionToolChoiceOptionChatCompletionNamedToolChoiceCustom(v ChatCompletionNamedToolChoiceCustom) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalChatCompletionToolChoiceOption converts an untyped value to ChatCompletionToolChoiceOption.
+func UnmarshalChatCompletionToolChoiceOption(v any) ChatCompletionToolChoiceOption {
+	b, _ := json.Marshal(v)
+	var result ChatCompletionToolChoiceOption
+	_ = json.Unmarshal(b, &result)
+	return result
+}

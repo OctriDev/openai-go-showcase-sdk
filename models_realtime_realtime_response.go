@@ -681,3 +681,42 @@ func (u *RealtimeResponseCreateParamsToolChoice) UnmarshalJSON(data []byte) erro
 	}
 	return refusal
 }
+
+func (u RealtimeResponseCreateParamsToolChoice) MarshalJSON() ([]byte, error) {
+	if u.ToolChoiceOptions != nil {
+		return json.Marshal(u.ToolChoiceOptions)
+	}
+	if u.ToolChoiceFunction != nil {
+		return json.Marshal(u.ToolChoiceFunction)
+	}
+	if u.ToolChoiceMCP != nil {
+		return json.Marshal(u.ToolChoiceMCP)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptyRealtimeResponseCreateParamsToolChoiceToolChoiceOptions(v ToolChoiceOptions) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeResponseCreateParamsToolChoiceToolChoiceFunction(v ToolChoiceFunction) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyRealtimeResponseCreateParamsToolChoiceToolChoiceMCP(v ToolChoiceMCP) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalRealtimeResponseCreateParamsToolChoice converts an untyped value to RealtimeResponseCreateParamsToolChoice.
+func UnmarshalRealtimeResponseCreateParamsToolChoice(v any) RealtimeResponseCreateParamsToolChoice {
+	b, _ := json.Marshal(v)
+	var result RealtimeResponseCreateParamsToolChoice
+	_ = json.Unmarshal(b, &result)
+	return result
+}

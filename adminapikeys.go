@@ -9,45 +9,6 @@ import (
 	"fmt"
 )
 
-type DeleteAdminApiKeysResponse struct {
-	Id      string                               `json:"id"`
-	Object  DeleteAdminApiKeysResponseObjectEnum `json:"object"`
-	Deleted bool                                 `json:"deleted"`
-}
-
-func (value *DeleteAdminApiKeysResponse) UnmarshalJSON(data []byte) error {
-	type DeleteAdminApiKeysResponseAlias DeleteAdminApiKeysResponse
-	var decoded DeleteAdminApiKeysResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = DeleteAdminApiKeysResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"id", "object", "deleted"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"id", "object", "deleted"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewDeleteAdminApiKeysResponse returns a validated DeleteAdminApiKeysResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewDeleteAdminApiKeysResponse(fields DeleteAdminApiKeysResponse) (*DeleteAdminApiKeysResponse, error) {
-	return ConstructModel(fields)
-}
-
-type DeleteAdminApiKeysResponseObjectEnum string
-
-const (
-	DeleteAdminApiKeysResponseObjectEnumOrganizationAdminApiKeyDeleted DeleteAdminApiKeysResponseObjectEnum = "organization.admin_api_key.deleted"
-)
-
 type ListAdminApiKeysParams struct {
 	After *NullableValue[string]
 	Order *string
@@ -227,3 +188,42 @@ func DeleteAdminApiKeys(ctx context.Context, clientConfig ClientConfig, params D
 	}
 	return &resp.Data, nil
 }
+
+type DeleteAdminApiKeysResponse struct {
+	Id      string                               `json:"id"`
+	Object  DeleteAdminApiKeysResponseObjectEnum `json:"object"`
+	Deleted bool                                 `json:"deleted"`
+}
+
+func (value *DeleteAdminApiKeysResponse) UnmarshalJSON(data []byte) error {
+	type DeleteAdminApiKeysResponseAlias DeleteAdminApiKeysResponse
+	var decoded DeleteAdminApiKeysResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = DeleteAdminApiKeysResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"id", "object", "deleted"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"id", "object", "deleted"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewDeleteAdminApiKeysResponse returns a validated DeleteAdminApiKeysResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewDeleteAdminApiKeysResponse(fields DeleteAdminApiKeysResponse) (*DeleteAdminApiKeysResponse, error) {
+	return ConstructModel(fields)
+}
+
+type DeleteAdminApiKeysResponseObjectEnum string
+
+const (
+	DeleteAdminApiKeysResponseObjectEnumOrganizationAdminApiKeyDeleted DeleteAdminApiKeysResponseObjectEnum = "organization.admin_api_key.deleted"
+)

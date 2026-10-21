@@ -414,7 +414,7 @@ func (sdk *SpendLimitsNamespace) DeleteProject(ctx context.Context, params Delet
 	return DeleteSpendLimitsProject(ctx, sdk.config, params, opts...)
 }
 
-// UpdateProject creates or replaces a project's hard spend limit. Supply `threshold_amount`, `currency`, and `interval` to set the spending threshold and the period used to evaluate it. The response includes the resulting limit and its enforcement state.
+// Update creates or replaces a project's hard spend limit. Supply `threshold_amount`, `currency`, and `interval` to set the spending threshold and the period used to evaluate it. The response includes the resulting limit and its enforcement state.
 //
 // Create or replace a project's hard spend limit.
 //
@@ -426,8 +426,8 @@ func (sdk *SpendLimitsNamespace) DeleteProject(ctx context.Context, params Delet
 //	supported.
 //	interval: The time interval for evaluating spend against the threshold.
 //	Currently, only `month` is supported.
-func (sdk *SpendLimitsNamespace) UpdateProject(ctx context.Context, params UpdateSpendLimitsProjectParams, opts ...RequestOption) (*ProjectSpendLimitResource, error) {
-	return UpdateSpendLimitsProject(ctx, sdk.config, params, opts...)
+func (sdk *SpendLimitsNamespace) Update(ctx context.Context, params UpdateProjectSpendLimitParams, opts ...RequestOption) (*ProjectSpendLimitResource, error) {
+	return UpdateProjectSpendLimit(ctx, sdk.config, params, opts...)
 }
 
 type ContentProvenanceChecksNamespace struct {

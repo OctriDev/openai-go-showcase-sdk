@@ -692,3 +692,21 @@ func (u CreateModerationRequestInputItem) MarshalJSON() ([]byte, error) {
 	}
 	return []byte("null"), nil
 }
+
+func isNonEmptyCreateModerationRequestInputItemCreateModerationRequestInputItemVariant0(v CreateModerationRequestInputItemVariant0) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptyCreateModerationRequestInputItemCreateModerationRequestInputItemVariant1(v CreateModerationRequestInputItemVariant1) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalCreateModerationRequestInputItem converts an untyped value to CreateModerationRequestInputItem.
+func UnmarshalCreateModerationRequestInputItem(v any) CreateModerationRequestInputItem {
+	b, _ := json.Marshal(v)
+	var result CreateModerationRequestInputItem
+	_ = json.Unmarshal(b, &result)
+	return result
+}

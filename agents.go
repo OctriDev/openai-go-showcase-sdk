@@ -5,69 +5,16 @@ package sdk
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 )
 
-// ListAgentSessionSubagentsResponse A page of Agents API resources, with IDs for retrieving additional pages.
-type ListAgentSessionSubagentsResponse struct {
-	// Object The object type, which is always `list`.
-	Object ListAgentSessionSubagentsResponseObjectEnum `json:"object"`
-	// Data The resources returned in this page, in the requested sort order.
-	Data []SubagentResource `json:"data"`
-	// FirstId The ID of the first resource in `data`, or `null` if the page is empty.
-	FirstId NullableValue[string] `json:"first_id"`
-	// LastId The ID of the last resource in `data`, or `null` if the page is empty. Pass this as `after` with the same order and filters.
-	LastId NullableValue[string] `json:"last_id"`
-	// HasMore Whether there are more resources to retrieve after this page.
-	HasMore bool `json:"has_more"`
-}
-
-func (value *ListAgentSessionSubagentsResponse) UnmarshalJSON(data []byte) error {
-	type ListAgentSessionSubagentsResponseAlias ListAgentSessionSubagentsResponse
-	var decoded ListAgentSessionSubagentsResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ListAgentSessionSubagentsResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"object", "data", "first_id", "last_id", "has_more"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"object", "data", "has_more"}); err != nil {
-		return err
-	}
-	if err := ValidateItems("data", value.Data, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](2000)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewListAgentSessionSubagentsResponse returns a validated ListAgentSessionSubagentsResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewListAgentSessionSubagentsResponse(fields ListAgentSessionSubagentsResponse) (*ListAgentSessionSubagentsResponse, error) {
-	return ConstructModel(fields)
-}
-
-// ListAgentSessionSubagentsResponseObjectEnum The object type, which is always `list`.
-type ListAgentSessionSubagentsResponseObjectEnum string
-
-const (
-	ListAgentSessionSubagentsResponseObjectEnumList ListAgentSessionSubagentsResponseObjectEnum = "list"
-)
-
-type ListAgentEnvironmentsParams struct {
+type ListAgentsParams struct {
 	Limit *int64
 	Order *ListOrderParam
 	After *string
-	Type_ *EnvironmentTypeParam
 }
 
-// ListAgentEnvironments lists OpenAI-hosted environments owned by the authenticated principal. Requires access to the prewarming beta.
+// ListAgents lists reusable agents in the current project. See [agent configuration](https://developers.openai.com/api/docs/guides/agents-api/configuration).
 //
 // Parameters:
 //
@@ -75,12 +22,10 @@ type ListAgentEnvironmentsParams struct {
 //	Defaults to 20.
 //	order: The order in which resources are returned. Defaults to `desc`.
 //	after: Return resources after this resource ID in the selected order.
-//	type_: The hosting type to list. Defaults to `openai_hosted`.
-func ListAgentEnvironments(ctx context.Context, clientConfig ClientConfig, params ListAgentEnvironmentsParams, opts ...RequestOption) (*AgentEnvironmentListResource, error) {
+func ListAgents(ctx context.Context, clientConfig ClientConfig, params ListAgentsParams, opts ...RequestOption) (*AgentListResource, error) {
 	limit := params.Limit
 	order := params.Order
 	after := params.After
-	type_ := params.Type_
 
 	if limit != nil {
 		if err := ValidateRange("limit", *limit, RangeOpts{Min: Ptr[float64](1), Max: Ptr[float64](100)}); err != nil {
@@ -94,14 +39,13 @@ func ListAgentEnvironments(ctx context.Context, clientConfig ClientConfig, param
 		}
 	}
 
-	resp, err := DoCfg[AgentEnvironmentListResource](ctx, &clientConfig, "GET", "/agents/environments", &RequestOpts{
+	resp, err := DoCfg[AgentListResource](ctx, &clientConfig, "GET", "/agents", &RequestOpts{
 		Query: map[string]any{
 			"limit": QueryValue{Value: limit, Style: "form", Explode: true},
 			"order": QueryValue{Value: order, Style: "form", Explode: true},
 			"after": QueryValue{Value: after, Style: "form", Explode: true},
-			"type":  QueryValue{Value: type_, Style: "form", Explode: true},
 		},
-		OperationID: "ListAgentEnvironments",
+		OperationID: "ListAgents",
 		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
 		Options:     opts,
 	})
@@ -111,7 +55,7 @@ func ListAgentEnvironments(ctx context.Context, clientConfig ClientConfig, param
 	return &resp.Data, nil
 }
 
-// ListAgentEnvironmentsPaginated lists OpenAI-hosted environments owned by the authenticated principal. Requires access to the prewarming beta.
+// ListAgentsPaginated lists reusable agents in the current project. See [agent configuration](https://developers.openai.com/api/docs/guides/agents-api/configuration).
 //
 // Parameters:
 //
@@ -119,13 +63,12 @@ func ListAgentEnvironments(ctx context.Context, clientConfig ClientConfig, param
 //	Defaults to 20.
 //	order: The order in which resources are returned. Defaults to `desc`.
 //	after: Return resources after this resource ID in the selected order.
-//	type_: The hosting type to list. Defaults to `openai_hosted`.
-func ListAgentEnvironmentsPaginated(ctx context.Context, clientConfig ClientConfig, params ListAgentEnvironmentsParams, yield func(*PublicEnvironmentResource) bool, opts ...RequestOption) error {
+func ListAgentsPaginated(ctx context.Context, clientConfig ClientConfig, params ListAgentsParams, yield func(*AgentResource) bool, opts ...RequestOption) error {
 	_cursor := params.After
 	for {
 		_params := params
 		_params.After = _cursor
-		_page, err := ListAgentEnvironments(ctx, clientConfig, _params, opts...)
+		_page, err := ListAgents(ctx, clientConfig, _params, opts...)
 		if err != nil {
 			return err
 		}
@@ -151,18 +94,18 @@ func ListAgentEnvironmentsPaginated(ctx context.Context, clientConfig ClientConf
 	}
 }
 
-type ListAgentEnvironmentsPage struct {
-	Data    *AgentEnvironmentListResource
-	Items   []PublicEnvironmentResource
+type ListAgentsPage struct {
+	Data    *AgentListResource
+	Items   []AgentResource
 	HasMore bool
 }
 
-func ListAgentEnvironmentsPages(ctx context.Context, clientConfig ClientConfig, params ListAgentEnvironmentsParams, yieldPage func(ListAgentEnvironmentsPage) bool, opts ...RequestOption) error {
+func ListAgentsPages(ctx context.Context, clientConfig ClientConfig, params ListAgentsParams, yieldPage func(ListAgentsPage) bool, opts ...RequestOption) error {
 	_cursor := params.After
 	for {
 		_params := params
 		_params.After = _cursor
-		_page, err := ListAgentEnvironments(ctx, clientConfig, _params, opts...)
+		_page, err := ListAgents(ctx, clientConfig, _params, opts...)
 		if err != nil {
 			return err
 		}
@@ -174,7 +117,7 @@ func ListAgentEnvironmentsPages(ctx context.Context, clientConfig ClientConfig, 
 			return nil
 		}
 		_hasMore := _page.HasMore && _page.LastId.Value != nil
-		if !yieldPage(ListAgentEnvironmentsPage{Data: _page, Items: _items, HasMore: _hasMore}) {
+		if !yieldPage(ListAgentsPage{Data: _page, Items: _items, HasMore: _hasMore}) {
 			return nil
 		}
 		if !_hasMore {
@@ -187,79 +130,85 @@ func ListAgentEnvironmentsPages(ctx context.Context, clientConfig ClientConfig, 
 	}
 }
 
-type CreateAgentEnvironmentParams struct {
-	Environment    CreateEnvironmentParam
-	IdempotencyKey *string
-	VaultIds       *NullableValue[[]string]
+type CreateAgentParams struct {
+	Model        string
+	Metadata     *NullableValue[map[string]string]
+	Name         *NullableValue[string]
+	Reasoning    *NullableValue[ReasoningParam]
+	Text         *NullableValue[TextParam]
+	ServiceTier  *NullableValue[ServiceTierParam]
+	Instructions *NullableValue[string]
+	Tools        *NullableValue[[]PersistedAgentToolConfigParam]
+	MultiAgent   *NullableValue[MultiAgentConfigCurrentParam]
 }
 
-// CreateAgentEnvironment creates an OpenAI-hosted environment before creating a session. Requires access to the prewarming beta.
+// CreateAgent creates a reusable agent without storing credentials. See [agent configuration](https://developers.openai.com/api/docs/guides/agents-api/configuration).
 //
 // Parameters:
 //
-//	environment: The required hosting type and its configuration.
-//	idempotencyKey: Deduplicates creation for 24 hours within the authenticated
-//	organization, project, and creator. Retry the same JSON parameters with the
-//	same key to retrieve the original environment in its current state.
-//	Different parameters or an incomplete hosted creation return 409. Deleted
-//	environments are not recreated. After retention expires, the key may create
-//	a new environment. Without this header, each request creates a new
-//	environment.
-//	vaultIds: The IDs of up to 10 vaults made available to an OpenAI-hosted
-//	environment.
-func CreateAgentEnvironment(ctx context.Context, clientConfig ClientConfig, params CreateAgentEnvironmentParams, opts ...RequestOption) (*PublicEnvironmentResource, error) {
-	environment := params.Environment
-	idempotencyKey := params.IdempotencyKey
-	vaultIds := params.VaultIds
+//	model: The model to use for the agent. The requested model name is
+//	preserved.
+//	metadata: Up to 16 string key-value pairs, with keys up to 64 and values up
+//	to 512 characters. Omission or null defaults to an empty map.
+//	name: A human-readable name for the agent. Omission or null leaves the agent
+//	unnamed.
+//	reasoning: Configuration for model reasoning. Omission uses the model's
+//	default effort.
+//	text: Configuration for generated text. Defaults to the `text` format and
+//	medium verbosity.
+//	serviceTier: The service tier used for model requests. Defaults to `auto`.
+//	instructions: Additional instructions appended to the agent's default base
+//	instructions. Omit or set to null to add no custom instructions.
+//	tools: Tools available to the agent. Defaults to an empty list. The tool
+//	list must fit within 3 MiB (3,145,728 bytes) of compact UTF-8 JSON.
+//	multiAgent: Configuration for creating and coordinating subagents. Subagent
+//	tools are disabled by default.
+func CreateAgent(ctx context.Context, clientConfig ClientConfig, params CreateAgentParams, opts ...RequestOption) (*AgentResource, error) {
+	model := params.Model
+	metadata := params.Metadata
+	name := params.Name
+	reasoning := params.Reasoning
+	text := params.Text
+	serviceTier := params.ServiceTier
+	instructions := params.Instructions
+	tools := params.Tools
+	multiAgent := params.MultiAgent
 
-	if idempotencyKey != nil {
-		if err := ValidateLength("Idempotency-Key", *idempotencyKey, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](256)}); err != nil {
+	if err := ValidateLength("model", model, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
+		return nil, err
+	}
+
+	if name != nil && name.Value != nil {
+		if err := ValidateLength("name", string(*name.Value), LengthOpts{Min: Ptr[int](0), Max: Ptr[int](128)}); err != nil {
 			return nil, err
 		}
 	}
 
-	if vaultIds != nil && vaultIds.Value != nil {
-		if err := ValidateItems("vault_ids", *vaultIds.Value, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](10)}); err != nil {
+	if instructions != nil && instructions.Value != nil {
+		if err := ValidateLength("instructions", string(*instructions.Value), LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
 			return nil, err
 		}
 	}
 
-	resp, err := DoCfg[PublicEnvironmentResource](ctx, &clientConfig, "POST", "/agents/environments", &RequestOpts{
+	if tools != nil && tools.Value != nil {
+		if err := ValidateItems("tools", *tools.Value, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](2000)}); err != nil {
+			return nil, err
+		}
+	}
+
+	resp, err := DoCfg[AgentResource](ctx, &clientConfig, "POST", "/agents", &RequestOpts{
 		Body: map[string]any{
-			"environment": environment,
-			"vault_ids":   vaultIds,
+			"model":        model,
+			"metadata":     metadata,
+			"name":         name,
+			"reasoning":    reasoning,
+			"text":         text,
+			"service_tier": serviceTier,
+			"instructions": instructions,
+			"tools":        tools,
+			"multi_agent":  multiAgent,
 		},
-		Headers: OperationHeaders(map[string]any{
-			"Idempotency-Key": idempotencyKey,
-		}),
-		OperationID: "CreateAgentEnvironment",
-		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "429": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
-		Options:     opts,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return &resp.Data, nil
-}
-
-type RetrieveAgentEnvironmentParams struct {
-	EnvironmentId string
-}
-
-// RetrieveAgentEnvironment retrieves an execution environment's connection status and safe installed metadata. See [environment lifecycle](https://developers.openai.com/api/docs/guides/agents-api/environments/lifecycle).
-//
-// Parameters:
-//
-//	environmentId: The ID of the environment.
-func RetrieveAgentEnvironment(ctx context.Context, clientConfig ClientConfig, params RetrieveAgentEnvironmentParams, opts ...RequestOption) (*PublicEnvironmentResource, error) {
-	environmentId := params.EnvironmentId
-
-	if err := ValidateLength("environment_id", environmentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return nil, err
-	}
-
-	resp, err := DoCfg[PublicEnvironmentResource](ctx, &clientConfig, "GET", fmt.Sprintf("/agents/environments/%s", EncodePathSegment(environmentId)), &RequestOpts{
-		OperationID: "RetrieveAgentEnvironment",
+		OperationID: "CreateAgent",
 		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
 		Options:     opts,
 	})
@@ -269,61 +218,24 @@ func RetrieveAgentEnvironment(ctx context.Context, clientConfig ClientConfig, pa
 	return &resp.Data, nil
 }
 
-type ListAgentEnvironmentFilesParams struct {
-	EnvironmentId string
-	Path          *NullableValue[string]
-	Limit         *NullableValue[int64]
-	Order         *ListOrderParam
-	Page          *string
+type RetrieveAgentParams struct {
+	AgentId string
 }
 
-// ListAgentEnvironmentFiles lists live files on a connected execution environment with optional directory filtering and opaque cursor pagination. See [environment files](https://developers.openai.com/api/docs/guides/agents-api/environments/files).
+// RetrieveAgent retrieves a reusable agent by ID. See [agent configuration](https://developers.openai.com/api/docs/guides/agents-api/configuration).
 //
 // Parameters:
 //
-//	environmentId: The ID of the environment.
-//	path: Restrict the listing to this absolute workspace directory.
-//	limit: The maximum number of files to return, between 1 and 100.
-//	order: Sort by case-sensitive path components. Defaults to descending.
-//	page: The opaque token from the previous page. Keep the same path, order,
-//	and limit.
-func ListAgentEnvironmentFiles(ctx context.Context, clientConfig ClientConfig, params ListAgentEnvironmentFilesParams, opts ...RequestOption) (*EnvironmentFileListResource, error) {
-	environmentId := params.EnvironmentId
-	path := params.Path
-	limit := params.Limit
-	order := params.Order
-	page := params.Page
+//	agentId: The ID of the reusable agent.
+func RetrieveAgent(ctx context.Context, clientConfig ClientConfig, params RetrieveAgentParams, opts ...RequestOption) (*AgentResource, error) {
+	agentId := params.AgentId
 
-	if err := ValidateLength("environment_id", environmentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
+	if err := ValidateLength("agent_id", agentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
 		return nil, err
 	}
 
-	if path != nil && path.Value != nil {
-		if err := ValidateLength("path", string(*path.Value), LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-			return nil, err
-		}
-	}
-
-	if limit != nil && limit.Value != nil {
-		if err := ValidateRange("limit", *limit.Value, RangeOpts{Min: Ptr[float64](1), Max: Ptr[float64](100)}); err != nil {
-			return nil, err
-		}
-	}
-
-	if page != nil {
-		if err := ValidateLength("page", *page, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-			return nil, err
-		}
-	}
-
-	resp, err := DoCfg[EnvironmentFileListResource](ctx, &clientConfig, "GET", fmt.Sprintf("/agents/environments/%s/files", EncodePathSegment(environmentId)), &RequestOpts{
-		Query: map[string]any{
-			"path":  QueryValue{Value: path, Style: "form", Explode: true},
-			"limit": QueryValue{Value: limit, Style: "form", Explode: true},
-			"order": QueryValue{Value: order, Style: "form", Explode: true},
-			"page":  QueryValue{Value: page, Style: "form", Explode: true},
-		},
-		OperationID: "ListAgentEnvironmentFiles",
+	resp, err := DoCfg[AgentResource](ctx, &clientConfig, "GET", fmt.Sprintf("/agents/%s", EncodePathSegment(agentId)), &RequestOpts{
+		OperationID: "RetrieveAgent",
 		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
 		Options:     opts,
 	})
@@ -333,83 +245,93 @@ func ListAgentEnvironmentFiles(ctx context.Context, clientConfig ClientConfig, p
 	return &resp.Data, nil
 }
 
-type CreateAgentEnvironmentFileParams struct {
-	EnvironmentId string
-	Body          *HostedEnvironmentFileParam
+type UpdateAgentParams struct {
+	AgentId      string
+	Model        *string
+	Reasoning    *NullableValue[ReasoningParam]
+	Text         *NullableValue[TextParam]
+	ServiceTier  *NullableValue[ServiceTierParam]
+	Instructions *NullableValue[string]
+	MultiAgent   *NullableValue[MultiAgentConfigCurrentParam]
+	Metadata     *NullableValue[map[string]string]
+	Name         *NullableValue[string]
+	Tools        *NullableValue[[]PersistedAgentToolConfigParam]
 }
 
-// CreateAgentEnvironmentFile writes a file to a connected agent execution environment, using either inline base64 data or a file uploaded through the Files API. Choose the `inline` or `file_id` body variant and provide the absolute destination `path`; writing to an existing regular file at that path replaces it. Upload the file between turns and wait for success before starting the next turn.
-//
-// Copies inline bytes or a Files API file into a connected execution environment, replacing an existing regular file at the same path. Upload between turns and wait for success before starting the next turn. See [environment files](https://developers.openai.com/api/docs/guides/agents-api/environments/files).
+// UpdateAgent updates a reusable agent. See [agent configuration](https://developers.openai.com/api/docs/guides/agents-api/configuration).
 //
 // Parameters:
 //
-//	environmentId: The ID of the environment.
-func CreateAgentEnvironmentFile(ctx context.Context, clientConfig ClientConfig, params CreateAgentEnvironmentFileParams, opts ...RequestOption) (*EnvironmentFileResource, error) {
-	environmentId := params.EnvironmentId
-	body := params.Body
+//	agentId: The ID of the reusable agent.
+//	model: The model to use for the agent. The requested model name is
+//	preserved.
+//	reasoning: Configuration for model reasoning. Omit to keep the current
+//	settings; pass `null` to reset to the model's default effort.
+//	text: Configuration for text generated by the agent.
+//	serviceTier: The service tier used for model requests.
+//	instructions: Additional instructions appended to the agent's default base
+//	instructions. Omit to leave unchanged.
+//	multiAgent: Configuration for creating and coordinating subagents.
+//	metadata: Replaces all metadata. Omit to leave unchanged, or pass null or {}
+//	to clear it. Up to 16 string key-value pairs, with keys up to 64 and values
+//	up to 512 characters.
+//	name: A replacement name. Omit to leave unchanged, or pass null to clear it.
+//	tools: Replaces the tool list. Omit to leave it unchanged, or pass null to
+//	clear it. The replacement must fit within 3 MiB (3,145,728 bytes) of compact
+//	UTF-8 JSON.
+func UpdateAgent(ctx context.Context, clientConfig ClientConfig, params UpdateAgentParams, opts ...RequestOption) (*AgentResource, error) {
+	agentId := params.AgentId
+	model := params.Model
+	reasoning := params.Reasoning
+	text := params.Text
+	serviceTier := params.ServiceTier
+	instructions := params.Instructions
+	multiAgent := params.MultiAgent
+	metadata := params.Metadata
+	name := params.Name
+	tools := params.Tools
 
-	if err := ValidateLength("environment_id", environmentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
+	if err := ValidateLength("agent_id", agentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
 		return nil, err
 	}
 
-	resp, err := DoCfg[EnvironmentFileResource](ctx, &clientConfig, "POST", fmt.Sprintf("/agents/environments/%s/files", EncodePathSegment(environmentId)), &RequestOpts{
-		Body:        body,
-		OperationID: "CreateAgentEnvironmentFile",
-		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "429": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
-		Options:     opts,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return &resp.Data, nil
-}
-
-type ListAgentSessionSubagentsParams struct {
-	SessionId string
-	Limit     *int64
-	Order     *ListOrderParam
-	After     *string
-}
-
-// ListAgentSessionSubagents lists subagents in a session, including nested and closed subagents. See [subagent workflows](https://developers.openai.com/api/docs/guides/agents-api/multi-agent).
-//
-// Parameters:
-//
-//	sessionId: The ID of the session.
-//	limit: The maximum number of resources to return, between 1 and 100.
-//	Defaults to 20.
-//	order: The order in which resources are returned. Defaults to `desc`.
-//	after: Return resources after this resource ID in the selected order.
-func ListAgentSessionSubagents(ctx context.Context, clientConfig ClientConfig, params ListAgentSessionSubagentsParams, opts ...RequestOption) (*ListAgentSessionSubagentsResponse, error) {
-	sessionId := params.SessionId
-	limit := params.Limit
-	order := params.Order
-	after := params.After
-
-	if err := ValidateLength("session_id", sessionId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return nil, err
-	}
-
-	if limit != nil {
-		if err := ValidateRange("limit", *limit, RangeOpts{Min: Ptr[float64](1), Max: Ptr[float64](100)}); err != nil {
+	if model != nil {
+		if err := ValidateLength("model", *model, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
 			return nil, err
 		}
 	}
 
-	if after != nil {
-		if err := ValidateLength("after", *after, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
+	if instructions != nil && instructions.Value != nil {
+		if err := ValidateLength("instructions", string(*instructions.Value), LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
 			return nil, err
 		}
 	}
 
-	resp, err := DoCfg[ListAgentSessionSubagentsResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/agents/sessions/%s/subagents", EncodePathSegment(sessionId)), &RequestOpts{
-		Query: map[string]any{
-			"limit": QueryValue{Value: limit, Style: "form", Explode: true},
-			"order": QueryValue{Value: order, Style: "form", Explode: true},
-			"after": QueryValue{Value: after, Style: "form", Explode: true},
+	if name != nil && name.Value != nil {
+		if err := ValidateLength("name", string(*name.Value), LengthOpts{Min: Ptr[int](0), Max: Ptr[int](128)}); err != nil {
+			return nil, err
+		}
+	}
+
+	if tools != nil && tools.Value != nil {
+		if err := ValidateItems("tools", *tools.Value, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](2000)}); err != nil {
+			return nil, err
+		}
+	}
+
+	resp, err := DoCfg[AgentResource](ctx, &clientConfig, "POST", fmt.Sprintf("/agents/%s", EncodePathSegment(agentId)), &RequestOpts{
+		Body: map[string]any{
+			"model":        model,
+			"reasoning":    reasoning,
+			"text":         text,
+			"service_tier": serviceTier,
+			"instructions": instructions,
+			"multi_agent":  multiAgent,
+			"metadata":     metadata,
+			"name":         name,
+			"tools":        tools,
 		},
-		OperationID: "ListAgentSessionSubagents",
+		OperationID: "UpdateAgent",
 		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
 		Options:     opts,
 	})
@@ -419,306 +341,24 @@ func ListAgentSessionSubagents(ctx context.Context, clientConfig ClientConfig, p
 	return &resp.Data, nil
 }
 
-// ListAgentSessionSubagentsPaginated lists subagents in a session, including nested and closed subagents. See [subagent workflows](https://developers.openai.com/api/docs/guides/agents-api/multi-agent).
+type DeleteAgentParams struct {
+	AgentId string
+}
+
+// DeleteAgent deletes a reusable agent. See [agent configuration](https://developers.openai.com/api/docs/guides/agents-api/configuration).
 //
 // Parameters:
 //
-//	sessionId: The ID of the session.
-//	limit: The maximum number of resources to return, between 1 and 100.
-//	Defaults to 20.
-//	order: The order in which resources are returned. Defaults to `desc`.
-//	after: Return resources after this resource ID in the selected order.
-func ListAgentSessionSubagentsPaginated(ctx context.Context, clientConfig ClientConfig, params ListAgentSessionSubagentsParams, yield func(*SubagentResource) bool, opts ...RequestOption) error {
-	_cursor := params.After
-	for {
-		_params := params
-		_params.After = _cursor
-		_page, err := ListAgentSessionSubagents(ctx, clientConfig, _params, opts...)
-		if err != nil {
-			return err
-		}
-		if _page == nil {
-			return nil
-		}
-		_items := _page.Data
-		if len(_items) == 0 {
-			return nil
-		}
-		for i := range _items {
-			if !yield(&_items[i]) {
-				return nil
-			}
-		}
-		if !_page.HasMore {
-			return nil
-		}
-		if _page.LastId.Value == nil {
-			return nil
-		}
-		_cursor = _page.LastId.Value
-	}
-}
+//	agentId: The ID of the reusable agent.
+func DeleteAgent(ctx context.Context, clientConfig ClientConfig, params DeleteAgentParams, opts ...RequestOption) (*DeletedAgentResource, error) {
+	agentId := params.AgentId
 
-type ListAgentSessionSubagentsPage struct {
-	Data    *ListAgentSessionSubagentsResponse
-	Items   []SubagentResource
-	HasMore bool
-}
-
-func ListAgentSessionSubagentsPages(ctx context.Context, clientConfig ClientConfig, params ListAgentSessionSubagentsParams, yieldPage func(ListAgentSessionSubagentsPage) bool, opts ...RequestOption) error {
-	_cursor := params.After
-	for {
-		_params := params
-		_params.After = _cursor
-		_page, err := ListAgentSessionSubagents(ctx, clientConfig, _params, opts...)
-		if err != nil {
-			return err
-		}
-		if _page == nil {
-			return nil
-		}
-		_items := _page.Data
-		if len(_items) == 0 {
-			return nil
-		}
-		_hasMore := _page.HasMore && _page.LastId.Value != nil
-		if !yieldPage(ListAgentSessionSubagentsPage{Data: _page, Items: _items, HasMore: _hasMore}) {
-			return nil
-		}
-		if !_hasMore {
-			return nil
-		}
-		if _page.LastId.Value == nil {
-			return nil
-		}
-		_cursor = _page.LastId.Value
-	}
-}
-
-type RetrieveAgentSessionSubagentParams struct {
-	SessionId  string
-	SubagentId string
-}
-
-// RetrieveAgentSessionSubagent retrieves a subagent belonging to this session. See [subagent workflows](https://developers.openai.com/api/docs/guides/agents-api/multi-agent).
-//
-// Parameters:
-//
-//	sessionId: The ID of the session.
-//	subagentId: The ID of the subagent in this session.
-func RetrieveAgentSessionSubagent(ctx context.Context, clientConfig ClientConfig, params RetrieveAgentSessionSubagentParams, opts ...RequestOption) (*SubagentResource, error) {
-	sessionId := params.SessionId
-	subagentId := params.SubagentId
-
-	if err := ValidateLength("session_id", sessionId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
+	if err := ValidateLength("agent_id", agentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
 		return nil, err
 	}
 
-	if err := ValidateLength("subagent_id", subagentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return nil, err
-	}
-
-	resp, err := DoCfg[SubagentResource](ctx, &clientConfig, "GET", fmt.Sprintf("/agents/sessions/%s/subagents/%s", EncodePathSegment(sessionId), EncodePathSegment(subagentId)), &RequestOpts{
-		OperationID: "RetrieveAgentSessionSubagent",
-		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
-		Options:     opts,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return &resp.Data, nil
-}
-
-type ListAgentSessionSubagentItemsParams struct {
-	SessionId  string
-	SubagentId string
-	Limit      *int64
-	Order      *ListOrderParam
-	After      *string
-}
-
-// ListAgentSessionSubagentItems lists this subagent's own items across all of its turns. See [subagent workflows](https://developers.openai.com/api/docs/guides/agents-api/multi-agent).
-//
-// Parameters:
-//
-//	sessionId: The ID of the session.
-//	subagentId: The ID of the subagent in this session.
-//	limit: The maximum number of resources to return, between 1 and 100.
-//	Defaults to 20.
-//	order: The order in which resources are returned. Defaults to `desc`.
-//	after: Return resources after this resource ID in the selected order.
-func ListAgentSessionSubagentItems(ctx context.Context, clientConfig ClientConfig, params ListAgentSessionSubagentItemsParams, opts ...RequestOption) (*SessionItemListResource, error) {
-	sessionId := params.SessionId
-	subagentId := params.SubagentId
-	limit := params.Limit
-	order := params.Order
-	after := params.After
-
-	if err := ValidateLength("session_id", sessionId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return nil, err
-	}
-
-	if err := ValidateLength("subagent_id", subagentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return nil, err
-	}
-
-	if limit != nil {
-		if err := ValidateRange("limit", *limit, RangeOpts{Min: Ptr[float64](1), Max: Ptr[float64](100)}); err != nil {
-			return nil, err
-		}
-	}
-
-	if after != nil {
-		if err := ValidateLength("after", *after, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-			return nil, err
-		}
-	}
-
-	resp, err := DoCfg[SessionItemListResource](ctx, &clientConfig, "GET", fmt.Sprintf("/agents/sessions/%s/subagents/%s/items", EncodePathSegment(sessionId), EncodePathSegment(subagentId)), &RequestOpts{
-		Query: map[string]any{
-			"limit": QueryValue{Value: limit, Style: "form", Explode: true},
-			"order": QueryValue{Value: order, Style: "form", Explode: true},
-			"after": QueryValue{Value: after, Style: "form", Explode: true},
-		},
-		OperationID: "ListAgentSessionSubagentItems",
-		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
-		Options:     opts,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return &resp.Data, nil
-}
-
-// ListAgentSessionSubagentItemsPaginated lists this subagent's own items across all of its turns. See [subagent workflows](https://developers.openai.com/api/docs/guides/agents-api/multi-agent).
-//
-// Parameters:
-//
-//	sessionId: The ID of the session.
-//	subagentId: The ID of the subagent in this session.
-//	limit: The maximum number of resources to return, between 1 and 100.
-//	Defaults to 20.
-//	order: The order in which resources are returned. Defaults to `desc`.
-//	after: Return resources after this resource ID in the selected order.
-func ListAgentSessionSubagentItemsPaginated(ctx context.Context, clientConfig ClientConfig, params ListAgentSessionSubagentItemsParams, yield func(*SessionTurnItemResource) bool, opts ...RequestOption) error {
-	_cursor := params.After
-	for {
-		_params := params
-		_params.After = _cursor
-		_page, err := ListAgentSessionSubagentItems(ctx, clientConfig, _params, opts...)
-		if err != nil {
-			return err
-		}
-		if _page == nil {
-			return nil
-		}
-		_items := _page.Data
-		if len(_items) == 0 {
-			return nil
-		}
-		for i := range _items {
-			if !yield(&_items[i]) {
-				return nil
-			}
-		}
-		if !_page.HasMore {
-			return nil
-		}
-		if _page.LastId.Value == nil {
-			return nil
-		}
-		_cursor = _page.LastId.Value
-	}
-}
-
-type ListAgentSessionSubagentItemsPage struct {
-	Data    *SessionItemListResource
-	Items   []SessionTurnItemResource
-	HasMore bool
-}
-
-func ListAgentSessionSubagentItemsPages(ctx context.Context, clientConfig ClientConfig, params ListAgentSessionSubagentItemsParams, yieldPage func(ListAgentSessionSubagentItemsPage) bool, opts ...RequestOption) error {
-	_cursor := params.After
-	for {
-		_params := params
-		_params.After = _cursor
-		_page, err := ListAgentSessionSubagentItems(ctx, clientConfig, _params, opts...)
-		if err != nil {
-			return err
-		}
-		if _page == nil {
-			return nil
-		}
-		_items := _page.Data
-		if len(_items) == 0 {
-			return nil
-		}
-		_hasMore := _page.HasMore && _page.LastId.Value != nil
-		if !yieldPage(ListAgentSessionSubagentItemsPage{Data: _page, Items: _items, HasMore: _hasMore}) {
-			return nil
-		}
-		if !_hasMore {
-			return nil
-		}
-		if _page.LastId.Value == nil {
-			return nil
-		}
-		_cursor = _page.LastId.Value
-	}
-}
-
-type ListAgentSessionSubagentTurnsParams struct {
-	SessionId  string
-	SubagentId string
-	Limit      *int64
-	Order      *ListOrderParam
-	After      *string
-}
-
-// ListAgentSessionSubagentTurns lists all turns of this subagent, including turns after a resume. See [subagent workflows](https://developers.openai.com/api/docs/guides/agents-api/multi-agent).
-//
-// Parameters:
-//
-//	sessionId: The ID of the session.
-//	subagentId: The ID of the subagent in this session.
-//	limit: The maximum number of resources to return, between 1 and 100.
-//	Defaults to 20.
-//	order: The order in which resources are returned. Defaults to `desc`.
-//	after: Return resources after this resource ID in the selected order.
-func ListAgentSessionSubagentTurns(ctx context.Context, clientConfig ClientConfig, params ListAgentSessionSubagentTurnsParams, opts ...RequestOption) (*SessionTurnListResource, error) {
-	sessionId := params.SessionId
-	subagentId := params.SubagentId
-	limit := params.Limit
-	order := params.Order
-	after := params.After
-
-	if err := ValidateLength("session_id", sessionId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return nil, err
-	}
-
-	if err := ValidateLength("subagent_id", subagentId, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-		return nil, err
-	}
-
-	if limit != nil {
-		if err := ValidateRange("limit", *limit, RangeOpts{Min: Ptr[float64](1), Max: Ptr[float64](100)}); err != nil {
-			return nil, err
-		}
-	}
-
-	if after != nil {
-		if err := ValidateLength("after", *after, LengthOpts{Min: Ptr[int](0), Max: Ptr[int](1048576)}); err != nil {
-			return nil, err
-		}
-	}
-
-	resp, err := DoCfg[SessionTurnListResource](ctx, &clientConfig, "GET", fmt.Sprintf("/agents/sessions/%s/subagents/%s/turns", EncodePathSegment(sessionId), EncodePathSegment(subagentId)), &RequestOpts{
-		Query: map[string]any{
-			"limit": QueryValue{Value: limit, Style: "form", Explode: true},
-			"order": QueryValue{Value: order, Style: "form", Explode: true},
-			"after": QueryValue{Value: after, Style: "form", Explode: true},
-		},
-		OperationID: "ListAgentSessionSubagentTurns",
+	resp, err := DoCfg[DeletedAgentResource](ctx, &clientConfig, "DELETE", fmt.Sprintf("/agents/%s", EncodePathSegment(agentId)), &RequestOpts{
+		OperationID: "DeleteAgent",
 		Errors:      ErrorDecoders{"400": decodeErrorData[ErrorResponse2], "401": decodeErrorData[ErrorResponse2], "403": decodeErrorData[ErrorResponse2], "404": decodeErrorData[ErrorResponse2], "409": decodeErrorData[ErrorResponse2], "500": decodeErrorData[ErrorResponse2], "503": decodeErrorData[ErrorResponse2]},
 		Options:     opts,
 	})

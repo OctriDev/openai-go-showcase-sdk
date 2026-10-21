@@ -713,3 +713,16 @@ func isNonEmptyBetaContainerAutoParamSkillsItemBetaSkillReferenceParam(v BetaSki
 	b, _ := json.Marshal(v)
 	return string(b) != "{}" && string(b) != "null"
 }
+
+func isNonEmptyBetaContainerAutoParamSkillsItemBetaInlineSkillParam(v BetaInlineSkillParam) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalBetaContainerAutoParamSkillsItem converts an untyped value to BetaContainerAutoParamSkillsItem.
+func UnmarshalBetaContainerAutoParamSkillsItem(v any) BetaContainerAutoParamSkillsItem {
+	b, _ := json.Marshal(v)
+	var result BetaContainerAutoParamSkillsItem
+	_ = json.Unmarshal(b, &result)
+	return result
+}

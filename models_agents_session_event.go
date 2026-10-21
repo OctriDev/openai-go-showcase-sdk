@@ -3,693 +3,972 @@
 
 package sdk
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import "encoding/json"
 
-// SessionEventAgentSessionTurnReasoningSummaryTextDone Emitted when a reasoning summary content part is complete.
-type SessionEventAgentSessionTurnReasoningSummaryTextDone struct {
-	// Type The type of the object. Always `agent.session.turn.reasoning_summary_text.done`.
-	Type SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The ID of the turn associated with the event, when applicable.
-	TurnId NullableValue[string] `json:"turn_id"`
-	// ItemId The ID of the reasoning item.
-	ItemId string `json:"item_id"`
-	// OutputIndex The index of the item in the turn output.
-	OutputIndex int64 `json:"output_index"`
-	// SummaryIndex The index of the summary content part.
-	SummaryIndex int64 `json:"summary_index"`
-	// Text The complete reasoning summary text.
-	Text string `json:"text"`
+// SessionEvent represents a union type.
+type SessionEvent struct {
+	SessionEventError                                     *SessionEventError
+	SessionEventAgentSessionEnvironmentReady              *SessionEventAgentSessionEnvironmentReady
+	SessionEventAgentSessionEnvironmentSuspended          *SessionEventAgentSessionEnvironmentSuspended
+	SessionEventAgentSessionEnvironmentExpired            *SessionEventAgentSessionEnvironmentExpired
+	SessionEventAgentSessionEnvironmentReset              *SessionEventAgentSessionEnvironmentReset
+	SessionEventAgentOutputCommandExecutionOutputDelta    *SessionEventAgentOutputCommandExecutionOutputDelta
+	SessionEventAgentSessionCreated                       *SessionEventAgentSessionCreated
+	SessionEventAgentSessionTurnCreated                   *SessionEventAgentSessionTurnCreated
+	SessionEventAgentSessionTurnInProgress                *SessionEventAgentSessionTurnInProgress
+	SessionEventAgentSessionTurnCompleted                 *SessionEventAgentSessionTurnCompleted
+	SessionEventAgentSessionTurnFailed                    *SessionEventAgentSessionTurnFailed
+	SessionEventAgentSessionTurnCancelled                 *SessionEventAgentSessionTurnCancelled
+	SessionEventAgentSessionTurnItemAdded                 *SessionEventAgentSessionTurnItemAdded
+	SessionEventAgentSessionIdle                          *SessionEventAgentSessionIdle
+	SessionEventAgentSessionInProgress                    *SessionEventAgentSessionInProgress
+	SessionEventAgentSessionRequiresAction                *SessionEventAgentSessionRequiresAction
+	SessionEventAgentSessionFailed                        *SessionEventAgentSessionFailed
+	SessionEventAgentSessionEnvironmentPending            *SessionEventAgentSessionEnvironmentPending
+	SessionEventAgentSessionEnvironmentConnected          *SessionEventAgentSessionEnvironmentConnected
+	SessionEventAgentSessionEnvironmentDisconnected       *SessionEventAgentSessionEnvironmentDisconnected
+	SessionEventAgentSessionEnvironmentFailed             *SessionEventAgentSessionEnvironmentFailed
+	SessionEventAgentSessionSubagentCreated               *SessionEventAgentSessionSubagentCreated
+	SessionEventAgentSessionSubagentActive                *SessionEventAgentSessionSubagentActive
+	SessionEventAgentSessionSubagentClosed                *SessionEventAgentSessionSubagentClosed
+	SessionEventAgentSessionTurnItemDone                  *SessionEventAgentSessionTurnItemDone
+	SessionEventAgentSessionTurnContentPartAdded          *SessionEventAgentSessionTurnContentPartAdded
+	SessionEventAgentSessionTurnContentPartDone           *SessionEventAgentSessionTurnContentPartDone
+	SessionEventAgentSessionTurnOutputTextDelta           *SessionEventAgentSessionTurnOutputTextDelta
+	SessionEventAgentSessionTurnOutputTextDone            *SessionEventAgentSessionTurnOutputTextDone
+	SessionEventAgentSessionTurnReasoningSummaryPartAdded *SessionEventAgentSessionTurnReasoningSummaryPartAdded
+	SessionEventAgentSessionTurnReasoningSummaryPartDone  *SessionEventAgentSessionTurnReasoningSummaryPartDone
+	SessionEventAgentSessionTurnReasoningSummaryTextDelta *SessionEventAgentSessionTurnReasoningSummaryTextDelta
+	SessionEventAgentSessionTurnReasoningSummaryTextDone  *SessionEventAgentSessionTurnReasoningSummaryTextDone
+
+	// Unknown holds a member whose type names no branch this SDK knows, as received.
+	Unknown json.RawMessage
 }
 
-func (value *SessionEventAgentSessionTurnReasoningSummaryTextDone) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
+func (u *SessionEvent) UnmarshalJSON(data []byte) error {
+	*u = SessionEvent{}
+	var refusal error
+	var object map[string]json.RawMessage
+	if err := json.Unmarshal(data, &object); err == nil {
+		if rawDiscriminator, ok := object["type"]; ok {
+			var discriminatorValue string
+			if err := json.Unmarshal(rawDiscriminator, &discriminatorValue); err == nil {
+				switch discriminatorValue {
+				case "agent.session.turn.reasoning_summary_text.done":
+					var sessioneventagentsessionturnreasoningsummarytextdone SessionEventAgentSessionTurnReasoningSummaryTextDone
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarytextdone); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnReasoningSummaryTextDone = &sessioneventagentsessionturnreasoningsummarytextdone
+					return nil
+				case "error":
+					var sessioneventerror SessionEventError
+					if err := json.Unmarshal(data, &sessioneventerror); err != nil {
+						return err
+					}
+					u.SessionEventError = &sessioneventerror
+					return nil
+				case "agent.session.environment.ready":
+					var sessioneventagentsessionenvironmentready SessionEventAgentSessionEnvironmentReady
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentready); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentReady = &sessioneventagentsessionenvironmentready
+					return nil
+				case "agent.session.environment.suspended":
+					var sessioneventagentsessionenvironmentsuspended SessionEventAgentSessionEnvironmentSuspended
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentsuspended); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentSuspended = &sessioneventagentsessionenvironmentsuspended
+					return nil
+				case "agent.session.environment.expired":
+					var sessioneventagentsessionenvironmentexpired SessionEventAgentSessionEnvironmentExpired
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentexpired); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentExpired = &sessioneventagentsessionenvironmentexpired
+					return nil
+				case "agent.session.environment.reset":
+					var sessioneventagentsessionenvironmentreset SessionEventAgentSessionEnvironmentReset
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentreset); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentReset = &sessioneventagentsessionenvironmentreset
+					return nil
+				case "agent.output.command_execution_output.delta":
+					var sessioneventagentoutputcommandexecutionoutputdelta SessionEventAgentOutputCommandExecutionOutputDelta
+					if err := json.Unmarshal(data, &sessioneventagentoutputcommandexecutionoutputdelta); err != nil {
+						return err
+					}
+					u.SessionEventAgentOutputCommandExecutionOutputDelta = &sessioneventagentoutputcommandexecutionoutputdelta
+					return nil
+				case "agent.session.created":
+					var sessioneventagentsessioncreated SessionEventAgentSessionCreated
+					if err := json.Unmarshal(data, &sessioneventagentsessioncreated); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionCreated = &sessioneventagentsessioncreated
+					return nil
+				case "agent.session.turn.created":
+					var sessioneventagentsessionturncreated SessionEventAgentSessionTurnCreated
+					if err := json.Unmarshal(data, &sessioneventagentsessionturncreated); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnCreated = &sessioneventagentsessionturncreated
+					return nil
+				case "agent.session.turn.in_progress":
+					var sessioneventagentsessionturninprogress SessionEventAgentSessionTurnInProgress
+					if err := json.Unmarshal(data, &sessioneventagentsessionturninprogress); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnInProgress = &sessioneventagentsessionturninprogress
+					return nil
+				case "agent.session.turn.completed":
+					var sessioneventagentsessionturncompleted SessionEventAgentSessionTurnCompleted
+					if err := json.Unmarshal(data, &sessioneventagentsessionturncompleted); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnCompleted = &sessioneventagentsessionturncompleted
+					return nil
+				case "agent.session.turn.failed":
+					var sessioneventagentsessionturnfailed SessionEventAgentSessionTurnFailed
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnfailed); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnFailed = &sessioneventagentsessionturnfailed
+					return nil
+				case "agent.session.turn.cancelled":
+					var sessioneventagentsessionturncancelled SessionEventAgentSessionTurnCancelled
+					if err := json.Unmarshal(data, &sessioneventagentsessionturncancelled); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnCancelled = &sessioneventagentsessionturncancelled
+					return nil
+				case "agent.session.turn.item.added":
+					var sessioneventagentsessionturnitemadded SessionEventAgentSessionTurnItemAdded
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnitemadded); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnItemAdded = &sessioneventagentsessionturnitemadded
+					return nil
+				case "agent.session.idle":
+					var sessioneventagentsessionidle SessionEventAgentSessionIdle
+					if err := json.Unmarshal(data, &sessioneventagentsessionidle); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionIdle = &sessioneventagentsessionidle
+					return nil
+				case "agent.session.in_progress":
+					var sessioneventagentsessioninprogress SessionEventAgentSessionInProgress
+					if err := json.Unmarshal(data, &sessioneventagentsessioninprogress); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionInProgress = &sessioneventagentsessioninprogress
+					return nil
+				case "agent.session.requires_action":
+					var sessioneventagentsessionrequiresaction SessionEventAgentSessionRequiresAction
+					if err := json.Unmarshal(data, &sessioneventagentsessionrequiresaction); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionRequiresAction = &sessioneventagentsessionrequiresaction
+					return nil
+				case "agent.session.failed":
+					var sessioneventagentsessionfailed SessionEventAgentSessionFailed
+					if err := json.Unmarshal(data, &sessioneventagentsessionfailed); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionFailed = &sessioneventagentsessionfailed
+					return nil
+				case "agent.session.environment.pending":
+					var sessioneventagentsessionenvironmentpending SessionEventAgentSessionEnvironmentPending
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentpending); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentPending = &sessioneventagentsessionenvironmentpending
+					return nil
+				case "agent.session.environment.connected":
+					var sessioneventagentsessionenvironmentconnected SessionEventAgentSessionEnvironmentConnected
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentconnected); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentConnected = &sessioneventagentsessionenvironmentconnected
+					return nil
+				case "agent.session.environment.disconnected":
+					var sessioneventagentsessionenvironmentdisconnected SessionEventAgentSessionEnvironmentDisconnected
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentdisconnected); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentDisconnected = &sessioneventagentsessionenvironmentdisconnected
+					return nil
+				case "agent.session.environment.failed":
+					var sessioneventagentsessionenvironmentfailed SessionEventAgentSessionEnvironmentFailed
+					if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentfailed); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionEnvironmentFailed = &sessioneventagentsessionenvironmentfailed
+					return nil
+				case "agent.session.subagent.created":
+					var sessioneventagentsessionsubagentcreated SessionEventAgentSessionSubagentCreated
+					if err := json.Unmarshal(data, &sessioneventagentsessionsubagentcreated); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionSubagentCreated = &sessioneventagentsessionsubagentcreated
+					return nil
+				case "agent.session.subagent.active":
+					var sessioneventagentsessionsubagentactive SessionEventAgentSessionSubagentActive
+					if err := json.Unmarshal(data, &sessioneventagentsessionsubagentactive); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionSubagentActive = &sessioneventagentsessionsubagentactive
+					return nil
+				case "agent.session.subagent.closed":
+					var sessioneventagentsessionsubagentclosed SessionEventAgentSessionSubagentClosed
+					if err := json.Unmarshal(data, &sessioneventagentsessionsubagentclosed); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionSubagentClosed = &sessioneventagentsessionsubagentclosed
+					return nil
+				case "agent.session.turn.item.done":
+					var sessioneventagentsessionturnitemdone SessionEventAgentSessionTurnItemDone
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnitemdone); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnItemDone = &sessioneventagentsessionturnitemdone
+					return nil
+				case "agent.session.turn.content_part.added":
+					var sessioneventagentsessionturncontentpartadded SessionEventAgentSessionTurnContentPartAdded
+					if err := json.Unmarshal(data, &sessioneventagentsessionturncontentpartadded); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnContentPartAdded = &sessioneventagentsessionturncontentpartadded
+					return nil
+				case "agent.session.turn.content_part.done":
+					var sessioneventagentsessionturncontentpartdone SessionEventAgentSessionTurnContentPartDone
+					if err := json.Unmarshal(data, &sessioneventagentsessionturncontentpartdone); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnContentPartDone = &sessioneventagentsessionturncontentpartdone
+					return nil
+				case "agent.session.turn.output_text.delta":
+					var sessioneventagentsessionturnoutputtextdelta SessionEventAgentSessionTurnOutputTextDelta
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnoutputtextdelta); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnOutputTextDelta = &sessioneventagentsessionturnoutputtextdelta
+					return nil
+				case "agent.session.turn.output_text.done":
+					var sessioneventagentsessionturnoutputtextdone SessionEventAgentSessionTurnOutputTextDone
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnoutputtextdone); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnOutputTextDone = &sessioneventagentsessionturnoutputtextdone
+					return nil
+				case "agent.session.turn.reasoning_summary_part.added":
+					var sessioneventagentsessionturnreasoningsummarypartadded SessionEventAgentSessionTurnReasoningSummaryPartAdded
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarypartadded); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnReasoningSummaryPartAdded = &sessioneventagentsessionturnreasoningsummarypartadded
+					return nil
+				case "agent.session.turn.reasoning_summary_part.done":
+					var sessioneventagentsessionturnreasoningsummarypartdone SessionEventAgentSessionTurnReasoningSummaryPartDone
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarypartdone); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnReasoningSummaryPartDone = &sessioneventagentsessionturnreasoningsummarypartdone
+					return nil
+				case "agent.session.turn.reasoning_summary_text.delta":
+					var sessioneventagentsessionturnreasoningsummarytextdelta SessionEventAgentSessionTurnReasoningSummaryTextDelta
+					if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarytextdelta); err != nil {
+						return err
+					}
+					u.SessionEventAgentSessionTurnReasoningSummaryTextDelta = &sessioneventagentsessionturnreasoningsummarytextdelta
+					return nil
+				default:
+					u.Unknown = append(json.RawMessage(nil), data...)
+					return nil
+				}
+			}
+		}
 	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.session.turn.reasoning_summary_text.done"}); err != nil {
-		return err
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 SessionEventError
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.SessionEventError = &lossless0
+			return nil
+		}
+		var lossless1 SessionEventAgentSessionEnvironmentReady
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SessionEventAgentSessionEnvironmentReady = &lossless1
+			return nil
+		}
+		var lossless2 SessionEventAgentSessionEnvironmentSuspended
+		if json.Unmarshal(data, &lossless2) == nil && keepsEveryKey(raw, lossless2) {
+			u.SessionEventAgentSessionEnvironmentSuspended = &lossless2
+			return nil
+		}
+		var lossless3 SessionEventAgentSessionEnvironmentExpired
+		if json.Unmarshal(data, &lossless3) == nil && keepsEveryKey(raw, lossless3) {
+			u.SessionEventAgentSessionEnvironmentExpired = &lossless3
+			return nil
+		}
+		var lossless4 SessionEventAgentSessionEnvironmentReset
+		if json.Unmarshal(data, &lossless4) == nil && keepsEveryKey(raw, lossless4) {
+			u.SessionEventAgentSessionEnvironmentReset = &lossless4
+			return nil
+		}
+		var lossless5 SessionEventAgentOutputCommandExecutionOutputDelta
+		if json.Unmarshal(data, &lossless5) == nil && keepsEveryKey(raw, lossless5) {
+			u.SessionEventAgentOutputCommandExecutionOutputDelta = &lossless5
+			return nil
+		}
+		var lossless6 SessionEventAgentSessionCreated
+		if json.Unmarshal(data, &lossless6) == nil && keepsEveryKey(raw, lossless6) {
+			u.SessionEventAgentSessionCreated = &lossless6
+			return nil
+		}
+		var lossless7 SessionEventAgentSessionTurnCreated
+		if json.Unmarshal(data, &lossless7) == nil && keepsEveryKey(raw, lossless7) {
+			u.SessionEventAgentSessionTurnCreated = &lossless7
+			return nil
+		}
+		var lossless8 SessionEventAgentSessionTurnInProgress
+		if json.Unmarshal(data, &lossless8) == nil && keepsEveryKey(raw, lossless8) {
+			u.SessionEventAgentSessionTurnInProgress = &lossless8
+			return nil
+		}
+		var lossless9 SessionEventAgentSessionTurnCompleted
+		if json.Unmarshal(data, &lossless9) == nil && keepsEveryKey(raw, lossless9) {
+			u.SessionEventAgentSessionTurnCompleted = &lossless9
+			return nil
+		}
+		var lossless10 SessionEventAgentSessionTurnFailed
+		if json.Unmarshal(data, &lossless10) == nil && keepsEveryKey(raw, lossless10) {
+			u.SessionEventAgentSessionTurnFailed = &lossless10
+			return nil
+		}
+		var lossless11 SessionEventAgentSessionTurnCancelled
+		if json.Unmarshal(data, &lossless11) == nil && keepsEveryKey(raw, lossless11) {
+			u.SessionEventAgentSessionTurnCancelled = &lossless11
+			return nil
+		}
+		var lossless12 SessionEventAgentSessionTurnItemAdded
+		if json.Unmarshal(data, &lossless12) == nil && keepsEveryKey(raw, lossless12) {
+			u.SessionEventAgentSessionTurnItemAdded = &lossless12
+			return nil
+		}
+		var lossless13 SessionEventAgentSessionIdle
+		if json.Unmarshal(data, &lossless13) == nil && keepsEveryKey(raw, lossless13) {
+			u.SessionEventAgentSessionIdle = &lossless13
+			return nil
+		}
+		var lossless14 SessionEventAgentSessionInProgress
+		if json.Unmarshal(data, &lossless14) == nil && keepsEveryKey(raw, lossless14) {
+			u.SessionEventAgentSessionInProgress = &lossless14
+			return nil
+		}
+		var lossless15 SessionEventAgentSessionRequiresAction
+		if json.Unmarshal(data, &lossless15) == nil && keepsEveryKey(raw, lossless15) {
+			u.SessionEventAgentSessionRequiresAction = &lossless15
+			return nil
+		}
+		var lossless16 SessionEventAgentSessionFailed
+		if json.Unmarshal(data, &lossless16) == nil && keepsEveryKey(raw, lossless16) {
+			u.SessionEventAgentSessionFailed = &lossless16
+			return nil
+		}
+		var lossless17 SessionEventAgentSessionEnvironmentPending
+		if json.Unmarshal(data, &lossless17) == nil && keepsEveryKey(raw, lossless17) {
+			u.SessionEventAgentSessionEnvironmentPending = &lossless17
+			return nil
+		}
+		var lossless18 SessionEventAgentSessionEnvironmentConnected
+		if json.Unmarshal(data, &lossless18) == nil && keepsEveryKey(raw, lossless18) {
+			u.SessionEventAgentSessionEnvironmentConnected = &lossless18
+			return nil
+		}
+		var lossless19 SessionEventAgentSessionEnvironmentDisconnected
+		if json.Unmarshal(data, &lossless19) == nil && keepsEveryKey(raw, lossless19) {
+			u.SessionEventAgentSessionEnvironmentDisconnected = &lossless19
+			return nil
+		}
+		var lossless20 SessionEventAgentSessionEnvironmentFailed
+		if json.Unmarshal(data, &lossless20) == nil && keepsEveryKey(raw, lossless20) {
+			u.SessionEventAgentSessionEnvironmentFailed = &lossless20
+			return nil
+		}
+		var lossless21 SessionEventAgentSessionSubagentCreated
+		if json.Unmarshal(data, &lossless21) == nil && keepsEveryKey(raw, lossless21) {
+			u.SessionEventAgentSessionSubagentCreated = &lossless21
+			return nil
+		}
+		var lossless22 SessionEventAgentSessionSubagentActive
+		if json.Unmarshal(data, &lossless22) == nil && keepsEveryKey(raw, lossless22) {
+			u.SessionEventAgentSessionSubagentActive = &lossless22
+			return nil
+		}
+		var lossless23 SessionEventAgentSessionSubagentClosed
+		if json.Unmarshal(data, &lossless23) == nil && keepsEveryKey(raw, lossless23) {
+			u.SessionEventAgentSessionSubagentClosed = &lossless23
+			return nil
+		}
+		var lossless24 SessionEventAgentSessionTurnItemDone
+		if json.Unmarshal(data, &lossless24) == nil && keepsEveryKey(raw, lossless24) {
+			u.SessionEventAgentSessionTurnItemDone = &lossless24
+			return nil
+		}
+		var lossless25 SessionEventAgentSessionTurnContentPartAdded
+		if json.Unmarshal(data, &lossless25) == nil && keepsEveryKey(raw, lossless25) {
+			u.SessionEventAgentSessionTurnContentPartAdded = &lossless25
+			return nil
+		}
+		var lossless26 SessionEventAgentSessionTurnContentPartDone
+		if json.Unmarshal(data, &lossless26) == nil && keepsEveryKey(raw, lossless26) {
+			u.SessionEventAgentSessionTurnContentPartDone = &lossless26
+			return nil
+		}
+		var lossless27 SessionEventAgentSessionTurnOutputTextDelta
+		if json.Unmarshal(data, &lossless27) == nil && keepsEveryKey(raw, lossless27) {
+			u.SessionEventAgentSessionTurnOutputTextDelta = &lossless27
+			return nil
+		}
+		var lossless28 SessionEventAgentSessionTurnOutputTextDone
+		if json.Unmarshal(data, &lossless28) == nil && keepsEveryKey(raw, lossless28) {
+			u.SessionEventAgentSessionTurnOutputTextDone = &lossless28
+			return nil
+		}
+		var lossless29 SessionEventAgentSessionTurnReasoningSummaryPartAdded
+		if json.Unmarshal(data, &lossless29) == nil && keepsEveryKey(raw, lossless29) {
+			u.SessionEventAgentSessionTurnReasoningSummaryPartAdded = &lossless29
+			return nil
+		}
+		var lossless30 SessionEventAgentSessionTurnReasoningSummaryPartDone
+		if json.Unmarshal(data, &lossless30) == nil && keepsEveryKey(raw, lossless30) {
+			u.SessionEventAgentSessionTurnReasoningSummaryPartDone = &lossless30
+			return nil
+		}
+		var lossless31 SessionEventAgentSessionTurnReasoningSummaryTextDelta
+		if json.Unmarshal(data, &lossless31) == nil && keepsEveryKey(raw, lossless31) {
+			u.SessionEventAgentSessionTurnReasoningSummaryTextDelta = &lossless31
+			return nil
+		}
+		var lossless32 SessionEventAgentSessionTurnReasoningSummaryTextDone
+		if json.Unmarshal(data, &lossless32) == nil && keepsEveryKey(raw, lossless32) {
+			u.SessionEventAgentSessionTurnReasoningSummaryTextDone = &lossless32
+			return nil
+		}
 	}
-	type SessionEventAgentSessionTurnReasoningSummaryTextDoneAlias SessionEventAgentSessionTurnReasoningSummaryTextDone
-	var decoded SessionEventAgentSessionTurnReasoningSummaryTextDoneAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentSessionTurnReasoningSummaryTextDone(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "turn_id", "item_id", "output_index", "summary_index", "text"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "item_id", "output_index", "summary_index", "text"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("item_id", value.ItemId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("output_index", value.OutputIndex, RangeOpts{Min: Ptr[float64](0), Max: Ptr[float64](4294967295)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("summary_index", value.SummaryIndex, RangeOpts{Min: Ptr[float64](0), Max: Ptr[float64](4294967295)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("text", value.Text, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentSessionTurnReasoningSummaryTextDone returns a validated SessionEventAgentSessionTurnReasoningSummaryTextDone built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentSessionTurnReasoningSummaryTextDone(fields SessionEventAgentSessionTurnReasoningSummaryTextDone) (*SessionEventAgentSessionTurnReasoningSummaryTextDone, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum The type of the object. Always `agent.session.turn.reasoning_summary_text.done`.
-type SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum string
-
-const (
-	SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnumAgentSessionTurnReasoningSummaryTextDone SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum = "agent.session.turn.reasoning_summary_text.done"
-)
-
-func (value *SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.session.turn.reasoning_summary_text.done":
-		*value = SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum(raw)
+	var sessioneventerror SessionEventError
+	if err := json.Unmarshal(data, &sessioneventerror); err == nil && isNonEmptySessionEventSessionEventError(sessioneventerror) {
+		u.SessionEventError = &sessioneventerror
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentSessionTurnReasoningSummaryTextDoneTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventError Emitted when a turn or session fails.
-type SessionEventError struct {
-	// Type The type of the object. Always `error`.
-	Type SessionEventErrorTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// Error The error that occurred.
-	Error SessionErrorResource `json:"error"`
-}
-
-func (value *SessionEventError) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"error"}); err != nil {
-		return err
-	}
-	type SessionEventErrorAlias SessionEventError
-	var decoded SessionEventErrorAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventError(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "error"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "error"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventError returns a validated SessionEventError built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventError(fields SessionEventError) (*SessionEventError, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventErrorTypeEnum The type of the object. Always `error`.
-type SessionEventErrorTypeEnum string
-
-const (
-	SessionEventErrorTypeEnumError SessionEventErrorTypeEnum = "error"
-)
-
-func (value *SessionEventErrorTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "error":
-		*value = SessionEventErrorTypeEnum(raw)
+	var sessioneventagentsessionenvironmentready SessionEventAgentSessionEnvironmentReady
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentready); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentReady(sessioneventagentsessionenvironmentready) {
+		u.SessionEventAgentSessionEnvironmentReady = &sessioneventagentsessionenvironmentready
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventErrorTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventErrorTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventAgentSessionEnvironmentReady Emitted when a hosted session environment is ready to connect.
-type SessionEventAgentSessionEnvironmentReady struct {
-	// Type The type of the object. Always `agent.session.environment.ready`.
-	Type SessionEventAgentSessionEnvironmentReadyTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The ID of the turn associated with the event, when applicable.
-	TurnId NullableValue[string] `json:"turn_id"`
-	// Environment The current environment state.
-	Environment SessionEnvironmentStateResource `json:"environment"`
-}
-
-func (value *SessionEventAgentSessionEnvironmentReady) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.session.environment.ready"}); err != nil {
-		return err
-	}
-	type SessionEventAgentSessionEnvironmentReadyAlias SessionEventAgentSessionEnvironmentReady
-	var decoded SessionEventAgentSessionEnvironmentReadyAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentSessionEnvironmentReady(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "turn_id", "environment"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "environment"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentSessionEnvironmentReady returns a validated SessionEventAgentSessionEnvironmentReady built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentSessionEnvironmentReady(fields SessionEventAgentSessionEnvironmentReady) (*SessionEventAgentSessionEnvironmentReady, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentSessionEnvironmentReadyTypeEnum The type of the object. Always `agent.session.environment.ready`.
-type SessionEventAgentSessionEnvironmentReadyTypeEnum string
-
-const (
-	SessionEventAgentSessionEnvironmentReadyTypeEnumAgentSessionEnvironmentReady SessionEventAgentSessionEnvironmentReadyTypeEnum = "agent.session.environment.ready"
-)
-
-func (value *SessionEventAgentSessionEnvironmentReadyTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.session.environment.ready":
-		*value = SessionEventAgentSessionEnvironmentReadyTypeEnum(raw)
+	var sessioneventagentsessionenvironmentsuspended SessionEventAgentSessionEnvironmentSuspended
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentsuspended); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentSuspended(sessioneventagentsessionenvironmentsuspended) {
+		u.SessionEventAgentSessionEnvironmentSuspended = &sessioneventagentsessionenvironmentsuspended
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentSessionEnvironmentReadyTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentSessionEnvironmentReadyTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventAgentSessionEnvironmentSuspended Emitted after an idle hosted session environment is checkpointed and stopped.
-type SessionEventAgentSessionEnvironmentSuspended struct {
-	// Type The type of the object. Always `agent.session.environment.suspended`.
-	Type SessionEventAgentSessionEnvironmentSuspendedTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The ID of the turn associated with the event, when applicable.
-	TurnId NullableValue[string] `json:"turn_id"`
-	// Environment The current environment state.
-	Environment SessionEnvironmentStateResource `json:"environment"`
-}
-
-func (value *SessionEventAgentSessionEnvironmentSuspended) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.session.environment.suspended"}); err != nil {
-		return err
-	}
-	type SessionEventAgentSessionEnvironmentSuspendedAlias SessionEventAgentSessionEnvironmentSuspended
-	var decoded SessionEventAgentSessionEnvironmentSuspendedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentSessionEnvironmentSuspended(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "turn_id", "environment"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "environment"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentSessionEnvironmentSuspended returns a validated SessionEventAgentSessionEnvironmentSuspended built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentSessionEnvironmentSuspended(fields SessionEventAgentSessionEnvironmentSuspended) (*SessionEventAgentSessionEnvironmentSuspended, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentSessionEnvironmentSuspendedTypeEnum The type of the object. Always `agent.session.environment.suspended`.
-type SessionEventAgentSessionEnvironmentSuspendedTypeEnum string
-
-const (
-	SessionEventAgentSessionEnvironmentSuspendedTypeEnumAgentSessionEnvironmentSuspended SessionEventAgentSessionEnvironmentSuspendedTypeEnum = "agent.session.environment.suspended"
-)
-
-func (value *SessionEventAgentSessionEnvironmentSuspendedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.session.environment.suspended":
-		*value = SessionEventAgentSessionEnvironmentSuspendedTypeEnum(raw)
+	var sessioneventagentsessionenvironmentexpired SessionEventAgentSessionEnvironmentExpired
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentexpired); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentExpired(sessioneventagentsessionenvironmentexpired) {
+		u.SessionEventAgentSessionEnvironmentExpired = &sessioneventagentsessionenvironmentexpired
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentSessionEnvironmentSuspendedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentSessionEnvironmentSuspendedTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventAgentSessionEnvironmentExpired Emitted after a suspended hosted session environment and its checkpoint expire.
-type SessionEventAgentSessionEnvironmentExpired struct {
-	// Type The type of the object. Always `agent.session.environment.expired`.
-	Type SessionEventAgentSessionEnvironmentExpiredTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The ID of the turn associated with the event, when applicable.
-	TurnId NullableValue[string] `json:"turn_id"`
-	// Environment The current environment state.
-	Environment SessionEnvironmentStateResource `json:"environment"`
-}
-
-func (value *SessionEventAgentSessionEnvironmentExpired) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.session.environment.expired"}); err != nil {
-		return err
-	}
-	type SessionEventAgentSessionEnvironmentExpiredAlias SessionEventAgentSessionEnvironmentExpired
-	var decoded SessionEventAgentSessionEnvironmentExpiredAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentSessionEnvironmentExpired(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "turn_id", "environment"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "environment"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentSessionEnvironmentExpired returns a validated SessionEventAgentSessionEnvironmentExpired built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentSessionEnvironmentExpired(fields SessionEventAgentSessionEnvironmentExpired) (*SessionEventAgentSessionEnvironmentExpired, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentSessionEnvironmentExpiredTypeEnum The type of the object. Always `agent.session.environment.expired`.
-type SessionEventAgentSessionEnvironmentExpiredTypeEnum string
-
-const (
-	SessionEventAgentSessionEnvironmentExpiredTypeEnumAgentSessionEnvironmentExpired SessionEventAgentSessionEnvironmentExpiredTypeEnum = "agent.session.environment.expired"
-)
-
-func (value *SessionEventAgentSessionEnvironmentExpiredTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.session.environment.expired":
-		*value = SessionEventAgentSessionEnvironmentExpiredTypeEnum(raw)
+	var sessioneventagentsessionenvironmentreset SessionEventAgentSessionEnvironmentReset
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentreset); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentReset(sessioneventagentsessionenvironmentreset) {
+		u.SessionEventAgentSessionEnvironmentReset = &sessioneventagentsessionenvironmentreset
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentSessionEnvironmentExpiredTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentSessionEnvironmentExpiredTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventAgentSessionEnvironmentReset Emitted after a hosted sandbox is replaced. Conversation history survives; changes to the previous sandbox's files and processes do not.
-type SessionEventAgentSessionEnvironmentReset struct {
-	// Type The type of the object. Always `agent.session.environment.reset`.
-	Type SessionEventAgentSessionEnvironmentResetTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The associated turn, when applicable.
-	TurnId NullableValue[string] `json:"turn_id"`
-	// EnvironmentId The stable environment ID, retained across sandbox replacements.
-	EnvironmentId string `json:"environment_id"`
-	// ResetCount Monotonically increasing reset number. Repeated notifications share this number.
-	ResetCount int64 `json:"reset_count"`
-}
-
-func (value *SessionEventAgentSessionEnvironmentReset) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.session.environment.reset"}); err != nil {
-		return err
-	}
-	type SessionEventAgentSessionEnvironmentResetAlias SessionEventAgentSessionEnvironmentReset
-	var decoded SessionEventAgentSessionEnvironmentResetAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentSessionEnvironmentReset(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "turn_id", "environment_id", "reset_count"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "environment_id", "reset_count"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("environment_id", value.EnvironmentId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("reset_count", value.ResetCount, RangeOpts{Min: Ptr[float64](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentSessionEnvironmentReset returns a validated SessionEventAgentSessionEnvironmentReset built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentSessionEnvironmentReset(fields SessionEventAgentSessionEnvironmentReset) (*SessionEventAgentSessionEnvironmentReset, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentSessionEnvironmentResetTypeEnum The type of the object. Always `agent.session.environment.reset`.
-type SessionEventAgentSessionEnvironmentResetTypeEnum string
-
-const (
-	SessionEventAgentSessionEnvironmentResetTypeEnumAgentSessionEnvironmentReset SessionEventAgentSessionEnvironmentResetTypeEnum = "agent.session.environment.reset"
-)
-
-func (value *SessionEventAgentSessionEnvironmentResetTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.session.environment.reset":
-		*value = SessionEventAgentSessionEnvironmentResetTypeEnum(raw)
+	var sessioneventagentoutputcommandexecutionoutputdelta SessionEventAgentOutputCommandExecutionOutputDelta
+	if err := json.Unmarshal(data, &sessioneventagentoutputcommandexecutionoutputdelta); err == nil && isNonEmptySessionEventSessionEventAgentOutputCommandExecutionOutputDelta(sessioneventagentoutputcommandexecutionoutputdelta) {
+		u.SessionEventAgentOutputCommandExecutionOutputDelta = &sessioneventagentoutputcommandexecutionoutputdelta
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentSessionEnvironmentResetTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentSessionEnvironmentResetTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventAgentOutputCommandExecutionOutputDelta Emitted when command execution produces an output delta.
-type SessionEventAgentOutputCommandExecutionOutputDelta struct {
-	// Type The type of the object. Always `agent.output.command_execution_output.delta`.
-	Type SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The ID of the turn associated with the event, when applicable.
-	TurnId NullableValue[string] `json:"turn_id"`
-	// ItemId The ID of the command execution item.
-	ItemId string `json:"item_id"`
-	// OutputIndex The index of the item in the turn output.
-	OutputIndex int64 `json:"output_index"`
-	// Delta The output text that was appended.
-	Delta string `json:"delta"`
-}
-
-func (value *SessionEventAgentOutputCommandExecutionOutputDelta) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.output.command_execution_output.delta"}); err != nil {
-		return err
-	}
-	type SessionEventAgentOutputCommandExecutionOutputDeltaAlias SessionEventAgentOutputCommandExecutionOutputDelta
-	var decoded SessionEventAgentOutputCommandExecutionOutputDeltaAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentOutputCommandExecutionOutputDelta(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "turn_id", "item_id", "output_index", "delta"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "item_id", "output_index", "delta"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("item_id", value.ItemId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("output_index", value.OutputIndex, RangeOpts{Min: Ptr[float64](0), Max: Ptr[float64](4294967295)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("delta", value.Delta, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentOutputCommandExecutionOutputDelta returns a validated SessionEventAgentOutputCommandExecutionOutputDelta built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentOutputCommandExecutionOutputDelta(fields SessionEventAgentOutputCommandExecutionOutputDelta) (*SessionEventAgentOutputCommandExecutionOutputDelta, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum The type of the object. Always `agent.output.command_execution_output.delta`.
-type SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum string
-
-const (
-	SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnumAgentOutputCommandExecutionOutputDelta SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum = "agent.output.command_execution_output.delta"
-)
-
-func (value *SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.output.command_execution_output.delta":
-		*value = SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum(raw)
+	var sessioneventagentsessioncreated SessionEventAgentSessionCreated
+	if err := json.Unmarshal(data, &sessioneventagentsessioncreated); err == nil && isNonEmptySessionEventSessionEventAgentSessionCreated(sessioneventagentsessioncreated) {
+		u.SessionEventAgentSessionCreated = &sessioneventagentsessioncreated
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentOutputCommandExecutionOutputDeltaTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventAgentSessionCreated Emitted when a session is created.
-type SessionEventAgentSessionCreated struct {
-	// Type The type of the object. Always `agent.session.created`.
-	Type SessionEventAgentSessionCreatedTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// Session The session that was created.
-	Session SessionResource `json:"session"`
-}
-
-func (value *SessionEventAgentSessionCreated) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.session.created"}); err != nil {
-		return err
-	}
-	type SessionEventAgentSessionCreatedAlias SessionEventAgentSessionCreated
-	var decoded SessionEventAgentSessionCreatedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentSessionCreated(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentSessionCreated returns a validated SessionEventAgentSessionCreated built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentSessionCreated(fields SessionEventAgentSessionCreated) (*SessionEventAgentSessionCreated, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentSessionCreatedTypeEnum The type of the object. Always `agent.session.created`.
-type SessionEventAgentSessionCreatedTypeEnum string
-
-const (
-	SessionEventAgentSessionCreatedTypeEnumAgentSessionCreated SessionEventAgentSessionCreatedTypeEnum = "agent.session.created"
-)
-
-func (value *SessionEventAgentSessionCreatedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.session.created":
-		*value = SessionEventAgentSessionCreatedTypeEnum(raw)
+	var sessioneventagentsessionturncreated SessionEventAgentSessionTurnCreated
+	if err := json.Unmarshal(data, &sessioneventagentsessionturncreated); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnCreated(sessioneventagentsessionturncreated) {
+		u.SessionEventAgentSessionTurnCreated = &sessioneventagentsessionturncreated
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentSessionCreatedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentSessionCreatedTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
-}
-
-// SessionEventAgentSessionTurnCreated Emitted when a turn is created.
-type SessionEventAgentSessionTurnCreated struct {
-	// Type The type of the object. Always `agent.session.turn.created`.
-	Type SessionEventAgentSessionTurnCreatedTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The ID of the turn associated with the event.
-	TurnId string `json:"turn_id"`
-	// Turn The turn at the time it was created.
-	Turn TurnResource `json:"turn"`
-}
-
-func (value *SessionEventAgentSessionTurnCreated) UnmarshalJSON(data []byte) error {
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRawEnum("type", rawFields["type"], []string{"agent.session.turn.created"}); err != nil {
-		return err
-	}
-	type SessionEventAgentSessionTurnCreatedAlias SessionEventAgentSessionTurnCreated
-	var decoded SessionEventAgentSessionTurnCreatedAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = SessionEventAgentSessionTurnCreated(decoded)
-	if err := ValidateRequired(rawFields, []string{"type", "event_id", "session_id", "turn_id", "turn"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"type", "event_id", "session_id", "turn_id", "turn"}); err != nil {
-		return err
-	}
-	if err := ValidateLength("event_id", value.EventId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("session_id", value.SessionId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	if err := ValidateLength("turn_id", value.TurnId, LengthOpts{Min: Ptr[int](0)}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewSessionEventAgentSessionTurnCreated returns a validated SessionEventAgentSessionTurnCreated built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewSessionEventAgentSessionTurnCreated(fields SessionEventAgentSessionTurnCreated) (*SessionEventAgentSessionTurnCreated, error) {
-	return ConstructModel(fields)
-}
-
-// SessionEventAgentSessionTurnCreatedTypeEnum The type of the object. Always `agent.session.turn.created`.
-type SessionEventAgentSessionTurnCreatedTypeEnum string
-
-const (
-	SessionEventAgentSessionTurnCreatedTypeEnumAgentSessionTurnCreated SessionEventAgentSessionTurnCreatedTypeEnum = "agent.session.turn.created"
-)
-
-func (value *SessionEventAgentSessionTurnCreatedTypeEnum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
-	case "agent.session.turn.created":
-		*value = SessionEventAgentSessionTurnCreatedTypeEnum(raw)
+	var sessioneventagentsessionturninprogress SessionEventAgentSessionTurnInProgress
+	if err := json.Unmarshal(data, &sessioneventagentsessionturninprogress); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnInProgress(sessioneventagentsessionturninprogress) {
+		u.SessionEventAgentSessionTurnInProgress = &sessioneventagentsessionturninprogress
 		return nil
-	default:
-		return &SdkValidationError{Field: "SessionEventAgentSessionTurnCreatedTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SessionEventAgentSessionTurnCreatedTypeEnum: %v", raw)}
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
 	}
+	var sessioneventagentsessionturncompleted SessionEventAgentSessionTurnCompleted
+	if err := json.Unmarshal(data, &sessioneventagentsessionturncompleted); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnCompleted(sessioneventagentsessionturncompleted) {
+		u.SessionEventAgentSessionTurnCompleted = &sessioneventagentsessionturncompleted
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnfailed SessionEventAgentSessionTurnFailed
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnfailed); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnFailed(sessioneventagentsessionturnfailed) {
+		u.SessionEventAgentSessionTurnFailed = &sessioneventagentsessionturnfailed
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturncancelled SessionEventAgentSessionTurnCancelled
+	if err := json.Unmarshal(data, &sessioneventagentsessionturncancelled); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnCancelled(sessioneventagentsessionturncancelled) {
+		u.SessionEventAgentSessionTurnCancelled = &sessioneventagentsessionturncancelled
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnitemadded SessionEventAgentSessionTurnItemAdded
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnitemadded); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnItemAdded(sessioneventagentsessionturnitemadded) {
+		u.SessionEventAgentSessionTurnItemAdded = &sessioneventagentsessionturnitemadded
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionidle SessionEventAgentSessionIdle
+	if err := json.Unmarshal(data, &sessioneventagentsessionidle); err == nil && isNonEmptySessionEventSessionEventAgentSessionIdle(sessioneventagentsessionidle) {
+		u.SessionEventAgentSessionIdle = &sessioneventagentsessionidle
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessioninprogress SessionEventAgentSessionInProgress
+	if err := json.Unmarshal(data, &sessioneventagentsessioninprogress); err == nil && isNonEmptySessionEventSessionEventAgentSessionInProgress(sessioneventagentsessioninprogress) {
+		u.SessionEventAgentSessionInProgress = &sessioneventagentsessioninprogress
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionrequiresaction SessionEventAgentSessionRequiresAction
+	if err := json.Unmarshal(data, &sessioneventagentsessionrequiresaction); err == nil && isNonEmptySessionEventSessionEventAgentSessionRequiresAction(sessioneventagentsessionrequiresaction) {
+		u.SessionEventAgentSessionRequiresAction = &sessioneventagentsessionrequiresaction
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionfailed SessionEventAgentSessionFailed
+	if err := json.Unmarshal(data, &sessioneventagentsessionfailed); err == nil && isNonEmptySessionEventSessionEventAgentSessionFailed(sessioneventagentsessionfailed) {
+		u.SessionEventAgentSessionFailed = &sessioneventagentsessionfailed
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionenvironmentpending SessionEventAgentSessionEnvironmentPending
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentpending); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentPending(sessioneventagentsessionenvironmentpending) {
+		u.SessionEventAgentSessionEnvironmentPending = &sessioneventagentsessionenvironmentpending
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionenvironmentconnected SessionEventAgentSessionEnvironmentConnected
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentconnected); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentConnected(sessioneventagentsessionenvironmentconnected) {
+		u.SessionEventAgentSessionEnvironmentConnected = &sessioneventagentsessionenvironmentconnected
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionenvironmentdisconnected SessionEventAgentSessionEnvironmentDisconnected
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentdisconnected); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentDisconnected(sessioneventagentsessionenvironmentdisconnected) {
+		u.SessionEventAgentSessionEnvironmentDisconnected = &sessioneventagentsessionenvironmentdisconnected
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionenvironmentfailed SessionEventAgentSessionEnvironmentFailed
+	if err := json.Unmarshal(data, &sessioneventagentsessionenvironmentfailed); err == nil && isNonEmptySessionEventSessionEventAgentSessionEnvironmentFailed(sessioneventagentsessionenvironmentfailed) {
+		u.SessionEventAgentSessionEnvironmentFailed = &sessioneventagentsessionenvironmentfailed
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionsubagentcreated SessionEventAgentSessionSubagentCreated
+	if err := json.Unmarshal(data, &sessioneventagentsessionsubagentcreated); err == nil && isNonEmptySessionEventSessionEventAgentSessionSubagentCreated(sessioneventagentsessionsubagentcreated) {
+		u.SessionEventAgentSessionSubagentCreated = &sessioneventagentsessionsubagentcreated
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionsubagentactive SessionEventAgentSessionSubagentActive
+	if err := json.Unmarshal(data, &sessioneventagentsessionsubagentactive); err == nil && isNonEmptySessionEventSessionEventAgentSessionSubagentActive(sessioneventagentsessionsubagentactive) {
+		u.SessionEventAgentSessionSubagentActive = &sessioneventagentsessionsubagentactive
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionsubagentclosed SessionEventAgentSessionSubagentClosed
+	if err := json.Unmarshal(data, &sessioneventagentsessionsubagentclosed); err == nil && isNonEmptySessionEventSessionEventAgentSessionSubagentClosed(sessioneventagentsessionsubagentclosed) {
+		u.SessionEventAgentSessionSubagentClosed = &sessioneventagentsessionsubagentclosed
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnitemdone SessionEventAgentSessionTurnItemDone
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnitemdone); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnItemDone(sessioneventagentsessionturnitemdone) {
+		u.SessionEventAgentSessionTurnItemDone = &sessioneventagentsessionturnitemdone
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturncontentpartadded SessionEventAgentSessionTurnContentPartAdded
+	if err := json.Unmarshal(data, &sessioneventagentsessionturncontentpartadded); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnContentPartAdded(sessioneventagentsessionturncontentpartadded) {
+		u.SessionEventAgentSessionTurnContentPartAdded = &sessioneventagentsessionturncontentpartadded
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturncontentpartdone SessionEventAgentSessionTurnContentPartDone
+	if err := json.Unmarshal(data, &sessioneventagentsessionturncontentpartdone); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnContentPartDone(sessioneventagentsessionturncontentpartdone) {
+		u.SessionEventAgentSessionTurnContentPartDone = &sessioneventagentsessionturncontentpartdone
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnoutputtextdelta SessionEventAgentSessionTurnOutputTextDelta
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnoutputtextdelta); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnOutputTextDelta(sessioneventagentsessionturnoutputtextdelta) {
+		u.SessionEventAgentSessionTurnOutputTextDelta = &sessioneventagentsessionturnoutputtextdelta
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnoutputtextdone SessionEventAgentSessionTurnOutputTextDone
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnoutputtextdone); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnOutputTextDone(sessioneventagentsessionturnoutputtextdone) {
+		u.SessionEventAgentSessionTurnOutputTextDone = &sessioneventagentsessionturnoutputtextdone
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnreasoningsummarypartadded SessionEventAgentSessionTurnReasoningSummaryPartAdded
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarypartadded); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryPartAdded(sessioneventagentsessionturnreasoningsummarypartadded) {
+		u.SessionEventAgentSessionTurnReasoningSummaryPartAdded = &sessioneventagentsessionturnreasoningsummarypartadded
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnreasoningsummarypartdone SessionEventAgentSessionTurnReasoningSummaryPartDone
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarypartdone); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryPartDone(sessioneventagentsessionturnreasoningsummarypartdone) {
+		u.SessionEventAgentSessionTurnReasoningSummaryPartDone = &sessioneventagentsessionturnreasoningsummarypartdone
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnreasoningsummarytextdelta SessionEventAgentSessionTurnReasoningSummaryTextDelta
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarytextdelta); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryTextDelta(sessioneventagentsessionturnreasoningsummarytextdelta) {
+		u.SessionEventAgentSessionTurnReasoningSummaryTextDelta = &sessioneventagentsessionturnreasoningsummarytextdelta
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	var sessioneventagentsessionturnreasoningsummarytextdone SessionEventAgentSessionTurnReasoningSummaryTextDone
+	if err := json.Unmarshal(data, &sessioneventagentsessionturnreasoningsummarytextdone); err == nil && isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryTextDone(sessioneventagentsessionturnreasoningsummarytextdone) {
+		u.SessionEventAgentSessionTurnReasoningSummaryTextDone = &sessioneventagentsessionturnreasoningsummarytextdone
+		return nil
+	} else if _, refused := err.(*SdkValidationError); refused && refusal == nil {
+		refusal = err
+	}
+	return refusal
 }
 
-// SessionEventAgentSessionTurnInProgress Emitted when a turn starts running.
-type SessionEventAgentSessionTurnInProgress struct {
-	// Type The type of the object. Always `agent.session.turn.in_progress`.
-	Type SessionEventAgentSessionTurnInProgressTypeEnum `json:"type"`
-	// EventId The unique ID of the event.
-	EventId string `json:"event_id"`
-	// SessionId The ID of the session associated with the event.
-	SessionId string `json:"session_id"`
-	// TurnId The ID of the turn associated with the event.
-	TurnId string `json:"turn_id"`
-	// Turn The turn at the time it started running.
-	Turn TurnResource `json:"turn"`
+func (u SessionEvent) MarshalJSON() ([]byte, error) {
+	if u.SessionEventError != nil {
+		return json.Marshal(u.SessionEventError)
+	}
+	if u.SessionEventAgentSessionEnvironmentReady != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentReady)
+	}
+	if u.SessionEventAgentSessionEnvironmentSuspended != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentSuspended)
+	}
+	if u.SessionEventAgentSessionEnvironmentExpired != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentExpired)
+	}
+	if u.SessionEventAgentSessionEnvironmentReset != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentReset)
+	}
+	if u.SessionEventAgentOutputCommandExecutionOutputDelta != nil {
+		return json.Marshal(u.SessionEventAgentOutputCommandExecutionOutputDelta)
+	}
+	if u.SessionEventAgentSessionCreated != nil {
+		return json.Marshal(u.SessionEventAgentSessionCreated)
+	}
+	if u.SessionEventAgentSessionTurnCreated != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnCreated)
+	}
+	if u.SessionEventAgentSessionTurnInProgress != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnInProgress)
+	}
+	if u.SessionEventAgentSessionTurnCompleted != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnCompleted)
+	}
+	if u.SessionEventAgentSessionTurnFailed != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnFailed)
+	}
+	if u.SessionEventAgentSessionTurnCancelled != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnCancelled)
+	}
+	if u.SessionEventAgentSessionTurnItemAdded != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnItemAdded)
+	}
+	if u.SessionEventAgentSessionIdle != nil {
+		return json.Marshal(u.SessionEventAgentSessionIdle)
+	}
+	if u.SessionEventAgentSessionInProgress != nil {
+		return json.Marshal(u.SessionEventAgentSessionInProgress)
+	}
+	if u.SessionEventAgentSessionRequiresAction != nil {
+		return json.Marshal(u.SessionEventAgentSessionRequiresAction)
+	}
+	if u.SessionEventAgentSessionFailed != nil {
+		return json.Marshal(u.SessionEventAgentSessionFailed)
+	}
+	if u.SessionEventAgentSessionEnvironmentPending != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentPending)
+	}
+	if u.SessionEventAgentSessionEnvironmentConnected != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentConnected)
+	}
+	if u.SessionEventAgentSessionEnvironmentDisconnected != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentDisconnected)
+	}
+	if u.SessionEventAgentSessionEnvironmentFailed != nil {
+		return json.Marshal(u.SessionEventAgentSessionEnvironmentFailed)
+	}
+	if u.SessionEventAgentSessionSubagentCreated != nil {
+		return json.Marshal(u.SessionEventAgentSessionSubagentCreated)
+	}
+	if u.SessionEventAgentSessionSubagentActive != nil {
+		return json.Marshal(u.SessionEventAgentSessionSubagentActive)
+	}
+	if u.SessionEventAgentSessionSubagentClosed != nil {
+		return json.Marshal(u.SessionEventAgentSessionSubagentClosed)
+	}
+	if u.SessionEventAgentSessionTurnItemDone != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnItemDone)
+	}
+	if u.SessionEventAgentSessionTurnContentPartAdded != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnContentPartAdded)
+	}
+	if u.SessionEventAgentSessionTurnContentPartDone != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnContentPartDone)
+	}
+	if u.SessionEventAgentSessionTurnOutputTextDelta != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnOutputTextDelta)
+	}
+	if u.SessionEventAgentSessionTurnOutputTextDone != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnOutputTextDone)
+	}
+	if u.SessionEventAgentSessionTurnReasoningSummaryPartAdded != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryPartAdded)
+	}
+	if u.SessionEventAgentSessionTurnReasoningSummaryPartDone != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryPartDone)
+	}
+	if u.SessionEventAgentSessionTurnReasoningSummaryTextDelta != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryTextDelta)
+	}
+	if u.SessionEventAgentSessionTurnReasoningSummaryTextDone != nil {
+		return json.Marshal(u.SessionEventAgentSessionTurnReasoningSummaryTextDone)
+	}
+	if u.Unknown != nil {
+		return u.Unknown, nil
+	}
+	return []byte("null"), nil
+}
+
+func isNonEmptySessionEventSessionEventError(v SessionEventError) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentReady(v SessionEventAgentSessionEnvironmentReady) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentSuspended(v SessionEventAgentSessionEnvironmentSuspended) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentExpired(v SessionEventAgentSessionEnvironmentExpired) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentReset(v SessionEventAgentSessionEnvironmentReset) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentOutputCommandExecutionOutputDelta(v SessionEventAgentOutputCommandExecutionOutputDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionCreated(v SessionEventAgentSessionCreated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnCreated(v SessionEventAgentSessionTurnCreated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnInProgress(v SessionEventAgentSessionTurnInProgress) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnCompleted(v SessionEventAgentSessionTurnCompleted) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnFailed(v SessionEventAgentSessionTurnFailed) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnCancelled(v SessionEventAgentSessionTurnCancelled) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnItemAdded(v SessionEventAgentSessionTurnItemAdded) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionIdle(v SessionEventAgentSessionIdle) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionInProgress(v SessionEventAgentSessionInProgress) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionRequiresAction(v SessionEventAgentSessionRequiresAction) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionFailed(v SessionEventAgentSessionFailed) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentPending(v SessionEventAgentSessionEnvironmentPending) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentConnected(v SessionEventAgentSessionEnvironmentConnected) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentDisconnected(v SessionEventAgentSessionEnvironmentDisconnected) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionEnvironmentFailed(v SessionEventAgentSessionEnvironmentFailed) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionSubagentCreated(v SessionEventAgentSessionSubagentCreated) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionSubagentActive(v SessionEventAgentSessionSubagentActive) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionSubagentClosed(v SessionEventAgentSessionSubagentClosed) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnItemDone(v SessionEventAgentSessionTurnItemDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnContentPartAdded(v SessionEventAgentSessionTurnContentPartAdded) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnContentPartDone(v SessionEventAgentSessionTurnContentPartDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnOutputTextDelta(v SessionEventAgentSessionTurnOutputTextDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnOutputTextDone(v SessionEventAgentSessionTurnOutputTextDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryPartAdded(v SessionEventAgentSessionTurnReasoningSummaryPartAdded) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryPartDone(v SessionEventAgentSessionTurnReasoningSummaryPartDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryTextDelta(v SessionEventAgentSessionTurnReasoningSummaryTextDelta) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+func isNonEmptySessionEventSessionEventAgentSessionTurnReasoningSummaryTextDone(v SessionEventAgentSessionTurnReasoningSummaryTextDone) bool {
+	b, _ := json.Marshal(v)
+	return string(b) != "{}" && string(b) != "null"
+}
+
+// UnmarshalSessionEvent converts an untyped value to SessionEvent.
+func UnmarshalSessionEvent(v any) SessionEvent {
+	b, _ := json.Marshal(v)
+	var result SessionEvent
+	_ = json.Unmarshal(b, &result)
+	return result
 }
